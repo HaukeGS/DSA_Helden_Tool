@@ -21,6 +21,7 @@ public class AventurianManager {
 	private Aventurian aventurian;
 	private final LevelCostCalculator calculator;
 	private final List<Observer> observers;
+	private LanguageAventurianManager languageManager;
 
 	static final int MAX_BAD_PROPERTIES_SUM = 25;
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
@@ -41,6 +42,7 @@ public class AventurianManager {
 
 	public AventurianManager() {
 		this(new Aventurian("testAventurian", 16500));
+		this.languageManager = new LanguageAventurianManager(aventurian);
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
@@ -128,81 +130,29 @@ public class AventurianManager {
 		} else {
 			pay(refund);
 		}
-		
+
 		aventurian.remove(p);
 
 	}
 
 	public void increaseLanguage(Language l) {
-		if (!l.isIncreasable())
-			throw new IllegalStateException("cannot further increase level of " + l.getName());
-		if (!aventurian.hasSkill(l))
-			throw new IllegalStateException("cannot increase skill " + l.getName());
-		final int cost = l.getUpgradeCost();
-		if (canPay(cost) && l.isAllowed(aventurian) && l.isIncreasable()) {
-			l.increase();
-			pay(cost);
-		}
+		languageManager.increaseLanguage(l);
 	}
 
 	public void decreaseLanguage(Language l) {
-		if (!l.isDecreasable())
-			throw new IllegalStateException("cannot further decrease level of " + l.getName());
-		if (!aventurian.hasSkill(l))
-			throw new IllegalStateException("cannot decrease skill which is not owned: " + l.getName());
-		final int refund = l.getDowngradeRefund();
-		l.decrease();
-		refund(refund);
+		languageManager.decreaseLanguage(l);
 	}
 
 	public void addLanguage(Language l) {
-		if (aventurian.hasSkill(l))
-			throw new IllegalStateException("has already skill " + l.getName());
-		final int cost = l.getLearningCost();
-		if (canPay(cost) && l.isAllowed(aventurian)) {
-			aventurian.add(l);
-			pay(cost);
-		}
+		languageManager.addLanguage(l);
 	}
 
 	public void addLanguageAsNativeTongue(Language l) {
-		if (aventurian.hasSkill(l))
-			throw new IllegalStateException("has already skill " + l.getName());
-		if (l.isNativeTongue())
-			throw new IllegalStateException("language is already native tongue" + l.getName());
-		if (l.isAllowed(aventurian)) {
-			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
-				l.increase();
-			l.setNativeTongue(true);
-			aventurian.add(l);
-		}
-
+		languageManager.addLanguageAsNativeTongue(l);
 	}
 
 	public void removeLanguage(Language l) {
-		if (!aventurian.hasSkill(l))
-			throw new IllegalStateException("cannot remove skill " + l.getName());
-		if (l.isNativeTongue()) {
-			l.setNativeTongue(false);
-			decreaseLanguageWithoutRefund(l);
-		} else {
-			decreaseLanguageWithRefund(l);
-		}
-		aventurian.remove(l);
-	}
-
-	private void decreaseLanguageWithRefund(Language l) {
-		while (l.isDecreasable()) {
-			decreaseLanguage(l);
-		}
-		refund(l.getLearningCost());
-	}
-
-	private void decreaseLanguageWithoutRefund(Language l) {
-		while (l.getLevel() > Language.NATIVE_TONGUE_LEVEL)
-			decreaseLanguage(l);
-		while (l.isDecreasable())
-			l.decrease();
+		languageManager.removeLanguage(l);
 	}
 
 	private boolean canPay(int cost) {
