@@ -312,13 +312,4 @@ public class AventurianTest {
 	public void testGetSecondaryAttribute() {
 		assertEquals(12, toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS));
 	}
-	
-	@Test
-	public void testIsMage() {
-		assertFalse(toTest.isMage());
-		Property mage = mock(Property.class);
-		when(mage.getName()).thenReturn("Halbzauberer");
-		toTest.add(mage);
-		assertTrue(toTest.isMage());
-	}
 }
