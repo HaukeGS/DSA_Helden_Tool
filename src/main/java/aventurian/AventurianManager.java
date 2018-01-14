@@ -71,10 +71,8 @@ public class AventurianManager {
 					&& aventurian.getPointsInAdvantages() + cost <= MAX_POINTS_IN_ADVANTAGES) {
 				pay(cost);
 				aventurian.add(p);
-				p.gain(aventurian);
 			} else if (p.isDisadvantage()
 					&& aventurian.getPointsOutDisadvantages() + cost <= MAX_POINTS_OUT_DISADVANTAGES) {
-				p.gain(aventurian);
 				refund(cost);
 				aventurian.add(p);
 			}
@@ -88,7 +86,6 @@ public class AventurianManager {
 		if (aventurian.getBadPropertySum() + p.getLevel() <= MAX_BAD_PROPERTIES_SUM && p.isAllowed(aventurian)
 				&& aventurian.getPointsOutDisadvantages() + (cost * p.getLevel()) <= MAX_POINTS_OUT_DISADVANTAGES) {
 			refund(cost * p.getLevel());
-			p.gain(aventurian);
 			aventurian.add(p);
 		}
 	}
@@ -99,7 +96,7 @@ public class AventurianManager {
 		while (p.isDecreasable()) {
 			decreaseBadProperty(p);
 		}
-		p.lose(aventurian);
+
 		aventurian.remove(p);
 		refund(p.getCost() * p.getLevel());
 	}
@@ -131,7 +128,7 @@ public class AventurianManager {
 		} else {
 			pay(refund);
 		}
-		p.lose(aventurian);
+		
 		aventurian.remove(p);
 
 	}
@@ -164,7 +161,6 @@ public class AventurianManager {
 		final int cost = l.getLearningCost();
 		if (canPay(cost) && l.isAllowed(aventurian)) {
 			aventurian.add(l);
-			l.gain(aventurian);
 			pay(cost);
 		}
 	}
@@ -178,7 +174,6 @@ public class AventurianManager {
 			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
 				l.increase();
 			l.setNativeTongue(true);
-			l.gain(aventurian);
 			aventurian.add(l);
 		}
 
@@ -193,7 +188,6 @@ public class AventurianManager {
 		} else {
 			decreaseLanguageWithRefund(l);
 		}
-		l.lose(aventurian);
 		aventurian.remove(l);
 	}
 

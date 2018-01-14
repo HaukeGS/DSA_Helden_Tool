@@ -118,6 +118,7 @@ public class LanguagePaneController extends PaneController {
 			setText(null); // No text in label of super class
 			if (empty || item == null) {
 				setGraphic(null);
+				setTooltip(null);
 			} else {
 				nameLabel.setText(item.getName());
 				nativeTongueButton.setDisable(hasNativeTongue);
@@ -152,6 +153,7 @@ public class LanguagePaneController extends PaneController {
 			setText(null); // No text in label of super class
 			if (empty || item == null) {
 				setGraphic(null);
+				setTooltip(null);
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));

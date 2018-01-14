@@ -34,7 +34,7 @@ public class Aventurian extends Observable {
 	private final List<Language> languages;
 
 	static final int MAX_ATTRIBUTES_SUM = 101;
-	
+
 	private Aventurian() {
 		// only needed for JAXB
 		this(0);
@@ -89,21 +89,25 @@ public class Aventurian extends Observable {
 
 	void add(Property p) {
 		properties.add(p);
+		p.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void remove(Property p) {
 		properties.remove(p);
+		p.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void add(BadProperty p) {
 		badProperties.add(p);
+		p.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void remove(BadProperty p) {
 		badProperties.remove(p);
+		p.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
@@ -122,11 +126,13 @@ public class Aventurian extends Observable {
 
 	void add(Language l) {
 		languages.add(l);
+		l.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void remove(Language l) {
 		languages.remove(l);
+		l.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
@@ -138,11 +144,11 @@ public class Aventurian extends Observable {
 	int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();
 	}
-	
+
 	public boolean isPrimaryAttributeIncreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.isIncreasable(a);
 	}
-	
+
 	public boolean isPrimaryAttributeDecreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.isDecreasable(a);
 	}
@@ -189,11 +195,11 @@ public class Aventurian extends Observable {
 	public List<Language> getLanguages() {
 		return new ArrayList<>(languages);
 	}
-	
+
 	public boolean hasNativeTongue() {
 		return languages.stream().anyMatch((Language l) -> l.isNativeTongue());
 	}
-	
+
 	public boolean isPrimaryAttributesLowerThanThreshhold() {
 		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
 	}

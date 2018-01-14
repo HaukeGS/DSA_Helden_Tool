@@ -82,48 +82,56 @@ public class AventurianTest {
 
 	@Test
 	public void canPay() throws Exception {
-		assertFalse(toTest.canPay(AP+1));
+		assertFalse(toTest.canPay(AP + 1));
 	}
 
 	@Test
-	public void addProperty() throws Exception {
+	public void testAddProperty() throws Exception {
 		final Property testProp = mock(Property.class);
 		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
+		verify(testProp).gain(toTest);
 		verify(mockedObserver).update(toTest, null);
 	}
 
 	@Test
-	public void removeProperty() throws Exception {
+	public void testRemoveProperty() throws Exception {
 		final Property testProp = mock(Property.class);
 		when(testProp.getName()).thenReturn("test");
+
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(mockedObserver).update(toTest, null);
+
 		toTest.remove(testProp);
 		assertFalse(toTest.hasSkill(testProp));
+		verify(testProp).lose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
-	public void addBadProperty() throws Exception {
+	public void testAddBadProperty() throws Exception {
 		final BadProperty testProp = mock(BadProperty.class);
 		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
+		verify(testProp).gain(toTest);
 		verify(mockedObserver).update(toTest, null);
 	}
 
 	@Test
-	public void removeBadProperty() throws Exception {
+	public void testRemoveBadProperty() throws Exception {
 		final BadProperty testProp = mock(BadProperty.class);
 		when(testProp.getName()).thenReturn("test");
+
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(mockedObserver).update(toTest, null);
+
 		toTest.remove(testProp);
 		assertFalse(toTest.hasSkill(testProp));
+		verify(testProp).lose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -142,23 +150,27 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void addLanguage() throws Exception {
+	public void testAddLanguage() throws Exception {
 		final Language testLanguage = mock(Language.class);
 		when(testLanguage.getName()).thenReturn("test");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
+		verify(testLanguage).gain(toTest);
 		verify(mockedObserver).update(toTest, null);
 	}
 
 	@Test
-	public void removeLanguage() throws Exception {
+	public void testRemoveLanguage() throws Exception {
 		final Language testLanguage = mock(Language.class);
 		when(testLanguage.getName()).thenReturn("test");
+		
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
 		verify(mockedObserver).update(toTest, null);
+		
 		toTest.remove(testLanguage);
 		assertFalse(toTest.hasSkill(testLanguage));
+		verify(testLanguage).lose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null); // Why
 																	// atLeastOnce???
 	}
@@ -276,7 +288,7 @@ public class AventurianTest {
 		toTest.add(bp);
 		assertEquals(450, toTest.getPointsOutDisadvantages());
 	}
-	
+
 	@Test
 	public void testSetName() {
 		assertEquals(AVENTURIAN_NAME, toTest.getName());
@@ -284,7 +296,7 @@ public class AventurianTest {
 		assertEquals("newName", toTest.getName());
 		verify(mockedObserver).update(toTest, null);
 	}
-	
+
 	@Test
 	public void testHasNativeTongue() {
 		assertFalse(toTest.hasNativeTongue());

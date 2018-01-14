@@ -1,11 +1,12 @@
 package ui;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
+import javafx.scene.control.Label;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AttributePaneTest extends BaseGuiTest {
@@ -143,23 +142,10 @@ public class AttributePaneTest extends BaseGuiTest {
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.AGILITY)).thenReturn(9);
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(8);
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(7);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.COURAGE)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.INTUITION)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.CHARISMA)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.AGILITY)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeIncreasable(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(true);
+		
+		when(mockedAventurian.isPrimaryAttributeIncreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
+		when(mockedAventurian.isPrimaryAttributeDecreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isPrimaryAttributesLowerThanThreshhold()).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.COURAGE)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.INTUITION)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.CHARISMA)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.AGILITY)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(true);
-		when(mockedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(true);
 	}
 
 }
