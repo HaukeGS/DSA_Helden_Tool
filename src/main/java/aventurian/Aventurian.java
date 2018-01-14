@@ -95,21 +95,25 @@ public class Aventurian extends Observable {
 
 	void add(Property p) {
 		properties.add(p);
+		p.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void remove(Property p) {
 		properties.remove(p);
+		p.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void add(BadProperty p) {
 		badProperties.add(p);
+		p.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void remove(BadProperty p) {
 		badProperties.remove(p);
+		p.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
@@ -128,11 +132,13 @@ public class Aventurian extends Observable {
 
 	void add(Language l) {
 		languages.add(l);
+		l.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
 	void remove(Language l) {
 		languages.remove(l);
+		l.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
@@ -208,7 +214,7 @@ public class Aventurian extends Observable {
 	public boolean hasNativeTongue() {
 		return languages.stream().anyMatch((Language l) -> l.isNativeTongue());
 	}
-	
+
 	public boolean isMage() {
 		return isMage;
 	}

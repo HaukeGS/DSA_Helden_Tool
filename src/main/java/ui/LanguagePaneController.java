@@ -33,7 +33,7 @@ public class LanguagePaneController extends PaneController {
 	public Button btnUnAssignLanguage;
 	@FXML
 	public ListView<Language> lvAssignedLanguages;
-	
+
 	private boolean hasNativeTongue;
 
 	public void assignLanguage() {
@@ -53,7 +53,6 @@ public class LanguagePaneController extends PaneController {
 		lvUnAssignedLanguages.setItems(null); // forces listview to re-render all cells
 		final List<Language> assignedLanguages = updatedAventurian.getLanguages();
 		lvAssignedLanguages.setItems(FXCollections.observableArrayList(assignedLanguages));
-
 		final List<Language> unassignedLanguages = db.getLanguages().stream()
 				.filter(l -> !assignedLanguages.contains(l)).collect(toList());
 		lvUnAssignedLanguages.setItems(FXCollections.observableArrayList(unassignedLanguages));
@@ -97,7 +96,7 @@ public class LanguagePaneController extends PaneController {
 		});
 		lvAssignedLanguages.setCellFactory((ListView<Language> list) -> new AssignedLanguageCell());
 	}
-	
+
 	private class UnassignedLanguageCell extends ListCell<Language> {
 		HBox hbox = new HBox();
 		Label nameLabel = new Label("(empty)");
@@ -109,6 +108,7 @@ public class LanguagePaneController extends PaneController {
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
 			HBox.setHgrow(pane, Priority.ALWAYS);
+			nativeTongueButton.setId("btnNativeTongue");
 			nativeTongueButton.setOnAction((ActionEvent e) -> m.addLanguageAsNativeTongue(getItem()));
 		}
 
@@ -118,6 +118,7 @@ public class LanguagePaneController extends PaneController {
 			setText(null); // No text in label of super class
 			if (empty || item == null) {
 				setGraphic(null);
+				setTooltip(null);
 			} else {
 				nameLabel.setText(item.getName());
 				nativeTongueButton.setDisable(hasNativeTongue);
@@ -152,6 +153,7 @@ public class LanguagePaneController extends PaneController {
 			setText(null); // No text in label of super class
 			if (empty || item == null) {
 				setGraphic(null);
+				setTooltip(null);
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));

@@ -95,7 +95,6 @@ public class AventurianManagerTest {
 
 		verify(a).add(p);
 		verify(a).pay(anyInt());
-		verify(p).gain(a);
 	}
 
 	@Test
@@ -153,7 +152,6 @@ public class AventurianManagerTest {
 
 		verify(a).add(p);
 		verify(a).refund(anyInt());
-		verify(p).gain(a);
 
 	}
 
@@ -184,7 +182,6 @@ public class AventurianManagerTest {
 
 		toTest.addBadProperty(p);
 
-		verify(p).gain(a);
 		verify(a).refund(anyInt());
 		verify(a).add(p);
 	}
@@ -260,7 +257,6 @@ public class AventurianManagerTest {
 		when(a.canPay(anyInt())).thenReturn(true);
 		toTest.addLanguage(l);
 
-		verify(l).gain(a);
 		verify(a).pay(anyInt());
 		verify(a).add(l);
 	}
@@ -347,7 +343,6 @@ public class AventurianManagerTest {
 
 		verify(a).remove(p);
 		verify(a).refund(anyInt());
-		verify(p).lose(a);
 	}
 
 	@Test
@@ -361,7 +356,6 @@ public class AventurianManagerTest {
 		verify(p).decrease();
 		verify(a).remove(p);
 		verify(a, times(2)).refund(anyInt());
-		verify(p).lose(a);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -409,7 +403,6 @@ public class AventurianManagerTest {
 
 		verify(a).remove(l);
 		verify(a).refund(anyInt());
-		verify(l).lose(a);
 	}
 
 	@Test
@@ -452,7 +445,6 @@ public class AventurianManagerTest {
 		verify(l).decrease();
 		verify(a).remove(l);
 		verify(a, times(2)).refund(anyInt());
-		verify(l).lose(a);
 	}
 
 	@Test
@@ -590,7 +582,6 @@ public class AventurianManagerTest {
 
 		verify(a).remove(p);
 		verify(a).refund(anyInt());
-		verify(p).lose(a);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -612,6 +603,5 @@ public class AventurianManagerTest {
 
 		verify(a).remove(p);
 		verify(a).pay(anyInt());
-		verify(p).lose(a);
 	}
 }

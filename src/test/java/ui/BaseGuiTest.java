@@ -4,6 +4,8 @@ import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
 import static ui.NavigationPaneController.PAGES.LANGUAGES;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.concurrent.Semaphore;
 
 import org.mockito.Mock;
 import org.testfx.framework.junit.ApplicationTest;
@@ -11,6 +13,7 @@ import org.testfx.framework.junit.ApplicationTest;
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
 import database.Database;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -73,9 +76,9 @@ public abstract class BaseGuiTest extends ApplicationTest {
 
 	private void loadPage(PAGES p, String fxml) throws IOException {
 		final FXMLLoader l = new FXMLLoader(ui.MainController.class.getResource(fxml));
-		final Parent bla = l.load();
-		final PaneController blub = l.getController();
-		mainController.addLoadedPage(p, blub, bla);
+		final Parent pane = l.load();
+		final PaneController controller = l.getController();
+		mainController.addLoadedPage(p, controller, pane);
 	}
 
 	public <T extends Node> T find(final String query) {
@@ -84,12 +87,42 @@ public abstract class BaseGuiTest extends ApplicationTest {
 		return lookup(query).query();
 	}
 
+	public <T extends Node> Set<T> findAll(final String query) {
+
+		// TestFX provides many operations to retrieve elements from the loaded GUI.
+		return lookup(query).queryAll();
+	}
+
+	private static void waitForRunLater() throws InterruptedException {
+		final Semaphore semaphore = new Semaphore(0);
+		Platform.runLater(() -> semaphore.release());
+		semaphore.acquire();
+		Thread.sleep(50);
+
+	}
+
+	/**
+	 * Call to update the GUI with {@link #mockedAventurian} whose behaviour you
+	 * have changed/specified via Mocktio.when().
+	 */
+	protected final void updateGui() {
+		try {
+			Platform.runLater(() -> {
+				mainController.update(mockedAventurian);
+			});
+			waitForRunLater();
+		} catch (final InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Implement to configure the behaviour of the mocks the actual testcase relies
 	 * on. Typically, you would setup {@link #mockedDatabase} and
-	 * {@link #mockedAventurian} and verify on {@link #mockedAventurianManager}.
+	 * {@link #mockedAventurian} (if needed by all tests) and verify on {@link #mockedAventurianManager}.
 	 * <br>
 	 * Have a look at {@link LanguagePaneTest}.
 	 */
 	abstract void setUpMocks();
+
 }
