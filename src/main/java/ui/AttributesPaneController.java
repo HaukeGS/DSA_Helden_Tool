@@ -171,6 +171,30 @@ public class AttributesPaneController extends PaneController {
 	public void decreaseStrength() {
 		m.decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH);
 	}
+	
+	public void increaseHitPoints() {
+		m.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+	
+	public void decreaseHitPoints() {
+		m.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+	
+	public void increaseAstralPoints() {
+		m.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+	}
+	
+	public void decreaseAstralPoints() {
+		m.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+	}
+	
+	public void increaseMagicResistance() {
+		m.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
+	}
+	
+	public void decreaseMagicResistance() {
+		m.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
+	}
 
 	@Override
 	public void update(Aventurian updatedAventurian) {
@@ -227,7 +251,12 @@ public class AttributesPaneController extends PaneController {
 		labelAttackValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.ATTACKVALUE)));
 		labelDefendValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.DEFENDVALUE)));
 		labelRangedValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.RANGEDVALUE)));
-		
+		btnIncreaseHitPoints.setDisable(!updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS));
+		btnDecreaseHitPoints.setDisable(!updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS));
+		btnIncreaseAstralPoints.setDisable(!updatedAventurian.isMage() || !updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS));
+		btnDecreaseAstralPoints.setDisable(!updatedAventurian.isMage() || !updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS));
+		btnIncreaseMagicResistance.setDisable(!updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE));
+		btnDecreaseMagicResistance.setDisable(!updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE));
 	}
 
 	@Override

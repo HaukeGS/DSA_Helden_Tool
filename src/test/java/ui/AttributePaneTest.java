@@ -7,12 +7,14 @@ import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import javafx.scene.control.Label;
+import net.bytebuddy.implementation.bytecode.member.HandleInvocation;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -111,6 +113,42 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseStrength");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH);
 	}
+	
+	@Test
+	public void testIncreaseHitPoints() {
+		clickOn("#btnIncreaseHitPoints");
+		verify(mockedAventurianManager).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+	
+	@Test
+	public void testDecreaseHitPoints() {
+		clickOn("#btnDecreaseHitPoints");
+		verify(mockedAventurianManager).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+	
+	@Test
+	public void testIncreaseAstralPoints() {
+		clickOn("#btnIncreaseAstralPoints");
+		verify(mockedAventurianManager).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+	}
+	
+	@Test
+	public void testDecreaseAstralPoints() {
+		clickOn("#btnDecreaseAstralPoints");
+		verify(mockedAventurianManager).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+	}
+	
+	@Test
+	public void testIncreaseMagicResistance() {
+		clickOn("#btnIncreaseMagicResistance");
+		verify(mockedAventurianManager).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
+	}
+	
+	@Test
+	public void testDecreaseMagicResistance() {
+		clickOn("#btnDecreaseMagicResistance");
+		verify(mockedAventurianManager).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
+	}
 
 	@Test
 	public void testUpdate() {
@@ -146,6 +184,10 @@ public class AttributePaneTest extends BaseGuiTest {
 		when(mockedAventurian.isPrimaryAttributeIncreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isPrimaryAttributeDecreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isPrimaryAttributesLowerThanThreshhold()).thenReturn(true);
+		
+		when(mockedAventurian.isMage()).thenReturn(true);
+		when(mockedAventurian.isSecondaryAttributeIncreasableByBuy(any(SECONDARY_ATTRIBUTE.class))).thenReturn(true);
+		when(mockedAventurian.isSecondaryAttributeDecreasableByBuy(any(SECONDARY_ATTRIBUTE.class))).thenReturn(true);
 	}
 
 }

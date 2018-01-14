@@ -194,11 +194,11 @@ public class Aventurian extends Observable {
 		secondaryAttributes.decreaseMod(a, mod);
 	}
 	
-	void increaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+	public void increaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		secondaryAttributes.increaseModBuy(a);
 	}
 	
-	void decreaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+	public void decreaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		secondaryAttributes.decreaseModBuy(a);
 	}
 	

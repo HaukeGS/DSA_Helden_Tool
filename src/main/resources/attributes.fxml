@@ -43,10 +43,10 @@
             <Button fx:id="btnIncreaseIntelligence" mnemonicParsing="false" onAction="#increaseIntelligence" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label text="Lebenspunkte" GridPane.columnIndex="4" />
             <Label fx:id="labelHitPoints" text="Label" GridPane.columnIndex="6" />
-            <Button mnemonicParsing="false" prefWidth="25.0" text="-" GridPane.columnIndex="5" />
-            <Button mnemonicParsing="false" prefWidth="25.0" text="+" GridPane.columnIndex="7" />
-            <Button mnemonicParsing="false" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <Button fx:id="btnDecreaseHitPoints" mnemonicParsing="false" onAction="#decreaseHitPoints" prefWidth="25.0" text="-" GridPane.columnIndex="5" />
+            <Button fx:id="btnIncreaseHitPoints" mnemonicParsing="false" onAction="#increaseHitPoints" prefWidth="25.0" text="+" GridPane.columnIndex="7" />
+            <Button fx:id="btnDecreaseAstralPoints" mnemonicParsing="false" onAction="#decreaseAstralPoints" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Button fx:id="btnIncreaseAstralPoints" mnemonicParsing="false" onAction="#increaseAstralPoints" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="1" />
             <Label fx:id="labelAstralPoints" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="1" />
             <Label text="Astralenergie" GridPane.columnIndex="4" GridPane.rowIndex="1" />
             <Button fx:id="btnDecreaseIntuition" mnemonicParsing="false" onAction="#decreaseIntuition" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -89,8 +89,8 @@
             <Label fx:id="labelInitiativeValue" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="6" />
             <Label fx:id="labelAttackValue" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="7" />
             <Label fx:id="labelRangedValue" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="9" />
-            <Button mnemonicParsing="false" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <Button fx:id="btnDecreaseMagicResistance" mnemonicParsing="false" onAction="#decreaseMagicResistance" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Button fx:id="btnIncreaseMagicResistance" mnemonicParsing="false" onAction="#increaseMagicResistance" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>
