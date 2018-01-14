@@ -172,10 +172,38 @@ public class Aventurian extends Observable {
 		return primaryAttributes.getMaximumOfPrimaryAttribute(a);
 	}
 
-	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
-		primaryAttributes.increase(attribute);
+	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+		primaryAttributes.increase(a);
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
+	}
+	
+	public boolean isSecondaryAttributeIncreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		return secondaryAttributes.isIncreasableByBuy(a);
+	}
+	
+	public boolean isSecondaryAttributeDecreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		return secondaryAttributes.isDecreasableByBuy(a);
+	}
+	
+	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a, int mod) {
+		secondaryAttributes.increaseMod(a, mod);
+	}
+	
+	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a, int mod) {
+		secondaryAttributes.decreaseMod(a, mod);
+	}
+	
+	void increaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		secondaryAttributes.increaseModBuy(a);
+	}
+	
+	void decreaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		secondaryAttributes.decreaseModBuy(a);
+	}
+	
+	int getSecondaryAttributeCost(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		return secondaryAttributes.getCost(a);
 	}
 
 	public int getSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {

@@ -61,6 +61,25 @@ public class AventurianManager {
 			refund(cost);
 		}
 	}
+	
+	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		if (aventurian.isSecondaryAttributeIncreasableByBuy(a)) {
+			final int cost = aventurian.getSecondaryAttributeCost(a);
+			if (aventurian.canPay(cost)) {
+				aventurian.increaseSecondaryAttributeByBuy(a);
+				pay(cost);				
+			}
+		}
+		
+	}
+	
+	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		if (aventurian.isSecondaryAttributeDecreasableByBuy(a)) {
+			final int cost = aventurian.getSecondaryAttributeCost(a);
+			aventurian.decreaseSecondaryAttributeByBuy(a);
+			refund(cost);
+		}
+	}
 
 	public void addProperty(Property p) {
 		if (aventurian.hasSkill(p))

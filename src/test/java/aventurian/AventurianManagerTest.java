@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
+import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -85,6 +86,50 @@ public class AventurianManagerTest {
 		verify(a).decrasePrimaryAttribute(COURAGE);
 		verify(a).refund(anyInt());
 
+	}
+	
+	@Test
+	public void testIncreaseSecondaryAttributeNotIncreasable() {
+		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS)).thenReturn(false);
+		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+		verify(a, never()).pay(anyInt());
+		verify(a, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+	
+	@Test
+	public void testIncreaseSecondaryAttributeTooExpensive() {
+		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
+		when(a.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(50);
+		when(a.canPay(50)).thenReturn(false);
+		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+		verify(a, never()).pay(anyInt());
+		verify(a, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+	}
+	
+	@Test
+	public void testIncreaseSecondaryAttributeAllConditionsMet() {
+		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(true);
+		when(a.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(100);
+		when(a.canPay(100)).thenReturn(true);
+		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
+		verify(a).pay(anyInt());
+		verify(a).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);		
+	}
+	
+	@Test
+	public void testDecreaseSecondaryAttributeNotDecreasable() {
+		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS)).thenReturn(false);
+		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+		verify(a, never()).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.HITPOINTS);
+		verify(a, never()).pay(anyInt());
+	}
+	
+	@Test
+	public void testDecreaseSecondaryAttributeAllConditionsMet() {
+		when(a.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
+		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+		verify(a).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+		verify(a).refund(anyInt());
 	}
 
 	@Test
