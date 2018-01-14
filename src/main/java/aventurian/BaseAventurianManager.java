@@ -10,15 +10,15 @@ abstract class BaseAventurianManager {
 
 	}
 
-	protected boolean canPay(int cost) {
+	protected final boolean canPay(int cost) {
 		return aventurian.canPay(cost);
 	}
 
-	protected void pay(int cost) {
+	protected final void pay(int cost) {
 		aventurian.pay(cost);
 	}
 
-	protected void refund(int refund) {
+	protected final void refund(int refund) {
 		aventurian.refund(refund);
 	}
 

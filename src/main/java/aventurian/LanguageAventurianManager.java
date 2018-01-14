@@ -6,10 +6,9 @@ class LanguageAventurianManager extends BaseAventurianManager {
 
 	public LanguageAventurianManager(Aventurian a) {
 		super(a);
-		// TODO Auto-generated constructor stub
 	}
 
-	public void addLanguageAsNativeTongue(Language l) {
+	void addLanguageAsNativeTongue(Language l) {
 		if (aventurian.hasSkill(l))
 			throw new IllegalStateException("has already skill " + l.getName());
 		if (l.isNativeTongue())
@@ -20,10 +19,9 @@ class LanguageAventurianManager extends BaseAventurianManager {
 			l.setNativeTongue(true);
 			aventurian.add(l);
 		}
-
 	}
-	
-	public void removeLanguage(Language l) {
+
+	void removeLanguage(Language l) {
 		if (!aventurian.hasSkill(l))
 			throw new IllegalStateException("cannot remove skill " + l.getName());
 		if (l.isNativeTongue()) {
@@ -34,7 +32,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		}
 		aventurian.remove(l);
 	}
-	
+
 	private void decreaseLanguageWithRefund(Language l) {
 		while (l.isDecreasable()) {
 			decreaseLanguage(l);
@@ -48,8 +46,8 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (l.isDecreasable())
 			l.decrease();
 	}
-	
-	public void decreaseLanguage(Language l) {
+
+	void decreaseLanguage(Language l) {
 		if (!l.isDecreasable())
 			throw new IllegalStateException("cannot further decrease level of " + l.getName());
 		if (!aventurian.hasSkill(l))
@@ -58,8 +56,8 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		l.decrease();
 		refund(refund);
 	}
-	
-	public void addLanguage(Language l) {
+
+	void addLanguage(Language l) {
 		if (aventurian.hasSkill(l))
 			throw new IllegalStateException("has already skill " + l.getName());
 		final int cost = l.getLearningCost();
@@ -68,8 +66,8 @@ class LanguageAventurianManager extends BaseAventurianManager {
 			pay(cost);
 		}
 	}
-	
-	public void increaseLanguage(Language l) {
+
+	void increaseLanguage(Language l) {
 		if (!l.isIncreasable())
 			throw new IllegalStateException("cannot further increase level of " + l.getName());
 		if (!aventurian.hasSkill(l))

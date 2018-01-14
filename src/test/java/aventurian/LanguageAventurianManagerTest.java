@@ -16,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import skills.Language;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LanguageAventurianMangerTest {
+public class LanguageAventurianManagerTest {
 
 	LanguageAventurianManager toTest;
 
