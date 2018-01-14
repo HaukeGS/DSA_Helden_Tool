@@ -72,7 +72,7 @@ public class SecondaryAttributesTest {
     }
 
     private void assertKarmalPointsMinium() {
-        assertEquals(24, toTest.getValueOf(KARMALPOINTS));
+        assertEquals(0, toTest.getValueOf(KARMALPOINTS));
     }
 
     private void assertMagicResistanceMinimum() {
@@ -113,7 +113,7 @@ public class SecondaryAttributesTest {
     }
 
     private void assertKarmalPointsMaximum() {
-        assertEquals(24, toTest.getValueOf(KARMALPOINTS));
+        assertEquals(0, toTest.getValueOf(KARMALPOINTS));
     }
 
     private void assertMagicResistanceMaximum() {

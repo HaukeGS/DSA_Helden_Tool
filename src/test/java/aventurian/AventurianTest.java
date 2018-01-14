@@ -8,6 +8,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
 
 import java.util.Observer;
 
@@ -15,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -208,7 +210,7 @@ public class AventurianTest {
 		toTest.addObserver(mockedObserver);
 		toTest.increasePrimaryAttribute(COURAGE);
 		verify(pri).increase(COURAGE);
-		verify(second).updateValues(pri);
+		verify(second, times(2)).updateValues(pri);
 		verify(mockedObserver).update(toTest, null);
 	}
 
@@ -220,7 +222,7 @@ public class AventurianTest {
 		toTest.addObserver(mockedObserver);
 		toTest.decrasePrimaryAttribute(COURAGE);
 		verify(pri).decrease(COURAGE);
-		verify(second).updateValues(pri);
+		verify(second, times(2)).updateValues(pri);
 		verify(mockedObserver).update(toTest, null);
 	}
 
@@ -292,5 +294,19 @@ public class AventurianTest {
 		when(l.isNativeTongue()).thenReturn(true);
 		toTest.add(l);
 		assertTrue(toTest.hasNativeTongue());
+	}
+	
+	@Test
+	public void testGetSecondaryAttribute() {
+		assertEquals(12, toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS));
+	}
+	
+	@Test
+	public void testIsMage() {
+		assertFalse(toTest.isMage());
+		Property mage = mock(Property.class);
+		when(mage.getName()).thenReturn("Halbzauberer");
+		toTest.add(mage);
+		assertTrue(toTest.isMage());
 	}
 }

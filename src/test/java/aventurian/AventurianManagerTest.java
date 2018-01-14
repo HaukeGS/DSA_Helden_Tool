@@ -476,7 +476,7 @@ public class AventurianManagerTest {
 		toTest.increaseLanguage(l);
 
 		verify(a, never()).pay(anyInt());
-		verify(l, never()).increase();
+		verify(l, never()).increase();		
 	}
 
 	@Test(expected = IllegalStateException.class)

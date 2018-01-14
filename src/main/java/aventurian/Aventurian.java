@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -32,9 +33,12 @@ public class Aventurian extends Observable {
 	private final List<BadProperty> badProperties;
 	@XmlElementWrapper(name = "languages")
 	private final List<Language> languages;
+	
+	private boolean isMage;
+	private boolean isConsecrated;
 
 	static final int MAX_ATTRIBUTES_SUM = 101;
-	
+
 	private Aventurian() {
 		// only needed for JAXB
 		this(0);
@@ -52,6 +56,8 @@ public class Aventurian extends Observable {
 		this.properties = new ArrayList<>();
 		this.badProperties = new ArrayList<>();
 		this.languages = new ArrayList<>();
+		if (secondary != null)
+			secondaryAttributes.updateValues(primaryAttributes);
 	}
 
 	Aventurian(int ap) {
@@ -135,14 +141,19 @@ public class Aventurian extends Observable {
 				.anyMatch((s) -> s.equals(skill));
 	}
 
+	boolean hasSkill(String skill) {
+		return Stream.of(badProperties, properties, languages).flatMap(Collection::stream)
+				.anyMatch((s) -> s.equals(skill));
+	}
+
 	int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();
 	}
-	
+
 	public boolean isPrimaryAttributeIncreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.isIncreasable(a);
 	}
-	
+
 	public boolean isPrimaryAttributeDecreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.isDecreasable(a);
 	}
@@ -159,6 +170,10 @@ public class Aventurian extends Observable {
 		primaryAttributes.increase(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
+	}
+
+	public int getSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+		return secondaryAttributes.getValueOf(a);
 	}
 
 	void notifyObserversAndSetChanged() {
@@ -189,11 +204,19 @@ public class Aventurian extends Observable {
 	public List<Language> getLanguages() {
 		return new ArrayList<>(languages);
 	}
-	
+
 	public boolean hasNativeTongue() {
 		return languages.stream().anyMatch((Language l) -> l.isNativeTongue());
 	}
 	
+	public boolean isMage() {
+		return isMage;
+	}
+	
+	public boolean isConsecrated() {
+		return isConsecrated;
+	}
+
 	public boolean isPrimaryAttributesLowerThanThreshhold() {
 		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
 	}

@@ -59,23 +59,23 @@ public class SecondaryAttributes {
 
     private void calculateDefendValue(PrimaryAttributes a) {
         int intuition = a.getPrimaryAttribute(INTUITION);
-        int finesse = a.getPrimaryAttribute(AGILITY);
+        int agility = a.getPrimaryAttribute(AGILITY);
         int strength = a.getPrimaryAttribute(STRENGTH);
-        get(DEFENDVALUE).setBasis(round((intuition + finesse + strength) / 5.0));
+        get(DEFENDVALUE).setBasis(round((intuition + agility + strength) / 5.0));
     }
 
     private void calculateAttackValue(PrimaryAttributes a) {
         int courage = a.getPrimaryAttribute(COURAGE);
-        int finesse = a.getPrimaryAttribute(AGILITY);
+        int agility = a.getPrimaryAttribute(AGILITY);
         int strength = a.getPrimaryAttribute(STRENGTH);
-        get(ATTACKVALUE).setBasis(round((courage + finesse + strength) / 5.0));
+        get(ATTACKVALUE).setBasis(round((courage + agility + strength) / 5.0));
     }
 
     private void calculateInitiativeValue(PrimaryAttributes a) {
         int courage = a.getPrimaryAttribute(COURAGE);
         int intuition = a.getPrimaryAttribute(INTUITION);
-        int finesse = a.getPrimaryAttribute(AGILITY);
-        get(INITIATIVEVALUE).setBasis(round((courage * 2 + intuition + finesse) / 5.0));
+        int agility = a.getPrimaryAttribute(AGILITY);
+        get(INITIATIVEVALUE).setBasis(round((courage * 2 + intuition + agility) / 5.0));
     }
 
     private void calculateWoundThreshhold(PrimaryAttributes a) {
@@ -109,7 +109,7 @@ public class SecondaryAttributes {
     }
 
     private void calculateKarmalPoints(PrimaryAttributes a) {
-        get(KARMALPOINTS).setBasis(24);
+        get(KARMALPOINTS).setBasis(0);
     }
 
     private int round(double d) {
