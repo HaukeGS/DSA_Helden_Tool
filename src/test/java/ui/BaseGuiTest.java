@@ -97,7 +97,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 		final Semaphore semaphore = new Semaphore(0);
 		Platform.runLater(() -> semaphore.release());
 		semaphore.acquire();
-		Thread.sleep(50);
+		Thread.sleep(100);
 
 	}
 
