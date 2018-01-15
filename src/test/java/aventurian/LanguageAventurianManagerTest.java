@@ -1,6 +1,7 @@
 package aventurian;
 
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -42,8 +44,9 @@ public class LanguageAventurianManagerTest {
 		when(a.canPay(anyInt())).thenReturn(true);
 		toTest.addLanguage(l);
 
-		verify(a).pay(anyInt());
-		verify(a).add(l);
+		final InOrder correctOrder = inOrder(a);
+		correctOrder.verify(a).add(l);
+		correctOrder.verify(a).pay(anyInt());
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -85,8 +88,9 @@ public class LanguageAventurianManagerTest {
 
 		verify(a, never()).pay(anyInt());
 		verify(l, times(3)).increase();
-		verify(l).setNativeTongue(true);
-		verify(a).add(l);
+		final InOrder correctOrder = inOrder(a, l);
+		correctOrder.verify(l).setNativeTongue(true);
+		correctOrder.verify(a).add(l);
 	}
 
 	@Test
@@ -106,9 +110,10 @@ public class LanguageAventurianManagerTest {
 		when(l.isIncreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 		toTest.addLanguageAsNativeTongue(l);
 
-		verify(a).add(l);
 		verify(l, times(2)).increase();
-		verify(l).setNativeTongue(true);
+		final InOrder correctOrder = inOrder(a, l);
+		correctOrder.verify(l).setNativeTongue(true);
+		correctOrder.verify(a).add(l);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -194,9 +199,9 @@ public class LanguageAventurianManagerTest {
 		when(a.canPay(anyInt())).thenReturn(true);
 
 		toTest.increaseLanguage(l);
-
-		verify(a).pay(anyInt());
-		verify(l).increase();
+		final InOrder correctOrder = inOrder(a, l);
+		correctOrder.verify(l).increase();
+		correctOrder.verify(a).pay(anyInt());
 	}
 
 	@Test
