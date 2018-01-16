@@ -1,7 +1,8 @@
 package aventurian;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 import java.util.stream.Stream;
@@ -12,7 +13,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -29,11 +29,10 @@ public class Aventurian extends Observable {
 	private final PrimaryAttributes primaryAttributes;
 	private final SecondaryAttributes secondaryAttributes;
 
-	private final List<Property> properties;
-	private final List<BadProperty> badProperties;
 	@XmlElementWrapper(name = "languages")
-	private final List<Language> languages;
-	
+
+	private final List<Skill> allSkills;
+
 	private boolean isMage;
 	private boolean isConsecrated;
 
@@ -53,9 +52,7 @@ public class Aventurian extends Observable {
 		this.primaryAttributes = primary;
 		this.secondaryAttributes = secondary;
 		this.adventurePoints = ap;
-		this.properties = new ArrayList<>();
-		this.badProperties = new ArrayList<>();
-		this.languages = new ArrayList<>();
+		this.allSkills = new ArrayList<>();
 		if (secondary != null)
 			secondaryAttributes.updateValues(primaryAttributes);
 	}
@@ -93,63 +90,33 @@ public class Aventurian extends Observable {
 		notifyObserversAndSetChanged();
 	}
 
-	void add(Property p) {
-		properties.add(p);
-		p.gain(this);
+	void add(Skill s) {
+		allSkills.add(s);
+		s.gain(this);
 		notifyObserversAndSetChanged();
 	}
 
-	void remove(Property p) {
-		properties.remove(p);
-		p.lose(this);
-		notifyObserversAndSetChanged();
-	}
-
-	void add(BadProperty p) {
-		badProperties.add(p);
-		p.gain(this);
-		notifyObserversAndSetChanged();
-	}
-
-	void remove(BadProperty p) {
-		badProperties.remove(p);
-		p.lose(this);
+	void remove(Skill s) {
+		allSkills.remove(s);
+		s.lose(this);
 		notifyObserversAndSetChanged();
 	}
 
 	int getBadPropertySum() {
-		return badProperties.stream().mapToInt(BadProperty::getLevel).sum();
+		return getStreamOfBadProperties().mapToInt(BadProperty::getLevel).sum();
 	}
 
 	int getPointsInAdvantages() {
-		return properties.stream().filter((p) -> p.isAdvantage()).mapToInt(Property::getCost).sum();
+		return getStreamOfProperties().filter((p) -> p.isAdvantage()).mapToInt(Property::getCost).sum();
 	}
 
 	int getPointsOutDisadvantages() {
-		return properties.stream().filter((p) -> p.isDisadvantage()).mapToInt(Property::getCost).sum()
-				+ badProperties.stream().mapToInt((p) -> p.getCost() * p.getLevel()).sum();
-	}
-
-	void add(Language l) {
-		languages.add(l);
-		l.gain(this);
-		notifyObserversAndSetChanged();
-	}
-
-	void remove(Language l) {
-		languages.remove(l);
-		l.lose(this);
-		notifyObserversAndSetChanged();
+		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).mapToInt(Property::getCost).sum()
+				+ getStreamOfBadProperties().mapToInt((p) -> p.getCost() * p.getLevel()).sum();
 	}
 
 	boolean hasSkill(Skill skill) {
-		return Stream.of(badProperties, properties, languages).flatMap(Collection::stream)
-				.anyMatch((s) -> s.equals(skill));
-	}
-
-	boolean hasSkill(String skill) {
-		return Stream.of(badProperties, properties, languages).flatMap(Collection::stream)
-				.anyMatch((s) -> s.equals(skill));
+		return allSkills.stream().anyMatch((s) -> s.equals(skill));
 	}
 
 	int getSumOfPrimaryAttributes() {
@@ -177,31 +144,31 @@ public class Aventurian extends Observable {
 		secondaryAttributes.updateValues(primaryAttributes);
 		notifyObserversAndSetChanged();
 	}
-	
+
 	public boolean isSecondaryAttributeIncreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		return secondaryAttributes.isIncreasableByBuy(a);
 	}
-	
+
 	public boolean isSecondaryAttributeDecreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		return secondaryAttributes.isDecreasableByBuy(a);
 	}
-	
+
 	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a, int mod) {
 		secondaryAttributes.increaseMod(a, mod);
 	}
-	
+
 	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a, int mod) {
 		secondaryAttributes.decreaseMod(a, mod);
 	}
-	
+
 	public void increaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		secondaryAttributes.increaseModBuy(a);
 	}
-	
+
 	public void decreaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		secondaryAttributes.decreaseModBuy(a);
 	}
-	
+
 	int getSecondaryAttributeCost(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		return secondaryAttributes.getCost(a);
 	}
@@ -236,17 +203,30 @@ public class Aventurian extends Observable {
 	}
 
 	public List<Language> getLanguages() {
-		return new ArrayList<>(languages);
+		return getStreamOfLanguages().collect(toList());
+	}
+
+	private Stream<Language> getStreamOfLanguages() {
+		return allSkills.stream().filter(Language.class::isInstance).map(Language.class::cast);
+	}
+
+	private Stream<Property> getStreamOfProperties() {
+		return allSkills.stream().filter(p -> Property.class.isInstance(p) && !BadProperty.class.isInstance(p))
+				.map(Property.class::cast);
+	}
+
+	private Stream<BadProperty> getStreamOfBadProperties() {
+		return allSkills.stream().filter(BadProperty.class::isInstance).map(BadProperty.class::cast);
 	}
 
 	public boolean hasNativeTongue() {
-		return languages.stream().anyMatch((Language l) -> l.isNativeTongue());
+		return getStreamOfLanguages().anyMatch((Language l) -> l.isNativeTongue());
 	}
 
 	public boolean isMage() {
 		return isMage;
 	}
-	
+
 	public boolean isConsecrated() {
 		return isConsecrated;
 	}

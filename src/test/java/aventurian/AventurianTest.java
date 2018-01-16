@@ -6,21 +6,24 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 
 import java.util.Observer;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AventurianTest {
 
 	public static final int AP = 16500;
@@ -41,7 +44,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void payValid() throws Exception {
+	public void testPayValid() throws Exception {
 		toTest.pay(1000);
 		final int expected = AP - 1000;
 		final int actual = toTest.getAdventurePoints();
@@ -50,17 +53,17 @@ public class AventurianTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void payTooMuch() throws Exception {
+	public void testPayTooMuch() throws Exception {
 		toTest.pay(20000);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void payNegative() throws Exception {
+	public void testPayNegative() throws Exception {
 		toTest.pay(-20);
 	}
 
 	@Test
-	public void refundValid() throws Exception {
+	public void testRefundValid() throws Exception {
 		toTest.refund(500);
 		final int expected = AP + 500;
 		final int actual = toTest.getAdventurePoints();
@@ -69,7 +72,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void refundMuch() throws Exception {
+	public void testRefundMuch() throws Exception {
 		toTest.refund(20000);
 		final int expected = AP + 20000;
 		final int actual = toTest.getAdventurePoints();
@@ -78,19 +81,18 @@ public class AventurianTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void refundNegative() throws Exception {
+	public void testRefundNegative() throws Exception {
 		toTest.refund(-20);
 	}
 
 	@Test
-	public void canPay() throws Exception {
+	public void testCanPay() throws Exception {
 		assertFalse(toTest.canPay(AP + 1));
 	}
 
 	@Test
 	public void testAddProperty() throws Exception {
 		final Property testProp = mock(Property.class);
-		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(testProp).gain(toTest);
@@ -100,7 +102,6 @@ public class AventurianTest {
 	@Test
 	public void testRemoveProperty() throws Exception {
 		final Property testProp = mock(Property.class);
-		when(testProp.getName()).thenReturn("test");
 
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
@@ -115,7 +116,6 @@ public class AventurianTest {
 	@Test
 	public void testAddBadProperty() throws Exception {
 		final BadProperty testProp = mock(BadProperty.class);
-		when(testProp.getName()).thenReturn("test");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(testProp).gain(toTest);
@@ -125,7 +125,6 @@ public class AventurianTest {
 	@Test
 	public void testRemoveBadProperty() throws Exception {
 		final BadProperty testProp = mock(BadProperty.class);
-		when(testProp.getName()).thenReturn("test");
 
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
@@ -138,7 +137,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void getBadPropertySum() throws Exception {
+	public void testGetBadPropertySum() throws Exception {
 		assertEquals(0, toTest.getBadPropertySum());
 		final BadProperty bP1 = mock(BadProperty.class);
 		when(bP1.getLevel()).thenReturn(7);
@@ -154,7 +153,6 @@ public class AventurianTest {
 	@Test
 	public void testAddLanguage() throws Exception {
 		final Language testLanguage = mock(Language.class);
-		when(testLanguage.getName()).thenReturn("test");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
 		verify(testLanguage).gain(toTest);
@@ -164,12 +162,11 @@ public class AventurianTest {
 	@Test
 	public void testRemoveLanguage() throws Exception {
 		final Language testLanguage = mock(Language.class);
-		when(testLanguage.getName()).thenReturn("test");
-		
+
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
 		verify(mockedObserver).update(toTest, null);
-		
+
 		toTest.remove(testLanguage);
 		assertFalse(toTest.hasSkill(testLanguage));
 		verify(testLanguage).lose(toTest);
@@ -178,7 +175,25 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void hasSkill() throws Exception {
+	public void testGetLanguages() {
+		assertTrue(toTest.getLanguages().isEmpty());
+
+		final Language l1 = mock(Language.class);
+		toTest.add(l1);
+		assertEquals(1, toTest.getLanguages().size());
+
+		final Language l2 = mock(Language.class);
+		toTest.add(l2);
+		assertEquals(2, toTest.getLanguages().size());
+		
+		final Property p = mock(Property.class);
+		toTest.add(p);
+		assertEquals(2, toTest.getLanguages().size());
+
+	}
+
+	@Test
+	public void testHasSkill() throws Exception {
 		final Property p = mock(Property.class);
 		assertFalse(toTest.hasSkill(p));
 		toTest.add(p);
@@ -196,7 +211,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void getSumOfPrimaryAttributes() throws Exception {
+	public void testGetSumOfPrimaryAttributes() throws Exception {
 		assertEquals(64, toTest.getSumOfPrimaryAttributes());
 		toTest.increasePrimaryAttribute(COURAGE);
 		toTest.increasePrimaryAttribute(COURAGE);
@@ -205,17 +220,17 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void getPrimaryAttribute() throws Exception {
+	public void testGetPrimaryAttribute() throws Exception {
 		assertEquals(8, toTest.getPrimaryAttribute(COURAGE));
 	}
 
 	@Test
-	public void getMaxOfPrimaryAttribute() throws Exception {
+	public void testGetMaxOfPrimaryAttribute() throws Exception {
 		assertEquals(14, toTest.getMaxOfPrimaryAttribute(COURAGE));
 	}
 
 	@Test
-	public void increasePrimaryAttribute() throws Exception {
+	public void testIncreasePrimaryAttribute() throws Exception {
 		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
 		final SecondaryAttributes second = mock(SecondaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, second);
@@ -227,7 +242,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void decrasePrimaryAttribute() throws Exception {
+	public void testDecrasePrimaryAttribute() throws Exception {
 		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
 		final SecondaryAttributes second = mock(SecondaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, second);
@@ -239,7 +254,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void increaseMaximumOfPrimaryAttribute() throws Exception {
+	public void testIncreaseMaximumOfPrimaryAttribute() throws Exception {
 		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, null);
 		toTest.addObserver(mockedObserver);
@@ -249,7 +264,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void decreaseMaximumOfPrimaryAttribute() throws Exception {
+	public void testDecreaseMaximumOfPrimaryAttribute() throws Exception {
 		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
 		toTest = new Aventurian("", 100, pri, null);
 		toTest.addObserver(mockedObserver);
@@ -285,7 +300,6 @@ public class AventurianTest {
 		final BadProperty bp = mock(BadProperty.class);
 		when(bp.getCost()).thenReturn(50);
 		when(bp.getLevel()).thenReturn(5);
-		when(bp.isDisadvantage()).thenReturn(true);
 
 		toTest.add(bp);
 		assertEquals(450, toTest.getPointsOutDisadvantages());
@@ -307,7 +321,7 @@ public class AventurianTest {
 		toTest.add(l);
 		assertTrue(toTest.hasNativeTongue());
 	}
-	
+
 	@Test
 	public void testGetSecondaryAttribute() {
 		assertEquals(12, toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS));
