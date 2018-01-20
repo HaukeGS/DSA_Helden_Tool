@@ -65,6 +65,9 @@ public class AttributesPaneController extends PaneController {
 	Label labelStrength;
 	@FXML
 	Button btnDecreaseStrength;
+	
+	@FXML
+	Label labelSumOfAttributes;
 
 	@FXML
 	Button btnIncreaseHitPoints;
@@ -236,6 +239,7 @@ public class AttributesPaneController extends PaneController {
 		btnDecreaseConstitution
 				.setDisable(!updatedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.CONSTITUTION));
 		btnDecreaseStrength.setDisable(!updatedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.STRENGTH));
+		labelSumOfAttributes.setText(String.valueOf(updatedAventurian.getSumOfPrimaryAttributes()));
 
 		labelHitPoints.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS)));
 		if (updatedAventurian.isMage())

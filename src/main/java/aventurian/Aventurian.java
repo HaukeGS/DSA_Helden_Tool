@@ -13,6 +13,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import aventurian.LevelCostCalculator.COLUMN;
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -21,6 +23,8 @@ import skills.Skill;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Aventurian extends Observable {
+	
+	private final LevelCostCalculator calculator;
 
 	@XmlAttribute
 	private String nameOfAventurian;
@@ -55,6 +59,7 @@ public class Aventurian extends Observable {
 		this.allSkills = new ArrayList<>();
 		if (secondary != null)
 			secondaryAttributes.updateValues(primaryAttributes);
+		this.calculator = new LevelCostCalculator();
 	}
 
 	Aventurian(int ap) {
@@ -119,7 +124,7 @@ public class Aventurian extends Observable {
 		return allSkills.stream().anyMatch((s) -> s.equals(skill));
 	}
 
-	int getSumOfPrimaryAttributes() {
+	public int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();
 	}
 
@@ -233,5 +238,13 @@ public class Aventurian extends Observable {
 
 	public boolean isPrimaryAttributesLowerThanThreshhold() {
 		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
+	}
+	
+	public int getAPinAttributes() {
+		int sum = 0;
+		for (PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
+			sum += calculator.getCost(8, primaryAttributes.getPrimaryAttribute(a), COLUMN.H);
+		}
+		return sum;
 	}
 }
