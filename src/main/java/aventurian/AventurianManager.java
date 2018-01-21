@@ -57,6 +57,12 @@ public class AventurianManager {
 		this.observers = new ArrayList<>();
 	}
 
+	public void createNewAventurian(String name, int startingAP, String race) {
+		this.aventurian.deleteObservers();
+		this.aventurian = new Aventurian(name, startingAP);
+		addObserversToAventurian();
+	}
+
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		this.attributesManager.increasePrimaryAttribute(a);
 	}

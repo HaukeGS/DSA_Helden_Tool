@@ -15,6 +15,7 @@ import skills.LanguageTest;
 import skills.PropertyTest;
 import ui.AttributePaneTest;
 import ui.LanguagePaneTest;
+import ui.MenuTest;
 import ui.NavigatorTest;
 
 @RunWith(Suite.class)
@@ -22,7 +23,7 @@ import ui.NavigatorTest;
 		AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
-		NavigatorTest.class, LanguagePaneTest.class })
+		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class })
 public class TestSuite {
 
 }

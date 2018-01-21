@@ -6,16 +6,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
-import javafx.scene.control.Label;
-import net.bytebuddy.implementation.bytecode.member.HandleInvocation;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
+import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import javafx.scene.control.Label;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AttributePaneTest extends BaseGuiTest {
