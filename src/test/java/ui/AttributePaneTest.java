@@ -167,6 +167,8 @@ public class AttributePaneTest extends BaseGuiTest {
 		assertEquals(String.valueOf(8), lblConstitution.getText());
 		final Label lblStrength = find("#labelStrength");
 		assertEquals(String.valueOf(7), lblStrength.getText());
+		final Label lblSum = find("#labelSumOfAttributes");
+		assertEquals(String.valueOf(80), lblSum.getText());
 	}
 
 	@Override
@@ -179,6 +181,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.AGILITY)).thenReturn(9);
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(8);
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(7);
+		when(mockedAventurian.getSumOfPrimaryAttributes()).thenReturn(80);
 		
 		when(mockedAventurian.isPrimaryAttributeIncreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isPrimaryAttributeDecreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
