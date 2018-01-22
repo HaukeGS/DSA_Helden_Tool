@@ -60,6 +60,9 @@ public class AventurianManager {
 	public void createNewAventurian(String name, int startingAP, String race) {
 		this.aventurian.deleteObservers();
 		this.aventurian = new Aventurian(name, startingAP);
+		attributesManager.changeAventurian(aventurian);
+		propertyManager.changeAventurian(aventurian);
+		languageManager.changeAventurian(aventurian);
 		addObserversToAventurian();
 	}
 
