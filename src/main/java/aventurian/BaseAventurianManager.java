@@ -9,6 +9,10 @@ abstract class BaseAventurianManager {
 		this.aventurian = a;
 
 	}
+	
+	protected final void changeAventurian(Aventurian a) {
+		this.aventurian = a;
+	}
 
 	protected final boolean canPay(int cost) {
 		return aventurian.canPay(cost);
