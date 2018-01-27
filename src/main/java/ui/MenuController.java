@@ -1,13 +1,16 @@
 package ui;
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.File;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.prefs.Preferences;
+import java.util.stream.Stream;
 
 import javax.xml.bind.JAXBException;
 
 import aventurian.Aventurian;
+import aventurian.Race;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -91,17 +94,16 @@ public class MenuController extends PaneController {
 
 	public void newAventurian() {
 
-		final Optional<Triple<String, Integer, String>> result = createNewAventurianDialog().showAndWait();
+		final Optional<Triple<String, Integer, Race>> result = createNewAventurianDialog().showAndWait();
 
 		result.ifPresent(config -> {
-			System.out.println("name=" + config.value1 + ", ap=" + config.value2 + ", race=" + config.value3);
 			m.createNewAventurian(config.value1, config.value2, config.value3);
 		});
 	}
 
-	private Dialog<Triple<String, Integer, String>> createNewAventurianDialog() {
+	private Dialog<Triple<String, Integer, Race>> createNewAventurianDialog() {
 		// Create the custom dialog.
-		final Dialog<Triple<String, Integer, String>> dialog = new Dialog<>();
+		final Dialog<Triple<String, Integer, Race>> dialog = new Dialog<>();
 
 		dialog.setTitle("Erstelle neuen Aventurier");
 		// dialog.setHeaderText("Lege folgende Einstellungen fest, um einen neuen
@@ -123,9 +125,9 @@ public class MenuController extends PaneController {
 		final TextField ap = new TextField("16500");
 		ap.setId("txtFieldAp");
 		ap.setPromptText("16500");
-		final ComboBox<String> race = new ComboBox<>();
+		final ComboBox<Race> race = new ComboBox<>();
 		race.setMaxWidth(Double.MAX_VALUE);
-		race.setItems(FXCollections.observableArrayList(Arrays.asList("Goblin", "Ork")));
+		race.setItems(FXCollections.observableArrayList(Stream.of(Race.values()).collect(toList())));
 		race.getSelectionModel().select(0);
 
 		grid.add(new Label("Name:"), 0, 0);

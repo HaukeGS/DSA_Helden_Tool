@@ -57,7 +57,7 @@ public class AventurianManager {
 		this.observers = new ArrayList<>();
 	}
 
-	public void createNewAventurian(String name, int startingAP, String race) {
+	public void createNewAventurian(String name, int startingAP, Race race) {
 		this.aventurian.deleteObservers();
 		this.aventurian = new Aventurian(name, startingAP);
 		addObserversToAventurian();
