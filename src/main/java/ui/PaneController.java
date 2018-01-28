@@ -22,4 +22,5 @@ public abstract class PaneController {
 	abstract void initControllerSpecificStuff();
 
 	abstract void update(Aventurian updatedAventurian);
+
 }

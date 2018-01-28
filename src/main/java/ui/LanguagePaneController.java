@@ -165,5 +165,4 @@ public class LanguagePaneController extends PaneController {
 			}
 		}
 	}
-
 }

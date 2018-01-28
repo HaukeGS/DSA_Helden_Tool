@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<HBox fx:id="paneAttributes" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AttributesPaneController">
+<HBox fx:id="paneAttributes" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AttributesPaneController">
    <children>
       <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
         <columnConstraints>
@@ -34,41 +34,41 @@
         </rowConstraints>
          <children>
             <Label text="Mut" />
-            <Label fx:id="labelCourage" text="8" GridPane.columnIndex="2" />
-            <Button fx:id="btnDecreaseCourage" mnemonicParsing="false" onAction="#decreaseCourage" prefWidth="25.0" text="-" GridPane.columnIndex="1" />
-            <Button fx:id="btnIncreaseCourage" mnemonicParsing="false" onAction="#increaseCourage" prefWidth="25.0" text="+" GridPane.columnIndex="3" />
+            <Label fx:id="labelCourage" GridPane.columnIndex="2" />
+            <Button fx:id="btnDecreaseCourage" disable="true" mnemonicParsing="false" onAction="#decreaseCourage" prefWidth="25.0" text="-" GridPane.columnIndex="1" />
+            <Button fx:id="btnIncreaseCourage" disable="true" mnemonicParsing="false" onAction="#increaseCourage" prefWidth="25.0" text="+" GridPane.columnIndex="3" />
             <Label text="Intuition" GridPane.rowIndex="2" />
-            <Label fx:id="labelIntelligence" text="8" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="btnDecreaseIntelligence" mnemonicParsing="false" onAction="#decreaseIntelligence" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="btnIncreaseIntelligence" mnemonicParsing="false" onAction="#increaseIntelligence" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="labelIntelligence" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="btnDecreaseIntelligence" disable="true" mnemonicParsing="false" onAction="#decreaseIntelligence" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="btnIncreaseIntelligence" disable="true" mnemonicParsing="false" onAction="#increaseIntelligence" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label text="Lebenspunkte" GridPane.columnIndex="4" />
-            <Label fx:id="labelHitPoints" text="Label" GridPane.columnIndex="6" />
-            <Button fx:id="btnDecreaseHitPoints" mnemonicParsing="false" onAction="#decreaseHitPoints" prefWidth="25.0" text="-" GridPane.columnIndex="5" />
-            <Button fx:id="btnIncreaseHitPoints" mnemonicParsing="false" onAction="#increaseHitPoints" prefWidth="25.0" text="+" GridPane.columnIndex="7" />
-            <Button fx:id="btnDecreaseAstralPoints" mnemonicParsing="false" onAction="#decreaseAstralPoints" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-            <Button fx:id="btnIncreaseAstralPoints" mnemonicParsing="false" onAction="#increaseAstralPoints" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-            <Label fx:id="labelAstralPoints" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <Label fx:id="labelHitPoints" GridPane.columnIndex="6" />
+            <Button fx:id="btnDecreaseHitPoints" disable="true" mnemonicParsing="false" onAction="#decreaseHitPoints" prefWidth="25.0" text="-" GridPane.columnIndex="5" />
+            <Button fx:id="btnIncreaseHitPoints" disable="true" mnemonicParsing="false" onAction="#increaseHitPoints" prefWidth="25.0" text="+" GridPane.columnIndex="7" />
+            <Button fx:id="btnDecreaseAstralPoints" disable="true" mnemonicParsing="false" onAction="#decreaseAstralPoints" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Button fx:id="btnIncreaseAstralPoints" disable="true" mnemonicParsing="false" onAction="#increaseAstralPoints" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+            <Label fx:id="labelAstralPoints" GridPane.columnIndex="6" GridPane.rowIndex="1" />
             <Label text="Astralenergie" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <Button fx:id="btnDecreaseIntuition" mnemonicParsing="false" onAction="#decreaseIntuition" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="btnDecreaseCharisma" mnemonicParsing="false" onAction="#decreaseCharisma" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Button fx:id="btnDecreaseDexterity" mnemonicParsing="false" onAction="#decreaseDexterity" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button fx:id="btnDecreaseAgility" mnemonicParsing="false" onAction="#decreaseAgility" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button fx:id="btnDecreaseConstitution" mnemonicParsing="false" onAction="#decreaseConstitution" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Button fx:id="btnDecreaseStrength" mnemonicParsing="false" onAction="#decreaseStrength" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Button fx:id="btnIncreaseIntuition" mnemonicParsing="false" onAction="#increaseIntuition" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Button fx:id="btnIncreaseCharisma" mnemonicParsing="false" onAction="#increaseCharisma" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Button fx:id="btnIncreaseDexterity" mnemonicParsing="false" onAction="#increaseDexterity" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <Button fx:id="btnIncreaseAgility" mnemonicParsing="false" onAction="#increaseAgility" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-            <Button fx:id="btnIncreaseConstitution" mnemonicParsing="false" onAction="#increaseConstitution" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <Button fx:id="btnIncreaseStrength" mnemonicParsing="false" onAction="#increaseStrength" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Button fx:id="btnDecreaseIntuition" disable="true" mnemonicParsing="false" onAction="#decreaseIntuition" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btnDecreaseCharisma" disable="true" mnemonicParsing="false" onAction="#decreaseCharisma" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button fx:id="btnDecreaseDexterity" disable="true" mnemonicParsing="false" onAction="#decreaseDexterity" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button fx:id="btnDecreaseAgility" disable="true" mnemonicParsing="false" onAction="#decreaseAgility" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="btnDecreaseConstitution" disable="true" mnemonicParsing="false" onAction="#decreaseConstitution" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Button fx:id="btnDecreaseStrength" disable="true" mnemonicParsing="false" onAction="#decreaseStrength" prefWidth="25.0" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Button fx:id="btnIncreaseIntuition" disable="true" mnemonicParsing="false" onAction="#increaseIntuition" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Button fx:id="btnIncreaseCharisma" disable="true" mnemonicParsing="false" onAction="#increaseCharisma" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Button fx:id="btnIncreaseDexterity" disable="true" mnemonicParsing="false" onAction="#increaseDexterity" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Button fx:id="btnIncreaseAgility" disable="true" mnemonicParsing="false" onAction="#increaseAgility" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Button fx:id="btnIncreaseConstitution" disable="true" mnemonicParsing="false" onAction="#increaseConstitution" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Button fx:id="btnIncreaseStrength" disable="true" mnemonicParsing="false" onAction="#increaseStrength" prefWidth="25.0" text="+" GridPane.columnIndex="3" GridPane.rowIndex="7" />
             <Label text="PA-Basiswert" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-            <Label fx:id="labelDefendValue" text="8" GridPane.columnIndex="6" GridPane.rowIndex="8" />
-            <Label fx:id="labelIntuition" text="8" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="labelCharisma" text="8" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="labelDexterity" text="8" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Label fx:id="labelAgility" text="8" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Label fx:id="labelConstitution" text="8" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Label fx:id="labelStrength" text="8" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label fx:id="labelDefendValue" GridPane.columnIndex="6" GridPane.rowIndex="8" />
+            <Label fx:id="labelIntuition" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="labelCharisma" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="labelDexterity" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="labelAgility" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label fx:id="labelConstitution" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label fx:id="labelStrength" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Label text="Klugheit" GridPane.rowIndex="1" />
             <Label text="Charisma" GridPane.rowIndex="3" />
             <Label text="Fingerfertigkeit" GridPane.rowIndex="4" />
@@ -82,18 +82,18 @@
             <Label text="INI-Basiswert" GridPane.columnIndex="4" GridPane.rowIndex="6" />
             <Label text="AT-Basiswert" GridPane.columnIndex="4" GridPane.rowIndex="7" />
             <Label text="FK-Basiswert" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-            <Label fx:id="labelKarmalPoints" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="2" />
-            <Label fx:id="labelMagicResistance" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="3" />
-            <Label fx:id="labelWoundThreshhold" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="4" />
-            <Label fx:id="labelExhaustionThreshhold" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="5" />
-            <Label fx:id="labelInitiativeValue" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="6" />
-            <Label fx:id="labelAttackValue" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="7" />
-            <Label fx:id="labelRangedValue" text="Label" GridPane.columnIndex="6" GridPane.rowIndex="9" />
-            <Button fx:id="btnDecreaseMagicResistance" mnemonicParsing="false" onAction="#decreaseMagicResistance" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            <Button fx:id="btnIncreaseMagicResistance" mnemonicParsing="false" onAction="#increaseMagicResistance" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-            <Label fx:id="labelSumOfAttributes" text="64" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <Label fx:id="labelKarmalPoints" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <Label fx:id="labelMagicResistance" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <Label fx:id="labelWoundThreshhold" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+            <Label fx:id="labelExhaustionThreshhold" GridPane.columnIndex="6" GridPane.rowIndex="5" />
+            <Label fx:id="labelInitiativeValue" GridPane.columnIndex="6" GridPane.rowIndex="6" />
+            <Label fx:id="labelAttackValue" GridPane.columnIndex="6" GridPane.rowIndex="7" />
+            <Label fx:id="labelRangedValue" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+            <Button fx:id="btnDecreaseMagicResistance" disable="true" mnemonicParsing="false" onAction="#decreaseMagicResistance" prefWidth="25.0" text="-" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <Button fx:id="btnIncreaseMagicResistance" disable="true" mnemonicParsing="false" onAction="#increaseMagicResistance" prefWidth="25.0" text="+" GridPane.columnIndex="7" GridPane.rowIndex="3" />
+            <Label fx:id="labelSumOfAttributes" GridPane.columnIndex="2" GridPane.rowIndex="9" />
             <Label text="Summe" GridPane.rowIndex="9" />
-            <Label text="/ 101" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+            <Label GridPane.columnIndex="3" GridPane.rowIndex="9" />
          </children>
       </GridPane>
    </children>

@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Observer;
 import java.util.Optional;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import database.Database;
 import skills.BadProperty;
@@ -124,13 +122,13 @@ public class AventurianManager extends BaseAventurianManager {
 	}
 
 	public void saveAventurian(File f) throws JAXBException {
-		final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
-		final Marshaller m = context.createMarshaller();
-		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		// Marshalling and saving XML to the file.
-		m.marshal(aventurian, System.out);
-		// m.marshal(aventurian, new File("aventurian.xml"));
-		m.marshal(aventurian, f);
+		// final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
+		// final Marshaller m = context.createMarshaller();
+		// m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		// // Marshalling and saving XML to the file.
+		// m.marshal(aventurian, System.out);
+		// // m.marshal(aventurian, new File("aventurian.xml"));
+		// m.marshal(aventurian, f);
 	}
 
 	public void registerObserver(Observer o) {
@@ -143,16 +141,17 @@ public class AventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(a -> observers.forEach(a::addObserver));
 	}
 
-	/*
-	 * public void loadAventurian(File f) { try { final JAXBContext context =
-	 * JAXBContext.newInstance(Aventurian.class); final Unmarshaller um =
-	 * context.createUnmarshaller();
-	 * 
-	 * // Reading XML from the file and unmarshalling. this.aventurian =
-	 * (Aventurian) um.unmarshal(f); addObserversToAventurian(); } catch (final
-	 * Exception e) { // catches ANY exception e.printStackTrace(); }
-	 * 
-	 * }
-	 */
-
+	public void loadAventurian(File f) {
+		// try {
+		// final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
+		// final Unmarshaller um = context.createUnmarshaller();
+		// // Reading XML from the file and unmarshalling.
+		// this.aventurian = Optional.of((Aventurian) um.unmarshal(f));
+		// addObserversToAventurian();
+		//
+		// } catch (
+		//
+		// final Exception e) { // catches ANY exception e.printStackTrace(); }
+		// }
+	}
 }

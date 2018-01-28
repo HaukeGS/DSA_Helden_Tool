@@ -191,4 +191,5 @@ public class MenuController extends PaneController {
 		nameOfAventurian = updatedAventurian.getName();
 
 	}
+
 }

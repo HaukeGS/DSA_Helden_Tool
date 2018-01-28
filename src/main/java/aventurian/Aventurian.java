@@ -43,7 +43,7 @@ public class Aventurian extends Observable {
 
 	private final Race race;
 
-	static final int MAX_ATTRIBUTES_SUM = 101;
+	public static final int MAX_ATTRIBUTES_SUM = 101;
 
 	public Aventurian(String name, int ap, Race r) {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes(), r);

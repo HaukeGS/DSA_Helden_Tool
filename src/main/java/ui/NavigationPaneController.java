@@ -32,4 +32,5 @@ public class NavigationPaneController extends PaneController {
 	void initControllerSpecificStuff() {
 		// nothing to here
 	}
+
 }

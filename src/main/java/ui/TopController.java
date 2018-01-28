@@ -24,6 +24,4 @@ public class TopController extends PaneController {
 		// TODO Auto-generated method stub
 	}
 
-	
-
 }

@@ -1,11 +1,10 @@
 package ui;
 
-import javafx.scene.control.Button;
-
 import aventurian.Aventurian;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class AttributesPaneController extends PaneController {
@@ -65,7 +64,7 @@ public class AttributesPaneController extends PaneController {
 	Label labelStrength;
 	@FXML
 	Button btnDecreaseStrength;
-	
+
 	@FXML
 	Label labelSumOfAttributes;
 
@@ -174,27 +173,27 @@ public class AttributesPaneController extends PaneController {
 	public void decreaseStrength() {
 		m.decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH);
 	}
-	
+
 	public void increaseHitPoints() {
 		m.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
-	
+
 	public void decreaseHitPoints() {
 		m.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
-	
+
 	public void increaseAstralPoints() {
 		m.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 	}
-	
+
 	public void decreaseAstralPoints() {
 		m.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 	}
-	
+
 	public void increaseMagicResistance() {
 		m.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
 	}
-	
+
 	public void decreaseMagicResistance() {
 		m.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
 	}
@@ -239,7 +238,8 @@ public class AttributesPaneController extends PaneController {
 		btnDecreaseConstitution
 				.setDisable(!updatedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.CONSTITUTION));
 		btnDecreaseStrength.setDisable(!updatedAventurian.isPrimaryAttributeDecreasable(PRIMARY_ATTRIBUTE.STRENGTH));
-		labelSumOfAttributes.setText(String.valueOf(updatedAventurian.getSumOfPrimaryAttributes()));
+		labelSumOfAttributes.setText(String
+				.valueOf(updatedAventurian.getSumOfPrimaryAttributes() + " (" + Aventurian.MAX_ATTRIBUTES_SUM + ")"));
 
 		labelHitPoints.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS)));
 		if (updatedAventurian.isMage())
@@ -247,24 +247,39 @@ public class AttributesPaneController extends PaneController {
 					.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS)));
 		else
 			labelAstralPoints.setText("0");
-		labelKarmalPoints.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.KARMALPOINTS)));
-		labelMagicResistance.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)));
-		labelWoundThreshhold.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.WOUNDTHRESHHOLD)));
-		labelExhaustionThreshhold.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD)));
-		labelInitiativeValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.INITIATIVEVALUE)));
-		labelAttackValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.ATTACKVALUE)));
-		labelDefendValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.DEFENDVALUE)));
-		labelRangedValue.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.RANGEDVALUE)));
-		btnIncreaseHitPoints.setDisable(!updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS));
-		btnDecreaseHitPoints.setDisable(!updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS));
-		btnIncreaseAstralPoints.setDisable(!updatedAventurian.isMage() || !updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS));
-		btnDecreaseAstralPoints.setDisable(!updatedAventurian.isMage() || !updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS));
-		btnIncreaseMagicResistance.setDisable(!updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE));
-		btnDecreaseMagicResistance.setDisable(!updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE));
+		labelKarmalPoints
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.KARMALPOINTS)));
+		labelMagicResistance
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)));
+		labelWoundThreshhold
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.WOUNDTHRESHHOLD)));
+		labelExhaustionThreshhold.setText(
+				String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD)));
+		labelInitiativeValue
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.INITIATIVEVALUE)));
+		labelAttackValue
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.ATTACKVALUE)));
+		labelDefendValue
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.DEFENDVALUE)));
+		labelRangedValue
+				.setText(String.valueOf(updatedAventurian.getSecondaryAttribute(SECONDARY_ATTRIBUTE.RANGEDVALUE)));
+		btnIncreaseHitPoints
+				.setDisable(!updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS));
+		btnDecreaseHitPoints
+				.setDisable(!updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS));
+		btnIncreaseAstralPoints.setDisable(!updatedAventurian.isMage()
+				|| !updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS));
+		btnDecreaseAstralPoints.setDisable(!updatedAventurian.isMage()
+				|| !updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS));
+		btnIncreaseMagicResistance.setDisable(
+				!updatedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE));
+		btnDecreaseMagicResistance.setDisable(
+				!updatedAventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE));
 	}
 
 	@Override
 	void initControllerSpecificStuff() {
 		// TODO nothing to do here!?
 	}
+
 }
