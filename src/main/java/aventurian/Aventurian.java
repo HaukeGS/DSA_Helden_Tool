@@ -43,10 +43,6 @@ public class Aventurian extends Observable {
 
 	static final int MAX_ATTRIBUTES_SUM = 101;
 
-	private Aventurian() {
-		// only needed for JAXB
-		this(0);
-	}
 
 	public Aventurian(String name, int ap) {
 		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
