@@ -28,7 +28,7 @@ public class AventurianManager extends BaseAventurianManager {
 		this.languageManager = new LanguageAventurianManager(Optional.empty(), db);
 		this.propertyManager = new PropertyAventurianManager(Optional.empty(), db);
 		this.attributesManager = new AttributesAventurianManager(Optional.empty(), db);
-		this.raceManager = new RaceAventurianManager(Optional.empty(), db);
+		this.raceManager = new RaceAventurianManager(Optional.empty(), db, this.propertyManager);
 		this.observers = new ArrayList<>();
 	}
 
@@ -44,9 +44,9 @@ public class AventurianManager extends BaseAventurianManager {
 	 * @param properties
 	 *            the mock of a {@link PropertyAventurianManager}
 	 */
-	AventurianManager(Aventurian a, AttributesAventurianManager attributes, LanguageAventurianManager languages,
+	AventurianManager(Optional<Aventurian> a, AttributesAventurianManager attributes, LanguageAventurianManager languages,
 			PropertyAventurianManager properties, RaceAventurianManager races, Database db) {
-		super(Optional.of(a), db);
+		super(a, db);
 		this.attributesManager = attributes;
 		this.propertyManager = properties;
 		this.languageManager = languages;
@@ -57,12 +57,12 @@ public class AventurianManager extends BaseAventurianManager {
 	public void createNewAventurian(String name, int startingAP, Race race) {
 		this.aventurian.ifPresent(a -> a.deleteObservers());
 		this.aventurian = Optional.of(new Aventurian(name, startingAP));
-		addObserversToAventurian();
 		attributesManager.changeAventurian(aventurian);
 		propertyManager.changeAventurian(aventurian);
 		languageManager.changeAventurian(aventurian);
 		raceManager.changeAventurian(aventurian);
-		raceManager.applyRace(race);
+		raceManager.buyRaceMods(race);
+		addObserversToAventurian();
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
@@ -83,14 +83,6 @@ public class AventurianManager extends BaseAventurianManager {
 
 	public void addProperty(Property p) {
 		this.propertyManager.addProperty(p);
-	}
-
-	public void addBadProperty(BadProperty p) {
-		this.propertyManager.addBadProperty(p);
-	}
-
-	public void removeBadProperty(BadProperty p) {
-		this.propertyManager.removeBadProperty(p);
 	}
 
 	public void increaseBadProperty(BadProperty p) {
@@ -148,7 +140,6 @@ public class AventurianManager extends BaseAventurianManager {
 	private void addObserversToAventurian() {
 		aventurian.ifPresent(a -> a.deleteObservers());
 		aventurian.ifPresent(a -> observers.forEach(a::addObserver));
-		aventurian.ifPresent(a -> a.notifyObserversAndSetChanged());
 	}
 
 	/*

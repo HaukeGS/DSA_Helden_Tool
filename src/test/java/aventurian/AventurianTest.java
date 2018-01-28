@@ -49,7 +49,7 @@ public class AventurianTest {
 		final int expected = AP - 1000;
 		final int actual = toTest.getAdventurePoints();
 		assertEquals(expected, actual);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -68,7 +68,7 @@ public class AventurianTest {
 		final int expected = AP + 500;
 		final int actual = toTest.getAdventurePoints();
 		assertEquals(expected, actual);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class AventurianTest {
 		final int expected = AP + 20000;
 		final int actual = toTest.getAdventurePoints();
 		assertEquals(expected, actual);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -96,7 +96,7 @@ public class AventurianTest {
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(testProp).gain(toTest);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class AventurianTest {
 
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 
 		toTest.remove(testProp);
 		assertFalse(toTest.hasSkill(testProp));
@@ -119,7 +119,7 @@ public class AventurianTest {
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(testProp).gain(toTest);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -128,7 +128,7 @@ public class AventurianTest {
 
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 
 		toTest.remove(testProp);
 		assertFalse(toTest.hasSkill(testProp));
@@ -156,7 +156,7 @@ public class AventurianTest {
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
 		verify(testLanguage).gain(toTest);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -165,7 +165,7 @@ public class AventurianTest {
 
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 
 		toTest.remove(testLanguage);
 		assertFalse(toTest.hasSkill(testLanguage));
@@ -238,7 +238,7 @@ public class AventurianTest {
 		toTest.increasePrimaryAttribute(COURAGE);
 		verify(pri).increase(COURAGE);
 		verify(second, times(2)).updateValues(pri);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -250,7 +250,7 @@ public class AventurianTest {
 		toTest.decrasePrimaryAttribute(COURAGE);
 		verify(pri).decrease(COURAGE);
 		verify(second, times(2)).updateValues(pri);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -260,7 +260,7 @@ public class AventurianTest {
 		toTest.addObserver(mockedObserver);
 		toTest.increaseMaximumOfPrimaryAttribute(COURAGE);
 		verify(pri).increaseMaximum(COURAGE);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -270,7 +270,7 @@ public class AventurianTest {
 		toTest.addObserver(mockedObserver);
 		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
 		verify(pri).decreaseMaximum(COURAGE);
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
@@ -310,7 +310,7 @@ public class AventurianTest {
 		assertEquals(AVENTURIAN_NAME, toTest.getName());
 		toTest.setName("newName");
 		assertEquals("newName", toTest.getName());
-		verify(mockedObserver).update(toTest, null);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test

@@ -4,6 +4,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.Observer;
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,25 +38,26 @@ public class AventurianManagerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManager(a, attributes, languages, properties, races, db);
+		toTest = new AventurianManager(Optional.of(a), attributes, languages, properties, races, db);
+	}
+	
+	@Test
+	public void testCreateNewAventurian() {
+		final Observer obs = mock(Observer.class);
+		toTest.registerObserver(obs);
+		toTest.createNewAventurian("test", 16500, Race.ORK);
+		verify(attributes).changeAventurian(any(Optional.class));
+		verify(languages).changeAventurian(any(Optional.class));
+		verify(properties).changeAventurian(any(Optional.class));
+		verify(races).changeAventurian(any(Optional.class));
+		verify(races).buyRaceMods(Race.ORK);
+		verify(obs).update(any(Aventurian.class), any());
 	}
 
 	@Test
 	public void testAddProperty() {
 		toTest.addProperty(mock(Property.class));
 		verify(properties).addProperty(any(Property.class));
-	}
-
-	@Test
-	public void addBadProperty() {
-		toTest.addBadProperty(mock(BadProperty.class));
-		verify(properties).addBadProperty(any(BadProperty.class));
-	}
-
-	@Test
-	public void removeBadProperty() {
-		toTest.removeBadProperty(mock(BadProperty.class));
-		verify(properties).removeBadProperty(any(BadProperty.class));
 	}
 
 	@Test

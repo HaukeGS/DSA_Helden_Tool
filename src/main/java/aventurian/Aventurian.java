@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.stream.Stream;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -73,7 +74,7 @@ public class Aventurian extends Observable {
 	void pay(int cost) {
 		if (canPay(cost) && cost >= 0) {
 			adventurePoints -= cost;
-			notifyObserversAndSetChanged();
+			setChangedAndNotifyObservers();
 		} else
 			throw new IllegalArgumentException("Cannot pay: " + cost);
 	}
@@ -81,7 +82,7 @@ public class Aventurian extends Observable {
 	void refund(int refund) {
 		if (refund >= 0) {
 			adventurePoints += refund;
-			notifyObserversAndSetChanged();
+			setChangedAndNotifyObservers();
 		} else
 			throw new IllegalArgumentException("Cannot refund negative amound: " + refund);
 	}
@@ -92,19 +93,19 @@ public class Aventurian extends Observable {
 
 	public void setName(String name) {
 		this.nameOfAventurian = name;
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	void add(Skill s) {
 		allSkills.add(s);
 		s.gain(this);
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	void remove(Skill s) {
 		allSkills.remove(s);
 		s.lose(this);
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	int getBadPropertySum() {
@@ -147,7 +148,7 @@ public class Aventurian extends Observable {
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		primaryAttributes.increase(a);
 		secondaryAttributes.updateValues(primaryAttributes);
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	public boolean isSecondaryAttributeIncreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
@@ -182,7 +183,7 @@ public class Aventurian extends Observable {
 		return secondaryAttributes.getValueOf(a);
 	}
 
-	void notifyObserversAndSetChanged() {
+	private void setChangedAndNotifyObservers() {
 		setChanged();
 		notifyObservers();
 	}
@@ -190,17 +191,17 @@ public class Aventurian extends Observable {
 	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increaseMaximum(attribute);
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	void decreaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decreaseMaximum(attribute);
-		notifyObserversAndSetChanged();
+		setChangedAndNotifyObservers();
 	}
 
 	public String getName() {
@@ -242,9 +243,15 @@ public class Aventurian extends Observable {
 	
 	public int getAPinAttributes() {
 		int sum = 0;
-		for (PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
+		for (final PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
 			sum += calculator.getCost(8, primaryAttributes.getPrimaryAttribute(a), COLUMN.H);
 		}
 		return sum;
+	}
+	
+	@Override
+	public void addObserver(Observer o) {
+		super.addObserver(o);
+		setChangedAndNotifyObservers();
 	}
 }

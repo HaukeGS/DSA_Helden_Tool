@@ -17,7 +17,7 @@ abstract class BaseAventurianManager {
 
 	}
 	
-	protected final void changeAventurian(Optional<Aventurian> a) {
+	protected void changeAventurian(Optional<Aventurian> a) {
 		this.aventurian = a;
 	}
 

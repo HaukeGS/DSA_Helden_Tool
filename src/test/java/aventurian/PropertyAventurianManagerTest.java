@@ -117,7 +117,7 @@ public class PropertyAventurianManagerTest {
 		final BadProperty p = createBadPropertyMock(true);
 		when(a.getBadPropertySum()).thenReturn(5);
 
-		toTest.addBadProperty(p);
+		toTest.addProperty(p);
 
 		verify(a).refund(anyInt());
 		verify(a).add(p);
@@ -128,7 +128,7 @@ public class PropertyAventurianManagerTest {
 		final BadProperty p = createBadPropertyMock(true);
 		when(a.getPointsOutDisadvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
 
-		toTest.addBadProperty(p);
+		toTest.addProperty(p);
 
 		verify(p, never()).gain(a);
 		verify(a, never()).refund(anyInt());
@@ -154,7 +154,7 @@ public class PropertyAventurianManagerTest {
 		final BadProperty p = createBadPropertyMock(false);
 		when(a.getBadPropertySum()).thenReturn(5);
 
-		toTest.addBadProperty(p);
+		toTest.addProperty(p);
 
 		verify(p, never()).gain(a);
 		verify(a, never()).pay(anyInt());
@@ -166,7 +166,7 @@ public class PropertyAventurianManagerTest {
 		final BadProperty p = createBadPropertyMock(false);
 		when(a.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM);
 
-		toTest.addBadProperty(p);
+		toTest.addProperty(p);
 
 		verify(p, never()).gain(a);
 		verify(a, never()).pay(anyInt());
@@ -177,7 +177,7 @@ public class PropertyAventurianManagerTest {
 	public void testAddBadPropertyAlreadyHasSkill() {
 		final BadProperty p = createBadPropertyMock(true);
 		when(a.hasSkill(p)).thenReturn(true);
-		toTest.addBadProperty(p);
+		toTest.addProperty(p);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -185,7 +185,7 @@ public class PropertyAventurianManagerTest {
 		final BadProperty p = createBadPropertyMock(true);
 		when(a.hasSkill(p)).thenReturn(false);
 
-		toTest.removeBadProperty(p);
+		toTest.removeProperty(p);
 	}
 
 	@Test
@@ -194,7 +194,7 @@ public class PropertyAventurianManagerTest {
 		final BadProperty p = createBadPropertyMock(true);
 		when(a.hasSkill(p)).thenReturn(true);
 
-		toTest.removeBadProperty(p);
+		toTest.removeProperty(p);
 
 		verify(a).remove(p);
 		verify(a).refund(anyInt());
@@ -207,7 +207,7 @@ public class PropertyAventurianManagerTest {
 		when(p.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 		when(a.hasSkill(p)).thenReturn(true);
 
-		toTest.removeBadProperty(p);
+		toTest.removeProperty(p);
 		verify(p).decrease();
 		verify(a).remove(p);
 		verify(a, times(2)).refund(anyInt());

@@ -11,7 +11,7 @@ public class BadProperty extends Property {
 
     public BadProperty(String name, String description, int cost, Predicate<Aventurian> requirement) {
         super(name, description, cost, EMPTY, EMPTY, requirement);
-        this.level = 5;
+        this.level = MIN_LEVEL;
     }
 
     public void increase() {

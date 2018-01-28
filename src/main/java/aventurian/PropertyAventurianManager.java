@@ -14,8 +14,16 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	PropertyAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
 	}
+	
+	public void addProperty(Property p) {
+		if (p instanceof BadProperty) {
+			addBadProperty((BadProperty) p);
+		} else {
+			addNormalProperty(p);
+		}
+	}
 
-	void addBadProperty(BadProperty p) {
+	private void addBadProperty(BadProperty p) {
 		aventurian.ifPresent(av -> {
 			if (av.hasSkill(p))
 				throw new IllegalStateException("has already skill " + p.getName());
@@ -28,7 +36,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		});
 	}
 
-	void addProperty(Property p) {
+	private void addNormalProperty(Property p) {
 		aventurian.ifPresent(av -> {
 			if (av.hasSkill(p))
 				throw new IllegalStateException("has already skill " + p.getName());
@@ -58,8 +66,16 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			
 		});
 	}
+	
+	public void removeProperty(Property p) {
+		if (p instanceof BadProperty) {
+			removeBadProperty((BadProperty) p);
+		} else {
+			removeNormalProperty(p);
+		}
+	}
 
-	void removeBadProperty(BadProperty p) {
+	private void removeBadProperty(BadProperty p) {
 		aventurian.ifPresent(av -> {
 			if (!av.hasSkill(p))
 				throw new IllegalStateException("cannot remove skill " + p.getName());
@@ -84,7 +100,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		});
 	}
 
-	void removeProperty(Property p) {
+	private void removeNormalProperty(Property p) {
 		aventurian.ifPresent(av -> {
 			if (!av.hasSkill(p))
 				throw new IllegalStateException("cannot remove skill " + p.getName());
