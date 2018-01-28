@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="navigationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="125.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.NavigationPaneController">
+<VBox fx:id="navigationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="125.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.NavigationPaneController">
    <children>
       <Label text="Modify:" underline="true">
          <font>
@@ -15,7 +15,7 @@
       </Label>
       <Hyperlink fx:id="hyperlinkAttributes" onAction="#showAttributes" style="-fx-underline: false;" text="Attributes" visited="true" />
       <Hyperlink fx:id="hyperlinkLanguages" onAction="#showLanguages" style="-fx-underline: false;" text="Languages" visited="true" />
-      <Hyperlink style="-fx-underline: false;" text="Properties" visited="true" />
+      <Hyperlink fx:id="hyperlinkProperties" onAction="#showProperties" style="-fx-underline: false;" text="Properties" visited="true" />
       <Hyperlink style="-fx-underline: false;" text="Combat Skills" visited="true" />
    </children>
    <padding>

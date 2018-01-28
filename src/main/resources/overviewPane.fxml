@@ -20,9 +20,9 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label text="Sum">
+      <Label text="Summe">
          <font>
-            <Font size="24.0" />
+            <Font size="22.0" />
          </font>
       </Label>
       <GridPane>

@@ -249,6 +249,15 @@ public class Aventurian extends Observable {
 		return sum;
 	}
 	
+	public List<Property> getAdvantages() {
+		return getStreamOfProperties().filter((p) -> p.isAdvantage()).collect(toList());
+	}
+	
+	public List<Property> getDisadvantages() {
+		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).collect(toList());
+		
+	}
+	
 	@Override
 	public void addObserver(Observer o) {
 		super.addObserver(o);
