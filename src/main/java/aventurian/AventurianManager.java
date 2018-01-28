@@ -4,36 +4,32 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
+import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
+import database.Database;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
 
-public class AventurianManager {
-
-	private Aventurian aventurian;
+public class AventurianManager extends BaseAventurianManager {
+	
 	private final List<Observer> observers;
 	private final LanguageAventurianManager languageManager;
 	private final PropertyAventurianManager propertyManager;
 	private final AttributesAventurianManager attributesManager;
+	private final RaceAventurianManager raceManager;
 
-	/**
-	 * Do not use in production code! Use only for testing purposes
-	 * 
-	 * @param a
-	 *            the (mock of an) aventurian
-	 */
-	AventurianManager(Aventurian a) {
-		this(a, new AttributesAventurianManager(a), new LanguageAventurianManager(a), new PropertyAventurianManager(a));
-	}
-
-	public AventurianManager() {
-		this(new Aventurian("testAventurian", 16500));
+	public AventurianManager(Database db) {
+		super(Optional.empty(), db);
+		this.languageManager = new LanguageAventurianManager(Optional.empty(), db);
+		this.propertyManager = new PropertyAventurianManager(Optional.empty(), db);
+		this.attributesManager = new AttributesAventurianManager(Optional.empty(), db);
+		this.raceManager = new RaceAventurianManager(Optional.empty(), db);
+		this.observers = new ArrayList<>();
 	}
 
 	/**
@@ -49,21 +45,24 @@ public class AventurianManager {
 	 *            the mock of a {@link PropertyAventurianManager}
 	 */
 	AventurianManager(Aventurian a, AttributesAventurianManager attributes, LanguageAventurianManager languages,
-			PropertyAventurianManager properties) {
-		this.aventurian = a;
+			PropertyAventurianManager properties, RaceAventurianManager races, Database db) {
+		super(Optional.of(a), db);
 		this.attributesManager = attributes;
 		this.propertyManager = properties;
 		this.languageManager = languages;
+		this.raceManager = races;
 		this.observers = new ArrayList<>();
 	}
 
 	public void createNewAventurian(String name, int startingAP, Race race) {
-		this.aventurian.deleteObservers();
-		this.aventurian = new Aventurian(name, startingAP);
+		this.aventurian.ifPresent(a -> a.deleteObservers());
+		this.aventurian = Optional.of(new Aventurian(name, startingAP));
+		addObserversToAventurian();
 		attributesManager.changeAventurian(aventurian);
 		propertyManager.changeAventurian(aventurian);
 		languageManager.changeAventurian(aventurian);
-		addObserversToAventurian();
+		raceManager.changeAventurian(aventurian);
+		raceManager.applyRace(race);
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
@@ -127,7 +126,7 @@ public class AventurianManager {
 	}
 
 	public void setName(String name) {
-		aventurian.setName(name);
+		aventurian.ifPresent(a -> a.setName(name));
 
 	}
 
@@ -147,11 +146,12 @@ public class AventurianManager {
 	}
 
 	private void addObserversToAventurian() {
-		aventurian.deleteObservers();
-		observers.forEach(aventurian::addObserver);
-		aventurian.notifyObserversAndSetChanged();
+		aventurian.ifPresent(a -> a.deleteObservers());
+		aventurian.ifPresent(a -> observers.forEach(a::addObserver));
+		aventurian.ifPresent(a -> a.notifyObserversAndSetChanged());
 	}
 
+	/*
 	public void loadAventurian(File f) {
 		try {
 			final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
@@ -165,5 +165,6 @@ public class AventurianManager {
 		}
 
 	}
+	*/
 
 }

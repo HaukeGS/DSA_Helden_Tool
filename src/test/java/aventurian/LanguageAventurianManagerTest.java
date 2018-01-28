@@ -8,6 +8,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +17,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import database.Database;
 import skills.Language;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,11 +27,13 @@ public class LanguageAventurianManagerTest {
 
 	@Mock
 	Aventurian a;
+	@Mock
+	Database db;
 
 	@Before
 	public void setUp() throws Exception {
 		when(a.canPay(anyInt())).thenReturn(true);
-		toTest = new LanguageAventurianManager(a);
+		toTest = new LanguageAventurianManager(Optional.of(a), db);
 	}
 
 	@Test(expected = IllegalStateException.class)

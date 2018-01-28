@@ -7,12 +7,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import database.Database;
 import skills.BadProperty;
 import skills.Property;
 
@@ -20,12 +23,15 @@ import skills.Property;
 public class PropertyAventurianManagerTest {
 	@Mock
 	Aventurian a;
+	@Mock
+	Database db;
+	
 	PropertyAventurianManager toTest;
 
 	@Before
 	public void setUp() throws Exception {
 		when(a.canPay(anyInt())).thenReturn(true);
-		toTest = new PropertyAventurianManager(a);
+		toTest = new PropertyAventurianManager(Optional.of(a), db);
 	}
 
 	@Test

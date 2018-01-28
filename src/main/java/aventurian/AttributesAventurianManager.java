@@ -2,47 +2,59 @@ package aventurian;
 
 import static aventurian.LevelCostCalculator.COLUMN.H;
 
+import java.util.Optional;
+
+import database.Database;
+
 class AttributesAventurianManager extends BaseAventurianManager {
 
-	AttributesAventurianManager(Aventurian a) {
-		super(a);
+	AttributesAventurianManager(Optional<Aventurian> a, Database db) {
+		super(a, db);
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		final int cost = calculator.getCost(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) + 1,
-				H);
-		if (canPay(cost) && aventurian.isPrimaryAttributesLowerThanThreshhold()
-				&& aventurian.isPrimaryAttributeIncreasable(a)) {
-			aventurian.increasePrimaryAttribute(a);
-			pay(cost);
-		}
+		aventurian.ifPresent(av -> {
+			final int cost = calculator.getCost(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) + 1, H);
+			if (canPay(cost) && av.isPrimaryAttributesLowerThanThreshhold() && av.isPrimaryAttributeIncreasable(a)) {
+				av.increasePrimaryAttribute(a);
+				pay(cost);
+			}
+		});
 	}
 
 	public void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		final int cost = calculator.getRefund(aventurian.getPrimaryAttribute(a), aventurian.getPrimaryAttribute(a) - 1,
-				H);
-		if (aventurian.isPrimaryAttributeDecreasable(a)) {
-			aventurian.decrasePrimaryAttribute(a);
-			refund(cost);
-		}
+		aventurian.ifPresent(av -> {
+			final int cost = calculator.getRefund(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) - 1,
+					H);
+			if (av.isPrimaryAttributeDecreasable(a)) {
+				av.decrasePrimaryAttribute(a);
+				refund(cost);
+			}
+		});
 	}
 
 	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		if (aventurian.isSecondaryAttributeIncreasableByBuy(a)) {
-			final int cost = aventurian.getSecondaryAttributeCost(a);
-			if (aventurian.canPay(cost)) {
-				aventurian.increaseSecondaryAttributeByBuy(a);
-				pay(cost);
+		aventurian.ifPresent(av -> {
+			if (av.isSecondaryAttributeIncreasableByBuy(a)) {
+				final int cost = av.getSecondaryAttributeCost(a);
+				if (av.canPay(cost)) {
+					av.increaseSecondaryAttributeByBuy(a);
+					pay(cost);
+				}
 			}
-		}
+			
+		});
 	}
 
 	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		if (aventurian.isSecondaryAttributeDecreasableByBuy(a)) {
-			final int cost = aventurian.getSecondaryAttributeCost(a);
-			aventurian.decreaseSecondaryAttributeByBuy(a);
-			refund(cost);
-		}
+		aventurian.ifPresent(av -> {
+			if (av.isSecondaryAttributeDecreasableByBuy(a)) {
+				final int cost = av.getSecondaryAttributeCost(a);
+				av.decreaseSecondaryAttributeByBuy(a);
+				refund(cost);
+			}
+			
+		});
 	}
 
 }

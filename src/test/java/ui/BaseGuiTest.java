@@ -68,7 +68,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 	}
 
 	private Parent loadMainPane() throws IOException {
-		final FXMLLoader loader = new FXMLLoader(ui.Main.class.getResource("/main.fxml"));
+		final FXMLLoader loader = new FXMLLoader(ui.Starter.class.getResource("/main.fxml"));
 		final Parent root = loader.load();
 		mainController = loader.getController();
 		return root;

@@ -35,6 +35,7 @@ public class MenuController extends PaneController {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public void open() {
 		final FileChooser fileChooser = new FileChooser();
 
@@ -44,7 +45,7 @@ public class MenuController extends PaneController {
 		final File file = fileChooser.showOpenDialog(menu.getScene().getWindow());
 
 		if (file != null) {
-			m.loadAventurian(file);
+			//m.loadAventurian(file);
 		}
 	}
 
@@ -127,7 +128,7 @@ public class MenuController extends PaneController {
 		ap.setPromptText("16500");
 		final ComboBox<Race> race = new ComboBox<>();
 		race.setMaxWidth(Double.MAX_VALUE);
-		race.setItems(FXCollections.observableArrayList(Stream.of(Race.values()).collect(toList())));
+		race.setItems(FXCollections.observableList(Stream.of(Race.values()).collect(toList())));
 		race.getSelectionModel().select(0);
 
 		grid.add(new Label("Name:"), 0, 0);

@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import aventurian.Race;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 
@@ -39,7 +40,7 @@ public class MenuTest extends BaseGuiTest {
 		final Button btnOk = find("#btnOk");
 		verifyThat(btnOk, isEnabled());
 		clickOn(btnOk);
-		verify(mockedAventurianManager).createNewAventurian(any(String.class), any(Integer.class), any(String.class));
+		verify(mockedAventurianManager).createNewAventurian(any(String.class), any(Integer.class), any(Race.class));
 	}
 
 	@Test
@@ -50,7 +51,7 @@ public class MenuTest extends BaseGuiTest {
 		verifyThat(btnOk, isDisabled());
 		clickOn(btnOk);
 		verify(mockedAventurianManager, never()).createNewAventurian(any(String.class), any(Integer.class),
-				any(String.class));
+				any(Race.class));
 		clickOn("#btnCancel");
 	}
 
@@ -63,7 +64,7 @@ public class MenuTest extends BaseGuiTest {
 		verifyThat(btnOk, isDisabled());
 		clickOn(btnOk);
 		verify(mockedAventurianManager, never()).createNewAventurian(any(String.class), any(Integer.class),
-				any(String.class));
+				any(Race.class));
 		clickOn("#btnCancel");
 	}
 
@@ -77,7 +78,7 @@ public class MenuTest extends BaseGuiTest {
 		verifyThat(btnOk, isDisabled());
 		clickOn(btnOk);
 		verify(mockedAventurianManager, never()).createNewAventurian(any(String.class), any(Integer.class),
-				any(String.class));
+				any(Race.class));
 		clickOn("#btnCancel");
 	}
 

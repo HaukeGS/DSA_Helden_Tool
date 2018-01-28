@@ -12,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import database.Database;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -27,10 +28,14 @@ public class AventurianManagerTest {
 	LanguageAventurianManager languages;
 	@Mock
 	PropertyAventurianManager properties;
+	@Mock
+	RaceAventurianManager races;
+	@Mock
+	Database db;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManager(a, attributes, languages, properties);
+		toTest = new AventurianManager(a, attributes, languages, properties, races, db);
 	}
 
 	@Test

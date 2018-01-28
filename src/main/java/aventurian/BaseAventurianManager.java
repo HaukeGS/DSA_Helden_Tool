@@ -1,29 +1,36 @@
 package aventurian;
 
-abstract class BaseAventurianManager {
-	protected Aventurian aventurian;
+import java.util.Optional;
+
+import database.Database;
+
+abstract class BaseAventurianManager {	
+	
+	protected final Database database;
+	protected Optional<Aventurian> aventurian;
 	protected final LevelCostCalculator calculator;
 
-	BaseAventurianManager(Aventurian a) {
+	BaseAventurianManager(Optional<Aventurian> a, Database db) {
 		this.calculator = new LevelCostCalculator();
 		this.aventurian = a;
+		this.database = db;
 
 	}
 	
-	protected final void changeAventurian(Aventurian a) {
+	protected final void changeAventurian(Optional<Aventurian> a) {
 		this.aventurian = a;
 	}
 
 	protected final boolean canPay(int cost) {
-		return aventurian.canPay(cost);
+		return aventurian.map(a -> a.canPay(cost)).orElse(false);
 	}
 
 	protected final void pay(int cost) {
-		aventurian.pay(cost);
+		aventurian.ifPresent(a -> a.pay(cost));
 	}
 
 	protected final void refund(int refund) {
-		aventurian.refund(refund);
+		aventurian.ifPresent(a -> a.refund(refund));
 	}
 
 }

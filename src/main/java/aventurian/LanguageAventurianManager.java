@@ -1,36 +1,43 @@
 package aventurian;
 
+import java.util.Optional;
+
+import database.Database;
 import skills.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
 
-	public LanguageAventurianManager(Aventurian a) {
-		super(a);
+	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
+		super(a, db);
 	}
 
 	void addLanguageAsNativeTongue(Language l) {
-		if (aventurian.hasSkill(l))
-			throw new IllegalStateException("has already skill " + l.getName());
-		if (l.isNativeTongue())
-			throw new IllegalStateException("language is already native tongue" + l.getName());
-		if (l.isAllowed(aventurian)) {
-			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
-				l.increase();
-			l.setNativeTongue(true);
-			aventurian.add(l);
-		}
+		aventurian.ifPresent(av -> {
+			if (av.hasSkill(l))
+				throw new IllegalStateException("has already skill " + l.getName());
+			if (l.isNativeTongue())
+				throw new IllegalStateException("language is already native tongue" + l.getName());
+			if (l.isAllowed(av)) {
+				while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+					l.increase();
+				l.setNativeTongue(true);
+				av.add(l);
+			}			
+		});
 	}
 
 	void removeLanguage(Language l) {
-		if (!aventurian.hasSkill(l))
-			throw new IllegalStateException("cannot remove skill " + l.getName());
-		if (l.isNativeTongue()) {
-			l.setNativeTongue(false);
-			decreaseLanguageWithoutRefund(l);
-		} else {
-			decreaseLanguageWithRefund(l);
-		}
-		aventurian.remove(l);
+		aventurian.ifPresent(av -> {
+			if (!av.hasSkill(l))
+				throw new IllegalStateException("cannot remove skill " + l.getName());
+			if (l.isNativeTongue()) {
+				l.setNativeTongue(false);
+				decreaseLanguageWithoutRefund(l);
+			} else {
+				decreaseLanguageWithRefund(l);
+			}
+			av.remove(l);			
+		});
 	}
 
 	private void decreaseLanguageWithRefund(Language l) {
@@ -48,35 +55,41 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	}
 
 	void decreaseLanguage(Language l) {
-		if (!l.isDecreasable())
-			throw new IllegalStateException("cannot further decrease level of " + l.getName());
-		if (!aventurian.hasSkill(l))
-			throw new IllegalStateException("cannot decrease skill which is not owned: " + l.getName());
-		final int refund = l.getDowngradeRefund();
-		l.decrease();
-		refund(refund);
+		aventurian.ifPresent(av -> {
+			if (!l.isDecreasable())
+				throw new IllegalStateException("cannot further decrease level of " + l.getName());
+			if (!av.hasSkill(l))
+				throw new IllegalStateException("cannot decrease skill which is not owned: " + l.getName());
+			final int refund = l.getDowngradeRefund();
+			l.decrease();
+			refund(refund);			
+		});
 	}
 
 	void addLanguage(Language l) {
-		if (aventurian.hasSkill(l))
-			throw new IllegalStateException("has already skill " + l.getName());
-		final int cost = l.getLearningCost();
-		if (canPay(cost) && l.isAllowed(aventurian)) {
-			aventurian.add(l);
-			pay(cost);
-		}
+		aventurian.ifPresent(av -> {
+			if (av.hasSkill(l))
+				throw new IllegalStateException("has already skill " + l.getName());
+			final int cost = l.getLearningCost();
+			if (canPay(cost) && l.isAllowed(av)) {
+				av.add(l);
+				pay(cost);
+			}			
+		});
 	}
 
 	void increaseLanguage(Language l) {
-		if (!l.isIncreasable())
-			throw new IllegalStateException("cannot further increase level of " + l.getName());
-		if (!aventurian.hasSkill(l))
-			throw new IllegalStateException("cannot increase skill " + l.getName());
-		final int cost = l.getUpgradeCost();
-		if (canPay(cost) && l.isAllowed(aventurian) && l.isIncreasable()) {
-			l.increase();
-			pay(cost);
-		}
+		aventurian.ifPresent(av -> {
+			if (!l.isIncreasable())
+				throw new IllegalStateException("cannot further increase level of " + l.getName());
+			if (!av.hasSkill(l))
+				throw new IllegalStateException("cannot increase skill " + l.getName());
+			final int cost = l.getUpgradeCost();
+			if (canPay(cost) && l.isAllowed(av) && l.isIncreasable()) {
+				l.increase();
+				pay(cost);
+			}			
+		});
 	}
 
 }

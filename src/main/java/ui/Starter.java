@@ -27,8 +27,8 @@ public class Starter extends Application {
 
 	@Override
 	public void init() {
-		aventurianManager = new AventurianManager();
 		db = new Database();
+		aventurianManager = new AventurianManager(db);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class Starter extends Application {
 	}
 
 	private Parent loadMainPane() throws IOException {
-		final FXMLLoader loader = new FXMLLoader(ui.Main.class.getResource("/main.fxml"));
+		final FXMLLoader loader = new FXMLLoader(ui.Starter.class.getResource("/main.fxml"));
 		final Parent root = loader.load();
 		mainController = loader.getController();
 		return root;

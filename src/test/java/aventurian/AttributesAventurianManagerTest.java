@@ -6,6 +6,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import database.Database;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AttributesAventurianManagerTest {
@@ -20,11 +23,13 @@ public class AttributesAventurianManagerTest {
 	private AttributesAventurianManager toTest;
 	@Mock
 	Aventurian a;
+	@Mock
+	Database db;
 
 	@Before
 	public void setUp() throws Exception {
 		when(a.canPay(anyInt())).thenReturn(true);
-		toTest = new AttributesAventurianManager(a);
+		toTest = new AttributesAventurianManager(Optional.of(a), db);
 	}
 
 	@Test
