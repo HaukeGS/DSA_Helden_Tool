@@ -62,7 +62,6 @@ public class MainController extends PaneController implements Observer {
 		if (o instanceof Aventurian) {
 			update((Aventurian) o);
 		}
-
 	}
 
 	void changeTo(PAGES page) {

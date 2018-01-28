@@ -24,7 +24,7 @@ import skills.Skill;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Aventurian extends Observable {
-	
+
 	private final LevelCostCalculator calculator;
 
 	@XmlAttribute
@@ -41,30 +41,24 @@ public class Aventurian extends Observable {
 	private boolean isMage;
 	private boolean isConsecrated;
 
-	static final int MAX_ATTRIBUTES_SUM = 101;
+	private final Race race;
 
-	private Aventurian() {
-		// only needed for JAXB
-		this(0);
+	public static final int MAX_ATTRIBUTES_SUM = 101;
+
+	public Aventurian(String name, int ap, Race r) {
+		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes(), r);
 	}
 
-	public Aventurian(String name, int ap) {
-		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes());
-	}
-
-	Aventurian(String name, int ap, PrimaryAttributes primary, SecondaryAttributes secondary) {
+	Aventurian(String name, int ap, PrimaryAttributes primary, SecondaryAttributes secondary, Race r) {
 		this.nameOfAventurian = name;
 		this.primaryAttributes = primary;
 		this.secondaryAttributes = secondary;
 		this.adventurePoints = ap;
+		this.race = r;
 		this.allSkills = new ArrayList<>();
 		if (secondary != null)
 			secondaryAttributes.updateValues(primaryAttributes);
 		this.calculator = new LevelCostCalculator();
-	}
-
-	Aventurian(int ap) {
-		this("", ap, new PrimaryAttributes(), new SecondaryAttributes());
 	}
 
 	public int getAdventurePoints() {
@@ -135,6 +129,10 @@ public class Aventurian extends Observable {
 
 	public boolean isPrimaryAttributeDecreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.isDecreasable(a);
+	}
+
+	public Race getRace() {
+		return race;
 	}
 
 	public int getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
@@ -240,7 +238,7 @@ public class Aventurian extends Observable {
 	public boolean isPrimaryAttributesLowerThanThreshhold() {
 		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
 	}
-	
+
 	public int getAPinAttributes() {
 		int sum = 0;
 		for (final PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
@@ -248,7 +246,7 @@ public class Aventurian extends Observable {
 		}
 		return sum;
 	}
-	
+
 	public List<Property> getAdvantages() {
 		return getStreamOfProperties().filter((p) -> p.isAdvantage()).collect(toList());
 	}

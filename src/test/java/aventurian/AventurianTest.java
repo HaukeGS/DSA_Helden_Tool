@@ -1,6 +1,7 @@
 package aventurian;
 
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
+import static aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE.ASTRALPOINTS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -16,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
@@ -29,18 +31,76 @@ public class AventurianTest {
 	public static final int AP = 16500;
 	public static final String AVENTURIAN_NAME = "testAventurian";
 	private Aventurian toTest;
+	@Mock
 	private Observer mockedObserver;
+	@Mock
+	private PrimaryAttributes mockedPrimaryAttributes;
+	@Mock
+	private SecondaryAttributes mockedSecondaryAttributes;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Aventurian(AVENTURIAN_NAME, AP);
-		mockedObserver = mock(Observer.class);
+		toTest = new Aventurian(AVENTURIAN_NAME, AP, mockedPrimaryAttributes, mockedSecondaryAttributes, Race.DWARF);
 		toTest.addObserver(mockedObserver);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		toTest.deleteObservers();
+	}
+
+	@Test
+	public void testIsPrimaryAttributeIncreasable() {
+		toTest.isPrimaryAttributeIncreasable(COURAGE);
+		verify(mockedPrimaryAttributes).isIncreasable(COURAGE);
+	}
+
+	@Test
+	public void testIsPrimaryAttributeDecreasable() {
+		toTest.isPrimaryAttributeDecreasable(COURAGE);
+		verify(mockedPrimaryAttributes).isDecreasable(COURAGE);
+	}
+
+	@Test
+	public void testIsSecondaryAttributeIncreasableByBuy() {
+		toTest.isSecondaryAttributeIncreasableByBuy(ASTRALPOINTS);
+		verify(mockedSecondaryAttributes).isIncreasableByBuy(ASTRALPOINTS);
+	}
+
+	@Test
+	public void testIsSecondaryAttributeDecreasableByBuy() {
+		toTest.isSecondaryAttributeDecreasableByBuy(ASTRALPOINTS);
+		verify(mockedSecondaryAttributes).isDecreasableByBuy(ASTRALPOINTS);
+	}
+
+	@Test
+	public void testIncreaseSecondaryAttribute() {
+		toTest.increaseSecondaryAttribute(ASTRALPOINTS, 1);
+		verify(mockedSecondaryAttributes).increaseMod(ASTRALPOINTS, 1);
+	}
+
+	@Test
+	public void testDecreaseSecondaryAttribute() {
+		toTest.decreaseSecondaryAttribute(ASTRALPOINTS, 1);
+		verify(mockedSecondaryAttributes).decreaseMod(ASTRALPOINTS, 1);
+	}
+
+	@Test
+	public void testIncreaseSecondaryAttributeByBuy() {
+		toTest.increaseSecondaryAttributeByBuy(ASTRALPOINTS);
+		verify(mockedSecondaryAttributes).increaseModBuy(ASTRALPOINTS);
+	}
+
+	@Test
+	public void testDecreaseSecondaryAttributeByBuy() {
+		toTest.decreaseSecondaryAttributeByBuy(ASTRALPOINTS);
+		verify(mockedSecondaryAttributes).decreaseModBuy(ASTRALPOINTS);
+	}
+
+	@Test
+	public void testGetSecondaryAttributeCost() {
+		toTest.getSecondaryAttributeCost(ASTRALPOINTS);
+		verify(mockedSecondaryAttributes).getCost(ASTRALPOINTS);
 	}
 
 	@Test
@@ -185,7 +245,7 @@ public class AventurianTest {
 		final Language l2 = mock(Language.class);
 		toTest.add(l2);
 		assertEquals(2, toTest.getLanguages().size());
-		
+
 		final Property p = mock(Property.class);
 		toTest.add(p);
 		assertEquals(2, toTest.getLanguages().size());
@@ -212,64 +272,50 @@ public class AventurianTest {
 
 	@Test
 	public void testGetSumOfPrimaryAttributes() throws Exception {
-		assertEquals(64, toTest.getSumOfPrimaryAttributes());
-		toTest.increasePrimaryAttribute(COURAGE);
-		toTest.increasePrimaryAttribute(COURAGE);
-		toTest.increasePrimaryAttribute(COURAGE);
-		assertEquals(67, toTest.getSumOfPrimaryAttributes());
+		toTest.getSumOfPrimaryAttributes();
+		verify(mockedPrimaryAttributes).getSum();
 	}
 
 	@Test
 	public void testGetPrimaryAttribute() throws Exception {
-		assertEquals(8, toTest.getPrimaryAttribute(COURAGE));
+		toTest.getPrimaryAttribute(COURAGE);
+		verify(mockedPrimaryAttributes).getPrimaryAttribute(COURAGE);
 	}
 
 	@Test
 	public void testGetMaxOfPrimaryAttribute() throws Exception {
-		assertEquals(14, toTest.getMaxOfPrimaryAttribute(COURAGE));
+		toTest.getMaxOfPrimaryAttribute(COURAGE);
+		verify(mockedPrimaryAttributes).getMaximumOfPrimaryAttribute(COURAGE);
 	}
 
 	@Test
 	public void testIncreasePrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		final SecondaryAttributes second = mock(SecondaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, second);
-		toTest.addObserver(mockedObserver);
 		toTest.increasePrimaryAttribute(COURAGE);
-		verify(pri).increase(COURAGE);
-		verify(second, times(2)).updateValues(pri);
+		verify(mockedPrimaryAttributes).increase(COURAGE);
+		verify(mockedSecondaryAttributes, times(2)).updateValues(mockedPrimaryAttributes);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
 	public void testDecrasePrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		final SecondaryAttributes second = mock(SecondaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, second);
 		toTest.addObserver(mockedObserver);
 		toTest.decrasePrimaryAttribute(COURAGE);
-		verify(pri).decrease(COURAGE);
-		verify(second, times(2)).updateValues(pri);
+		verify(mockedPrimaryAttributes).decrease(COURAGE);
+		verify(mockedSecondaryAttributes, times(2)).updateValues(mockedPrimaryAttributes);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
 	public void testIncreaseMaximumOfPrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, null);
-		toTest.addObserver(mockedObserver);
 		toTest.increaseMaximumOfPrimaryAttribute(COURAGE);
-		verify(pri).increaseMaximum(COURAGE);
+		verify(mockedPrimaryAttributes).increaseMaximum(COURAGE);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
 	public void testDecreaseMaximumOfPrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, null);
-		toTest.addObserver(mockedObserver);
 		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
-		verify(pri).decreaseMaximum(COURAGE);
+		verify(mockedPrimaryAttributes).decreaseMaximum(COURAGE);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -323,7 +369,13 @@ public class AventurianTest {
 	}
 
 	@Test
+	public void testGetRace() {
+		assertEquals(toTest.getRace(), Race.DWARF);
+	}
+
+	@Test
 	public void testGetSecondaryAttribute() {
-		assertEquals(12, toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS));
+		toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+		verify(mockedSecondaryAttributes).getValueOf(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
 }
