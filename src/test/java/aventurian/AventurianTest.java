@@ -40,7 +40,7 @@ public class AventurianTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Aventurian(AVENTURIAN_NAME, AP, mockedPrimaryAttributes, mockedSecondaryAttributes);
+		toTest = new Aventurian(AVENTURIAN_NAME, AP, mockedPrimaryAttributes, mockedSecondaryAttributes, Race.DWARF);
 		toTest.addObserver(mockedObserver);
 	}
 
@@ -290,45 +290,32 @@ public class AventurianTest {
 
 	@Test
 	public void testIncreasePrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		final SecondaryAttributes second = mock(SecondaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, second);
-		toTest.addObserver(mockedObserver);
 		toTest.increasePrimaryAttribute(COURAGE);
-		verify(pri).increase(COURAGE);
-		verify(second, times(2)).updateValues(pri);
+		verify(mockedPrimaryAttributes).increase(COURAGE);
+		verify(mockedSecondaryAttributes, times(2)).updateValues(mockedPrimaryAttributes);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
 	public void testDecrasePrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		final SecondaryAttributes second = mock(SecondaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, second);
 		toTest.addObserver(mockedObserver);
 		toTest.decrasePrimaryAttribute(COURAGE);
-		verify(pri).decrease(COURAGE);
-		verify(second, times(2)).updateValues(pri);
+		verify(mockedPrimaryAttributes).decrease(COURAGE);
+		verify(mockedSecondaryAttributes, times(2)).updateValues(mockedPrimaryAttributes);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
 	public void testIncreaseMaximumOfPrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, null);
-		toTest.addObserver(mockedObserver);
 		toTest.increaseMaximumOfPrimaryAttribute(COURAGE);
-		verify(pri).increaseMaximum(COURAGE);
+		verify(mockedPrimaryAttributes).increaseMaximum(COURAGE);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
 	@Test
 	public void testDecreaseMaximumOfPrimaryAttribute() throws Exception {
-		final PrimaryAttributes pri = mock(PrimaryAttributes.class);
-		toTest = new Aventurian("", 100, pri, null);
-		toTest.addObserver(mockedObserver);
 		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
-		verify(pri).decreaseMaximum(COURAGE);
+		verify(mockedPrimaryAttributes).decreaseMaximum(COURAGE);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -379,6 +366,11 @@ public class AventurianTest {
 		when(l.isNativeTongue()).thenReturn(true);
 		toTest.add(l);
 		assertTrue(toTest.hasNativeTongue());
+	}
+
+	@Test
+	public void testGetRace() {
+		assertEquals(toTest.getRace(), Race.DWARF);
 	}
 
 	@Test
