@@ -2,11 +2,13 @@ package ui;
 
 import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
 import static ui.NavigationPaneController.PAGES.LANGUAGES;
+import static ui.NavigationPaneController.PAGES.PROPERTIES;
 
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 
+import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -19,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import testsuites.categories.UITest;
 import ui.NavigationPaneController.PAGES;
 
 /**
@@ -29,7 +32,7 @@ import ui.NavigationPaneController.PAGES;
  * 
  * @author Jonas
  *
- */
+ */@Category(UITest.class)
 public abstract class BaseGuiTest extends ApplicationTest {
 
 	protected MainController mainController;
@@ -53,6 +56,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 
 		loadPage(LANGUAGES, "/languages.fxml");
 		loadPage(ATTRIBUTES, "/attributes.fxml");
+		loadPage(PROPERTIES, "/propertyPane.fxml");
 
 		mainController.init(mockedAventurianManager, mockedDatabase);
 		mockedAventurian.addObserver(mainController);

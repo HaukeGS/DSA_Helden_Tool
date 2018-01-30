@@ -1,4 +1,4 @@
-package ui;
+package testsuites.categories;
 
 /**
  * This is just a "marker"-interface which is used to mark (ui) tests that

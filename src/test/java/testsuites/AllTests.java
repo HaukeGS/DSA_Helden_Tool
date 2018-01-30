@@ -1,3 +1,5 @@
+package testsuites;
+import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -18,12 +20,13 @@ import ui.LanguagePaneTest;
 import ui.MenuTest;
 import ui.NavigatorTest;
 
-@RunWith(Suite.class)
+@RunWith(Categories.class)
+//@Categories.ExcludeCategory(UITest.class)
 @Suite.SuiteClasses({ PrimaryAttributesTest.class, SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
 		AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
 		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class })
-public class TestSuite {
+public class AllTests {
 
 }

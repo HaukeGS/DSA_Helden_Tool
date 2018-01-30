@@ -25,6 +25,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import skills.Language;
+import testsuites.categories.CannotRunHeadless;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LanguagePaneTest extends BaseGuiTest {

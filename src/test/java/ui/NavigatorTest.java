@@ -25,6 +25,13 @@ public class NavigatorTest extends BaseGuiTest {
 		clickOn(attributes);
 		verifyThat("#paneAttributes", isVisible());
 	}
+	
+	@Test
+	public void testClickOnProperties() {
+		final Hyperlink properties = find("#hyperlinkProperties");
+		clickOn(properties);
+		verifyThat("#paneProperties", isVisible());
+	}
 
 	@Override
 	void setUpMocks() {

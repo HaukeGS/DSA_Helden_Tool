@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import aventurian.Aventurian;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#hyperlinkAttributes");
 		verifyThat("#paneAttributes", isVisible());
 	}
+
 	@Test
 	public void testIncreaseCourage() {
 		clickOn("#btnIncreaseCourage");
@@ -35,6 +37,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseCourage");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
+
 	@Test
 	public void testIncreaseIntelligence() {
 		clickOn("#btnIncreaseIntelligence");
@@ -46,6 +49,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseIntelligence");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
 	}
+
 	@Test
 	public void testIncreaseIntuition() {
 		clickOn("#btnIncreaseIntuition");
@@ -57,6 +61,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseIntuition");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.INTUITION);
 	}
+
 	@Test
 	public void testIncreaseCharisma() {
 		clickOn("#btnIncreaseCharisma");
@@ -68,6 +73,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseCharisma");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.CHARISMA);
 	}
+
 	@Test
 	public void testIncreaseDexterity() {
 		clickOn("#btnIncreaseDexterity");
@@ -79,6 +85,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseDexterity");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY);
 	}
+
 	@Test
 	public void testIncreaseAgility() {
 		clickOn("#btnIncreaseAgility");
@@ -90,6 +97,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseAgility");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.AGILITY);
 	}
+
 	@Test
 	public void testIncreaseConstitution() {
 		clickOn("#btnIncreaseConstitution");
@@ -101,6 +109,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseConstitution");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.CONSTITUTION);
 	}
+
 	@Test
 	public void testIncreaseStrength() {
 		clickOn("#btnIncreaseStrength");
@@ -112,37 +121,37 @@ public class AttributePaneTest extends BaseGuiTest {
 		clickOn("#btnDecreaseStrength");
 		verify(mockedAventurianManager).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH);
 	}
-	
+
 	@Test
 	public void testIncreaseHitPoints() {
 		clickOn("#btnIncreaseHitPoints");
 		verify(mockedAventurianManager).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
-	
+
 	@Test
 	public void testDecreaseHitPoints() {
 		clickOn("#btnDecreaseHitPoints");
 		verify(mockedAventurianManager).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
-	
+
 	@Test
 	public void testIncreaseAstralPoints() {
 		clickOn("#btnIncreaseAstralPoints");
 		verify(mockedAventurianManager).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 	}
-	
+
 	@Test
 	public void testDecreaseAstralPoints() {
 		clickOn("#btnDecreaseAstralPoints");
 		verify(mockedAventurianManager).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 	}
-	
+
 	@Test
 	public void testIncreaseMagicResistance() {
 		clickOn("#btnIncreaseMagicResistance");
 		verify(mockedAventurianManager).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
 	}
-	
+
 	@Test
 	public void testDecreaseMagicResistance() {
 		clickOn("#btnDecreaseMagicResistance");
@@ -168,7 +177,7 @@ public class AttributePaneTest extends BaseGuiTest {
 		final Label lblStrength = find("#labelStrength");
 		assertEquals(String.valueOf(7), lblStrength.getText());
 		final Label lblSum = find("#labelSumOfAttributes");
-		assertEquals(String.valueOf(80), lblSum.getText());
+		assertEquals("80" + " (" + Aventurian.MAX_ATTRIBUTES_SUM + ")", lblSum.getText());
 	}
 
 	@Override
@@ -182,11 +191,11 @@ public class AttributePaneTest extends BaseGuiTest {
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(8);
 		when(mockedAventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(7);
 		when(mockedAventurian.getSumOfPrimaryAttributes()).thenReturn(80);
-		
+
 		when(mockedAventurian.isPrimaryAttributeIncreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isPrimaryAttributeDecreasable(any(PRIMARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isPrimaryAttributesLowerThanThreshhold()).thenReturn(true);
-		
+
 		when(mockedAventurian.isMage()).thenReturn(true);
 		when(mockedAventurian.isSecondaryAttributeIncreasableByBuy(any(SECONDARY_ATTRIBUTE.class))).thenReturn(true);
 		when(mockedAventurian.isSecondaryAttributeDecreasableByBuy(any(SECONDARY_ATTRIBUTE.class))).thenReturn(true);
