@@ -17,23 +17,20 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import database.Database;
 import skills.Language;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LanguageAventurianManagerTest {
+public class LanguageAventurianManagerTest extends BaseTest{
 
 	LanguageAventurianManager toTest;
 
 	@Mock
-	Aventurian a;
-	@Mock
-	Database db;
+	Aventurian aventurian;
 
 	@Before
 	public void setUp() throws Exception {
-		when(a.canPay(anyInt())).thenReturn(true);
-		toTest = new LanguageAventurianManager(Optional.of(a), db);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
+		toTest = new LanguageAventurianManager(Optional.of(aventurian), db);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -46,43 +43,43 @@ public class LanguageAventurianManagerTest {
 	@Test
 	public void testLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
-		when(a.canPay(anyInt())).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
 		toTest.addLanguage(l);
 
-		final InOrder correctOrder = inOrder(a);
-		correctOrder.verify(a).add(l);
-		correctOrder.verify(a).pay(anyInt());
+		final InOrder correctOrder = inOrder(aventurian);
+		correctOrder.verify(aventurian).add(l);
+		correctOrder.verify(aventurian).pay(anyInt());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageAlreadyHasSkill() {
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 		toTest.addLanguage(l);
 	}
 
 	@Test
 	public void testAddLanguageTooExpensive() {
 		final Language l = createLanguageMock(true, true);
-		when(a.canPay(anyInt())).thenReturn(false);
+		when(aventurian.canPay(anyInt())).thenReturn(false);
 
 		toTest.addLanguage(l);
 
-		verify(a, never()).add(l);
-		verify(a, never()).pay(anyInt());
-		verify(l, never()).gain(a);
+		verify(aventurian, never()).add(l);
+		verify(aventurian, never()).pay(anyInt());
+		verify(l, never()).gain(aventurian);
 	}
 
 	@Test
 	public void testAddLanguageNotAllowed() {
 		final Language l = createLanguageMock(false, true);
-		when(a.canPay(anyInt())).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
 
 		toTest.addLanguage(l);
 
-		verify(a, never()).add(l);
-		verify(a, never()).pay(anyInt());
-		verify(l, never()).gain(a);
+		verify(aventurian, never()).add(l);
+		verify(aventurian, never()).pay(anyInt());
+		verify(l, never()).gain(aventurian);
 	}
 
 	@Test
@@ -91,11 +88,11 @@ public class LanguageAventurianManagerTest {
 		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3).thenReturn(4).thenReturn(5);
 		toTest.addLanguageAsNativeTongue(l);
 
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).pay(anyInt());
 		verify(l, times(3)).increase();
-		final InOrder correctOrder = inOrder(a, l);
+		final InOrder correctOrder = inOrder(aventurian, l);
 		correctOrder.verify(l).setNativeTongue(true);
-		correctOrder.verify(a).add(l);
+		correctOrder.verify(aventurian).add(l);
 	}
 
 	@Test
@@ -103,7 +100,7 @@ public class LanguageAventurianManagerTest {
 		final Language l = createLanguageMock(false, true);
 		toTest.addLanguageAsNativeTongue(l);
 
-		verify(a, never()).add(l);
+		verify(aventurian, never()).add(l);
 		verify(l, never()).increase();
 		verify(l, never()).setNativeTongue(true);
 	}
@@ -116,15 +113,15 @@ public class LanguageAventurianManagerTest {
 		toTest.addLanguageAsNativeTongue(l);
 
 		verify(l, times(2)).increase();
-		final InOrder correctOrder = inOrder(a, l);
+		final InOrder correctOrder = inOrder(aventurian, l);
 		correctOrder.verify(l).setNativeTongue(true);
-		correctOrder.verify(a).add(l);
+		correctOrder.verify(aventurian).add(l);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testRemoveLanguageNotOwned() {
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(false);
+		when(aventurian.hasSkill(l)).thenReturn(false);
 
 		toTest.removeLanguage(l);
 	}
@@ -135,11 +132,11 @@ public class LanguageAventurianManagerTest {
 		when(l.isNativeTongue()).thenReturn(true);
 		when(l.getLevel()).thenReturn(5).thenReturn(4).thenReturn(3).thenReturn(2).thenReturn(1);
 		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(false);
-		when(a.hasSkill(l)).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 		toTest.removeLanguage(l);
 
-		verify(a, times(1)).refund(anyInt());
-		verify(a).remove(l);
+		verify(aventurian, times(1)).refund(anyInt());
+		verify(aventurian).remove(l);
 		verify(l, times(4)).decrease();
 		verify(l).setNativeTongue(false);
 	}
@@ -148,32 +145,32 @@ public class LanguageAventurianManagerTest {
 	public void testRemoveLanguage() {
 
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 
 		toTest.removeLanguage(l);
 
-		verify(a).remove(l);
-		verify(a).refund(anyInt());
+		verify(aventurian).remove(l);
+		verify(aventurian).refund(anyInt());
 	}
 
 	@Test
 	public void testDecreaseLanguage() {
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.decreaseLanguage(l);
 
 		verify(l).decrease();
-		verify(a).refund(anyInt());
-		verify(a, never()).remove(l);
+		verify(aventurian).refund(anyInt());
+		verify(aventurian, never()).remove(l);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testDecreaseLanguageNotOwned() {
 		final Language l = createLanguageMock(true, true);
 		when(l.isDecreasable()).thenReturn(true);
-		when(a.hasSkill(l)).thenReturn(false);
+		when(aventurian.hasSkill(l)).thenReturn(false);
 		toTest.decreaseLanguage(l);
 	}
 
@@ -188,36 +185,36 @@ public class LanguageAventurianManagerTest {
 	public void testRemoveIncreasedLanguage() {
 
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.removeLanguage(l);
 		verify(l).decrease();
-		verify(a).remove(l);
-		verify(a, times(2)).refund(anyInt());
+		verify(aventurian).remove(l);
+		verify(aventurian, times(2)).refund(anyInt());
 	}
 
 	@Test
 	public void testIncreaseLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(true);
-		when(a.canPay(anyInt())).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
 
 		toTest.increaseLanguage(l);
-		final InOrder correctOrder = inOrder(a, l);
+		final InOrder correctOrder = inOrder(aventurian, l);
 		correctOrder.verify(l).increase();
-		correctOrder.verify(a).pay(anyInt());
+		correctOrder.verify(aventurian).pay(anyInt());
 	}
 
 	@Test
 	public void testIncreaseLanguageNotAllowed() {
 		final Language l = createLanguageMock(false, true);
-		when(a.hasSkill(l)).thenReturn(true);
-		when(a.canPay(anyInt())).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
 
 		toTest.increaseLanguage(l);
 
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).pay(anyInt());
 		verify(l, never()).increase();
 	}
 
@@ -231,19 +228,19 @@ public class LanguageAventurianManagerTest {
 	@Test
 	public void testIncreaseLanguageTooExpensive() {
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(true);
-		when(a.canPay(anyInt())).thenReturn(false);
+		when(aventurian.hasSkill(l)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(false);
 
 		toTest.increaseLanguage(l);
 
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).pay(anyInt());
 		verify(l, never()).increase();
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageDoesNotHaveSkill() {
 		final Language l = createLanguageMock(true, true);
-		when(a.hasSkill(l)).thenReturn(false);
+		when(aventurian.hasSkill(l)).thenReturn(false);
 
 		toTest.increaseLanguage(l);
 
@@ -252,7 +249,7 @@ public class LanguageAventurianManagerTest {
 	private Language createLanguageMock(boolean isAllowed, boolean isIncreasable) {
 		final Language l = mock(Language.class);
 		when(l.getName()).thenReturn("testLanguage");
-		when(l.isAllowed(a)).thenReturn(isAllowed);
+		when(l.isAllowed(aventurian)).thenReturn(isAllowed);
 		when(l.getLevel()).thenReturn(5);
 		when(l.getLearningCost()).thenReturn(50);
 		when(l.isIncreasable()).thenReturn(isIncreasable);

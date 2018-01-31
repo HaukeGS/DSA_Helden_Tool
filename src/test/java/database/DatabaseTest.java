@@ -25,9 +25,9 @@ public class DatabaseTest {
 	
 	@Test
 	public void testGetRaceSkills() {
-		List<Property> raceSkills = toTest.getRaceSkills(Race.MIDDLEGUY);
+		List<Property> raceSkills = toTest.getSkillsFor(Race.MIDDLEGUY);
 		assertTrue(raceSkills.isEmpty());
-		raceSkills = toTest.getRaceSkills(Race.THORWALAN);
+		raceSkills = toTest.getSkillsFor(Race.THORWALAN);
 		assertEquals(raceSkills.size(), 1);
 		
 	}

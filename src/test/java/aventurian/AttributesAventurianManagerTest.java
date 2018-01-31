@@ -11,129 +11,123 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import database.Database;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AttributesAventurianManagerTest {
+public class AttributesAventurianManagerTest extends BaseTest {
 
 	private AttributesAventurianManager toTest;
-	@Mock
-	Aventurian a;
-	@Mock
-	Database db;
 
 	@Before
 	public void setUp() throws Exception {
-		when(a.canPay(anyInt())).thenReturn(true);
-		toTest = new AttributesAventurianManager(Optional.of(a), db);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
+		toTest = new AttributesAventurianManager(Optional.of(aventurian), db);
 	}
 
 	@Test
 	public void testIncreasePrimaryAttributeAllConditionsMet() {
 		setUpMockForPrimaryAttributesTest(true, true, true);
 		toTest.increasePrimaryAttribute(COURAGE);
-		verify(a).increasePrimaryAttribute(COURAGE);
-		verify(a).pay(anyInt());
+		verify(aventurian).increasePrimaryAttribute(COURAGE);
+		verify(aventurian).pay(anyInt());
 	}
 
 	private void setUpMockForPrimaryAttributesTest(boolean canPay, boolean currentSmallerThanMax,
 			boolean sumSmallerThanMax) {
-		when(a.canPay(anyInt())).thenReturn(canPay);
-		when(a.isPrimaryAttributesLowerThanThreshhold()).thenReturn(sumSmallerThanMax);
+		when(aventurian.canPay(anyInt())).thenReturn(canPay);
+		when(aventurian.isPrimaryAttributesLowerThanThreshhold()).thenReturn(sumSmallerThanMax);
 		// when(a.getSumOfPrimaryAttributes()).thenReturn(
 		// sumSmallerThanMax ? Aventurian.MAX_ATTRIBUTES_SUM - 1 :
 		// Aventurian.MAX_ATTRIBUTES_SUM);
 		// when(a.getMaxOfPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MAX);
-		when(a.isPrimaryAttributeIncreasable(COURAGE)).thenReturn(currentSmallerThanMax);
+		when(aventurian.isPrimaryAttributeIncreasable(COURAGE)).thenReturn(currentSmallerThanMax);
 	}
 
 	@Test
 	public void testIncreasePrimaryAttributeTooExpensive() {
 		setUpMockForPrimaryAttributesTest(false, true, true);
 		toTest.increasePrimaryAttribute(COURAGE);
-		verify(a, never()).increasePrimaryAttribute(COURAGE);
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).increasePrimaryAttribute(COURAGE);
+		verify(aventurian, never()).pay(anyInt());
 	}
 
 	@Test
 	public void testIncreasePrimaryAttributeCurrentAtMaximum() {
 		setUpMockForPrimaryAttributesTest(true, false, true);
 		toTest.increasePrimaryAttribute(COURAGE);
-		verify(a, never()).increasePrimaryAttribute(COURAGE);
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).increasePrimaryAttribute(COURAGE);
+		verify(aventurian, never()).pay(anyInt());
 	}
 
 	@Test
 	public void testIncreasePrimaryAttributeSumTooBig() {
 		setUpMockForPrimaryAttributesTest(true, true, false);
 		toTest.increasePrimaryAttribute(COURAGE);
-		verify(a, never()).increasePrimaryAttribute(COURAGE);
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).increasePrimaryAttribute(COURAGE);
+		verify(aventurian, never()).pay(anyInt());
 	}
 
 	@Test
 	public void testDecreasePrimaryAttributAlreadyAtMinimum() {
-		when(a.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN);
+		when(aventurian.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN);
 		toTest.decreasePrimaryAttribute(COURAGE);
-		verify(a, never()).decrasePrimaryAttribute(COURAGE);
+		verify(aventurian, never()).decrasePrimaryAttribute(COURAGE);
 
 	}
 
 	@Test
 	public void testDecreasePrimaryAttributAllConditionsMet() {
-		when(a.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN + 1);
-		when(a.isPrimaryAttributeDecreasable(COURAGE)).thenReturn(true);
+		when(aventurian.getPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MIN + 1);
+		when(aventurian.isPrimaryAttributeDecreasable(COURAGE)).thenReturn(true);
 		toTest.decreasePrimaryAttribute(COURAGE);
-		verify(a).decrasePrimaryAttribute(COURAGE);
-		verify(a).refund(anyInt());
+		verify(aventurian).decrasePrimaryAttribute(COURAGE);
+		verify(aventurian).refund(anyInt());
 
 	}
 
 	@Test
 	public void testIncreaseSecondaryAttributeNotIncreasable() {
-		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS)).thenReturn(false);
+		when(aventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.HITPOINTS)).thenReturn(false);
 		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
-		verify(a, never()).pay(anyInt());
-		verify(a, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.HITPOINTS);
+		verify(aventurian, never()).pay(anyInt());
+		verify(aventurian, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
 
 	@Test
 	public void testIncreaseSecondaryAttributeTooExpensive() {
-		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
-		when(a.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(50);
-		when(a.canPay(50)).thenReturn(false);
+		when(aventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
+		when(aventurian.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(50);
+		when(aventurian.canPay(50)).thenReturn(false);
 		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
-		verify(a, never()).pay(anyInt());
-		verify(a, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+		verify(aventurian, never()).pay(anyInt());
+		verify(aventurian, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 	}
 
 	@Test
 	public void testIncreaseSecondaryAttributeAllConditionsMet() {
-		when(a.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(true);
-		when(a.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(100);
-		when(a.canPay(100)).thenReturn(true);
+		when(aventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(true);
+		when(aventurian.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(100);
+		when(aventurian.canPay(100)).thenReturn(true);
 		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
-		verify(a).pay(anyInt());
-		verify(a).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
+		verify(aventurian).pay(anyInt());
+		verify(aventurian).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
 	}
 
 	@Test
 	public void testDecreaseSecondaryAttributeNotDecreasable() {
 		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
-		verify(a, never()).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.HITPOINTS);
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.HITPOINTS);
+		verify(aventurian, never()).pay(anyInt());
 	}
 
 	@Test
 	public void testDecreaseSecondaryAttributeAllConditionsMet() {
-		when(a.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
+		when(aventurian.isSecondaryAttributeDecreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
 		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
-		verify(a).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
-		verify(a).refund(anyInt());
+		verify(aventurian).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
+		verify(aventurian).refund(anyInt());
 	}
 
 }

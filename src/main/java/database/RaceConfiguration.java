@@ -1,4 +1,4 @@
-package aventurian;
+package database;
 
 import java.util.List;
 

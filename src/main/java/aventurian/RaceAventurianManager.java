@@ -7,7 +7,7 @@ import database.Database;
 
 public class RaceAventurianManager extends BaseAventurianManager {
 	
-	PropertyAventurianManager propertyManager;
+	private final PropertyAventurianManager propertyManager;
 
 	public RaceAventurianManager(Optional<Aventurian> a, Database db, PropertyAventurianManager propertyManager) {
 		super(a, db);
@@ -15,19 +15,19 @@ public class RaceAventurianManager extends BaseAventurianManager {
 	}
 
 	void buyRaceMods(Race race) {
-		final int hitPointsMod = database.getRaceConfiguration(race).getHitPointsMod();
+		final int hitPointsMod = database.getHitPointsModFor(race);
 		if (hitPointsMod > 0)
 			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, hitPointsMod);
 		else
 			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, Math.abs(hitPointsMod));
 
-		final int magicResistanceMod = database.getRaceConfiguration(race).getMagicResistanceMod();
+		final int magicResistanceMod = database.getMagicResistanceModFor(race);
 		if (magicResistanceMod > 0)
 			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, magicResistanceMod);
 		else
 			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, Math.abs(magicResistanceMod));
 
-		database.getRaceSkills(race).forEach(propertyManager::addProperty);
+		database.getSkillsFor(race).forEach(propertyManager::addProperty);
 	}
 
 	private void increaseSecondaryAttribute(SECONDARY_ATTRIBUTE a, int mod) {

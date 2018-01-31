@@ -15,41 +15,38 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import database.Database;
 import skills.BadProperty;
 import skills.Property;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PropertyAventurianManagerTest {
+public class PropertyAventurianManagerTest extends BaseTest {
 	@Mock
-	Aventurian a;
-	@Mock
-	Database db;
+	Aventurian aventurian;
 	
 	PropertyAventurianManager toTest;
 
 	@Before
 	public void setUp() throws Exception {
-		when(a.canPay(anyInt())).thenReturn(true);
-		toTest = new PropertyAventurianManager(Optional.of(a), db);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
+		toTest = new PropertyAventurianManager(Optional.of(aventurian), db);
 	}
 
 	@Test
 	public void testAddPropertyAdvantageExceedsMaxPointsInAdvantages() {
 		final Property p = createPropertyMock(true, true);
-		when(a.canPay(anyInt())).thenReturn(true);
-		when(a.getPointsInAdvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_IN_ADVANTAGES);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
+		when(aventurian.getPointsInAdvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_IN_ADVANTAGES);
 
 		toTest.addProperty(p);
 
-		verify(a, never()).add(p);
-		verify(a, never()).pay(anyInt());
-		verify(p, never()).gain(a);
+		verify(aventurian, never()).add(p);
+		verify(aventurian, never()).pay(anyInt());
+		verify(p, never()).gain(aventurian);
 	}
 
 	private Property createPropertyMock(boolean isAllowed, boolean isAdvantage) {
 		final Property p = mock(Property.class);
-		when(p.isAllowed(a)).thenReturn(isAllowed);
+		when(p.isAllowed(aventurian)).thenReturn(isAllowed);
 		when(p.isAdvantage()).thenReturn(isAdvantage);
 		when(p.isDisadvantage()).thenReturn(!isAdvantage);
 		when(p.getName()).thenReturn("testProperty");
@@ -60,13 +57,13 @@ public class PropertyAventurianManagerTest {
 	@Test
 	public void testAddPropertyAdvantageTooExpensive() {
 		final Property p = createPropertyMock(true, true);
-		when(a.canPay(anyInt())).thenReturn(false);
+		when(aventurian.canPay(anyInt())).thenReturn(false);
 
 		toTest.addProperty(p);
 
-		verify(a, never()).add(p);
-		verify(a, never()).pay(anyInt());
-		verify(p, never()).gain(a);
+		verify(aventurian, never()).add(p);
+		verify(aventurian, never()).pay(anyInt());
+		verify(p, never()).gain(aventurian);
 	}
 
 	@Test
@@ -75,9 +72,9 @@ public class PropertyAventurianManagerTest {
 
 		toTest.addProperty(p);
 
-		verify(a, never()).add(p);
-		verify(a, never()).pay(anyInt());
-		verify(p, never()).gain(a);
+		verify(aventurian, never()).add(p);
+		verify(aventurian, never()).pay(anyInt());
+		verify(p, never()).gain(aventurian);
 
 	}
 
@@ -87,27 +84,27 @@ public class PropertyAventurianManagerTest {
 
 		toTest.addProperty(p);
 
-		verify(a).add(p);
-		verify(a).refund(anyInt());
+		verify(aventurian).add(p);
+		verify(aventurian).refund(anyInt());
 
 	}
 
 	@Test
 	public void testAddPropertyDisadvantageExceedMaxPointsOutDisadvantages() {
 		final Property p = createPropertyMock(true, false);
-		when(a.getPointsOutDisadvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
+		when(aventurian.getPointsOutDisadvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
 
 		toTest.addProperty(p);
 
-		verify(a, never()).add(p);
-		verify(a, never()).refund(anyInt());
-		verify(p, never()).gain(a);
+		verify(aventurian, never()).add(p);
+		verify(aventurian, never()).refund(anyInt());
+		verify(p, never()).gain(aventurian);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testAddPropertyAlreadyHasSkill() {
 		final Property p = createPropertyMock(true, true);
-		when(a.hasSkill(p)).thenReturn(true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
 		toTest.addProperty(p);
 
 	}
@@ -115,29 +112,29 @@ public class PropertyAventurianManagerTest {
 	@Test
 	public void testAddBadPropertyAllConditionsMet() {
 		final BadProperty p = createBadPropertyMock(true);
-		when(a.getBadPropertySum()).thenReturn(5);
+		when(aventurian.getBadPropertySum()).thenReturn(5);
 
 		toTest.addProperty(p);
 
-		verify(a).refund(anyInt());
-		verify(a).add(p);
+		verify(aventurian).refund(anyInt());
+		verify(aventurian).add(p);
 	}
 
 	@Test
 	public void testAddBadPropertyExceedingMaxPointsOutDisadvantages() {
 		final BadProperty p = createBadPropertyMock(true);
-		when(a.getPointsOutDisadvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
+		when(aventurian.getPointsOutDisadvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
 
 		toTest.addProperty(p);
 
-		verify(p, never()).gain(a);
-		verify(a, never()).refund(anyInt());
-		verify(a, never()).add(p);
+		verify(p, never()).gain(aventurian);
+		verify(aventurian, never()).refund(anyInt());
+		verify(aventurian, never()).add(p);
 	}
 
 	private BadProperty createBadPropertyMock(boolean isAllowed, boolean isIncreasable) {
 		final BadProperty p = mock(BadProperty.class);
-		when(p.isAllowed(a)).thenReturn(isAllowed);
+		when(p.isAllowed(aventurian)).thenReturn(isAllowed);
 		when(p.isIncreasable()).thenReturn(isIncreasable);
 		when(p.getLevel()).thenReturn(5);
 		when(p.getCost()).thenReturn(50);
@@ -152,38 +149,38 @@ public class PropertyAventurianManagerTest {
 	@Test
 	public void testAddBadPropertyNotAllowed() {
 		final BadProperty p = createBadPropertyMock(false);
-		when(a.getBadPropertySum()).thenReturn(5);
+		when(aventurian.getBadPropertySum()).thenReturn(5);
 
 		toTest.addProperty(p);
 
-		verify(p, never()).gain(a);
-		verify(a, never()).pay(anyInt());
-		verify(a, never()).add(p);
+		verify(p, never()).gain(aventurian);
+		verify(aventurian, never()).pay(anyInt());
+		verify(aventurian, never()).add(p);
 	}
 
 	@Test
 	public void testAddBadPropertyBadPropertySumTooHigh() {
 		final BadProperty p = createBadPropertyMock(false);
-		when(a.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM);
+		when(aventurian.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM);
 
 		toTest.addProperty(p);
 
-		verify(p, never()).gain(a);
-		verify(a, never()).pay(anyInt());
-		verify(a, never()).add(p);
+		verify(p, never()).gain(aventurian);
+		verify(aventurian, never()).pay(anyInt());
+		verify(aventurian, never()).add(p);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testAddBadPropertyAlreadyHasSkill() {
 		final BadProperty p = createBadPropertyMock(true);
-		when(a.hasSkill(p)).thenReturn(true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
 		toTest.addProperty(p);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testRemoveBadPropertyNotOwned() {
 		final BadProperty p = createBadPropertyMock(true);
-		when(a.hasSkill(p)).thenReturn(false);
+		when(aventurian.hasSkill(p)).thenReturn(false);
 
 		toTest.removeProperty(p);
 	}
@@ -192,12 +189,12 @@ public class PropertyAventurianManagerTest {
 	public void testRemoveBadProperty() {
 
 		final BadProperty p = createBadPropertyMock(true);
-		when(a.hasSkill(p)).thenReturn(true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
 
-		verify(a).remove(p);
-		verify(a).refund(anyInt());
+		verify(aventurian).remove(p);
+		verify(aventurian).refund(anyInt());
 	}
 
 	@Test
@@ -205,32 +202,32 @@ public class PropertyAventurianManagerTest {
 
 		final BadProperty p = createBadPropertyMock(true);
 		when(p.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
-		when(a.hasSkill(p)).thenReturn(true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
 		verify(p).decrease();
-		verify(a).remove(p);
-		verify(a, times(2)).refund(anyInt());
+		verify(aventurian).remove(p);
+		verify(aventurian, times(2)).refund(anyInt());
 	}
 
 	@Test
 	public void testDecreaseBadProperty() {
 		final BadProperty bp = createBadPropertyMock(true);
-		when(a.hasSkill(bp)).thenReturn(true);
+		when(aventurian.hasSkill(bp)).thenReturn(true);
 		when(bp.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.decreaseBadProperty(bp);
 
 		verify(bp).decrease();
-		verify(a).refund(anyInt());
-		verify(a, never()).remove(bp);
+		verify(aventurian).refund(anyInt());
+		verify(aventurian, never()).remove(bp);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testDecreaseBadPropertyNotOwned() {
 		final BadProperty bp = createBadPropertyMock(true);
 		when(bp.isDecreasable()).thenReturn(true);
-		when(a.hasSkill(bp)).thenReturn(false);
+		when(aventurian.hasSkill(bp)).thenReturn(false);
 		toTest.decreaseBadProperty(bp);
 	}
 
@@ -244,39 +241,39 @@ public class PropertyAventurianManagerTest {
 	@Test
 	public void testIncreaseBadPropertyAllConditionsMet() {
 		final BadProperty bp = createBadPropertyMock(true, true);
-		when(a.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM - 1);
-		when(a.hasSkill(bp)).thenReturn(true);
+		when(aventurian.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM - 1);
+		when(aventurian.hasSkill(bp)).thenReturn(true);
 		toTest.increaseBadProperty(bp);
 
 		verify(bp).increase();
-		verify(a).pay(anyInt());
+		verify(aventurian).pay(anyInt());
 	}
 
 	@Test
 	public void testIncreaseBadPropertyNotIncreasable() {
 		final BadProperty bp = createBadPropertyMock(true, false);
-		when(a.hasSkill(bp)).thenReturn(true);
+		when(aventurian.hasSkill(bp)).thenReturn(true);
 		toTest.increaseBadProperty(bp);
 
 		verify(bp, never()).increase();
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).pay(anyInt());
 	}
 
 	@Test
 	public void testIncreaseBadPropertySumExceeded() {
 		final BadProperty bp = createBadPropertyMock(true, true);
-		when(a.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM);
-		when(a.hasSkill(bp)).thenReturn(true);
+		when(aventurian.getBadPropertySum()).thenReturn(PropertyAventurianManager.MAX_BAD_PROPERTIES_SUM);
+		when(aventurian.hasSkill(bp)).thenReturn(true);
 		toTest.increaseBadProperty(bp);
 
 		verify(bp, never()).increase();
-		verify(a, never()).pay(anyInt());
+		verify(aventurian, never()).pay(anyInt());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseBadPropertyNotOwned() {
 		final BadProperty bp = createBadPropertyMock(true, true);
-		when(a.hasSkill(bp)).thenReturn(false);
+		when(aventurian.hasSkill(bp)).thenReturn(false);
 
 		toTest.increaseBadProperty(bp);
 	}
@@ -284,19 +281,19 @@ public class PropertyAventurianManagerTest {
 	@Test
 	public void testRemovePropertyAdvantageAllConditionsMet() {
 		final Property p = createPropertyMock(true, true);
-		when(a.hasSkill(p)).thenReturn(true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
 
-		verify(a).remove(p);
-		verify(a).refund(anyInt());
+		verify(aventurian).remove(p);
+		verify(aventurian).refund(anyInt());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testRemovePropertyNotOwned() {
 
 		final Property p = createPropertyMock(true, true);
-		when(a.hasSkill(p)).thenReturn(false);
+		when(aventurian.hasSkill(p)).thenReturn(false);
 
 		toTest.removeProperty(p);
 	}
@@ -304,12 +301,12 @@ public class PropertyAventurianManagerTest {
 	@Test
 	public void testRemovePropertyDisadvantageAllConditionsMet() {
 		final Property p = createPropertyMock(true, false);
-		when(a.hasSkill(p)).thenReturn(true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
 
-		verify(a).remove(p);
-		verify(a).pay(anyInt());
+		verify(aventurian).remove(p);
+		verify(aventurian).pay(anyInt());
 	}
 
 	@Test
@@ -318,8 +315,8 @@ public class PropertyAventurianManagerTest {
 
 		toTest.addProperty(p);
 
-		verify(a).add(p);
-		verify(a).pay(anyInt());
+		verify(aventurian).add(p);
+		verify(aventurian).pay(anyInt());
 	}
 
 }

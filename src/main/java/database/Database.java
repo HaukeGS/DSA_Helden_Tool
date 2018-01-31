@@ -13,7 +13,6 @@ import java.util.function.Predicate;
 import aventurian.Aventurian;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.Race;
-import aventurian.RaceConfiguration;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
@@ -34,21 +33,17 @@ public class Database {
 	public List<Language> getLanguages() {
 		return languages;
 	}
-	
+
 	public List<Property> getAdvantages() {
 		return properties.stream().filter(p -> p.isAdvantage()).collect(toList());
 	}
-	
+
 	public List<Property> getDisadvantages() {
 		return properties.stream().filter(p -> p.isDisadvantage()).collect(toList());
 	}
 
-	public RaceConfiguration getRaceConfiguration(Race race) {
-		return races.get(race);
-	}
-
-	public List<Property> getRaceSkills(Race race) {
-		final List<String> skillNames = getRaceConfiguration(race).getSkillNames();
+	public List<Property> getSkillsFor(Race race) {
+		final List<String> skillNames = races.get(race).getSkillNames();
 		return properties.stream().filter(p -> skillNames.contains(p.getName())).collect(toList());
 	}
 
@@ -78,5 +73,13 @@ public class Database {
 				(Aventurian a) -> a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE) >= 13, 5, 50));
 		languages.add(new Language("BlaBla", "sinnlose Sprache", (Aventurian a) -> true, 5, 50));
 
+	}
+
+	public int getHitPointsModFor(Race race) {
+		return races.get(race).getHitPointsMod();
+	}
+
+	public int getMagicResistanceModFor(Race race) {
+		return races.get(race).getMagicResistanceMod();
 	}
 }
