@@ -27,7 +27,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(av -> {
 			if (av.hasSkill(p))
 				throw new IllegalStateException("has already skill " + p.getName());
-			final int cost = p.getCost();
+			final int cost = p.getLearningCost();
 			if (av.getBadPropertySum() + p.getLevel() <= MAX_BAD_PROPERTIES_SUM && p.isAllowed(av)
 					&& av.getPointsOutDisadvantages() + (cost * p.getLevel()) <= MAX_POINTS_OUT_DISADVANTAGES) {
 				refund(cost * p.getLevel());
@@ -40,7 +40,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(av -> {
 			if (av.hasSkill(p))
 				throw new IllegalStateException("has already skill " + p.getName());
-			final int cost = p.getCost();
+			final int cost = p.getLearningCost();
 			if (p.isAllowed(av)) {
 				if (p.isAdvantage() && canPay(cost)
 						&& av.getPointsInAdvantages() + cost <= MAX_POINTS_IN_ADVANTAGES) {
@@ -61,7 +61,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 				throw new IllegalStateException("cannot increase skill " + p.getName());
 			if (p.isIncreasable() && av.getBadPropertySum() + 1 <= MAX_BAD_PROPERTIES_SUM) {
 				p.increase();
-				pay(p.getCost());
+				pay(p.getLearningCost());
 			}
 			
 		});
@@ -83,7 +83,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 				decreaseBadProperty(p);
 			}
 			av.remove(p);
-			refund(p.getCost() * p.getLevel());
+			refund(p.getLearningCost() * p.getLevel());
 			
 		});
 	}
@@ -95,7 +95,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			if (!av.hasSkill(p))
 				throw new IllegalStateException("cannot decrease skill which is not owned: " + p.getName());
 			p.decrease();
-			refund(p.getCost());
+			refund(p.getLearningCost());
 			
 		});
 	}
@@ -104,7 +104,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(av -> {
 			if (!av.hasSkill(p))
 				throw new IllegalStateException("cannot remove skill " + p.getName());
-			final int refund = p.getCost();
+			final int refund = p.getLearningCost();
 			if (p.isAdvantage()) {
 				refund(refund);
 			} else {

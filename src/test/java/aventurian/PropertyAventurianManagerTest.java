@@ -50,7 +50,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(p.isAdvantage()).thenReturn(isAdvantage);
 		when(p.isDisadvantage()).thenReturn(!isAdvantage);
 		when(p.getName()).thenReturn("testProperty");
-		when(p.getCost()).thenReturn(200);
+		when(p.getLearningCost()).thenReturn(200);
 		return p;
 	}
 
@@ -137,7 +137,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(p.isAllowed(aventurian)).thenReturn(isAllowed);
 		when(p.isIncreasable()).thenReturn(isIncreasable);
 		when(p.getLevel()).thenReturn(5);
-		when(p.getCost()).thenReturn(50);
+		when(p.getLearningCost()).thenReturn(50);
 		when(p.getName()).thenReturn("testBadProperty");
 		return p;
 	}

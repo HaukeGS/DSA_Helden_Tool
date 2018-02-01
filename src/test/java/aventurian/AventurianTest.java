@@ -323,12 +323,12 @@ public class AventurianTest {
 	public void testGetPointsInAdvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsInAdvantages());
 		final Property p = mock(Property.class);
-		when(p.getCost()).thenReturn(200);
+		when(p.getLearningCost()).thenReturn(200);
 		when(p.isAdvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsInAdvantages());
 		final Property p2 = mock(Property.class);
-		when(p2.getCost()).thenReturn(300);
+		when(p2.getLearningCost()).thenReturn(300);
 		when(p2.isAdvantage()).thenReturn(true);
 		toTest.add(p2);
 		assertEquals(500, toTest.getPointsInAdvantages());
@@ -338,13 +338,13 @@ public class AventurianTest {
 	public void testGetPointsOutDisadvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsOutDisadvantages());
 		final Property p = mock(Property.class);
-		when(p.getCost()).thenReturn(200);
+		when(p.getLearningCost()).thenReturn(200);
 		when(p.isDisadvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsOutDisadvantages());
 
 		final BadProperty bp = mock(BadProperty.class);
-		when(bp.getCost()).thenReturn(50);
+		when(bp.getLearningCost()).thenReturn(50);
 		when(bp.getLevel()).thenReturn(5);
 
 		toTest.add(bp);

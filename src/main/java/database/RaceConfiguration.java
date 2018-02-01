@@ -2,7 +2,7 @@ package database;
 
 import java.util.List;
 
-public class RaceConfiguration {
+ class RaceConfiguration {
 	
 	private final int hitPointsMod;
 	private final int magicResistanceMod;
@@ -10,7 +10,7 @@ public class RaceConfiguration {
 	
 	
 
-	public RaceConfiguration(int hitPointsMod, int magicResistanceMod, List<String> skillNames) {
+	 RaceConfiguration(int hitPointsMod, int magicResistanceMod, List<String> skillNames) {
 		this.hitPointsMod = hitPointsMod;
 		this.magicResistanceMod = magicResistanceMod;
 		this.skillNames = skillNames;

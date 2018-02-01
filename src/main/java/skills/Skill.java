@@ -17,15 +17,17 @@ public abstract class Skill {
 	private final Consumer<Aventurian> effectOnGain;
 	private final Consumer<Aventurian> effectOnLose;
 	private final Predicate<Aventurian> requirement;
+	protected final int cost;
 	private final boolean isRacialSkill;
 
 	public Skill(String name, String description, Consumer<Aventurian> effectOnGain, Consumer<Aventurian> effectOnLose,
-			Predicate<Aventurian> requirement) {
+			Predicate<Aventurian> requirement, int cost) {
 		this.name = name;
 		this.description = description;
 		this.effectOnGain = effectOnGain;
 		this.effectOnLose = effectOnLose;
 		this.requirement = requirement;
+		this.cost = cost;
 		this.isRacialSkill = false;
 	}
 
@@ -35,6 +37,10 @@ public abstract class Skill {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public int getLearningCost() {
+		return cost;
 	}
 
 	public void gain(Aventurian t) {

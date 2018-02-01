@@ -107,12 +107,12 @@ public class Aventurian extends Observable {
 	}
 
 	int getPointsInAdvantages() {
-		return getStreamOfProperties().filter((p) -> p.isAdvantage()).mapToInt(Property::getCost).sum();
+		return getStreamOfProperties().filter((p) -> p.isAdvantage()).mapToInt(Property::getLearningCost).sum();
 	}
 
 	int getPointsOutDisadvantages() {
-		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).mapToInt(Property::getCost).sum()
-				+ getStreamOfBadProperties().mapToInt((p) -> p.getCost() * p.getLevel()).sum();
+		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).mapToInt(Property::getLearningCost).sum()
+				+ getStreamOfBadProperties().mapToInt((p) -> p.getLearningCost() * p.getLevel()).sum();
 	}
 
 	boolean hasSkill(Skill skill) {

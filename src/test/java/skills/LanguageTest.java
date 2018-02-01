@@ -156,7 +156,7 @@ public class LanguageTest {
 	@Test
 	public void testIsDecreasableNativeTongue() {
 		toTest.setNativeTongue(true);
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Language.NATIVE_TONGUE_LEVEL; i++) {
 			toTest.increase();
 		}
 		assertTrue(toTest.isDecreasable());
