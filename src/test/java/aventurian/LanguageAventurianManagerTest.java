@@ -30,7 +30,7 @@ public class LanguageAventurianManagerTest extends BaseTest{
 	@Before
 	public void setUp() throws Exception {
 		when(aventurian.canPay(anyInt())).thenReturn(true);
-		toTest = new LanguageAventurianManager(Optional.of(aventurian), db);
+		toTest = new LanguageAventurianManager(Optional.of(aventurian), mockedDatabase);
 	}
 
 	@Test(expected = IllegalStateException.class)

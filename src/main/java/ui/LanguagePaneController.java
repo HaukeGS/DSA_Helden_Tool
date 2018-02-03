@@ -6,7 +6,6 @@ import java.util.List;
 
 import aventurian.Aventurian;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -67,9 +66,6 @@ public class LanguagePaneController extends PaneController {
 	}
 
 	private void prepareUnAssignedListView() {
-		final ObservableList<Language> l = FXCollections.observableArrayList(db.getLanguages());
-		lvUnAssignedLanguages.setItems(l);
-
 		lvUnAssignedLanguages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
 					btnAssignLanguage.setDisable(newValue == null);

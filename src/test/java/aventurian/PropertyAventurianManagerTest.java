@@ -28,7 +28,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	@Before
 	public void setUp() throws Exception {
 		when(aventurian.canPay(anyInt())).thenReturn(true);
-		toTest = new PropertyAventurianManager(Optional.of(aventurian), db);
+		toTest = new PropertyAventurianManager(Optional.of(aventurian), mockedDatabase);
 	}
 
 	@Test

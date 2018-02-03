@@ -15,16 +15,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import database.Database;
 import skills.BadProperty;
 import skills.Language;
 import skills.Property;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AventurianManagerTest {
+public class AventurianManagerTest extends BaseTest {
 	AventurianManager toTest;
-	@Mock
-	Aventurian a;
 	@Mock
 	AttributesAventurianManager attributes;
 	@Mock
@@ -33,12 +30,10 @@ public class AventurianManagerTest {
 	PropertyAventurianManager properties;
 	@Mock
 	RaceAventurianManager races;
-	@Mock
-	Database db;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManager(Optional.of(a), attributes, languages, properties, races, db);
+		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races, mockedDatabase);
 	}
 	
 	@Test
@@ -46,6 +41,7 @@ public class AventurianManagerTest {
 		final Observer obs = mock(Observer.class);
 		toTest.registerObserver(obs);
 		toTest.createNewAventurian("test", 16500, Race.ORK);
+		verify(mockedDatabase).reset();
 		verify(attributes).changeAventurian(any(Optional.class));
 		verify(languages).changeAventurian(any(Optional.class));
 		verify(properties).changeAventurian(any(Optional.class));
@@ -135,7 +131,7 @@ public class AventurianManagerTest {
 	@Test
 	public void setName() {
 		toTest.setName("");
-		verify(a).setName("");
+		verify(mockedAventurian).setName("");
 
 	}
 

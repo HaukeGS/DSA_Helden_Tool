@@ -27,38 +27,38 @@ public class RaceAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new RaceAventurianManager(Optional.of(aventurian), db, mockedPropertyManager);
+		toTest = new RaceAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedPropertyManager);
 
 	}
 
 	@Test
 	public void testBuyRaceModsHitAndMagicPositive() {
-		when(db.getHitPointsModFor(any(Race.class))).thenReturn(11);
-		when(db.getMagicResistanceModFor(any(Race.class))).thenReturn(5);
-		when(db.getSkillsFor(any(Race.class))).thenReturn(Arrays.asList(mock(Property.class), mock(Property.class)));
+		when(mockedDatabase.getHitPointsModFor(any(Race.class))).thenReturn(11);
+		when(mockedDatabase.getMagicResistanceModFor(any(Race.class))).thenReturn(5);
+		when(mockedDatabase.getSkillsFor(any(Race.class))).thenReturn(Arrays.asList(mock(Property.class), mock(Property.class)));
 
-		when(aventurian.canPay(any(Integer.class))).thenReturn(true);
+		when(mockedAventurian.canPay(any(Integer.class))).thenReturn(true);
 
 		toTest.buyRaceMods(Race.THORWALAN);
 
-		verify(aventurian, atLeastOnce()).canPay(any(Integer.class));
-		verify(aventurian, times(2)).pay(any(Integer.class));
-		verify(aventurian).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, 5);
-		verify(aventurian).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, 11);
+		verify(mockedAventurian, atLeastOnce()).canPay(any(Integer.class));
+		verify(mockedAventurian, times(2)).pay(any(Integer.class));
+		verify(mockedAventurian).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, 5);
+		verify(mockedAventurian).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, 11);
 		verify(mockedPropertyManager, atLeastOnce()).addProperty(any(Property.class));
 	}
 
 	@Test
 	public void testBuyRaceModsHitAndMagicNegative() {
-		when(db.getHitPointsModFor(any(Race.class))).thenReturn(-11);
-		when(db.getMagicResistanceModFor(any(Race.class))).thenReturn(-5);
-		when(db.getSkillsFor(any(Race.class))).thenReturn(Arrays.asList(mock(Property.class), mock(Property.class)));
+		when(mockedDatabase.getHitPointsModFor(any(Race.class))).thenReturn(-11);
+		when(mockedDatabase.getMagicResistanceModFor(any(Race.class))).thenReturn(-5);
+		when(mockedDatabase.getSkillsFor(any(Race.class))).thenReturn(Arrays.asList(mock(Property.class), mock(Property.class)));
 
 		toTest.buyRaceMods(Race.THORWALAN);
 
-		verify(aventurian, times(2)).refund(any(Integer.class));
-		verify(aventurian).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, 5);
-		verify(aventurian).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, 11);
+		verify(mockedAventurian, times(2)).refund(any(Integer.class));
+		verify(mockedAventurian).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, 5);
+		verify(mockedAventurian).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, 11);
 		verify(mockedPropertyManager, atLeastOnce()).addProperty(any(Property.class));
 	}
 

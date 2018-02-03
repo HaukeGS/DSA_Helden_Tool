@@ -6,8 +6,8 @@ import database.Database;
 
 public class BaseTest {
 	@Mock
-	protected Aventurian aventurian;
+	protected Aventurian mockedAventurian;
 	@Mock
-	protected Database db;
+	protected Database mockedDatabase;
 
 }

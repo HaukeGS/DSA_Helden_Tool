@@ -54,6 +54,7 @@ public class AventurianManager extends BaseAventurianManager {
 	}
 
 	public void createNewAventurian(String name, int startingAP, Race race) {
+		database.reset();
 		this.aventurian.ifPresent(a -> a.deleteObservers());
 		this.aventurian = Optional.of(new Aventurian(name, startingAP, race));
 		attributesManager.changeAventurian(aventurian);
