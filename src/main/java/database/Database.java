@@ -76,7 +76,7 @@ public class Database {
 
 	private void initRaces() {
 		races = new HashMap<>();
-		races.put(Race.MIDDLEGUY, new RaceConfiguration(10, -4, Arrays.asList("Gestank")));
+		races.put(Race.MIDDLEGUY, new RaceConfiguration(10, -4, new ArrayList<>()));
 		races.put(Race.THORWALAN, new RaceConfiguration(11, -5, Arrays.asList("Jaehzorn")));
 	}
 
