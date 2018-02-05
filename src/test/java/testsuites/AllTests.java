@@ -21,6 +21,7 @@ import ui.AttributePaneTest;
 import ui.LanguagePaneTest;
 import ui.MenuTest;
 import ui.NavigatorTest;
+import ui.PropertyPaneTest;
 
 @RunWith(Categories.class)
 // @Categories.ExcludeCategory(UITest.class)
@@ -28,7 +29,7 @@ import ui.NavigatorTest;
 		AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
-		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class })
+		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class, PropertyPaneTest.class })
 public class AllTests {
 
 }
