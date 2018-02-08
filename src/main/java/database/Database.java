@@ -22,6 +22,7 @@ public class Database {
 	private static final Predicate<Aventurian> NOREQUIREMENT = (Aventurian a) -> true;
 	private static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
 	};
+	private static final RaceConfiguration DEFAULT_RACECONFIGURATION = new RaceConfiguration(0, 0, new ArrayList<>());
 	private List<Property> properties;
 	private List<Language> languages;
 	private Map<Race, RaceConfiguration> races;
@@ -45,7 +46,7 @@ public class Database {
 	}
 
 	public List<Property> getSkillsFor(Race race) {
-		final List<String> skillNames = races.get(race).getSkillNames();
+		final List<String> skillNames = races.getOrDefault(race, DEFAULT_RACECONFIGURATION).getSkillNames();
 		return properties.stream().filter(p -> skillNames.contains(p.getName())).collect(toList());
 	}
 
@@ -81,10 +82,10 @@ public class Database {
 	}
 
 	public int getHitPointsModFor(Race race) {
-		return races.get(race).getHitPointsMod();
+		return races.getOrDefault(race, DEFAULT_RACECONFIGURATION).getHitPointsMod();
 	}
 
 	public int getMagicResistanceModFor(Race race) {
-		return races.get(race).getMagicResistanceMod();
+		return races.getOrDefault(race, DEFAULT_RACECONFIGURATION).getMagicResistanceMod();
 	}
 }

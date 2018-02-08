@@ -17,19 +17,38 @@ import skills.Property;
 public class DatabaseTest {
 
 	private Database toTest;
-	
+
 	@Before
 	public void setUp() {
 		toTest = new Database();
 	}
-	
+
 	@Test
 	public void testGetRaceSkills() {
-		List<Property> raceSkills = toTest.getSkillsFor(Race.MIDDLEGUY);
+		List<Property> raceSkills = toTest.getSkillsFor(null);
 		assertTrue(raceSkills.isEmpty());
+
 		raceSkills = toTest.getSkillsFor(Race.THORWALAN);
 		assertEquals(raceSkills.size(), 1);
-		
+
+	}
+
+	@Test
+	public void testGetRaceHitPointMod() {
+		int hpMod = toTest.getHitPointsModFor(null);
+		assertEquals(0, hpMod);
+
+		hpMod = toTest.getHitPointsModFor(Race.THORWALAN);
+		assertEquals(11, hpMod);
+	}
+	
+	@Test
+	public void testGetRaceMagicResistanceMod() {
+		int mrMod = toTest.getMagicResistanceModFor(null);
+		assertEquals(0, mrMod);
+
+		mrMod = toTest.getMagicResistanceModFor(Race.THORWALAN);
+		assertEquals(-5, mrMod);
 	}
 
 }

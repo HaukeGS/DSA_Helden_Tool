@@ -14,6 +14,7 @@ import aventurian.PropertyAventurianManagerTest;
 import aventurian.RaceAventurianManagerTest;
 import aventurian.SecondaryAttributeHelperTest;
 import aventurian.SecondaryAttributesTest;
+import database.DatabaseTest;
 import skills.BadPropertyTest;
 import skills.LanguageTest;
 import skills.PropertyTest;
@@ -24,12 +25,12 @@ import ui.NavigatorTest;
 import ui.PropertyPaneTest;
 
 @RunWith(Categories.class)
-// @Categories.ExcludeCategory(UITest.class)
 @Suite.SuiteClasses({ PrimaryAttributesTest.class, SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
 		AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
-		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class, PropertyPaneTest.class })
+		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class,
+		PropertyPaneTest.class, DatabaseTest.class })
 public class AllTests {
 
 }
