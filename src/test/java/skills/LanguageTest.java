@@ -1,6 +1,5 @@
 package skills;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,136 +21,6 @@ public class LanguageTest {
 		this.toTest = new Language("testLanguage", "description", requirement,
 				5, 50);
 	}
-
-	@Test
-	public void testIncrease() {
-		assertEquals(1, toTest.getLevel());
-		toTest.increase();
-		assertEquals(2, toTest.getLevel());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testIncreaseExceedMaximum() {
-		while (toTest.isIncreasable())
-			toTest.increase();
-		toTest.increase();
-	}
-
-	@Test
-	public void testDecrease() {
-		// first increase to be able to decrease
-		toTest.increase();
-		assertEquals(2, toTest.getLevel());
-		toTest.decrease();
-		assertEquals(1, toTest.getLevel());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testDecreaseExceedMinimum() {
-		toTest.decrease();
-	}
-
-	@Test
-	public void testGetLevel() {
-		assertEquals(1, toTest.getLevel());
-	}
-
-	@Test
-	public void testGetUpgradeCost() {
-		assertEquals(1, toTest.getLevel());
-		assertEquals(100, toTest.getUpgradeCost());
-
-		toTest.increase();
-		assertEquals(2, toTest.getLevel());
-		assertEquals(150, toTest.getUpgradeCost());
-
-		toTest.increase();
-		assertEquals(3, toTest.getLevel());
-		assertEquals(200, toTest.getUpgradeCost());
-
-		toTest.increase();
-		assertEquals(4, toTest.getLevel());
-		assertEquals(250, toTest.getUpgradeCost());
-
-	}
-	
-	@Test
-	public void testGetTotalCost() {
-		assertEquals(1, toTest.getLevel());
-		assertEquals(50, toTest.getTotalCost());
-
-		toTest.increase();
-		assertEquals(2, toTest.getLevel());
-		assertEquals(150, toTest.getTotalCost());
-
-		toTest.increase();
-		assertEquals(3, toTest.getLevel());
-		assertEquals(300, toTest.getTotalCost());
-
-		toTest.increase();
-		assertEquals(4, toTest.getLevel());
-		assertEquals(500, toTest.getTotalCost());
-		
-		toTest.increase();
-		assertEquals(5, toTest.getLevel());
-		assertEquals(750, toTest.getTotalCost());
-
-	}
-
-
-	@Test
-	public void testGetDowngradeCost() {
-		while (toTest.isIncreasable())
-			toTest.increase();
-
-		assertEquals(5, toTest.getLevel());
-		assertEquals(250, toTest.getDowngradeRefund());
-
-		toTest.decrease();
-		assertEquals(4, toTest.getLevel());
-		assertEquals(200, toTest.getDowngradeRefund());
-
-		toTest.decrease();
-		assertEquals(3, toTest.getLevel());
-		assertEquals(150, toTest.getDowngradeRefund());
-
-		toTest.decrease();
-		assertEquals(2, toTest.getLevel());
-		assertEquals(100, toTest.getDowngradeRefund());
-	}
-
-	@Test
-	public void testGetLearningCost() {
-		assertEquals(50, toTest.getLearningCost());
-	}
-
-	@Test
-	public void testSetNativeTongue() {
-		toTest.setNativeTongue(false);
-		assertFalse(toTest.isNativeTongue());
-
-		toTest.setNativeTongue(true);
-		assertTrue(toTest.isNativeTongue());
-	}
-
-	@Test
-	public void testIsIncreasable() {
-		assertTrue(toTest.isIncreasable());
-
-		for (int i = 1; i < 5; i++)
-			toTest.increase();
-
-		assertFalse(toTest.isIncreasable());
-	}
-
-	@Test
-	public void testIsDecreasable() {
-		assertFalse(toTest.isDecreasable());
-
-		toTest.increase();
-
-		assertTrue(toTest.isDecreasable());
-	}
 	
 	@Test
 	public void testIsDecreasableNativeTongue() {
@@ -164,6 +33,15 @@ public class LanguageTest {
 		toTest.decrease();
 		
 		assertFalse(toTest.isDecreasable());
+	}
+
+	@Test
+	public void testSetNativeTongue() {
+		toTest.setNativeTongue(false);
+		assertFalse(toTest.isNativeTongue());
+
+		toTest.setNativeTongue(true);
+		assertTrue(toTest.isNativeTongue());
 	}
 
 }

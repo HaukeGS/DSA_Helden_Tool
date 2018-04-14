@@ -10,7 +10,7 @@ public class Language extends IncreasableSkill {
 	private boolean isNativeTongue;
 
 	public Language(String name, String description, Predicate<Aventurian> requirement, int maxLevel, int cost) {
-		super(name, description, EMPTY, EMPTY, requirement, cost, maxLevel, 1);
+		super(name, description, EMPTY, EMPTY, requirement, cost, 1, maxLevel);
 		this.isNativeTongue = false;
 	}
 

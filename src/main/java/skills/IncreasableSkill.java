@@ -11,8 +11,8 @@ public abstract class IncreasableSkill extends Skill {
 	protected final int minLevel;
 
 	public IncreasableSkill(String name, String description, Consumer<Aventurian> effectOnGain,
-			Consumer<Aventurian> effectOnLose, Predicate<Aventurian> requirement, int cost, int maxLevel,
-			int minLevel) {
+			Consumer<Aventurian> effectOnLose, Predicate<Aventurian> requirement, int cost, int minLevel,
+			int maxLevel) {
 		super(name, description, effectOnGain, effectOnLose, requirement, cost);
 		this.maxLevel = maxLevel;
 		this.minLevel = minLevel;
@@ -26,7 +26,7 @@ public abstract class IncreasableSkill extends Skill {
 	}
 
 	public void decrease() {
-		if (level <= 1)
+		if (level <= minLevel)
 			throw new IllegalStateException("IncreasableSkill level cannot be less than min level!");
 		level--;
 	}
