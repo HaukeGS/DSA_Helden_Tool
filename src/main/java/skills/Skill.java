@@ -39,7 +39,7 @@ public abstract class Skill {
 		return description;
 	}
 
-	public int getLearningCost() {
+	public int getLearningCosts() {
 		return cost;
 	}
 

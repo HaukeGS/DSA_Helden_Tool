@@ -57,15 +57,15 @@ public class AventurianManagerTest extends BaseTest {
 	}
 
 	@Test
-	public void increaseBadProperty() {
-		toTest.increaseBadProperty(mock(BadProperty.class));
-		verify(properties).increaseBadProperty(any(BadProperty.class));
+	public void increaseProperty() {
+		toTest.increaseProperty(mock(BadProperty.class));
+		verify(properties).increaseProperty(any(BadProperty.class));
 	}
 
 	@Test
-	public void decreaseBadProperty() {
-		toTest.decreaseBadProperty(mock(BadProperty.class));
-		verify(properties).decreaseBadProperty(any(BadProperty.class));
+	public void decreaseProperty() {
+		toTest.decreaseProperty(mock(BadProperty.class));
+		verify(properties).decreaseProperty(any(BadProperty.class));
 	}
 
 	@Test

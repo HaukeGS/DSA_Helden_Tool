@@ -36,13 +36,11 @@ public class Database {
 	}
 
 	public List<Property> getAdvantages() {
-		return properties.stream().filter(p -> !BadProperty.class.isInstance(p)).filter(Property::isAdvantage)
-				.collect(toList());
+		return properties.stream().filter(Property::isAdvantage).collect(toList());
 	}
 
 	public List<Property> getDisadvantages() {
-		return properties.stream().filter(p -> !BadProperty.class.isInstance(p)).filter(Property::isDisadvantage)
-				.collect(toList());
+		return properties.stream().filter(Property::isDisadvantage).collect(toList());
 	}
 
 	public List<Property> getSkillsFor(Race race) {

@@ -44,7 +44,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (l.isDecreasable()) {
 			decreaseLanguage(l);
 		}
-		refund(l.getLearningCost());
+		refund(l.getLearningCosts());
 	}
 
 	private void decreaseLanguageWithoutRefund(Language l) {
@@ -70,7 +70,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(av -> {
 			if (av.hasSkill(l))
 				throw new IllegalStateException("has already skill " + l.getName());
-			final int cost = l.getLearningCost();
+			final int cost = l.getLearningCosts();
 			if (canPay(cost) && l.isAllowed(av)) {
 				av.add(l);
 				pay(cost);

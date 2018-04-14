@@ -9,7 +9,6 @@ import java.util.Optional;
 import javax.xml.bind.JAXBException;
 
 import database.Database;
-import skills.BadProperty;
 import skills.Language;
 import skills.Property;
 
@@ -85,12 +84,8 @@ public class AventurianManager extends BaseAventurianManager {
 		this.propertyManager.addProperty(p);
 	}
 
-	public void increaseBadProperty(BadProperty p) {
-		this.propertyManager.increaseBadProperty(p);
-	}
-
-	public void decreaseBadProperty(BadProperty p) {
-		this.propertyManager.decreaseBadProperty(p);
+	public void increaseProperty(Property p) {
+		this.propertyManager.increaseProperty(p);
 	}
 
 	public void removeProperty(Property p) {
@@ -154,5 +149,9 @@ public class AventurianManager extends BaseAventurianManager {
 		//
 		// final Exception e) { // catches ANY exception e.printStackTrace(); }
 		// }
+	}
+
+	public void decreaseProperty(Property p) {
+		propertyManager.decreaseProperty(p);
 	}
 }

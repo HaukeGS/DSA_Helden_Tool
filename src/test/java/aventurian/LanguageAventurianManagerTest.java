@@ -251,7 +251,7 @@ public class LanguageAventurianManagerTest extends BaseTest{
 		when(l.getName()).thenReturn("testLanguage");
 		when(l.isAllowed(aventurian)).thenReturn(isAllowed);
 		when(l.getLevel()).thenReturn(5);
-		when(l.getLearningCost()).thenReturn(50);
+		when(l.getLearningCosts()).thenReturn(50);
 		when(l.isIncreasable()).thenReturn(isIncreasable);
 		when(l.isDecreasable()).thenReturn(false);
 

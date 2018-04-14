@@ -30,21 +30,29 @@ public abstract class IncreasableSkill extends Skill {
 			throw new IllegalStateException("IncreasableSkill level cannot be less than min level!");
 		level--;
 	}
-	
+
 	public int getUpgradeCost() {
-		return (level + 1) * cost;
+		return (level + 1) * getLearningCosts();
 	}
 
 	public int getDowngradeRefund() {
-		return level * cost;
+		return level * getLearningCosts();
 	}
 
-	public int getTotalCost() {
-		return (level * (level + 1) / 2) * cost;
+	public int getTotalCosts() {
+		return (level * (level + 1) / 2) * getLearningCosts();
 	}
 
 	public int getLevel() {
 		return level;
+	}
+
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+
+	public int getMinLevel() {
+		return minLevel;
 	}
 
 	public boolean isIncreasable() {

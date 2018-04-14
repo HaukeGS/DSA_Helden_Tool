@@ -49,14 +49,14 @@ public class PropertyTest {
 
 	@Test
 	public void testGetCostAdvantages() {
-		assertEquals(100, toTest.getLearningCost());
+		assertEquals(100, toTest.getLearningCosts());
 	}
 	
 	@Test
 	public void testGetCostDisadvantage() {
 		toTest = new Property("testProperty", "testDescription", -100, ON_GAIN,
 				ON_GAIN, REQUIREMENT);
-		assertEquals(100, toTest.getLearningCost());
+		assertEquals(100, toTest.getLearningCosts());
 	}
 
 	@Test

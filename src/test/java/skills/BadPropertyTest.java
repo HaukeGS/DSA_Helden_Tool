@@ -1,6 +1,7 @@
 package skills;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.function.Predicate;
 
@@ -17,57 +18,24 @@ public class BadPropertyTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new BadProperty("testBadProperty", "testDescription", 100,
+		toTest = new BadProperty("testBadProperty", "testDescription", -100,
 				requirement);
 	}
-
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testInvalidCosts() {
+		toTest = new BadProperty("testBadProperty", "testDescription", 100, requirement);
+	}
+	
 	@Test
-	public void testIncrease() {
-		assertEquals(5, toTest.getLevel());
-		toTest.increase();
-		assertEquals(6, toTest.getLevel());
+	public void testIsDisadvantage() {
+		assertTrue(toTest.isDisadvantage());
 	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testIncreaseExceedMaximum() {
-		while (toTest.isIncreasable())
-			toTest.increase();
-		toTest.increase();
-	}
-
+	
 	@Test
-	public void testDecrease() {
-		toTest.increase();
-		assertEquals(6, toTest.getLevel());
-
-		toTest.decrease();
-		assertEquals(5, toTest.getLevel());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testDecreaseExceedMinimum() {
-		toTest.decrease();
-	}
-
-	@Test
-	public void testGetLevel() {
-		assertEquals(5, toTest.getLevel());
-	}
-
-	@Test
-	public void testIsIncreasable() {
-		assertTrue(toTest.isIncreasable());
-		for(int i = 5; i < 12; i++)
-			toTest.increase();
-
-		assertFalse(toTest.isIncreasable());
-	}
-
-	@Test
-	public void testIsDecreasable() {
-		assertFalse(toTest.isDecreasable());
-		toTest.increase();
-		assertTrue(toTest.isDecreasable());
+	public void testCorrectMinAndMaxLevel() {
+		assertEquals(5, toTest.getMinLevel());
+		assertEquals(12, toTest.getMaxLevel());
 	}
 
 }

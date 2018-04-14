@@ -323,12 +323,12 @@ public class AventurianTest {
 	public void testGetPointsInAdvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsInAdvantages());
 		final Property p = mock(Property.class);
-		when(p.getLearningCost()).thenReturn(200);
+		when(p.getLearningCosts()).thenReturn(200);
 		when(p.isAdvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsInAdvantages());
 		final Property p2 = mock(Property.class);
-		when(p2.getLearningCost()).thenReturn(300);
+		when(p2.getLearningCosts()).thenReturn(300);
 		when(p2.isAdvantage()).thenReturn(true);
 		toTest.add(p2);
 		assertEquals(500, toTest.getPointsInAdvantages());
@@ -338,13 +338,13 @@ public class AventurianTest {
 	public void testGetPointsOutDisadvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsOutDisadvantages());
 		final Property p = mock(Property.class);
-		when(p.getLearningCost()).thenReturn(200);
+		when(p.getLearningCosts()).thenReturn(200);
 		when(p.isDisadvantage()).thenReturn(true);
 		toTest.add(p);
 		assertEquals(200, toTest.getPointsOutDisadvantages());
 
 		final BadProperty bp = mock(BadProperty.class);
-		when(bp.getLearningCost()).thenReturn(50);
+		when(bp.getLearningCosts()).thenReturn(50);
 		when(bp.getLevel()).thenReturn(5);
 
 		toTest.add(bp);
@@ -377,5 +377,37 @@ public class AventurianTest {
 	public void testGetSecondaryAttribute() {
 		toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 		verify(mockedSecondaryAttributes).getValueOf(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+	
+	@Test
+	public void testGetDisadvantages() {
+		final Property disadvantage = mock(Property.class);
+		when(disadvantage.isDisadvantage()).thenReturn(true);
+		final Property advantage = mock(Property.class);
+		when(advantage.isDisadvantage()).thenReturn(false);
+		final Property badProperty = mock(BadProperty.class);
+		when(badProperty.isDisadvantage()).thenReturn(true);
+		
+		toTest.add(disadvantage);
+		toTest.add(advantage);
+		toTest.add(badProperty);
+		
+		assertEquals(2, toTest.getDisadvantages().size());
+	}
+	
+	@Test
+	public void testGetAdvantages() {
+		final Property disadvantage = mock(Property.class);
+		when(disadvantage.isAdvantage()).thenReturn(false);
+		final Property advantage = mock(Property.class);
+		when(advantage.isAdvantage()).thenReturn(true);
+		final Property badProperty = mock(BadProperty.class);
+		when(badProperty.isAdvantage()).thenReturn(false);
+		
+		toTest.add(disadvantage);
+		toTest.add(advantage);
+		toTest.add(badProperty);
+		
+		assertEquals(1, toTest.getAdvantages().size());
 	}
 }

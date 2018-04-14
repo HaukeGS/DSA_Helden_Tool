@@ -19,7 +19,7 @@ public class Property extends IncreasableSkill {
 	
 
 	public boolean isAdvantage() {
-		return cost > 0;
+		return cost >= 0;
 	}
 
 	public boolean isDisadvantage() {
@@ -27,7 +27,7 @@ public class Property extends IncreasableSkill {
 	}
 
 	@Override
-	public int getLearningCost() {
+	public int getLearningCosts() {
 		if (isAdvantage())
 			return cost;
 		return cost * -1;

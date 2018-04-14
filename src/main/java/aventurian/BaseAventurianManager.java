@@ -3,9 +3,10 @@ package aventurian;
 import java.util.Optional;
 
 import database.Database;
+import skills.Skill;
 
-abstract class BaseAventurianManager {	
-	
+abstract class BaseAventurianManager {
+
 	protected final Database database;
 	protected Optional<Aventurian> aventurian;
 	protected final LevelCostCalculator calculator;
@@ -16,7 +17,7 @@ abstract class BaseAventurianManager {
 		this.database = db;
 
 	}
-	
+
 	protected void changeAventurian(Optional<Aventurian> a) {
 		this.aventurian = a;
 	}
@@ -33,4 +34,11 @@ abstract class BaseAventurianManager {
 		aventurian.ifPresent(a -> a.refund(refund));
 	}
 
+	protected final void remove(Skill s) {
+		aventurian.ifPresent(a -> a.remove(s));
+	}
+
+	protected final void add(Skill s) {
+		aventurian.ifPresent(a -> a.add(s));
+	}
 }

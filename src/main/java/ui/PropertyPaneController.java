@@ -6,10 +6,18 @@ import java.util.List;
 
 import aventurian.Aventurian;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import skills.Property;
 
 public class PropertyPaneController extends PaneController {
@@ -73,6 +81,7 @@ public class PropertyPaneController extends PaneController {
 				m.removeProperty(p);
 			}
 		});
+		lvAssignedAdvantages.setCellFactory((ListView<Property> list) -> new PropertyCell());
 	}
 
 	private void prepareUnassignedAdvantages() {
@@ -100,6 +109,7 @@ public class PropertyPaneController extends PaneController {
 				m.removeProperty(p);
 			}
 		});
+		lvAssignedDisadvantages.setCellFactory((ListView<Property> list) -> new PropertyCell());
 	}
 
 	private void prepareUnassignedDisadvantages() {
@@ -134,6 +144,47 @@ public class PropertyPaneController extends PaneController {
 		final List<Property> unassignedDisadvantages = db.getDisadvantages().stream()
 				.filter(p -> !assignedDisadvantages.contains(p)).collect(toList());
 		lvUnassignedDisadvantages.setItems(FXCollections.observableArrayList(unassignedDisadvantages));
+	}
+
+	private class PropertyCell extends ListCell<Property> {
+		HBox hbox = new HBox();
+		Label nameLabel = new Label("(empty)");
+		Label levelLabel = new Label("1");
+		Pane pane = new Pane();
+		Button increaseButton = new Button("+");
+		Button decreaseButton = new Button("-");
+
+		public PropertyCell() {
+			hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
+			hbox.setSpacing(5);
+			hbox.setAlignment(Pos.CENTER);
+			HBox.setHgrow(pane, Priority.ALWAYS);
+			decreaseButton.setPrefWidth(25);
+			increaseButton.setPrefWidth(25);
+			decreaseButton.setOnAction((ActionEvent e) -> m.decreaseProperty(getItem()));
+			increaseButton.setOnAction((ActionEvent e) -> m.increaseProperty(getItem()));
+		}
+
+		@Override
+		protected void updateItem(Property item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null); // No text in label of super class
+			if (empty || item == null) {
+				setGraphic(null);
+				setTooltip(null);
+			} else if (item.getMinLevel() == item.getMaxLevel()) {
+				nameLabel.setText(item.getName());
+				setTooltip(new Tooltip(item.getDescription()));
+				setGraphic(nameLabel);
+			} else {
+				nameLabel.setText(item.getName());
+				levelLabel.setText(String.valueOf(item.getLevel()));
+				increaseButton.setDisable(!item.isIncreasable());
+				decreaseButton.setDisable(!item.isDecreasable());
+				setTooltip(new Tooltip(item.getDescription()));
+				setGraphic(hbox);
+			}
+		}
 	}
 
 }
