@@ -13,9 +13,12 @@ import org.junit.Test;
 import aventurian.Aventurian;
 
 public class IncreasableSkillTest {
-	
+
+	private static final int COSTS = 50;
+	private static final int MIN_LEVEL = 1;
+	private static final int MAX_LEVEL = 5;
 	IncreasableSkill toTest;
-	private final Predicate<Aventurian> requirement = (Aventurian a) -> {
+	private static final Predicate<Aventurian> REQUIREMENT = (Aventurian a) -> {
 		return true;
 	};
 	private static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
@@ -23,7 +26,7 @@ public class IncreasableSkillTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new IncreasableSkill("test", "description", EMPTY, EMPTY, requirement, 50, 1, 5) {
+		toTest = new IncreasableSkill("test", "description", EMPTY, EMPTY, REQUIREMENT, COSTS, MIN_LEVEL, MAX_LEVEL) {
 		};
 	}
 
@@ -78,7 +81,7 @@ public class IncreasableSkillTest {
 		assertEquals(250, toTest.getUpgradeCost());
 
 	}
-	
+
 	@Test
 	public void testGetTotalCost() {
 		assertEquals(1, toTest.getLevel());
@@ -95,13 +98,12 @@ public class IncreasableSkillTest {
 		toTest.increase();
 		assertEquals(4, toTest.getLevel());
 		assertEquals(500, toTest.getTotalCosts());
-		
+
 		toTest.increase();
 		assertEquals(5, toTest.getLevel());
 		assertEquals(750, toTest.getTotalCosts());
 
 	}
-
 
 	@Test
 	public void testGetDowngradeCost() {
@@ -126,14 +128,16 @@ public class IncreasableSkillTest {
 
 	@Test
 	public void testGetLearningCost() {
-		assertEquals(50, toTest.getLearningCosts());
+		assertEquals(COSTS, toTest.getLearningCosts());
+		toTest.increase();
+		assertEquals(COSTS, toTest.getLearningCosts());
 	}
 
 	@Test
 	public void testIsIncreasable() {
 		assertTrue(toTest.isIncreasable());
 
-		for (int i = 1; i < 5; i++)
+		for (int i = 1; i < MAX_LEVEL; i++)
 			toTest.increase();
 
 		assertFalse(toTest.isIncreasable());
