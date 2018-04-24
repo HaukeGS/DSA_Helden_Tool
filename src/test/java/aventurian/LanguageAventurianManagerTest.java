@@ -95,14 +95,10 @@ public class LanguageAventurianManagerTest extends BaseTest{
 		correctOrder.verify(aventurian).add(l);
 	}
 
-	@Test
+	@Test (expected = IllegalStateException.class)
 	public void testAddLanguageAsNativeTongueNotAllowed() {
 		final Language l = createLanguageMock(false, true);
 		toTest.addLanguageAsNativeTongue(l);
-
-		verify(aventurian, never()).add(l);
-		verify(l, never()).increase();
-		verify(l, never()).setNativeTongue(true);
 	}
 
 	@Test

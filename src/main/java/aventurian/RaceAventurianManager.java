@@ -15,17 +15,18 @@ public class RaceAventurianManager extends BaseAventurianManager {
 	}
 
 	void buyRaceMods(Race race) {
+		final int magicResistanceMod = database.getMagicResistanceModFor(race);
+		if (magicResistanceMod > 0)
+			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, magicResistanceMod);
+		else
+			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, Math.abs(magicResistanceMod));
+		
 		final int hitPointsMod = database.getHitPointsModFor(race);
 		if (hitPointsMod > 0)
 			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, hitPointsMod);
 		else
 			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, Math.abs(hitPointsMod));
 
-		final int magicResistanceMod = database.getMagicResistanceModFor(race);
-		if (magicResistanceMod > 0)
-			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, magicResistanceMod);
-		else
-			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, Math.abs(magicResistanceMod));
 
 		database.getSkillsFor(race).forEach(propertyManager::addProperty);
 	}

@@ -66,19 +66,19 @@ public class IncreasableSkillTest {
 	@Test
 	public void testGetUpgradeCost() {
 		assertEquals(1, toTest.getLevel());
-		assertEquals(100, toTest.getUpgradeCost());
+		assertEquals(100, toTest.getUpgradeCosts());
 
 		toTest.increase();
 		assertEquals(2, toTest.getLevel());
-		assertEquals(150, toTest.getUpgradeCost());
+		assertEquals(150, toTest.getUpgradeCosts());
 
 		toTest.increase();
 		assertEquals(3, toTest.getLevel());
-		assertEquals(200, toTest.getUpgradeCost());
+		assertEquals(200, toTest.getUpgradeCosts());
 
 		toTest.increase();
 		assertEquals(4, toTest.getLevel());
-		assertEquals(250, toTest.getUpgradeCost());
+		assertEquals(250, toTest.getUpgradeCosts());
 
 	}
 

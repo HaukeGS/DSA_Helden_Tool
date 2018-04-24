@@ -31,7 +31,7 @@ public abstract class IncreasableSkill extends Skill {
 		level--;
 	}
 
-	public int getUpgradeCost() {
+	public int getUpgradeCosts() {
 		return (level + 1) * getLearningCosts();
 	}
 

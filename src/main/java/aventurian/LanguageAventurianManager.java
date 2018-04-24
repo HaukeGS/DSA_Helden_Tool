@@ -13,16 +13,15 @@ class LanguageAventurianManager extends BaseAventurianManager {
 
 	void addLanguageAsNativeTongue(Language l) {
 		aventurian.ifPresent(av -> {
+			checkForBasicRequirements(l);
 			if (av.hasSkill(l))
 				throw new IllegalStateException("has already skill " + l.getName());
 			if (l.isNativeTongue())
 				throw new IllegalStateException("language is already native tongue" + l.getName());
-			if (l.isAllowed(av)) {
-				while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
 					l.increase();
 				l.setNativeTongue(true);
 				av.add(l);
-			}			
 		});
 	}
 
@@ -84,7 +83,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 				throw new IllegalStateException("cannot further increase level of " + l.getName());
 			if (!av.hasSkill(l))
 				throw new IllegalStateException("cannot increase skill " + l.getName());
-			final int cost = l.getUpgradeCost();
+			final int cost = l.getUpgradeCosts();
 			if (canPay(cost) && l.isAllowed(av) && l.isIncreasable()) {
 				l.increase();
 				pay(cost);

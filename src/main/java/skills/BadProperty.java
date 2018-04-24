@@ -25,7 +25,7 @@ public class BadProperty extends Property {
 	}
 
 	@Override
-	public int getUpgradeCost() {
+	public int getUpgradeCosts() {
 		return getLearningCosts();
 	}
 }

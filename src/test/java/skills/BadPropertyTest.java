@@ -47,9 +47,9 @@ public class BadPropertyTest {
 
 	@Test
 	public void testGetUpgradeCosts() {
-		assertEquals(-COST, toTest.getUpgradeCost());
+		assertEquals(-COST, toTest.getUpgradeCosts());
 		toTest.increase();
-		assertEquals(-COST, toTest.getUpgradeCost());
+		assertEquals(-COST, toTest.getUpgradeCosts());
 	}
 	
 	@Test
