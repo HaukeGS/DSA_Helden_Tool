@@ -118,6 +118,10 @@ public class Aventurian extends Observable {
 	boolean hasSkill(Skill skill) {
 		return allSkills.stream().anyMatch((s) -> s.equals(skill));
 	}
+	
+	public boolean hasSkill(String skillName) {
+		return allSkills.stream().anyMatch((s) -> s.getName().equals(skillName));
+	}
 
 	public int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();

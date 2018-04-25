@@ -235,16 +235,6 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		toTest.increaseProperty(bp);
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testIncreaseBadPropertyTooExpensive() {
-		final BadProperty bp = createBadPropertyMock(true, true);
-
-		when(aventurian.canPay(anyInt())).thenReturn(false);
-		when(aventurian.hasSkill(bp)).thenReturn(true);
-
-		toTest.increaseProperty(bp);
-	}
-
 	@Test
 	public void testRemovePropertyAdvantageAllConditionsMet() {
 		final Property p = createPropertyMock(true, true);
