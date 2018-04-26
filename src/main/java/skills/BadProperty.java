@@ -28,4 +28,9 @@ public class BadProperty extends Property {
 	public int getUpgradeCosts() {
 		return getLearningCosts();
 	}
+	
+	@Override
+	public String toString() {
+		return getName() + " " + getLevel() + " (" + getLearningCosts() + " AP pro Punkt)";
+	}
 }
