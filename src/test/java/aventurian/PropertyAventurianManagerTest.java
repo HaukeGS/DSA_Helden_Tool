@@ -228,11 +228,49 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	}
 
 	@Test(expected = IllegalStateException.class)
+	public void testIncreaseBadPropertyNotAllowed() {
+		final BadProperty bp = createBadPropertyMock(false, true);
+		when(aventurian.hasSkill(bp)).thenReturn(true);
+		toTest.increaseProperty(bp);
+
+	}
+
+	@Test(expected = IllegalStateException.class)
 	public void testIncreaseBadPropertyNotOwned() {
 		final BadProperty bp = createBadPropertyMock(true, true);
 		when(aventurian.hasSkill(bp)).thenReturn(false);
 
 		toTest.increaseProperty(bp);
+	}
+
+	@Test
+	public void testIncreasePropertyAdvantageAllConditionsMet() {
+		final Property advantage = createPropertyMock(true, true);
+		when(aventurian.hasSkill(advantage)).thenReturn(true);
+		when(advantage.isIncreasable()).thenReturn(true);
+
+		toTest.increaseProperty(advantage);
+		verify(advantage).increase();
+		verify(aventurian).pay(anyInt());
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testIncreasePropertyAdvantageTooExpensive() {
+		final Property advantage = createPropertyMock(true, true);
+		when(advantage.isIncreasable()).thenReturn(true);
+		when(aventurian.hasSkill(advantage)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(false);
+
+		toTest.increaseProperty(advantage);
+
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testIncreasePropertyNotAllowed() {
+		final Property advantage = createPropertyMock(false, true);
+
+		toTest.increaseProperty(advantage);
+
 	}
 
 	@Test

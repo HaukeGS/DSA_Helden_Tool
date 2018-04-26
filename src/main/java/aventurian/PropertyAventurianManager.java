@@ -21,8 +21,9 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			&& av.getPointsOutDisadvantages() + p.getTotalCosts() > MAX_POINTS_OUT_DISADVANTAGES;
 	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_BADPROPERTYLEVELS = (av, p) -> p instanceof BadProperty
 			&& (p.getLevel() + av.getBadPropertySum() > MAX_BAD_PROPERTIES_SUM);
-	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE = (av, p) -> p instanceof BadProperty && av.getBadPropertySum() >= MAX_BAD_PROPERTIES_SUM;
-	
+	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE = (av,
+			p) -> p instanceof BadProperty && av.getBadPropertySum() >= MAX_BAD_PROPERTIES_SUM;
+
 	PropertyAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
 	}
@@ -34,7 +35,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			if (EXCEEDS_MAX_ADVANTAGEPOINTS.test(av, p) || EXCEEDS_MAX_DISADVANTAGEPOINTS.test(av, p)
 					|| EXCEEDS_MAX_BADPROPERTYLEVELS.test(av, p))
 				throw new IllegalStateException("Property requirements not met " + p.getName());
-			
+
 			if (p.isAdvantage())
 				pay(p.getTotalCosts());
 			else
@@ -91,20 +92,22 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	void increaseProperty(Property p) {
-		aventurian.ifPresent(av -> {
+		if (cannotIncrease(p))
+			throw new IllegalStateException("requirements not met for increasing " + p.getName());
+		if (p.isAdvantage()) {
+			p.increase();
+			pay(p.getUpgradeCosts());
+		} else {
+			p.increase();
+			refund(p.getUpgradeCosts());
+		}
+	}
 
-			if (IS_NOT_ALLOWED.test(av, p) || CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS.test(av, p) || HAS_NOT_SKILL.test(av, p) || IS_NOT_INCREASABLE.test(p))
-				throw new IllegalStateException("Basic requirements not met " + p.getName());
-			if (EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE.test(av, p))
-				throw new IllegalStateException("cannot exceed bad properties sum: " + MAX_BAD_PROPERTIES_SUM);
-
-			if (p.isAdvantage()) {
-				p.increase();
-				pay(p.getUpgradeCosts());
-			} else {
-				p.increase();
-				refund(p.getUpgradeCosts());
-			}
-		});
+	boolean cannotIncrease(Property p) {
+		return aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
+				|| IS_NOT_ALLOWED.test(av, p)//
+				|| IS_NOT_INCREASABLE.test(p)//
+				|| CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS.test(av, p)//
+				|| EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE.test(av, p)).orElse(true);
 	}
 }
