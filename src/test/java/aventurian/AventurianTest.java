@@ -153,6 +153,7 @@ public class AventurianTest {
 	@Test
 	public void testAddProperty() throws Exception {
 		final Property testProp = mock(Property.class);
+		when(testProp.getName()).thenReturn("testProp");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(testProp).gain(toTest);
@@ -162,7 +163,7 @@ public class AventurianTest {
 	@Test
 	public void testRemoveProperty() throws Exception {
 		final Property testProp = mock(Property.class);
-
+		when(testProp.getName()).thenReturn("testProp");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
@@ -176,6 +177,7 @@ public class AventurianTest {
 	@Test
 	public void testAddBadProperty() throws Exception {
 		final BadProperty testProp = mock(BadProperty.class);
+		when(testProp.getName()).thenReturn("testProp");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(testProp).gain(toTest);
@@ -185,7 +187,7 @@ public class AventurianTest {
 	@Test
 	public void testRemoveBadProperty() throws Exception {
 		final BadProperty testProp = mock(BadProperty.class);
-
+		when(testProp.getName()).thenReturn("testProp");
 		toTest.add(testProp);
 		assertTrue(toTest.hasSkill(testProp));
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
@@ -213,6 +215,7 @@ public class AventurianTest {
 	@Test
 	public void testAddLanguage() throws Exception {
 		final Language testLanguage = mock(Language.class);
+		when(testLanguage.getName()).thenReturn("testLanguage");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
 		verify(testLanguage).gain(toTest);
@@ -222,7 +225,7 @@ public class AventurianTest {
 	@Test
 	public void testRemoveLanguage() throws Exception {
 		final Language testLanguage = mock(Language.class);
-
+		when(testLanguage.getName()).thenReturn("testLanguage");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
@@ -255,19 +258,32 @@ public class AventurianTest {
 	@Test
 	public void testHasSkill() throws Exception {
 		final Property p = mock(Property.class);
+		when(p.getName()).thenReturn("p");
 		assertFalse(toTest.hasSkill(p));
 		toTest.add(p);
 		assertTrue(toTest.hasSkill(p));
 
 		final BadProperty bP = mock(BadProperty.class);
+		when(bP.getName()).thenReturn("bP");
 		assertFalse(toTest.hasSkill(bP));
 		toTest.add(bP);
 		assertTrue(toTest.hasSkill(bP));
 
 		final Language l = mock(Language.class);
+		when(l.getName()).thenReturn("l");
 		assertFalse(toTest.hasSkill(l));
 		toTest.add(l);
 		assertTrue(toTest.hasSkill(l));
+	}
+
+	@Test
+	public void testHasSkillByName() {
+		final Property p = mock(Property.class);
+		when(p.getName()).thenReturn("p");
+		System.out.println(p.getName());
+		assertFalse(toTest.hasSkill(p.getName()));
+		toTest.add(p);
+		assertTrue(toTest.hasSkill(p.getName()));
 	}
 
 	@Test
@@ -378,7 +394,7 @@ public class AventurianTest {
 		toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 		verify(mockedSecondaryAttributes).getValueOf(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
-	
+
 	@Test
 	public void testGetDisadvantages() {
 		final Property disadvantage = mock(Property.class);
@@ -387,14 +403,14 @@ public class AventurianTest {
 		when(advantage.isDisadvantage()).thenReturn(false);
 		final Property badProperty = mock(BadProperty.class);
 		when(badProperty.isDisadvantage()).thenReturn(true);
-		
+
 		toTest.add(disadvantage);
 		toTest.add(advantage);
 		toTest.add(badProperty);
-		
+
 		assertEquals(2, toTest.getDisadvantages().size());
 	}
-	
+
 	@Test
 	public void testGetAdvantages() {
 		final Property disadvantage = mock(Property.class);
@@ -403,11 +419,11 @@ public class AventurianTest {
 		when(advantage.isAdvantage()).thenReturn(true);
 		final Property badProperty = mock(BadProperty.class);
 		when(badProperty.isAdvantage()).thenReturn(false);
-		
+
 		toTest.add(disadvantage);
 		toTest.add(advantage);
 		toTest.add(badProperty);
-		
+
 		assertEquals(1, toTest.getAdvantages().size());
 	}
 }

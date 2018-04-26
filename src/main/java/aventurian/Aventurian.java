@@ -107,18 +107,18 @@ public class Aventurian extends Observable {
 	}
 
 	int getPointsInAdvantages() {
-		return getStreamOfProperties().filter((p) -> p.isAdvantage()).mapToInt(Property::getLearningCosts).sum();
+		return getStreamOfProperties().filter(Property::isAdvantage).mapToInt(Property::getLearningCosts).sum();
 	}
 
 	int getPointsOutDisadvantages() {
-		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).mapToInt(Property::getLearningCosts).sum()
+		return getStreamOfProperties().filter(Property::isDisadvantage).mapToInt(Property::getLearningCosts).sum()
 				+ getStreamOfBadProperties().mapToInt((p) -> p.getLearningCosts() * p.getLevel()).sum();
 	}
 
 	boolean hasSkill(Skill skill) {
-		return allSkills.stream().anyMatch((s) -> s.equals(skill));
+		return hasSkill(skill.getName());
 	}
-	
+
 	public boolean hasSkill(String skillName) {
 		return allSkills.stream().anyMatch((s) -> s.getName().equals(skillName));
 	}
@@ -219,8 +219,7 @@ public class Aventurian extends Observable {
 	}
 
 	private Stream<Property> getStreamOfProperties() {
-		return allSkills.stream().filter(p -> Property.class.isInstance(p))
-				.map(Property.class::cast);
+		return allSkills.stream().filter(Property.class::isInstance).map(Property.class::cast);
 	}
 
 	private Stream<BadProperty> getStreamOfBadProperties() {
@@ -254,12 +253,12 @@ public class Aventurian extends Observable {
 	public List<Property> getAdvantages() {
 		return getStreamOfProperties().filter((p) -> p.isAdvantage()).collect(toList());
 	}
-	
+
 	public List<Property> getDisadvantages() {
 		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).collect(toList());
-		
+
 	}
-	
+
 	@Override
 	public void addObserver(Observer o) {
 		super.addObserver(o);
