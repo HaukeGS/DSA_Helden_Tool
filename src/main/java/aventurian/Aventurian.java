@@ -16,10 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import aventurian.LevelCostCalculator.COLUMN;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import skills.BadProperty;
 import skills.Language;
-import skills.Property;
 import skills.Skill;
+import skills.properties.BadProperty;
+import skills.properties.Property;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)

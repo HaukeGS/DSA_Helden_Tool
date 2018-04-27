@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 
 import database.Database;
 import skills.Language;
-import skills.Property;
+import skills.properties.Property;
 
 public class AventurianManager extends BaseAventurianManager {
 

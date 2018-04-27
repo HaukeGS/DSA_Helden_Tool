@@ -1,4 +1,4 @@
-package skills;
+package skills.properties;
 
 import java.util.function.Predicate;
 

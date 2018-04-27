@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Race;
-import skills.Property;
+import skills.properties.Property;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DatabaseTest {

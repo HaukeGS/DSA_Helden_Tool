@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import skills.Property;
+import skills.properties.Property;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RaceAventurianManagerTest extends BaseTest {

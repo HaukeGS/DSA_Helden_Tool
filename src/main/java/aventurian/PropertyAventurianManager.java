@@ -4,8 +4,8 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 
 import database.Database;
-import skills.BadProperty;
-import skills.Property;
+import skills.properties.BadProperty;
+import skills.properties.Property;
 
 class PropertyAventurianManager extends BaseAventurianManager {
 	static final int MAX_BAD_PROPERTIES_SUM = 25;

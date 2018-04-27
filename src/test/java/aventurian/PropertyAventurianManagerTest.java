@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import skills.BadProperty;
-import skills.Property;
+import skills.properties.BadProperty;
+import skills.properties.Property;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PropertyAventurianManagerTest extends BaseTest {

@@ -15,9 +15,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import skills.BadProperty;
 import skills.Language;
-import skills.Property;
+import skills.properties.BadProperty;
+import skills.properties.Property;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AventurianManagerTest extends BaseTest {

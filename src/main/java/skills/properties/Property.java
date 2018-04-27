@@ -1,9 +1,10 @@
-package skills;
+package skills.properties;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import aventurian.Aventurian;
+import skills.IncreasableSkill;
 
 public class Property extends IncreasableSkill {
 

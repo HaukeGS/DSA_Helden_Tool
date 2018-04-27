@@ -12,12 +12,14 @@ import java.util.function.Predicate;
 
 import aventurian.Aventurian;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import aventurian.Race;
-import aventurian.SecondaryAttributes;
-import skills.BadProperty;
+import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.Language;
-import skills.Property;
+import skills.properties.Adlig_I;
+import skills.properties.Adlig_II;
+import skills.properties.Adlig_III;
+import skills.properties.BadProperty;
+import skills.properties.Property;
 
 public class Database {
 
@@ -66,15 +68,18 @@ public class Database {
 
 	private void initProperties() {
 		properties = new ArrayList<>();
-		properties.add(new Property("Adlig I",
-				"Der Charakter ist adliger Abstammung und hat Anspruch auf einen entsprechenden Titel. In manchen Bereichen unterliegt er nicht der gewöhnlichen Gerichtsbarkeit. Generell wird man ihm mehr Respekt entgegeben bringen und ihm mehr Gehör schenken. \nAllerdings hat er keine Aussicht darauf das Lehen seiner Eltern zu erben, da er ältere Geschwister besitzt oder aus einem Anderen Grund keinen Anspruch auf das Lehen hat. \n Er ist Kind eines Edelmannes oder einer Edelfrau, also eines Ritters oder eiens Junkers. \n Kann nicht mit 'Adlig II' oder 'Adlig III' gewählt werden!",
-				250, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Adlig II") && !a.hasSkill("Adlig III")));
-		properties.add(new Property("Adlig II",
-				"Der Charakter ist adliger Abstammung und hat Anspruch auf einen entsprechenden Titel. In manchen Bereichen unterliegt er nicht der gewöhnlichen Gerichtsbarkeit. Generell wird man ihm mehr Respekt entgegeben bringen und ihm mehr Gehör schenken. \nAllerdings hat er keine Aussicht darauf das Lehen seiner Eltern zu erben, da er ältere Geschwister besitzt oder aus einem Anderen Grund keinen Anspruch auf das Lehen hat. \n Er ist Kind eines mittleren Adligen, also eines Barons o.ä. \n Kann nicht mit 'Adlig I' oder 'Adlig III' gewählt werden!",
-				350, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Adlig I") && !a.hasSkill("Adlig III")));
-		properties.add(new Property("Adlig III",
-				"Der Charakter ist adliger Abstammung und hat Anspruch auf einen entsprechenden Titel. In manchen Bereichen unterliegt er nicht der gewöhnlichen Gerichtsbarkeit. Generell wird man ihm mehr Respekt entgegeben bringen und ihm mehr Gehör schenken. \nAllerdings hat er keine Aussicht darauf das Lehen seiner Eltern zu erben, da er ältere Geschwister besitzt oder aus einem Anderen Grund keinen Anspruch auf das Lehen hat. \\n Er ist Kind eines höheren Adligen, also eines Grafen o.ä. \n Kann nicht mit 'Adlig I' oder 'Adlig II' gewählt werden!",
-				500, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Adlig I") && !a.hasSkill("Adlig II")));
+//		properties.add(new Property("Adlig I",
+//				"Der Charakter ist adliger Abstammung und hat Anspruch auf einen entsprechenden Titel. In manchen Bereichen unterliegt er nicht der gewöhnlichen Gerichtsbarkeit. Generell wird man ihm mehr Respekt entgegeben bringen und ihm mehr Gehör schenken. \nAllerdings hat er keine Aussicht darauf das Lehen seiner Eltern zu erben, da er ältere Geschwister besitzt oder aus einem Anderen Grund keinen Anspruch auf das Lehen hat. \n Er ist Kind eines Edelmannes oder einer Edelfrau, also eines Ritters oder eiens Junkers. \n Kann nicht mit 'Adlig II' oder 'Adlig III' gewählt werden!",
+//				250, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Adlig II") && !a.hasSkill("Adlig III")));
+//		properties.add(new Property("Adlig II",
+//				"Der Charakter ist adliger Abstammung und hat Anspruch auf einen entsprechenden Titel. In manchen Bereichen unterliegt er nicht der gewöhnlichen Gerichtsbarkeit. Generell wird man ihm mehr Respekt entgegeben bringen und ihm mehr Gehör schenken. \nAllerdings hat er keine Aussicht darauf das Lehen seiner Eltern zu erben, da er ältere Geschwister besitzt oder aus einem Anderen Grund keinen Anspruch auf das Lehen hat. \n Er ist Kind eines mittleren Adligen, also eines Barons o.ä. \n Kann nicht mit 'Adlig I' oder 'Adlig III' gewählt werden!",
+//				350, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Adlig I") && !a.hasSkill("Adlig III")));
+//		properties.add(new Property("Adlig III",
+//				"Der Charakter ist adliger Abstammung und hat Anspruch auf einen entsprechenden Titel. In manchen Bereichen unterliegt er nicht der gewöhnlichen Gerichtsbarkeit. Generell wird man ihm mehr Respekt entgegeben bringen und ihm mehr Gehör schenken. \nAllerdings hat er keine Aussicht darauf das Lehen seiner Eltern zu erben, da er ältere Geschwister besitzt oder aus einem Anderen Grund keinen Anspruch auf das Lehen hat. \\n Er ist Kind eines höheren Adligen, also eines Grafen o.ä. \n Kann nicht mit 'Adlig I' oder 'Adlig II' gewählt werden!",
+//				500, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Adlig I") && !a.hasSkill("Adlig II")));
+		properties.add(new Adlig_I());
+		properties.add(new Adlig_II());
+		properties.add(new Adlig_III());
 		properties.add(new Property("Adliges Erbe", "Nur für adlige Charaktere.\r\n" + 
 				"Der Charakter ist der erste in der Erbfolge und es ist zu erwarten, dass er das Erbe seines Vaters oder seiner Mutter antritt, sollte diese/r dahinscheiden.", 250, EMPTY, EMPTY, (Aventurian a) -> a.hasSkill("Adlig I") || a.hasSkill("Adlig II") || a.hasSkill("Adlig III")));
 		properties.add(new Property("Amtsadel", "Der Charakter ist nicht von adliger Geburt, hat aber durch seinen Rang oder seinen Beruf einen ähnlichen, wenn auch nicht so ausgeprägten, Titel und damit vergleichbare Vorteile.	", 150, EMPTY, EMPTY, NOREQUIREMENT));

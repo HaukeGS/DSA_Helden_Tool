@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import skills.Property;
+import skills.properties.Property;
 
 public class PropertyPaneController extends PaneController {
 
