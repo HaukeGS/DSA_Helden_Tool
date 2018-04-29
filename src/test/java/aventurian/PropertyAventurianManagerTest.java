@@ -173,7 +173,20 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	}
 
 	@Test
-	public void testDecreaseProperty() {
+	public void testRemoveIncreasedAdvantage() {
+
+		final Property p = createPropertyMock(true, true);
+		when(p.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(aventurian.hasSkill(p)).thenReturn(true);
+
+		toTest.removeProperty(p);
+		verify(p, times(2)).decrease();
+		verify(aventurian).remove(p);
+		verify(aventurian, times(3)).refund(anyInt());
+	}
+
+	@Test
+	public void testDecreaseDisadvantage() {
 		final BadProperty bp = createBadPropertyMock(true);
 		when(aventurian.hasSkill(bp)).thenReturn(true);
 		when(bp.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
@@ -185,18 +198,40 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		verify(aventurian, never()).remove(bp);
 	}
 
+	@Test
+	public void testDecreaseAdvantage() {
+		final Property p = createPropertyMock(true, true);
+		when(aventurian.hasSkill(p)).thenReturn(true);
+		when(p.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+
+		toTest.decreaseProperty(p);
+
+		verify(p).decrease();
+		verify(aventurian).refund(anyInt());
+		verify(aventurian, never()).remove(p);
+	}
+
 	@Test(expected = IllegalStateException.class)
 	public void testDecreasePropertyNotOwned() {
 		final BadProperty bp = createBadPropertyMock(true);
-		when(bp.isDecreasable()).thenReturn(true);
 		when(aventurian.hasSkill(bp)).thenReturn(false);
+		toTest.decreaseProperty(bp);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreasePropertyTooExpensive() {
+		final BadProperty bp = createBadPropertyMock(true);
+		when(bp.isDecreasable()).thenReturn(true);
+		when(aventurian.hasSkill(bp)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(false);
 		toTest.decreaseProperty(bp);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testDecreasePropertyNotDecreasable() {
 		final BadProperty bp = createBadPropertyMock(true);
-
+		when(aventurian.hasSkill(bp)).thenReturn(true);
+		when(bp.isDecreasable()).thenReturn(false);
 		toTest.decreaseProperty(bp);
 	}
 
@@ -262,6 +297,16 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(aventurian.canPay(anyInt())).thenReturn(false);
 
 		toTest.increaseProperty(advantage);
+
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testIncreasePropertyDisadvantageTooExpensive() {
+		final BadProperty disadvantage = createBadPropertyMock(true, true);
+		when(aventurian.hasSkill(disadvantage)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(false);
+
+		toTest.removeProperty(disadvantage);
 
 	}
 

@@ -76,54 +76,57 @@ public class PropertyPaneController extends PaneController {
 					btnUnassignAdvantage.setDisable(newValue == null);
 				});
 		lvAssignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
-			if (click.getClickCount() == 2 && !lvAssignedAdvantages.getSelectionModel().isEmpty()) {
-				final Property p = lvAssignedAdvantages.getSelectionModel().getSelectedItem();
+			final Property p = lvAssignedAdvantages.getSelectionModel().getSelectedItem();
+			if (click.getClickCount() == 2 && p != null && !m.cannotRemoveProperty(p)) {
 				m.removeProperty(p);
 			}
 		});
-		lvAssignedAdvantages.setCellFactory((ListView<Property> list) -> new PropertyCell());
+		lvAssignedAdvantages.setCellFactory((ListView<Property> list) -> new AssignedPropertyCell());
 	}
 
 	private void prepareUnassignedAdvantages() {
 		lvUnassignedAdvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnAssignAdvantage.setDisable(newValue == null);
+					btnAssignAdvantage.setDisable(newValue == null || !m.canAddProperty(newValue));
 				});
 
 		lvUnassignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
-			if (click.getClickCount() == 2 && !lvUnassignedAdvantages.getSelectionModel().isEmpty()) {
-				final Property p = lvUnassignedAdvantages.getSelectionModel().getSelectedItem();
+			final Property p = lvUnassignedAdvantages.getSelectionModel().getSelectedItem();
+			if (click.getClickCount() == 2 && p != null && m.canAddProperty(p)) {
 				m.addProperty(p);
 			}
 		});
+
+		lvUnassignedAdvantages.setCellFactory((ListView<Property> list) -> new UnAssignedPropertyCell());
 	}
 
 	private void prepareAssignedDisadvantages() {
 		lvAssignedDisadvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnUnassignDisadvantage.setDisable(newValue == null);
+					btnUnassignDisadvantage.setDisable(newValue == null || m.cannotRemoveProperty(newValue));
 				});
 		lvAssignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
-			if (click.getClickCount() == 2 && !lvAssignedDisadvantages.getSelectionModel().isEmpty()) {
-				final Property p = lvAssignedDisadvantages.getSelectionModel().getSelectedItem();
+			final Property p = lvAssignedDisadvantages.getSelectionModel().getSelectedItem();
+			if (click.getClickCount() == 2 && p != null && !m.cannotRemoveProperty(p)) {
 				m.removeProperty(p);
 			}
 		});
-		lvAssignedDisadvantages.setCellFactory((ListView<Property> list) -> new PropertyCell());
+		lvAssignedDisadvantages.setCellFactory((ListView<Property> list) -> new AssignedPropertyCell());
 	}
 
 	private void prepareUnassignedDisadvantages() {
 		lvUnassignedDisadvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnAssignDisadvantage.setDisable(newValue == null);
+					btnAssignDisadvantage.setDisable(newValue == null || !m.canAddProperty(newValue));
 				});
 
 		lvUnassignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
-			if (click.getClickCount() == 2 && !lvUnassignedDisadvantages.getSelectionModel().isEmpty()) {
-				final Property p = lvUnassignedDisadvantages.getSelectionModel().getSelectedItem();
+			final Property p = lvUnassignedDisadvantages.getSelectionModel().getSelectedItem();
+			if (click.getClickCount() == 2 && p != null && m.canAddProperty(p)) {
 				m.addProperty(p);
 			}
 		});
+		lvUnassignedDisadvantages.setCellFactory((ListView<Property> list) -> new UnAssignedPropertyCell());
 	}
 
 	@Override
@@ -146,7 +149,7 @@ public class PropertyPaneController extends PaneController {
 		lvUnassignedDisadvantages.setItems(FXCollections.observableArrayList(unassignedDisadvantages));
 	}
 
-	private class PropertyCell extends ListCell<Property> {
+	private class AssignedPropertyCell extends ListCell<Property> {
 		HBox hbox = new HBox();
 		Label nameLabel = new Label("(empty)");
 		Label levelLabel = new Label("1");
@@ -154,7 +157,7 @@ public class PropertyPaneController extends PaneController {
 		Button increaseButton = new Button("+");
 		Button decreaseButton = new Button("-");
 
-		public PropertyCell() {
+		public AssignedPropertyCell() {
 			hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
@@ -174,15 +177,36 @@ public class PropertyPaneController extends PaneController {
 				setTooltip(null);
 			} else if (item.getMinLevel() == item.getMaxLevel()) {
 				nameLabel.setText(item.getName());
+				nameLabel.setDisable(PropertyPaneController.this.m.cannotRemoveProperty(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(nameLabel);
 			} else {
 				nameLabel.setText(item.getName());
+				nameLabel.setDisable(PropertyPaneController.this.m.cannotRemoveProperty(item));
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!item.isIncreasable());
-				decreaseButton.setDisable(!item.isDecreasable());
+				increaseButton.setDisable(PropertyPaneController.this.m.cannotIncreaseProperty(item));
+				decreaseButton.setDisable(PropertyPaneController.this.m.cannotDecreaseProperty(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
+			}
+		}
+	}
+
+	private class UnAssignedPropertyCell extends ListCell<Property> {
+		Label nameLabel = new Label("");
+
+		@Override
+		protected void updateItem(Property item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null);
+			if (empty || item == null) {
+				setGraphic(null);
+				setTooltip(null);
+			} else {
+				nameLabel.setText(item.toString());
+				nameLabel.setDisable(!PropertyPaneController.this.m.canAddProperty(item));
+				setGraphic(nameLabel);
+				setTooltip(new Tooltip(item.getDescription()));
 			}
 		}
 	}

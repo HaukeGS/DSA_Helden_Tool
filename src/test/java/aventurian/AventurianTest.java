@@ -280,7 +280,6 @@ public class AventurianTest {
 	public void testHasSkillByName() {
 		final Property p = mock(Property.class);
 		when(p.getName()).thenReturn("p");
-		System.out.println(p.getName());
 		assertFalse(toTest.hasSkill(p.getName()));
 		toTest.add(p);
 		assertTrue(toTest.hasSkill(p.getName()));

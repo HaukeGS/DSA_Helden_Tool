@@ -33,9 +33,10 @@ public class AventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races, mockedDatabase);
+		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races,
+				mockedDatabase);
 	}
-	
+
 	@Test
 	public void testCreateNewAventurian() {
 		final Observer obs = mock(Observer.class);
@@ -57,15 +58,39 @@ public class AventurianManagerTest extends BaseTest {
 	}
 
 	@Test
-	public void increaseProperty() {
+	public void testCanAddProperty() {
+		toTest.canAddProperty(mock(Property.class));
+		verify(properties).canAdd(any(Property.class));
+	}
+
+	@Test
+	public void testIncreaseProperty() {
 		toTest.increaseProperty(mock(BadProperty.class));
 		verify(properties).increaseProperty(any(BadProperty.class));
 	}
 
 	@Test
-	public void decreaseProperty() {
+	public void testCannotIncreaseProperty() {
+		toTest.cannotIncreaseProperty(mock(BadProperty.class));
+		verify(properties).cannotIncrease(any(BadProperty.class));
+	}
+
+	@Test
+	public void testDecreaseProperty() {
 		toTest.decreaseProperty(mock(BadProperty.class));
 		verify(properties).decreaseProperty(any(BadProperty.class));
+	}
+
+	@Test
+	public void testCannotDecreaseProperty() {
+		toTest.cannotDecreaseProperty(mock(BadProperty.class));
+		verify(properties).cannotDecrease(any(BadProperty.class));
+	}
+
+	@Test
+	public void testCannotRemoveProperty() {
+		toTest.cannotRemoveProperty(mock(BadProperty.class));
+		verify(properties).cannotRemove(any(BadProperty.class));
 	}
 
 	@Test

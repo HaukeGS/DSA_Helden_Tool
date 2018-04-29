@@ -84,8 +84,16 @@ public class AventurianManager extends BaseAventurianManager {
 		this.propertyManager.addProperty(p);
 	}
 
+	public boolean canAddProperty(Property p) {
+		return propertyManager.canAdd(p);
+	}
+
 	public void increaseProperty(Property p) {
 		this.propertyManager.increaseProperty(p);
+	}
+
+	public boolean cannotIncreaseProperty(Property p) {
+		return this.propertyManager.cannotIncrease(p);
 	}
 
 	public void removeProperty(Property p) {
@@ -153,5 +161,13 @@ public class AventurianManager extends BaseAventurianManager {
 
 	public void decreaseProperty(Property p) {
 		propertyManager.decreaseProperty(p);
+	}
+
+	public boolean cannotDecreaseProperty(Property p) {
+		return propertyManager.cannotDecrease(p);
+	}
+
+	public boolean cannotRemoveProperty(Property p) {
+		return propertyManager.cannotRemove(p);
 	}
 }

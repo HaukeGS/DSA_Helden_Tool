@@ -15,6 +15,12 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			&& !av.canPay(p.getTotalCosts());
 	private final BiPredicate<Aventurian, Property> CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS = (av, p) -> p.isAdvantage()
 			&& !av.canPay(p.getUpgradeCosts());
+
+	// TODO is this predicate correct??
+	private final BiPredicate<Aventurian, Property> CANNOT_PAY_DISADVANTAGE_TOTAL_COSTS = (av, p) -> p.isDisadvantage()
+			&& !av.canPay(p.getTotalCosts());
+	private final BiPredicate<Aventurian, Property> CANNOT_PAY_DISADVANTAGE_DOWNGRADE_COSTS = (av,
+			p) -> p.isDisadvantage() && !av.canPay(p.getDowngradeRefund());
 	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_ADVANTAGEPOINTS = (av, p) -> p.isAdvantage()
 			&& av.getPointsInAdvantages() + p.getTotalCosts() > MAX_POINTS_IN_ADVANTAGES;
 	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_DISADVANTAGEPOINTS = (av, p) -> p.isDisadvantage()
@@ -29,39 +35,47 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	void addProperty(Property p) {
-		aventurian.ifPresent(av -> {
-			if (IS_NOT_ALLOWED.test(av, p) || CANNOT_PAY_ADVANTAGE_TOTAL_COSTS.test(av, p) || HAS_SKILL.test(av, p))
-				throw new IllegalStateException("Basic requirements not met " + p.getName());
-			if (EXCEEDS_MAX_ADVANTAGEPOINTS.test(av, p) || EXCEEDS_MAX_DISADVANTAGEPOINTS.test(av, p)
-					|| EXCEEDS_MAX_BADPROPERTYLEVELS.test(av, p))
-				throw new IllegalStateException("Property requirements not met " + p.getName());
+		if (!canAdd(p))
+			throw new IllegalStateException("requirements not met for adding " + p.getName());
+		if (p.isAdvantage())
+			pay(p.getTotalCosts());
+		else
+			refund(p.getTotalCosts());
+		add(p);
 
-			if (p.isAdvantage())
-				pay(p.getTotalCosts());
-			else
-				refund(p.getTotalCosts());
-			add(p);
-		});
+	}
+
+	boolean canAdd(Property p) {
+		return !aventurian.map(av -> HAS_SKILL.test(av, p)//
+				|| IS_NOT_ALLOWED.test(av, p)//
+				|| CANNOT_PAY_ADVANTAGE_TOTAL_COSTS.test(av, p)//
+				|| EXCEEDS_MAX_ADVANTAGEPOINTS.test(av, p)//
+				|| EXCEEDS_MAX_DISADVANTAGEPOINTS.test(av, p) //
+				|| EXCEEDS_MAX_BADPROPERTYLEVELS.test(av, p)).orElse(true);
+
 	}
 
 	void removeProperty(Property p) {
-		aventurian.ifPresent(av -> {
-			if (!av.hasSkill(p))
-				throw new IllegalStateException("does not own skill " + p.getName());
-			if (p.isAdvantage()) {
-				decreaseAdvantageToMinimum(p);
-				remove(p);
-				refund(p.getTotalCosts());
-			} else {
-				decreaseDisadvantesToMinimum(p);
-				remove(p);
-				pay(p.getTotalCosts());
-			}
-		});
-
+		if (cannotRemove(p))
+			throw new IllegalStateException("requirements not met for removing " + p.getName());
+		if (p.isAdvantage()) {
+			decreaseAdvantageToMinimum(p);
+			remove(p);
+			refund(p.getTotalCosts());
+		} else {
+			decreaseDisadvantageToMinimum(p);
+			remove(p);
+			pay(p.getTotalCosts());
+		}
 	}
 
-	private void decreaseDisadvantesToMinimum(Property p) {
+	// is this correct?
+	boolean cannotRemove(Property p) {
+		return aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
+				|| CANNOT_PAY_DISADVANTAGE_TOTAL_COSTS.test(av, p)).orElse(true);
+	}
+
+	private void decreaseDisadvantageToMinimum(Property p) {
 		while (p.isDecreasable()) {
 			p.decrease();
 			pay(p.getDowngradeRefund());
@@ -69,19 +83,15 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	void decreaseProperty(Property p) {
-		aventurian.ifPresent(av -> {
-			if (!p.isDecreasable())
-				throw new IllegalStateException("cannot further decrease level of " + p.getName());
-			if (!av.hasSkill(p))
-				throw new IllegalStateException("cannot decrease skill which is not owned: " + p.getName());
-			if (p.isDisadvantage()) {
-				p.decrease();
-				pay(p.getDowngradeRefund());
-			} else {
-				p.decrease();
-				refund(p.getDowngradeRefund());
-			}
-		});
+		if (cannotDecrease(p))
+			throw new IllegalStateException("requirements not met for decreasing " + p.getName());
+		if (p.isDisadvantage()) {
+			p.decrease();
+			pay(p.getDowngradeRefund());
+		} else {
+			p.decrease();
+			refund(p.getDowngradeRefund());
+		}
 	}
 
 	private void decreaseAdvantageToMinimum(Property p) {
@@ -109,5 +119,11 @@ class PropertyAventurianManager extends BaseAventurianManager {
 				|| IS_NOT_INCREASABLE.test(p)//
 				|| CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS.test(av, p)//
 				|| EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE.test(av, p)).orElse(true);
+	}
+
+	boolean cannotDecrease(Property p) {
+		return aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
+				|| IS_NOT_DECREASABLE.test(p)//
+				|| CANNOT_PAY_DISADVANTAGE_DOWNGRADE_COSTS.test(av, p)).orElse(true);
 	}
 }

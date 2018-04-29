@@ -92,10 +92,6 @@ public abstract class BaseGuiTest extends ApplicationTest {
 		mainController.addLoadedPage(p, controller, pane);
 	}
 
-	public <T extends Node> T find2(final String query) {
-		System.out.println("hier");
-		return lookup(NodeMatchers.hasText(query)).query();
-	}
 
 	public <T extends Node> T find(final String query) {
 		lookup(NodeMatchers.hasText(query));

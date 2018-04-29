@@ -227,6 +227,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 	@Test
 	public void testBadPropertyDecreaseButtonIsDisabled() {
+		when(mockedAventurianManager.cannotDecreaseProperty(badPropertyMock)).thenReturn(true);
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
@@ -249,7 +250,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 	@Test
 	public void testBadPropertyIncreaseButtonGetsDisabled() {
-		when(badPropertyMock.isIncreasable()).thenReturn(false);
+		when(mockedAventurianManager.cannotIncreaseProperty(badPropertyMock)).thenReturn(true);
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
@@ -292,6 +293,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		badPropertyMock = createBadPropertyMock("badProperty", -75);
 		when(mockedDatabase.getAdvantages()).thenReturn(Arrays.asList(royalMock, prettyMock));
 		when(mockedDatabase.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock, badPropertyMock));
+		when(mockedAventurianManager.canAddProperty(any(Property.class))).thenReturn(true);
 
 	}
 

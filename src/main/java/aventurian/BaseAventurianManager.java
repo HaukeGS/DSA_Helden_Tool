@@ -15,6 +15,7 @@ abstract class BaseAventurianManager {
 	protected final LevelCostCalculator calculator;
 	
 	protected final Predicate<IncreasableSkill> IS_NOT_INCREASABLE = (IncreasableSkill s) -> !s.isIncreasable();
+	protected final Predicate<IncreasableSkill> IS_NOT_DECREASABLE = (IncreasableSkill s) -> !s.isDecreasable();
 	protected final Predicate<Optional<Aventurian>> IS_NOT_PRESENT = (Optional<Aventurian> av) -> !av.isPresent();
 	protected final BiPredicate<Aventurian,IncreasableSkill> IS_NOT_ALLOWED = (Aventurian av,IncreasableSkill s) -> !s.isAllowed(av);
 	protected final BiPredicate<Aventurian, IncreasableSkill> CANNOT_PAY_TOTAL_COSTS = (Aventurian av, IncreasableSkill s) -> !av.canPay(s.getTotalCosts());
