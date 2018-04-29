@@ -7,10 +7,13 @@ import static ui.NavigationPaneController.PAGES.PROPERTIES;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.matcher.base.NodeMatchers;
 
 import aventurian.Aventurian;
 import aventurian.AventurianManager;
@@ -32,9 +35,13 @@ import ui.NavigationPaneController.PAGES;
  * 
  * @author Jonas
  *
- */@Category(UITest.class)
+ */
+@Category(UITest.class)
 public abstract class BaseGuiTest extends ApplicationTest {
 
+	protected static final Predicate<Aventurian> NOREQUIREMENT = (Aventurian a) -> true;
+	protected static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
+	};
 	protected MainController mainController;
 	@Mock
 	protected AventurianManager mockedAventurianManager;
@@ -85,8 +92,13 @@ public abstract class BaseGuiTest extends ApplicationTest {
 		mainController.addLoadedPage(p, controller, pane);
 	}
 
-	public <T extends Node> T find(final String query) {
+	public <T extends Node> T find2(final String query) {
+		System.out.println("hier");
+		return lookup(NodeMatchers.hasText(query)).query();
+	}
 
+	public <T extends Node> T find(final String query) {
+		lookup(NodeMatchers.hasText(query));
 		// TestFX provides many operations to retrieve elements from the loaded GUI.
 		return lookup(query).query();
 	}
@@ -123,8 +135,8 @@ public abstract class BaseGuiTest extends ApplicationTest {
 	/**
 	 * Implement to configure the behaviour of the mocks the actual testcase relies
 	 * on. Typically, you would setup {@link #mockedDatabase} and
-	 * {@link #mockedAventurian} (if needed by all tests) and verify on {@link #mockedAventurianManager}.
-	 * <br>
+	 * {@link #mockedAventurian} (if needed by all tests) and verify on
+	 * {@link #mockedAventurianManager}. <br>
 	 * Have a look at {@link LanguagePaneTest}.
 	 */
 	abstract void setUpMocks();
