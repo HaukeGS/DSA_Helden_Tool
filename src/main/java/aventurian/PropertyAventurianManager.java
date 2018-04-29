@@ -56,7 +56,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	void removeProperty(Property p) {
-		if (cannotRemove(p))
+		if (!canRemove(p))
 			throw new IllegalStateException("requirements not met for removing " + p.getName());
 		if (p.isAdvantage()) {
 			decreaseAdvantageToMinimum(p);
@@ -70,8 +70,8 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	// is this correct?
-	boolean cannotRemove(Property p) {
-		return aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
+	boolean canRemove(Property p) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
 				|| CANNOT_PAY_DISADVANTAGE_TOTAL_COSTS.test(av, p)).orElse(true);
 	}
 
@@ -83,7 +83,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	void decreaseProperty(Property p) {
-		if (cannotDecrease(p))
+		if (!canDecrease(p))
 			throw new IllegalStateException("requirements not met for decreasing " + p.getName());
 		if (p.isDisadvantage()) {
 			p.decrease();
@@ -102,7 +102,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	void increaseProperty(Property p) {
-		if (cannotIncrease(p))
+		if (!canIncrease(p))
 			throw new IllegalStateException("requirements not met for increasing " + p.getName());
 		if (p.isAdvantage()) {
 			p.increase();
@@ -113,16 +113,16 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		}
 	}
 
-	boolean cannotIncrease(Property p) {
-		return aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
+	boolean canIncrease(Property p) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
 				|| IS_NOT_ALLOWED.test(av, p)//
 				|| IS_NOT_INCREASABLE.test(p)//
 				|| CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS.test(av, p)//
 				|| EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE.test(av, p)).orElse(true);
 	}
 
-	boolean cannotDecrease(Property p) {
-		return aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
+	boolean canDecrease(Property p) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
 				|| IS_NOT_DECREASABLE.test(p)//
 				|| CANNOT_PAY_DISADVANTAGE_DOWNGRADE_COSTS.test(av, p)).orElse(true);
 	}

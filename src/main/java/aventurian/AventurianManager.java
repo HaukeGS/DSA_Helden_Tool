@@ -92,8 +92,8 @@ public class AventurianManager extends BaseAventurianManager {
 		this.propertyManager.increaseProperty(p);
 	}
 
-	public boolean cannotIncreaseProperty(Property p) {
-		return this.propertyManager.cannotIncrease(p);
+	public boolean canIncreaseProperty(Property p) {
+		return this.propertyManager.canIncrease(p);
 	}
 
 	public void removeProperty(Property p) {
@@ -163,11 +163,11 @@ public class AventurianManager extends BaseAventurianManager {
 		propertyManager.decreaseProperty(p);
 	}
 
-	public boolean cannotDecreaseProperty(Property p) {
-		return propertyManager.cannotDecrease(p);
+	public boolean canDecreaseProperty(Property p) {
+		return propertyManager.canDecrease(p);
 	}
 
-	public boolean cannotRemoveProperty(Property p) {
-		return propertyManager.cannotRemove(p);
+	public boolean canRemoveProperty(Property p) {
+		return propertyManager.canRemove(p);
 	}
 }

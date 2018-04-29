@@ -71,8 +71,8 @@ public class AventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testCannotIncreaseProperty() {
-		toTest.cannotIncreaseProperty(mock(BadProperty.class));
-		verify(properties).cannotIncrease(any(BadProperty.class));
+		toTest.canIncreaseProperty(mock(BadProperty.class));
+		verify(properties).canIncrease(any(BadProperty.class));
 	}
 
 	@Test
@@ -82,15 +82,15 @@ public class AventurianManagerTest extends BaseTest {
 	}
 
 	@Test
-	public void testCannotDecreaseProperty() {
-		toTest.cannotDecreaseProperty(mock(BadProperty.class));
-		verify(properties).cannotDecrease(any(BadProperty.class));
+	public void testCanDecreaseProperty() {
+		toTest.canDecreaseProperty(mock(BadProperty.class));
+		verify(properties).canDecrease(any(BadProperty.class));
 	}
 
 	@Test
 	public void testCannotRemoveProperty() {
-		toTest.cannotRemoveProperty(mock(BadProperty.class));
-		verify(properties).cannotRemove(any(BadProperty.class));
+		toTest.canRemoveProperty(mock(BadProperty.class));
+		verify(properties).canRemove(any(BadProperty.class));
 	}
 
 	@Test

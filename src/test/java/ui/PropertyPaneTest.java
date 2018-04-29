@@ -77,6 +77,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 	@Test
 	public void testUnAssignAdvantageViaDoubleClick() {
 		when(mockedAventurian.getAdvantages()).thenReturn(Arrays.asList(prettyMock));
+		when(mockedAventurianManager.canRemoveProperty(prettyMock)).thenReturn(true);
 		updateGui();
 
 		verifyThat(prettyMock.getName(), NodeMatchers.isNotNull());
@@ -199,6 +200,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 	@Test
 	public void testUnAssignDisadvantageViaDoubleClick() {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock));
+		when(mockedAventurianManager.canRemoveProperty(disadvantageMock)).thenReturn(true);
 		updateGui();
 
 		verifyThat(disadvantageMock.getName(), NodeMatchers.isNotNull());
@@ -227,7 +229,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 	@Test
 	public void testBadPropertyDecreaseButtonIsDisabled() {
-		when(mockedAventurianManager.cannotDecreaseProperty(badPropertyMock)).thenReturn(true);
+		when(mockedAventurianManager.canDecreaseProperty(badPropertyMock)).thenReturn(false);
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
@@ -250,7 +252,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 	@Test
 	public void testBadPropertyIncreaseButtonGetsDisabled() {
-		when(mockedAventurianManager.cannotIncreaseProperty(badPropertyMock)).thenReturn(true);
+		when(mockedAventurianManager.canIncreaseProperty(badPropertyMock)).thenReturn(false);
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
@@ -269,7 +271,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 	@Test
 	public void testBadPropertyDecreaseButtonIsEnabled() {
-		when(badPropertyMock.isDecreasable()).thenReturn(true);
+		when(mockedAventurianManager.canDecreaseProperty(badPropertyMock)).thenReturn(true);
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
@@ -294,6 +296,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedDatabase.getAdvantages()).thenReturn(Arrays.asList(royalMock, prettyMock));
 		when(mockedDatabase.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock, badPropertyMock));
 		when(mockedAventurianManager.canAddProperty(any(Property.class))).thenReturn(true);
+		when(mockedAventurianManager.canIncreaseProperty(any(Property.class))).thenReturn(true);
 
 	}
 

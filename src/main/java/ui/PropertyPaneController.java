@@ -77,7 +77,7 @@ public class PropertyPaneController extends PaneController {
 				});
 		lvAssignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvAssignedAdvantages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && p != null && !m.cannotRemoveProperty(p)) {
+			if (click.getClickCount() == 2 && p != null && m.canRemoveProperty(p)) {
 				m.removeProperty(p);
 			}
 		});
@@ -103,11 +103,11 @@ public class PropertyPaneController extends PaneController {
 	private void prepareAssignedDisadvantages() {
 		lvAssignedDisadvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnUnassignDisadvantage.setDisable(newValue == null || m.cannotRemoveProperty(newValue));
+					btnUnassignDisadvantage.setDisable(newValue == null || m.canRemoveProperty(newValue));
 				});
 		lvAssignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvAssignedDisadvantages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && p != null && !m.cannotRemoveProperty(p)) {
+			if (click.getClickCount() == 2 && p != null && m.canRemoveProperty(p)) {
 				m.removeProperty(p);
 			}
 		});
@@ -177,15 +177,15 @@ public class PropertyPaneController extends PaneController {
 				setTooltip(null);
 			} else if (item.getMinLevel() == item.getMaxLevel()) {
 				nameLabel.setText(item.getName());
-				nameLabel.setDisable(PropertyPaneController.this.m.cannotRemoveProperty(item));
+				nameLabel.setDisable(!PropertyPaneController.this.m.canRemoveProperty(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(nameLabel);
 			} else {
 				nameLabel.setText(item.getName());
-				nameLabel.setDisable(PropertyPaneController.this.m.cannotRemoveProperty(item));
+				nameLabel.setDisable(!PropertyPaneController.this.m.canRemoveProperty(item));
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(PropertyPaneController.this.m.cannotIncreaseProperty(item));
-				decreaseButton.setDisable(PropertyPaneController.this.m.cannotDecreaseProperty(item));
+				increaseButton.setDisable(!PropertyPaneController.this.m.canIncreaseProperty(item));
+				decreaseButton.setDisable(!PropertyPaneController.this.m.canDecreaseProperty(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
 			}
