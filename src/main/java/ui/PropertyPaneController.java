@@ -176,12 +176,12 @@ public class PropertyPaneController extends PaneController {
 				setGraphic(null);
 				setTooltip(null);
 			} else if (item.getMinLevel() == item.getMaxLevel()) {
-				nameLabel.setText(item.getName());
+				nameLabel.setText(item.toString());
 				nameLabel.setDisable(!PropertyPaneController.this.m.canRemoveProperty(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(nameLabel);
 			} else {
-				nameLabel.setText(item.getName());
+				nameLabel.setText(item.toString());
 				nameLabel.setDisable(!PropertyPaneController.this.m.canRemoveProperty(item));
 				levelLabel.setText(String.valueOf(item.getLevel()));
 				increaseButton.setDisable(!PropertyPaneController.this.m.canIncreaseProperty(item));
