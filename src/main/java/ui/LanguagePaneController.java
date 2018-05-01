@@ -133,7 +133,6 @@ public class LanguagePaneController extends PaneController {
 		Button decreaseButton = new Button("-");
 
 		public AssignedLanguageCell() {
-			hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
 			HBox.setHgrow(pane, Priority.ALWAYS);
@@ -147,6 +146,7 @@ public class LanguagePaneController extends PaneController {
 		protected void updateItem(Language item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(null); // No text in label of super class
+			hbox.getChildren().clear();
 			if (empty || item == null) {
 				setGraphic(null);
 				setTooltip(null);
@@ -156,8 +156,9 @@ public class LanguagePaneController extends PaneController {
 				increaseButton.setDisable(!item.isIncreasable());
 				decreaseButton.setDisable(!item.isDecreasable());
 				nameLabel.setTextFill(getItem().isNativeTongue() ? Color.BLUE : Color.BLACK);
-				setTooltip(new Tooltip(item.getDescription()));
+				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);
+				setTooltip(new Tooltip(item.getDescription()));
 			}
 		}
 	}

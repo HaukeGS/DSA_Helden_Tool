@@ -158,7 +158,6 @@ public class PropertyPaneController extends PaneController {
 		Button decreaseButton = new Button("-");
 
 		public AssignedPropertyCell() {
-			hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 			hbox.setSpacing(5);
 			hbox.setAlignment(Pos.CENTER);
 			HBox.setHgrow(pane, Priority.ALWAYS);
@@ -172,6 +171,7 @@ public class PropertyPaneController extends PaneController {
 		protected void updateItem(Property item, boolean empty) {
 			super.updateItem(item, empty);
 			setText(null); // No text in label of super class
+			hbox.getChildren().clear();
 			if (empty || item == null) {
 				setGraphic(null);
 				setTooltip(null);
@@ -186,8 +186,9 @@ public class PropertyPaneController extends PaneController {
 				levelLabel.setText(String.valueOf(item.getLevel()));
 				increaseButton.setDisable(!PropertyPaneController.this.m.canIncreaseProperty(item));
 				decreaseButton.setDisable(!PropertyPaneController.this.m.canDecreaseProperty(item));
-				setTooltip(new Tooltip(item.getDescription()));
+				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);
+				setTooltip(new Tooltip(item.getDescription()));
 			}
 		}
 	}
