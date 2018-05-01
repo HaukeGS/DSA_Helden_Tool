@@ -74,6 +74,6 @@ public abstract class Skill {
 
 	@Override
 	public String toString() {
-		return getName();
+		return getName() + " (" + getLearningCosts() + ")";
 	}
 }

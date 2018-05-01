@@ -116,7 +116,7 @@ public class LanguagePaneController extends PaneController {
 				setGraphic(null);
 				setTooltip(null);
 			} else {
-				nameLabel.setText(item.getName());
+				nameLabel.setText(item.toString());
 				nativeTongueButton.setDisable(hasNativeTongue);
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);

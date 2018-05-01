@@ -69,8 +69,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getAdvantages()).thenReturn(Arrays.asList(prettyMock));
 		updateGui();
 
-		verifyThat(prettyMock.getName(), NodeMatchers.isNotNull());
-		clickOn(prettyMock.getName()).clickOn(ID_BTN_UN_ASSIGN_ADVANTAGE);
+		verifyThat(prettyMock.toString(), NodeMatchers.isNotNull());
+		clickOn(prettyMock.toString()).clickOn(ID_BTN_UN_ASSIGN_ADVANTAGE);
 		verify(mockedAventurianManager).removeProperty(any(Property.class));
 	}
 
@@ -80,8 +80,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurianManager.canRemoveProperty(prettyMock)).thenReturn(true);
 		updateGui();
 
-		verifyThat(prettyMock.getName(), NodeMatchers.isNotNull());
-		doubleClickOn(prettyMock.getName(), MouseButton.PRIMARY);
+		verifyThat(prettyMock.toString(), NodeMatchers.isNotNull());
+		doubleClickOn(prettyMock.toString(), MouseButton.PRIMARY);
 		verify(mockedAventurianManager).removeProperty(any(Property.class));
 	}
 
@@ -104,8 +104,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getAdvantages()).thenReturn(Arrays.asList(prettyMock));
 		updateGui();
 
-		verifyThat(prettyMock.getName(), NodeMatchers.isNotNull());
-		clickOn(prettyMock.getName());
+		verifyThat(prettyMock.toString(), NodeMatchers.isNotNull());
+		clickOn(prettyMock.toString());
 		final ListView<Property> assignedProperties = find(ID_LV_ASSIGNED_ADVANTAGES);
 		assertFalse(assignedProperties.getSelectionModel().isEmpty());
 		verifyThat(ID_BTN_UN_ASSIGN_ADVANTAGE, (Button b) -> !b.isDisable());
@@ -134,7 +134,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 	public void testToggleUnAssignAdvantagesButtonEnabledDisabled() {
 		testUnAssignAdvantageButtonIsDisabled();
 		testUnAssignAdvantageButtonIsEnabled();
-		press(KeyCode.CONTROL).clickOn(prettyMock.getName()).release(KeyCode.CONTROL);
+		press(KeyCode.CONTROL).clickOn(prettyMock.toString()).release(KeyCode.CONTROL);
 		verifyThat(ID_BTN_UN_ASSIGN_ADVANTAGE, (Button b) -> b.isDisable());
 	}
 
@@ -182,7 +182,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 	public void testToggleUnAssignDisadvantagesButtonEnabledDisabled() {
 		testUnAssignDisadvantageButtonIsDisabled();
 		testUnAssignDisadvantageButtonIsEnabled();
-		press(KeyCode.CONTROL).clickOn(disadvantageMock.getName()).release(KeyCode.CONTROL);
+		press(KeyCode.CONTROL).clickOn(disadvantageMock.toString()).release(KeyCode.CONTROL);
 		verifyThat(ID_BTN_UN_ASSIGN_DISADVANTAGE, (Button b) -> b.isDisable());
 	}
 
@@ -191,8 +191,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock));
 		updateGui();
 
-		verifyThat(disadvantageMock.getName(), NodeMatchers.isNotNull());
-		clickOn(disadvantageMock.getName()).clickOn(ID_BTN_UN_ASSIGN_DISADVANTAGE);
+		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
+		clickOn(disadvantageMock.toString()).clickOn(ID_BTN_UN_ASSIGN_DISADVANTAGE);
 		verify(mockedAventurianManager).removeProperty(disadvantageMock);
 
 	}
@@ -203,8 +203,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurianManager.canRemoveProperty(disadvantageMock)).thenReturn(true);
 		updateGui();
 
-		verifyThat(disadvantageMock.getName(), NodeMatchers.isNotNull());
-		doubleClickOn(disadvantageMock.getName(), MouseButton.PRIMARY);
+		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
+		doubleClickOn(disadvantageMock.toString(), MouseButton.PRIMARY);
 		verify(mockedAventurianManager).removeProperty(disadvantageMock);
 	}
 
@@ -220,8 +220,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock));
 		updateGui();
 
-		verifyThat(disadvantageMock.getName(), NodeMatchers.isNotNull());
-		clickOn(disadvantageMock.getName());
+		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
+		clickOn(disadvantageMock.toString());
 		final ListView<Property> assignedProperties = find(ID_LV_ASSIGNED_DISADVANTAGES);
 		assertFalse(assignedProperties.getSelectionModel().isEmpty());
 		verifyThat(ID_BTN_UN_ASSIGN_DISADVANTAGE, (Button b) -> !b.isDisable());
@@ -233,7 +233,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
-		verifyThat(badPropertyMock.getName(), NodeMatchers.isNotNull());
+		verifyThat(badPropertyMock.toString(), NodeMatchers.isNotNull());
 		final Button b = find("-");
 		verifyThat(b, NodeMatchers.isNotNull());
 		verifyThat(b, (Button button) -> button.isDisable());
@@ -244,7 +244,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
-		verifyThat(badPropertyMock.getName(), NodeMatchers.isNotNull());
+		verifyThat(badPropertyMock.toString(), NodeMatchers.isNotNull());
 		final Button b = find("+");
 		verifyThat(b, NodeMatchers.isNotNull());
 		verifyThat(b, (Button button) -> !button.isDisable());
@@ -256,7 +256,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
-		verifyThat(badPropertyMock.getName(), NodeMatchers.isNotNull());
+		verifyThat(badPropertyMock.toString(), NodeMatchers.isNotNull());
 		final Button b = find("+");
 		verifyThat(b, NodeMatchers.isNotNull());
 		verifyThat(b, (Button button) -> button.isDisable());
@@ -309,6 +309,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(p.isIncreasable()).thenReturn(false);
 		when(p.getMaxLevel()).thenReturn(1);
 		when(p.getMinLevel()).thenReturn(1);
+		when(p.getTotalCosts()).thenReturn(cost);
 		return new Property(name, "", cost, EMPTY, EMPTY, NOREQUIREMENT);
 
 	}
@@ -322,6 +323,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(bP.isDecreasable()).thenReturn(false);
 		when(bP.getMaxLevel()).thenReturn(12);
 		when(bP.getMinLevel()).thenReturn(5);
+		when(bP.getTotalCosts()).thenReturn(50);
 
 		return bP;
 	}

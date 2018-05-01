@@ -49,14 +49,14 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testAssignLanguage() {
-		verifyThat(garethi.getName(), NodeMatchers.isNotNull());
-		clickOn(garethi.getName()).clickOn(ID_BTN_ASSIGN_LANGUAGE);
+		verifyThat(garethi.toString(), NodeMatchers.isNotNull());
+		clickOn(garethi.toString()).clickOn(ID_BTN_ASSIGN_LANGUAGE);
 		verify(mockedAventurianManager).addLanguage(any(Language.class));
 	}
 
 	@Test
 	public void testAssignLanguageAsNativeTongue() {
-		verifyThat(garethi.getName(), NodeMatchers.isNotNull());
+		verifyThat(garethi.toString(), NodeMatchers.isNotNull());
 		final Button btn = find(ID_BTN_NATIVE_TONGUE);
 		assertFalse(btn.isDisable());
 		clickOn(btn);
@@ -75,8 +75,8 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testAssignLanguageViaDoubleClick() {
-		verifyThat(garethi.getName(), NodeMatchers.isNotNull());
-		doubleClickOn(garethi.getName(), MouseButton.PRIMARY);
+		verifyThat(garethi.toString(), NodeMatchers.isNotNull());
+		doubleClickOn(garethi.toString(), MouseButton.PRIMARY);
 		verify(mockedAventurianManager).addLanguage(any(Language.class));
 	}
 
@@ -131,7 +131,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testToggleAssignButtonEnabledDisabled() {
 		testAssignLanguageButtonIsDisabled();
 		testAssignLanguageButtonIsEnabled();
-		press(KeyCode.CONTROL).clickOn(garethi.getName()).release(KeyCode.CONTROL);
+		press(KeyCode.CONTROL).clickOn(garethi.toString()).release(KeyCode.CONTROL);
 		verifyThat(ID_BTN_ASSIGN_LANGUAGE, (Button b) -> b.isDisable());
 	}
 
@@ -146,8 +146,8 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testAssignLanguageButtonIsEnabled() {
-		verifyThat(garethi.getName(), NodeMatchers.isNotNull());
-		clickOn(garethi.getName());
+		verifyThat(garethi.toString(), NodeMatchers.isNotNull());
+		clickOn(garethi.toString());
 		final ListView<Language> allLanguages = find(ID_LV_UN_ASSIGNED_LANGUAGES);
 		assertFalse(allLanguages.getSelectionModel().isEmpty());
 		verifyThat(ID_BTN_ASSIGN_LANGUAGE, (Button b) -> !b.isDisable());
@@ -207,20 +207,21 @@ public class LanguagePaneTest extends BaseGuiTest {
 	@Override
 	void setUpMocks() {
 		// Database
-		garethi = createLanguage("Garethi");
-		blablub = createLanguage("blablub");
-		assignedLanguage = createLanguage("assignedLanguage");
+		garethi = createLanguage("Garethi", 100);
+		blablub = createLanguage("blablub",50);
+		assignedLanguage = createLanguage("assignedLanguage",50);
 		when(mockedDatabase.getLanguages()).thenReturn(Arrays.asList(garethi, blablub, assignedLanguage));
 	}
 
-	private static Language createLanguage(String name) {
+	private static Language createLanguage(String name, int cost) {
 		final Language l = Mockito.mock(Language.class);
-		when(l.toString()).thenReturn(name);
 		when(l.getName()).thenReturn(name);
 		when(l.isIncreasable()).thenReturn(true);
 		when(l.getMaxLevel()).thenReturn(5);
 		when(l.getMinLevel()).thenReturn(1);
 		when(l.isNativeTongue()).thenReturn(false);
+		when(l.getTotalCosts()).thenReturn(cost);
+		when(l.toString()).thenReturn(name + " (" + Math.abs(cost) + ")");
 		return l;
 		// mocking of languages not possible, because for some tests, we need real
 		// implementation of "equals()" which cannot be mocked

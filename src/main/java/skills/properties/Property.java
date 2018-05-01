@@ -34,8 +34,5 @@ public class Property extends IncreasableSkill {
 		return cost * -1;
 	}
 	
-	@Override
-	public String toString() {
-		return getName() + " (" + getTotalCosts() + ")";
-	}
+
 }

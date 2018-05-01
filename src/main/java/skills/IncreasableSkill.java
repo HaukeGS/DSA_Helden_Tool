@@ -62,5 +62,10 @@ public abstract class IncreasableSkill extends Skill {
 	public boolean isDecreasable() {
 		return level > minLevel;
 	}
+	
+	@Override
+	public String toString() {
+		return getName() + " (" + getTotalCosts() + ")";
+	}
 
 }
