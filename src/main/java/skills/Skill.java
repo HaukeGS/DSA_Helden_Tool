@@ -11,6 +11,7 @@ public abstract class Skill {
 
 	protected static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
 	};
+	protected static final Predicate<Aventurian> NOREQUIREMENT = (Aventurian a) -> true;
 	@XmlAttribute
 	private final String name;
 	private final String description;

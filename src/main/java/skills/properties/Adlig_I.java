@@ -3,7 +3,11 @@ package skills.properties;
 import java.util.function.Predicate;
 
 import aventurian.Aventurian;
+import skills.InstantiableSkill;
+import skills.InstantiableSkill.SkillType;
 
+
+@InstantiableSkill(SkillType.PROPERTY)
 public class Adlig_I extends Property {
 	
 //	mehrere Vorteile:
