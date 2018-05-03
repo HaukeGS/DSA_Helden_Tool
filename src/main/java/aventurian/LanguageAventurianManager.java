@@ -1,42 +1,48 @@
 package aventurian;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import database.Database;
 import skills.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
+	private final Predicate<Language> IS_NATIVE_TONGUE = (Language l) -> l.isNativeTongue();
 
 	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
 	}
 
 	void addLanguageAsNativeTongue(Language l) {
-		aventurian.ifPresent(av -> {
-			checkForBasicRequirements(l);
-			if (av.hasSkill(l))
-				throw new IllegalStateException("has already skill " + l.getName());
-			if (l.isNativeTongue())
-				throw new IllegalStateException("language is already native tongue" + l.getName());
-			while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
-					l.increase();
-				l.setNativeTongue(true);
-				av.add(l);
-		});
+		if (!canAddAsNativeTongue(l))
+			throw new IllegalStateException("requirements not met for adding " + l.getName() + " as native tongue");
+		while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+			l.increase();
+		l.setNativeTongue(true);
+		add(l);
+	}
+
+	boolean canAddAsNativeTongue(Language l) {
+		return !aventurian.map(av -> HAS_SKILL.test(av, l)//
+				|| IS_NOT_ALLOWED.test(av, l)//
+				|| CANNOT_PAY_TOTAL_COSTS.test(av, l)//
+				|| IS_NATIVE_TONGUE.test(l)).orElse(true);
 	}
 
 	void removeLanguage(Language l) {
-		aventurian.ifPresent(av -> {
-			if (!av.hasSkill(l))
-				throw new IllegalStateException("cannot remove skill " + l.getName());
-			if (l.isNativeTongue()) {
-				l.setNativeTongue(false);
-				decreaseLanguageWithoutRefund(l);
-			} else {
-				decreaseLanguageWithRefund(l);
-			}
-			av.remove(l);			
-		});
+		if (!canRemoveLanguage(l))
+			throw new IllegalStateException("requirements not met for removing " + l.getName());
+		if (l.isNativeTongue()) {
+			l.setNativeTongue(false);
+			decreaseLanguageWithoutRefund(l);
+		} else {
+			decreaseLanguageWithRefund(l);
+		}
+		remove(l);
+	}
+
+	boolean canRemoveLanguage(Language l) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)).orElse(true);
 	}
 
 	private void decreaseLanguageWithRefund(Language l) {
@@ -54,41 +60,44 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	}
 
 	void decreaseLanguage(Language l) {
-		aventurian.ifPresent(av -> {
-			if (!l.isDecreasable())
-				throw new IllegalStateException("cannot further decrease level of " + l.getName());
-			if (!av.hasSkill(l))
-				throw new IllegalStateException("cannot decrease skill which is not owned: " + l.getName());
-			final int refund = l.getDowngradeRefund();
-			l.decrease();
-			refund(refund);			
-		});
+		if (!canDecrease(l))
+			throw new IllegalStateException("requirements not met for decreasing " + l.getName());
+		final int refund = l.getDowngradeRefund();
+		l.decrease();
+		refund(refund);
+	}
+
+	boolean canDecrease(Language l) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)//
+				|| IS_NOT_DECREASABLE.test(l)).orElse(true);
 	}
 
 	void addLanguage(Language l) {
-		aventurian.ifPresent(av -> {
-			if (av.hasSkill(l))
-				throw new IllegalStateException("has already skill " + l.getName());
-			final int cost = l.getLearningCosts();
-			if (canPay(cost) && l.isAllowed(av)) {
-				av.add(l);
-				pay(cost);
-			}			
-		});
+		if (!canAdd(l))
+			throw new IllegalStateException("requirements not met for adding " + l.getName());
+		add(l);
+		pay(l.getTotalCosts());
+
+	}
+
+	boolean canAdd(Language l) {
+		return !aventurian.map(av -> HAS_SKILL.test(av, l)//
+				|| IS_NOT_ALLOWED.test(av, l)//
+				|| CANNOT_PAY_TOTAL_COSTS.test(av, l)).orElse(true);
 	}
 
 	void increaseLanguage(Language l) {
-		aventurian.ifPresent(av -> {
-			if (!l.isIncreasable())
-				throw new IllegalStateException("cannot further increase level of " + l.getName());
-			if (!av.hasSkill(l))
-				throw new IllegalStateException("cannot increase skill " + l.getName());
-			final int cost = l.getUpgradeCosts();
-			if (canPay(cost) && l.isAllowed(av) && l.isIncreasable()) {
-				l.increase();
-				pay(cost);
-			}			
-		});
+		if (!canIncrease(l))
+			throw new IllegalStateException("requirements not met for increasing " + l.getName());
+		l.increase();
+		pay(l.getUpgradeCosts());
+	}
+
+	boolean canIncrease(Language l) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)//
+				|| IS_NOT_ALLOWED.test(av, l)//
+				|| IS_NOT_INCREASABLE.test(l)//
+				|| CANNOT_PAY_UPGRADE_COSTS.test(av, l)).orElse(true);
 	}
 
 }

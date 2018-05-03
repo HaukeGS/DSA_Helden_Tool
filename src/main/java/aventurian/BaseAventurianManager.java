@@ -55,29 +55,5 @@ abstract class BaseAventurianManager {
 		aventurian.ifPresent(a -> a.add(s));
 	}
 	
-	protected final void checkForBasicDecreasableRequirements(IncreasableSkill s) {
-		if (!aventurian.isPresent())
-			throw new IllegalStateException("No Aventurian Present");
-		if (!aventurian.get().hasSkill(s))
-			throw new IllegalStateException("cannot decrease skill which is not owned: " + s.getName());
-		if (!s.isDecreasable())
-			throw new IllegalStateException("cannot further decrease level of " + s.getName());
-	}
 	
-	protected final void checkForBasicIncreasableRequirements(IncreasableSkill s) {
-		checkForBasicRequirements(s);
-		if (!aventurian.get().hasSkill(s))
-			throw new IllegalStateException("cannot increase skill which is not owned: " + s.getName());
-		if (!s.isIncreasable())
-			throw new IllegalStateException("cannot further increase level of " + s.getName());
-	}
-	
-	protected final void checkForBasicRequirements(IncreasableSkill s) {
-		if (!aventurian.isPresent())
-			throw new IllegalStateException("No Aventurian Present");
-		if (!s.isAllowed(aventurian.get()))
-			throw new IllegalStateException("requirements not met " + s.getName());
-		if (!aventurian.get().canPay(s.getTotalCosts()))
-			throw new IllegalStateException("cannot pay for " + s.getName());
-	}
 }

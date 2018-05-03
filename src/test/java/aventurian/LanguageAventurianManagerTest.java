@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import skills.Language;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LanguageAventurianManagerTest extends BaseTest{
+public class LanguageAventurianManagerTest extends BaseTest {
 
 	LanguageAventurianManager toTest;
 
@@ -58,28 +58,20 @@ public class LanguageAventurianManagerTest extends BaseTest{
 		toTest.addLanguage(l);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageTooExpensive() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.canPay(anyInt())).thenReturn(false);
 
 		toTest.addLanguage(l);
-
-		verify(aventurian, never()).add(l);
-		verify(aventurian, never()).pay(anyInt());
-		verify(l, never()).gain(aventurian);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageNotAllowed() {
 		final Language l = createLanguageMock(false, true);
-		when(aventurian.canPay(anyInt())).thenReturn(true);
 
 		toTest.addLanguage(l);
 
-		verify(aventurian, never()).add(l);
-		verify(aventurian, never()).pay(anyInt());
-		verify(l, never()).gain(aventurian);
 	}
 
 	@Test
@@ -95,7 +87,7 @@ public class LanguageAventurianManagerTest extends BaseTest{
 		correctOrder.verify(aventurian).add(l);
 	}
 
-	@Test (expected = IllegalStateException.class)
+	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageAsNativeTongueNotAllowed() {
 		final Language l = createLanguageMock(false, true);
 		toTest.addLanguageAsNativeTongue(l);
@@ -165,7 +157,6 @@ public class LanguageAventurianManagerTest extends BaseTest{
 	@Test(expected = IllegalStateException.class)
 	public void testDecreaseLanguageNotOwned() {
 		final Language l = createLanguageMock(true, true);
-		when(l.isDecreasable()).thenReturn(true);
 		when(aventurian.hasSkill(l)).thenReturn(false);
 		toTest.decreaseLanguage(l);
 	}
@@ -202,16 +193,13 @@ public class LanguageAventurianManagerTest extends BaseTest{
 		correctOrder.verify(aventurian).pay(anyInt());
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageNotAllowed() {
 		final Language l = createLanguageMock(false, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(aventurian.canPay(anyInt())).thenReturn(true);
 
 		toTest.increaseLanguage(l);
 
-		verify(aventurian, never()).pay(anyInt());
-		verify(l, never()).increase();
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -221,7 +209,7 @@ public class LanguageAventurianManagerTest extends BaseTest{
 		toTest.increaseLanguage(l);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageTooExpensive() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
@@ -229,8 +217,6 @@ public class LanguageAventurianManagerTest extends BaseTest{
 
 		toTest.increaseLanguage(l);
 
-		verify(aventurian, never()).pay(anyInt());
-		verify(l, never()).increase();
 	}
 
 	@Test(expected = IllegalStateException.class)
