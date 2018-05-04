@@ -1,9 +1,10 @@
 
-package skills;
+package skills.languages;
 
 import java.util.function.Predicate;
 
 import aventurian.Aventurian;
+import skills.IncreasableSkill;
 
 public class Language extends IncreasableSkill {
 	public static final int NATIVE_TONGUE_LEVEL = 4;

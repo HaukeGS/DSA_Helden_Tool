@@ -21,7 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import skills.Language;
+import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
 

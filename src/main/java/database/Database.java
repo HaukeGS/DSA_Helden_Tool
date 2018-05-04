@@ -20,11 +20,10 @@ import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
 import aventurian.Aventurian;
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.Race;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.InstantiableSkill;
-import skills.Language;
+import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
 
@@ -68,14 +67,19 @@ public class Database {
 
 		initRaces();
 		initProperties(reflections);
-		initLanguages();
+		initLanguages(reflections);
 	}
 
-	private void initLanguages() {
+	private void initLanguages(Reflections reflections) {
 		languages = new ArrayList<>();
-		languages.add(new Language("Garethi", "wichtigste Sprache",
-				(Aventurian a) -> a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE) >= 13, 5, 50));
-		languages.add(new Language("BlaBla", "sinnlose Sprache", (Aventurian a) -> true, 5, 50));
+		try {
+			final Set<Class<?>> languageClasses = findClasses(reflections, InstantiableSkill.SkillType.LANGUAGE);
+			for (final Class<?> clazz : languageClasses) {
+				languages.add((Language) clazz.newInstance());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Set<Class<?>> findClasses(Reflections reflections, InstantiableSkill.SkillType t) {

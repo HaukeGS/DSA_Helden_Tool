@@ -16,8 +16,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import aventurian.LevelCostCalculator.COLUMN;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import skills.Language;
 import skills.Skill;
+import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
 

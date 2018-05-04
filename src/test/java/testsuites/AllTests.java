@@ -16,7 +16,7 @@ import aventurian.SecondaryAttributeHelperTest;
 import aventurian.SecondaryAttributesTest;
 import database.DatabaseTest;
 import skills.IncreasableSkillTest;
-import skills.LanguageTest;
+import skills.languages.LanguageTest;
 import skills.properties.BadPropertyTest;
 import skills.properties.PropertyTest;
 import ui.AttributePaneTest;

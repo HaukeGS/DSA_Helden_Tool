@@ -1,4 +1,4 @@
-package skills;
+package skills.languages;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import aventurian.Aventurian;
+import skills.languages.Language;
 
 public class LanguageTest {
 	private Language toTest;

@@ -19,7 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-import skills.Language;
+import skills.languages.Language;
 
 public class LanguagePaneController extends PaneController {
 

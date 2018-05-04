@@ -24,7 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import skills.Language;
+import skills.languages.Language;
 import testsuites.categories.CannotRunHeadless;
 
 @RunWith(MockitoJUnitRunner.class)

@@ -9,7 +9,7 @@ import java.util.Optional;
 import javax.xml.bind.JAXBException;
 
 import database.Database;
-import skills.Language;
+import skills.languages.Language;
 import skills.properties.Property;
 
 public class AventurianManager extends BaseAventurianManager {

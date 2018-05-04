@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import database.Database;
-import skills.Language;
+import skills.languages.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
 	private final Predicate<Language> IS_NATIVE_TONGUE = (Language l) -> l.isNativeTongue();

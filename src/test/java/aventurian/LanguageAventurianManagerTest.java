@@ -17,7 +17,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import skills.Language;
+import skills.languages.Language;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LanguageAventurianManagerTest extends BaseTest {
