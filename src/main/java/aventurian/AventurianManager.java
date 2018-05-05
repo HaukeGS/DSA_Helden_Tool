@@ -104,16 +104,32 @@ public class AventurianManager extends BaseAventurianManager {
 		languageManager.increaseLanguage(l);
 	}
 
+	public boolean canIncreaseLanguage(Language l) {
+		return languageManager.canIncrease(l);
+	}
+
 	public void decreaseLanguage(Language l) {
 		languageManager.decreaseLanguage(l);
+	}
+
+	public boolean canDecreaseLanguage(Language l) {
+		return languageManager.canDecrease(l);
 	}
 
 	public void addLanguage(Language l) {
 		languageManager.addLanguage(l);
 	}
 
+	public boolean canAddLanguage(Language l) {
+		return languageManager.canAdd(l);
+	}
+
 	public void addLanguageAsNativeTongue(Language l) {
 		languageManager.addLanguageAsNativeTongue(l);
+	}
+
+	public boolean canAddLanguageAsNativeTongue(Language l) {
+		return languageManager.canAddAsNativeTongue(l);
 	}
 
 	public void removeLanguage(Language l) {

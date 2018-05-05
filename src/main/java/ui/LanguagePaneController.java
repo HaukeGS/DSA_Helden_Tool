@@ -33,7 +33,6 @@ public class LanguagePaneController extends PaneController {
 	@FXML
 	public ListView<Language> lvAssignedLanguages;
 
-	private boolean hasNativeTongue;
 
 	public void assignLanguage() {
 		final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
@@ -47,7 +46,6 @@ public class LanguagePaneController extends PaneController {
 
 	@Override
 	void update(Aventurian updatedAventurian) {
-		hasNativeTongue = updatedAventurian.hasNativeTongue();
 		lvAssignedLanguages.setItems(null); // forces listview to re-render all cells
 		lvUnAssignedLanguages.setItems(null); // forces listview to re-render all cells
 		final List<Language> assignedLanguages = updatedAventurian.getLanguages();
@@ -59,7 +57,6 @@ public class LanguagePaneController extends PaneController {
 
 	@Override
 	void initControllerSpecificStuff() {
-		hasNativeTongue = false;
 		prepareUnAssignedListView();
 		prepareAssignedListView();
 
@@ -68,12 +65,12 @@ public class LanguagePaneController extends PaneController {
 	private void prepareUnAssignedListView() {
 		lvUnAssignedLanguages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnAssignLanguage.setDisable(newValue == null);
+					btnAssignLanguage.setDisable(newValue == null || !m.canAddLanguage(newValue));
 				});
 
 		lvUnAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
-			if (click.getClickCount() == 2 && !lvUnAssignedLanguages.getSelectionModel().isEmpty()) {
-				final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
+			final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
+			if (click.getClickCount() == 2 && language != null && m.canAddLanguage(language)) {
 				m.addLanguage(language);
 			}
 		});
@@ -117,7 +114,8 @@ public class LanguagePaneController extends PaneController {
 				setTooltip(null);
 			} else {
 				nameLabel.setText(item.toString());
-				nativeTongueButton.setDisable(hasNativeTongue);
+				nameLabel.setDisable(!LanguagePaneController.this.m.canAddLanguage(item));
+				nativeTongueButton.setDisable(!LanguagePaneController.this.m.canAddLanguageAsNativeTongue(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
 			}
