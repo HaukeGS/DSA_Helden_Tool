@@ -79,11 +79,11 @@ public class LanguagePaneController extends PaneController {
 
 	private void prepareAssignedListView() {
 		lvAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			btnUnAssignLanguage.setDisable(newValue == null);
+			btnUnAssignLanguage.setDisable(newValue == null || !m.canRemoveLanguage(newValue));
 		});
 		lvAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
-			if (click.getClickCount() == 2 && !lvAssignedLanguages.getSelectionModel().isEmpty()) {
-				final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
+			final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
+			if (click.getClickCount() == 2 && language!=null && m.canRemoveLanguage(language)) {
 				m.removeLanguage(language);
 			}
 		});

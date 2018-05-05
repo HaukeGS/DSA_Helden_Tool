@@ -186,4 +186,8 @@ public class AventurianManager extends BaseAventurianManager {
 	public boolean canRemoveProperty(Property p) {
 		return propertyManager.canRemove(p);
 	}
+
+	public boolean canRemoveLanguage(Language l) {
+		return languageManager.canRemoveLanguage(l);
+	}
 }
