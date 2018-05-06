@@ -3,12 +3,14 @@ package aventurian;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import database.Database;
 import skills.languages.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
 	private final Predicate<Language> IS_NATIVE_TONGUE = (Language l) -> l.isNativeTongue();
-
+	private final Predicate<Aventurian> EXCEEDS_MAX_SUM_IN_LANGUAGES = (Aventurian a) -> a.getLanguages().stream().mapToInt(Language::getLevel).sum() >= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	
 	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
 	}
@@ -97,6 +99,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)//
 				|| IS_NOT_ALLOWED.test(av, l)//
 				|| IS_NOT_INCREASABLE.test(l)//
+				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)//
 				|| CANNOT_PAY_UPGRADE_COSTS.test(av, l)).orElse(true);
 	}
 
