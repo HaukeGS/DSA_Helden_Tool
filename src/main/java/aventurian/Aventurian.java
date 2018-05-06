@@ -120,7 +120,7 @@ public class Aventurian extends Observable {
 	}
 
 	public boolean hasSkill(String skillName) {
-		return allSkills.stream().anyMatch((s) -> s.getName().equals(skillName));
+		return getStreamOfSkills().anyMatch((s) -> s.getName().equals(skillName));
 	}
 
 	public int getSumOfPrimaryAttributes() {
@@ -214,20 +214,28 @@ public class Aventurian extends Observable {
 		return getStreamOfLanguages().collect(toList());
 	}
 
+	private Stream<Skill> getStreamOfSkills() {
+		return allSkills.stream().sorted();
+	}
+
 	private Stream<Language> getStreamOfLanguages() {
-		return allSkills.stream().filter(Language.class::isInstance).map(Language.class::cast);
+		return getStreamOfSkills().filter(Language.class::isInstance).map(Language.class::cast);
 	}
 
 	private Stream<Property> getStreamOfProperties() {
-		return allSkills.stream().filter(Property.class::isInstance).map(Property.class::cast);
+		return getStreamOfSkills().filter(Property.class::isInstance).map(Property.class::cast);
 	}
 
 	private Stream<BadProperty> getStreamOfBadProperties() {
-		return allSkills.stream().filter(BadProperty.class::isInstance).map(BadProperty.class::cast);
+		return getStreamOfSkills().filter(BadProperty.class::isInstance).map(BadProperty.class::cast);
 	}
 
 	public boolean hasNativeTongue() {
 		return getStreamOfLanguages().anyMatch((Language l) -> l.isNativeTongue());
+	}
+
+	int getPointsInLanguages() {
+		return getLanguages().stream().mapToInt(Language::getLevel).sum();
 	}
 
 	public boolean isMage() {

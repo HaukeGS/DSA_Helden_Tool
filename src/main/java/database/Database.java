@@ -42,7 +42,7 @@ public class Database {
 	}
 
 	public List<Language> getLanguages() {
-		return languages;
+		return languages.stream().sorted().collect(toList());
 	}
 
 	public List<Property> getAdvantages() {

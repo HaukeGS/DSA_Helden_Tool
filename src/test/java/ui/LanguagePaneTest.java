@@ -160,13 +160,14 @@ public class LanguagePaneTest extends BaseGuiTest {
 	@Test
 	public void testIncreaseLanguageLevel() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
+		when(mockedAventurianManager.canIncreaseLanguage(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
 		final Button btn = find("+");
 		verifyThat(btn, (Button button) -> !button.isDisable());
 		clickOn(btn);
-		verify(mockedAventurianManager).increaseLanguage(any(Language.class));
+		verify(mockedAventurianManager).increaseLanguage(assignedLanguage);
 	}
 
 	@Test

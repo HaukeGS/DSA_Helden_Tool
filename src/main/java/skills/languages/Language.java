@@ -32,4 +32,8 @@ public class Language extends IncreasableSkill {
 		return level > 1;
 	}
 
+
+
+	
+
 }

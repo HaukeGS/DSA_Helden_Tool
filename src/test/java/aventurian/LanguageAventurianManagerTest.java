@@ -17,6 +17,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.languages.Language;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -94,7 +95,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		correctOrder.verify(aventurian).add(l);
 	}
 
-	@Test(expected=IllegalStateException.class)
+	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageAsNativeTongueHasAlreadyNativeTongue() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(false);
@@ -205,6 +206,8 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
 		when(aventurian.canPay(anyInt())).thenReturn(true);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(aventurian.getPointsInLanguages()).thenReturn(0);
 
 		toTest.increaseLanguage(l);
 		final InOrder correctOrder = inOrder(aventurian, l);
@@ -234,6 +237,8 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
 		when(aventurian.canPay(anyInt())).thenReturn(false);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(aventurian.getPointsInLanguages()).thenReturn(0);
 
 		toTest.increaseLanguage(l);
 

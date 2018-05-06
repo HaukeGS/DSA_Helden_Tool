@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import aventurian.Aventurian;
 
-public abstract class Skill {
+public abstract class Skill implements Comparable<Skill> {
 
 	protected static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
 	};
@@ -76,5 +76,10 @@ public abstract class Skill {
 	@Override
 	public String toString() {
 		return getName() + " (" + getLearningCosts() + ")";
+	}
+	
+	@Override
+	public int compareTo(Skill o) {
+		return getName().compareTo(o.getName());
 	}
 }
