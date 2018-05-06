@@ -40,6 +40,13 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		toTest.addLanguageAsNativeTongue(l);
 	}
 
+	@Test(expected = IllegalStateException.class)
+	public void testAddLanguageAsNativeTongueHasAlreadyLanguage() {
+		final Language l = createLanguageMock(true, true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
+		toTest.addLanguageAsNativeTongue(l);
+	}
+
 	@Test
 	public void testLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
@@ -85,6 +92,17 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		final InOrder correctOrder = inOrder(aventurian, l);
 		correctOrder.verify(l).setNativeTongue(true);
 		correctOrder.verify(aventurian).add(l);
+	}
+
+	@Test(expected=IllegalStateException.class)
+	public void testAddLanguageAsNativeTongueHasAlreadyNativeTongue() {
+		final Language l = createLanguageMock(true, true);
+		when(aventurian.hasSkill(l)).thenReturn(false);
+		when(l.isAllowed(aventurian)).thenReturn(true);
+		when(l.isNativeTongue()).thenReturn(false);
+		when(aventurian.hasNativeTongue()).thenReturn(true);
+
+		toTest.addLanguageAsNativeTongue(l);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -164,6 +182,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	@Test(expected = IllegalStateException.class)
 	public void testDecreaseLanguageNotDecreasable() {
 		final Language l = createLanguageMock(true, true);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 
 		toTest.decreaseLanguage(l);
 	}
@@ -205,6 +224,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageNotIncreasable() {
 		final Language l = createLanguageMock(true, false);
+		when(aventurian.hasSkill(l)).thenReturn(true);
 
 		toTest.increaseLanguage(l);
 	}

@@ -8,8 +8,10 @@ import database.Database;
 import skills.languages.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
+	
 	private final Predicate<Language> IS_NATIVE_TONGUE = (Language l) -> l.isNativeTongue();
 	private final Predicate<Aventurian> EXCEEDS_MAX_SUM_IN_LANGUAGES = (Aventurian a) -> a.getLanguages().stream().mapToInt(Language::getLevel).sum() >= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	private final Predicate<Aventurian> HAS_ALREADY_NATIVE_TONGUE = (Aventurian av) -> av.hasNativeTongue();
 	
 	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
@@ -27,8 +29,8 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	boolean canAddAsNativeTongue(Language l) {
 		return !aventurian.map(av -> HAS_SKILL.test(av, l)//
 				|| IS_NOT_ALLOWED.test(av, l)//
-				|| CANNOT_PAY_TOTAL_COSTS.test(av, l)//
-				|| IS_NATIVE_TONGUE.test(l)).orElse(true);
+				|| IS_NATIVE_TONGUE.test(l)//
+				|| HAS_ALREADY_NATIVE_TONGUE.test(av)).orElse(true);
 	}
 
 	void removeLanguage(Language l) {

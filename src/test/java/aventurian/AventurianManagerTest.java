@@ -154,6 +154,41 @@ public class AventurianManagerTest extends BaseTest {
 	}
 
 	@Test
+	public void testCanAddLanguge() {
+		final Language l = mock(Language.class);
+		toTest.canAddLanguage(l);
+		verify(languages).canAdd(l);
+	}
+
+	@Test
+	public void testCanAddLangugeAsNativeTongue() {
+		final Language l = mock(Language.class);
+		toTest.canAddLanguageAsNativeTongue(l);
+		verify(languages).canAddAsNativeTongue(l);
+	}
+
+	@Test
+	public void testCanIncreaseLanguge() {
+		final Language l = mock(Language.class);
+		toTest.canIncreaseLanguage(l);
+		verify(languages).canIncrease(l);
+	}
+
+	@Test
+	public void testCanDecreaseLanguge() {
+		final Language l = mock(Language.class);
+		toTest.canDecreaseLanguage(l);
+		verify(languages).canDecrease(l);
+	}
+
+	@Test
+	public void testCanRemoveLanguage() {
+		final Language l = mock(Language.class);
+		toTest.canRemoveLanguage(l);
+		verify(languages).canRemoveLanguage(l);
+	}
+
+	@Test
 	public void setName() {
 		toTest.setName("");
 		verify(mockedAventurian).setName("");

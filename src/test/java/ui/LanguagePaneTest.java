@@ -36,7 +36,6 @@ public class LanguagePaneTest extends BaseGuiTest {
 	private static final String ID_LV_ASSIGNED_LANGUAGES = "#lvAssignedLanguages";
 	private static final String ID_LV_UN_ASSIGNED_LANGUAGES = "#lvUnAssignedLanguages";
 
-	private static final String LANGUAGE_NAME_NATIVETONGUE = "Native Tongue";
 	private Language garethi;
 	private Language blablub;
 	private Language assignedLanguage;
@@ -65,10 +64,10 @@ public class LanguagePaneTest extends BaseGuiTest {
 	}
 
 	@Test
-	public void testNativeTongueButtonsAreDisabled() throws InterruptedException {
+	public void testNativeTongueButtonsGetDisabled() throws InterruptedException {
 		final Set<Button> nativeTongueButtons = findAll(ID_BTN_NATIVE_TONGUE);
-		nativeTongueButtons.forEach(b -> assertFalse(b.isDisable()));
-		when(mockedAventurian.hasNativeTongue()).thenReturn(true);
+		when(mockedAventurianManager.canAddLanguageAsNativeTongue(garethi)).thenReturn(false);
+		when(mockedAventurianManager.canAddLanguageAsNativeTongue(blablub)).thenReturn(false);
 		updateGui();
 		nativeTongueButtons.forEach(b -> assertTrue(b.isDisable()));
 	}
@@ -83,16 +82,20 @@ public class LanguagePaneTest extends BaseGuiTest {
 	@Test
 	public void testUnAssignLanguage() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
+		when(mockedAventurianManager.canRemoveLanguage(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
 		clickOn(assignedLanguage.getName()).clickOn(ID_BTN_UN_ASSIGN_LANGUAGE);
-		verify(mockedAventurianManager).removeLanguage(any(Language.class));
+		final Button unassign = find(ID_BTN_UN_ASSIGN_LANGUAGE);
+		assertFalse(unassign.isDisable());
+		verify(mockedAventurianManager).removeLanguage(assignedLanguage);
 	}
 
 	@Test
 	public void testUnAssignLanguageViaDoubleClick() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
+		when(mockedAventurianManager.canRemoveLanguage(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
@@ -117,6 +120,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 	@Test
 	public void testUnAssignLanguageButtonIsEnabled() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
+		when(mockedAventurianManager.canRemoveLanguage(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
@@ -164,7 +168,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 		clickOn(btn);
 		verify(mockedAventurianManager).increaseLanguage(any(Language.class));
 	}
-	
+
 	@Test
 	public void testIncreaseLanguageLevelButtonGetsDisabled() {
 		when(assignedLanguage.isIncreasable()).thenReturn(false);
@@ -208,12 +212,16 @@ public class LanguagePaneTest extends BaseGuiTest {
 	void setUpMocks() {
 		// Database
 		garethi = createLanguage("Garethi", 100);
-		blablub = createLanguage("blablub",50);
-		assignedLanguage = createLanguage("assignedLanguage",50);
+		blablub = createLanguage("blablub", 50);
+		assignedLanguage = createLanguage("assignedLanguage", 50);
 		when(mockedDatabase.getLanguages()).thenReturn(Arrays.asList(garethi, blablub, assignedLanguage));
+		when(mockedAventurianManager.canAddLanguage(garethi)).thenReturn(true);
+		when(mockedAventurianManager.canAddLanguage(blablub)).thenReturn(true);
+		when(mockedAventurianManager.canAddLanguageAsNativeTongue(garethi)).thenReturn(true);
+		when(mockedAventurianManager.canAddLanguageAsNativeTongue(blablub)).thenReturn(true);
 	}
 
-	private static Language createLanguage(String name, int cost) {
+	private Language createLanguage(String name, int cost) {
 		final Language l = Mockito.mock(Language.class);
 		when(l.getName()).thenReturn(name);
 		when(l.isIncreasable()).thenReturn(true);
@@ -221,11 +229,9 @@ public class LanguagePaneTest extends BaseGuiTest {
 		when(l.getMinLevel()).thenReturn(1);
 		when(l.isNativeTongue()).thenReturn(false);
 		when(l.getTotalCosts()).thenReturn(cost);
+		when(l.isAllowed(mockedAventurian)).thenReturn(true);
 		when(l.toString()).thenReturn(name + " (" + Math.abs(cost) + ")");
 		return l;
-		// mocking of languages not possible, because for some tests, we need real
-		// implementation of "equals()" which cannot be mocked
-		// return new Language(name, "", NOREQUIREMENT, 5, 100);
 	}
 
 }
