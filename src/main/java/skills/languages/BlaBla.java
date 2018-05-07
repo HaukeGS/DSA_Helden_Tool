@@ -9,7 +9,7 @@ public class BlaBla extends Language {
 	final static String DESCRIPTION = "Testsprache. Kannst du mich verstehen?";
 
 	public BlaBla() {
-		super(NAME, DESCRIPTION, NOREQUIREMENT, 4, 50);
+		super(NAME, DESCRIPTION, 4, 50);
 	}
 
 }

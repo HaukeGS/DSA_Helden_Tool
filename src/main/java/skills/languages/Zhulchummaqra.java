@@ -1,8 +1,5 @@
 package skills.languages;
 
-import java.util.function.Predicate;
-
-import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
@@ -10,10 +7,9 @@ import skills.InstantiableSkill.SkillType;
 public class Zhulchummaqra extends Language {
 	static final String NAME = "Zhulchummaqra";
 	static final String DESCRIPTION = "Das Zhulchummaqra ist die Sprache der Trollzocker und ist aus dem Ur-Tulamidya entstanden. \nDie Sprache wird in keiner Schrift geschrieben.";
-	static final Predicate<Aventurian> REQ = NOREQUIREMENT;
 
 	public Zhulchummaqra() {
-		super(NAME, DESCRIPTION, REQ, 4, 40);
+		super(NAME, DESCRIPTION,  4, 40);
 	}
 
 }

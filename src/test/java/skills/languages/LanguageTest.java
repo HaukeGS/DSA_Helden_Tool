@@ -3,26 +3,17 @@ package skills.languages;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.function.Predicate;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import aventurian.Aventurian;
-import skills.languages.Language;
-
 public class LanguageTest {
 	private Language toTest;
-	private final Predicate<Aventurian> requirement = (Aventurian a) -> {
-		return true;
-	};
 
 	@Before
 	public void setUp() throws Exception {
-		this.toTest = new Language("testLanguage", "description", requirement,
-				5, 50);
+		this.toTest = new Language("testLanguage", "description", 5, 50);
 	}
-	
+
 	@Test
 	public void testIsDecreasableNativeTongue() {
 		toTest.setNativeTongue(true);
@@ -30,9 +21,9 @@ public class LanguageTest {
 			toTest.increase();
 		}
 		assertTrue(toTest.isDecreasable());
-		
+
 		toTest.decrease();
-		
+
 		assertFalse(toTest.isDecreasable());
 	}
 
