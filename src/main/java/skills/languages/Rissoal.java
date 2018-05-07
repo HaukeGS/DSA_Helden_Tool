@@ -7,12 +7,12 @@ import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
 @InstantiableSkill(SkillType.LANGUAGE)
-public class Zelemja extends Language {
-	static final String NAME = "Zelemja";
-	static final String DESCRIPTION = "Diese alte Sprache ist aus dem Rssahh enstanden und wird nur noch in der Gegend um Selem gesprochen. \nDie Sprache wird in den 5000 Chrmk-Zeichen geschrieben.";
+public class Rissoal extends Language {
+	static final String NAME = "Rissoal";
+	static final String DESCRIPTION = "Das Rissoal wird auf beiden Seiten des Meeres der Sieben Winde gesprochen. \nDie Sprache ist schriftlos.";
 	static final Predicate<Aventurian> REQ = NOREQUIREMENT;
 
-	public Zelemja() {
+	public Rissoal() {
 		super(NAME, DESCRIPTION, REQ, 5, 50);
 	}
 

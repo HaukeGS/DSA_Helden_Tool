@@ -10,7 +10,7 @@ import skills.languages.Language;
 class LanguageAventurianManager extends BaseAventurianManager {
 	
 	private final Predicate<Language> IS_NATIVE_TONGUE = (Language l) -> l.isNativeTongue();
-	private final Predicate<Aventurian> EXCEEDS_MAX_SUM_IN_LANGUAGES = (Aventurian a) -> a.getPointsInLanguages() >= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	private final Predicate<Aventurian> EXCEEDS_MAX_SUM_IN_LANGUAGES = (Aventurian a) -> a.getLevelSumOfLanguages() >= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
 	private final Predicate<Aventurian> HAS_ALREADY_NATIVE_TONGUE = (Aventurian av) -> av.hasNativeTongue();
 	
 	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
@@ -60,15 +60,14 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (l.getLevel() > Language.NATIVE_TONGUE_LEVEL)
 			decreaseLanguage(l);
 		while (l.isDecreasable())
-			l.decrease();
+			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(l));
 	}
 
 	void decreaseLanguage(Language l) {
 		if (!canDecrease(l))
 			throw new IllegalStateException("requirements not met for decreasing " + l.getName());
-		final int refund = l.getDowngradeRefund();
-		l.decrease();
-		refund(refund);
+		refund(l.getDowngradeRefund());
+		aventurian.ifPresent(av -> av.decreaseIncreasableSkill(l));
 	}
 
 	boolean canDecrease(Language l) {
@@ -87,14 +86,15 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	boolean canAdd(Language l) {
 		return !aventurian.map(av -> HAS_SKILL.test(av, l)//
 				|| IS_NOT_ALLOWED.test(av, l)//
+				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)//
 				|| CANNOT_PAY_TOTAL_COSTS.test(av, l)).orElse(true);
 	}
 
 	void increaseLanguage(Language l) {
 		if (!canIncrease(l))
 			throw new IllegalStateException("requirements not met for increasing " + l.getName());
-		l.increase();
 		pay(l.getUpgradeCosts());
+		aventurian.ifPresent(av -> av.increaseIncreasableSkill(l));
 	}
 
 	boolean canIncrease(Language l) {

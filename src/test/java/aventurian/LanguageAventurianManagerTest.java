@@ -49,9 +49,12 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	}
 
 	@Test
-	public void testLanguageAllConditionsMet() {
+	public void testAddLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.canPay(anyInt())).thenReturn(true);
+		when(aventurian.hasSkill(l)).thenReturn(false);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 		toTest.addLanguage(l);
 
 		final InOrder correctOrder = inOrder(aventurian);
@@ -72,6 +75,28 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(aventurian.canPay(anyInt())).thenReturn(false);
 
 		toTest.addLanguage(l);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testAddLanguageExceedsMaxSum() {
+		final Language l = createLanguageMock(true, true);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		
+		toTest.addLanguage(l);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testIncreaseLanguageExceedsMaxSum() {
+		final Language l = createLanguageMock(true, true);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(aventurian.hasSkill(l)).thenReturn(true);
+		when(aventurian.canPay(anyInt())).thenReturn(true);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
+		
+		toTest.increaseLanguage(l);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -144,7 +169,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 		verify(aventurian, times(1)).refund(anyInt());
 		verify(aventurian).remove(l);
-		verify(l, times(4)).decrease();
+		verify(aventurian, times(4)).decreaseIncreasableSkill(l);
 		verify(l).setNativeTongue(false);
 	}
 
@@ -168,7 +193,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 		toTest.decreaseLanguage(l);
 
-		verify(l).decrease();
+		verify(aventurian).decreaseIncreasableSkill(l);
 		verify(aventurian).refund(anyInt());
 		verify(aventurian, never()).remove(l);
 	}
@@ -196,7 +221,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.removeLanguage(l);
-		verify(l).decrease();
+		verify(aventurian).decreaseIncreasableSkill(l);
 		verify(aventurian).remove(l);
 		verify(aventurian, times(2)).refund(anyInt());
 	}
@@ -207,12 +232,12 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(aventurian.hasSkill(l)).thenReturn(true);
 		when(aventurian.canPay(anyInt())).thenReturn(true);
 		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(aventurian.getPointsInLanguages()).thenReturn(0);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 
 		toTest.increaseLanguage(l);
 		final InOrder correctOrder = inOrder(aventurian, l);
-		correctOrder.verify(l).increase();
 		correctOrder.verify(aventurian).pay(anyInt());
+		correctOrder.verify(aventurian).increaseIncreasableSkill(l);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -238,7 +263,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(aventurian.hasSkill(l)).thenReturn(true);
 		when(aventurian.canPay(anyInt())).thenReturn(false);
 		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(aventurian.getPointsInLanguages()).thenReturn(0);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 
 		toTest.increaseLanguage(l);
 

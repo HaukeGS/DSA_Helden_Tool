@@ -7,12 +7,12 @@ import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
 @InstantiableSkill(SkillType.LANGUAGE)
-public class Ferkina extends Language {
-	static final String NAME = "Ferkina";
-	static final String DESCRIPTION = "Das Ferkina ist die Sprache des gleichnamigen Volkes und ist aus dem Ur-Tulamidya entstanden. \nDie Sprache wird in keiner Schrift geschrieben.";
+public class Zhayad extends Language {
+	static final String NAME = "Zhayad";
+	static final String DESCRIPTION = "Das Zhayad wird nur von eitlen Magiern genutzt. Es heißt nur in dieser Sprache könne man mit Dämonen kommunizieren. \nDie Sprache verwendet eigene Silben- und Lautzeichen.";
 	static final Predicate<Aventurian> REQ = NOREQUIREMENT;
 
-	public Ferkina() {
+	public Zhayad() {
 		super(NAME, DESCRIPTION, REQ, 4, 40);
 	}
 

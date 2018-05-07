@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import aventurian.LevelCostCalculator.COLUMN;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
+import skills.IncreasableSkill;
 import skills.Skill;
 import skills.languages.Language;
 import skills.properties.BadProperty;
@@ -234,7 +235,7 @@ public class Aventurian extends Observable {
 		return getStreamOfLanguages().anyMatch((Language l) -> l.isNativeTongue());
 	}
 
-	int getPointsInLanguages() {
+	int getLevelSumOfLanguages() {
 		return getLanguages().stream().mapToInt(Language::getLevel).sum();
 	}
 
@@ -270,6 +271,16 @@ public class Aventurian extends Observable {
 	@Override
 	public void addObserver(Observer o) {
 		super.addObserver(o);
+		setChangedAndNotifyObservers();
+	}
+	
+	void increaseIncreasableSkill(IncreasableSkill s) {
+		s.increase();
+		setChangedAndNotifyObservers();
+	}
+	
+	void decreaseIncreasableSkill(IncreasableSkill s) {
+		s.decrease();
 		setChangedAndNotifyObservers();
 	}
 }

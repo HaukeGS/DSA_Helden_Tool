@@ -167,7 +167,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(aventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
-		verify(p, times(2)).decrease();
+		verify(aventurian, times(2)).decreaseIncreasableSkill(p);
 		verify(aventurian).remove(p);
 		verify(aventurian, times(3)).pay(anyInt());
 	}
@@ -180,7 +180,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(aventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
-		verify(p, times(2)).decrease();
+		verify(aventurian, times(2)).decreaseIncreasableSkill(p);
 		verify(aventurian).remove(p);
 		verify(aventurian, times(3)).refund(anyInt());
 	}
@@ -193,7 +193,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 		toTest.decreaseProperty(bp);
 
-		verify(bp).decrease();
+		verify(aventurian).decreaseIncreasableSkill(bp);
 		verify(aventurian).pay(anyInt());
 		verify(aventurian, never()).remove(bp);
 	}
@@ -206,7 +206,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 		toTest.decreaseProperty(p);
 
-		verify(p).decrease();
+		verify(aventurian).decreaseIncreasableSkill(p);
 		verify(aventurian).refund(anyInt());
 		verify(aventurian, never()).remove(p);
 	}
@@ -242,7 +242,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(aventurian.hasSkill(bp)).thenReturn(true);
 		toTest.increaseProperty(bp);
 
-		verify(bp).increase();
+		verify(aventurian).increaseIncreasableSkill(bp);
 		verify(aventurian).refund(anyInt());
 	}
 
@@ -285,7 +285,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(advantage.isIncreasable()).thenReturn(true);
 
 		toTest.increaseProperty(advantage);
-		verify(advantage).increase();
+		verify(aventurian).increaseIncreasableSkill(advantage);
 		verify(aventurian).pay(anyInt());
 	}
 
