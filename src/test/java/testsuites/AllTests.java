@@ -16,6 +16,7 @@ import aventurian.SecondaryAttributeHelperTest;
 import aventurian.SecondaryAttributesTest;
 import database.DatabaseTest;
 import skills.IncreasableSkillTest;
+import skills.SkillTest;
 import skills.languages.LanguageTest;
 import skills.properties.BadPropertyTest;
 import skills.properties.PropertyTest;
@@ -31,7 +32,7 @@ import ui.PropertyPaneTest;
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
 		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class,
-		PropertyPaneTest.class, DatabaseTest.class, IncreasableSkillTest.class })
+		PropertyPaneTest.class, DatabaseTest.class, IncreasableSkillTest.class, SkillTest.class })
 public class AllTests {
 
 }
