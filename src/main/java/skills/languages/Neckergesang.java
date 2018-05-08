@@ -7,7 +7,7 @@ import skills.InstantiableSkill.SkillType;
 @InstantiableSkill(SkillType.LANGUAGE)
 public class Neckergesang extends Language {
 	static final String NAME = "Neckergesang";
-	static final String DESCRIPTION = "^Der teilweise thelepatische Neckergesang kann nur mit dem Zauber GEDANKENBILDER ELFENRUF zur Perfektion gebracht werden. \nDie Sprache ist schriftlos.";
+	static final String DESCRIPTION = "Der teilweise telepathische Neckergesang kann nur mit dem Zauber GEDANKENBILDER ELFENRUF zur Perfektion gebracht werden. \nDie Sprache ist schriftlos.";
 
 	public Neckergesang() {
 		super(NAME, DESCRIPTION, 5, 50);
@@ -15,6 +15,15 @@ public class Neckergesang extends Language {
 	
 	@Override
 	public boolean isAllowedToHave(Aventurian a) {
+		if (getLevel() <= 4)
+			return true;
+		if (a.hasSkill("Gedankenbilder Elfenruf"))
+			return true;
+		return false;
+	}
+	
+	@Override
+	public boolean isAllowedToIncrease(Aventurian a) {
 		if (getLevel() < 4)
 			return true;
 		if (a.hasSkill("Gedankenbilder Elfenruf"))
