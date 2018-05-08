@@ -1,8 +1,5 @@
 package skills.properties;
 
-import java.util.function.Predicate;
-
-import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
@@ -21,7 +18,7 @@ public class Adlig extends Property {
 	static final String NAME = "Adlig";
 
 	public Adlig() {
-		super(NAME, DESCRIPTION, 250, EMPTY, EMPTY, NOREQUIREMENT, 1, 3);
+		super(NAME, DESCRIPTION, 250, EMPTY, EMPTY, 1, 3);
 	}
 	
 	@Override

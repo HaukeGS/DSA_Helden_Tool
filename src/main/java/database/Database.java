@@ -21,7 +21,6 @@ import org.reflections.util.FilterBuilder;
 
 import aventurian.Aventurian;
 import aventurian.Race;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.InstantiableSkill;
 import skills.languages.Language;
 import skills.properties.BadProperty;
@@ -104,66 +103,66 @@ public class Database {
 			e.printStackTrace();
 		}
 
-		properties.add(new Property("Adliges Erbe", "Nur für adlige Charaktere.\r\n"
-				+ "Der Charakter ist der erste in der Erbfolge und es ist zu erwarten, dass er das Erbe seines Vaters oder seiner Mutter antritt, sollte diese/r dahinscheiden.",
-				250, EMPTY, EMPTY,
-				(Aventurian a) -> a.hasSkill("Adlig I") || a.hasSkill("Adlig II") || a.hasSkill("Adlig III")));
-		properties.add(new Property("Amtsadel",
-				"Der Charakter ist nicht von adliger Geburt, hat aber durch seinen Rang oder seinen Beruf einen ähnlichen, wenn auch nicht so ausgeprägten, Titel und damit vergleichbare Vorteile.	",
-				150, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(new Property("Altersresistenz", "Normalerweise nur für Elfen und Zwerge.\r\n"
-				+ "Der Charakter altert merklich langsamer. Sein Aussehen und seine Werte verändern sich dementsprechend anders.",
-				50, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(new Property("Ausdauernd",
-				"Die Erschöpfungsschwelle des Charakters erhöht sich um 1. \n Kann nicht mit 'Kurzatmig' gewählt werden!",
-				150, (Aventurian a) -> a.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1),
-				(Aventurian a) -> a.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1),
-				(Aventurian a) -> !a.hasSkill("Kurzatmig")));
+//		properties.add(new Property("Adliges Erbe", "Nur für adlige Charaktere.\r\n"
+//				+ "Der Charakter ist der erste in der Erbfolge und es ist zu erwarten, dass er das Erbe seines Vaters oder seiner Mutter antritt, sollte diese/r dahinscheiden.",
+//				250, EMPTY, EMPTY,
+//				(Aventurian a) -> a.hasSkill("Adlig I") || a.hasSkill("Adlig II") || a.hasSkill("Adlig III")));
+//		properties.add(new Property("Amtsadel",
+//				"Der Charakter ist nicht von adliger Geburt, hat aber durch seinen Rang oder seinen Beruf einen ähnlichen, wenn auch nicht so ausgeprägten, Titel und damit vergleichbare Vorteile.	",
+//				150, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Altersresistenz", "Normalerweise nur für Elfen und Zwerge.\r\n"
+//				+ "Der Charakter altert merklich langsamer. Sein Aussehen und seine Werte verändern sich dementsprechend anders.",
+//				50, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Ausdauernd",
+//				"Die Erschöpfungsschwelle des Charakters erhöht sich um 1. \n Kann nicht mit 'Kurzatmig' gewählt werden!",
+//				150, (Aventurian a) -> a.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1),
+//				(Aventurian a) -> a.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1),
+//				(Aventurian a) -> !a.hasSkill("Kurzatmig")));
 		// funktioniert bisher noch nicht. benötigt konstante kosten.
 		// properties.add(new Property("Ausrüstungsvorteil", "Pro Stufe erhält der
 		// Charakter 15D mehr Startgeld. Kostet 50 AP pro Stufe.", cost, effectOnGain,
 		// effectOnLose, requirement, minLevel, maxLevel))
 		// funktioniert auch nicht ganz. benötigt konstante kosten.
-		properties.add(new Property("Besonderer Besitz",
-				"Nach Absprache mit dem Meister erhält der Charakter einen mittelmächtigen Gegenstand zum Spielstart.",
-				350, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(new Property("Daemmerungssicht",
-				"Charaktere mit Dunkelsicht halbieren die Abzuege durch fehlendes Licht, außer bei absoluter Dunkelheit. \n Kann nicht mit 'Nachtblind' gewählt werden!",
-				250, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Nachtblind")));
-		properties.add(new Property("Dichschaedel",
-				"Auch am Kopf werden nur 100% TP(B) verursacht. \nDas Manoever Kopfstoß ist um 2 Punkte erleichtert und verursacht 1 TP(B) mehr.",
-				100, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(
-				new Property("Eisern", "Erhoet die Wundschwelle um 1. \nKann nicht mit Glasknochen gewaehlt werden.",
-						200, (Aventurian a) -> a.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.WOUNDTHRESHHOLD, 1),
-						(Aventurian a) -> a.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.WOUNDTHRESHHOLD, 1),
-						(Aventurian a) -> !a.hasSkill("Glasknochen")));
-		properties.add(new Property("Entfernungssinn",
-				"IN-Proben zum Einschätzen der Entfernung sind um bis zu 5 Punkte erleichtert. Beim Fernkampf sind die Proben auf Ziele, die mindestens 50 Schritt entfernt sind, nicht erschwert.",
-				150, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(new Property("Feenfreund", "Feen helfen haeufiger und ohne eine Gegenleistung zu erwarten.", 250,
-				EMPTY, EMPTY, NOREQUIREMENT));
-		// Maybe add effectOnGain for dodging.
-		properties.add(new Property("Flink",
-				"Ausweichen um 1 erhöht. Außerdem sind Athletik-Proben für Geschwindigkeit (Verfolgung, Wettrennen etc.) um 3 Punkte erleichtert. Diese Punkte können auch als TaP* überbehalten werden.",
-				300, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Behaebig")));
-		// requirement needs to be added
-		properties.add(new Property("Glueck",
-				"Kann pro aventurischem Tag 1W3-1 Würfelwürfe wiederholen (oder vom Meister wiederholen lassen) und das bessere Ergebnis wählen.",
-				600, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(new Property("Glueck im Spiel",
-				"Erleichtert Proben auf Brett-/Kartenspiel um bis zu 7 Punkte, je nachdem wie viel Glück im Spiel vorhanden ist.",
-				100, EMPTY, EMPTY, NOREQUIREMENT));
-		properties.add(new Property("Gutes Aussehen",
-				"Erleichtert passende Proben auf Interaktionstalente um 2/4/6 Punkte. \nKann nicht mit 'Unansehnlich' oder 'Widerwärtiges Aussehen' gewählt werden!",
-				250, EMPTY, EMPTY,
-				(Aventurian a) -> !a.hasSkill("Unansehnlich") && !a.hasSkill("Widerwärtiges Aussehen"), 1, 3));
+//		properties.add(new Property("Besonderer Besitz",
+//				"Nach Absprache mit dem Meister erhält der Charakter einen mittelmächtigen Gegenstand zum Spielstart.",
+//				350, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Daemmerungssicht",
+//				"Charaktere mit Dunkelsicht halbieren die Abzuege durch fehlendes Licht, außer bei absoluter Dunkelheit. \n Kann nicht mit 'Nachtblind' gewählt werden!",
+//				250, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Nachtblind")));
+//		properties.add(new Property("Dichschaedel",
+//				"Auch am Kopf werden nur 100% TP(B) verursacht. \nDas Manoever Kopfstoß ist um 2 Punkte erleichtert und verursacht 1 TP(B) mehr.",
+//				100, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(
+//				new Property("Eisern", "Erhoet die Wundschwelle um 1. \nKann nicht mit Glasknochen gewaehlt werden.",
+//						200, (Aventurian a) -> a.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.WOUNDTHRESHHOLD, 1),
+//						(Aventurian a) -> a.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.WOUNDTHRESHHOLD, 1),
+//						(Aventurian a) -> !a.hasSkill("Glasknochen")));
+//		properties.add(new Property("Entfernungssinn",
+//				"IN-Proben zum Einschätzen der Entfernung sind um bis zu 5 Punkte erleichtert. Beim Fernkampf sind die Proben auf Ziele, die mindestens 50 Schritt entfernt sind, nicht erschwert.",
+//				150, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Feenfreund", "Feen helfen haeufiger und ohne eine Gegenleistung zu erwarten.", 250,
+//				EMPTY, EMPTY, NOREQUIREMENT));
+//		// Maybe add effectOnGain for dodging.
+//		properties.add(new Property("Flink",
+//				"Ausweichen um 1 erhöht. Außerdem sind Athletik-Proben für Geschwindigkeit (Verfolgung, Wettrennen etc.) um 3 Punkte erleichtert. Diese Punkte können auch als TaP* überbehalten werden.",
+//				300, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Behaebig")));
+//		// requirement needs to be added
+//		properties.add(new Property("Glueck",
+//				"Kann pro aventurischem Tag 1W3-1 Würfelwürfe wiederholen (oder vom Meister wiederholen lassen) und das bessere Ergebnis wählen.",
+//				600, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Glueck im Spiel",
+//				"Erleichtert Proben auf Brett-/Kartenspiel um bis zu 7 Punkte, je nachdem wie viel Glück im Spiel vorhanden ist.",
+//				100, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Gutes Aussehen",
+//				"Erleichtert passende Proben auf Interaktionstalente um 2/4/6 Punkte. \nKann nicht mit 'Unansehnlich' oder 'Widerwärtiges Aussehen' gewählt werden!",
+//				250, EMPTY, EMPTY,
+//				(Aventurian a) -> !a.hasSkill("Unansehnlich") && !a.hasSkill("Widerwärtiges Aussehen"), 1, 3));
+//
+//		properties.add(new Property("Nachtsicht",
+//				"Der Charakter ignoriert 6 Stufen fehlenden Lichts, außer bei absoluter Dunkelheit.\n Kann nicht mit 'Nachtblind' gewählt werden!",
+//				750, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Nachtblind")));
 
-		properties.add(new Property("Nachtsicht",
-				"Der Charakter ignoriert 6 Stufen fehlenden Lichts, außer bei absoluter Dunkelheit.\n Kann nicht mit 'Nachtblind' gewählt werden!",
-				750, EMPTY, EMPTY, (Aventurian a) -> !a.hasSkill("Nachtblind")));
-
-		properties.add(new Property("Richtungssinn", "gutes Gespür fuer Richtungen", 150, EMPTY, EMPTY, NOREQUIREMENT));
+//		properties.add(new Property("Richtungssinn", "gutes Gespür fuer Richtungen", 150, EMPTY, EMPTY, NOREQUIREMENT));
 		// properties.add(new Property("Gestank", "bestialischer Gestank", -150, EMPTY,
 		// EMPTY, NOREQUIREMENT));
 

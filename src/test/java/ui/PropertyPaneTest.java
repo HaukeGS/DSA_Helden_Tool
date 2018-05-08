@@ -310,7 +310,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(p.getMaxLevel()).thenReturn(1);
 		when(p.getMinLevel()).thenReturn(1);
 		when(p.getTotalCosts()).thenReturn(cost);
-		return new Property(name, "", cost, EMPTY, EMPTY, NOREQUIREMENT);
+		return new Property(name, "", cost, EMPTY, EMPTY);
 
 	}
 

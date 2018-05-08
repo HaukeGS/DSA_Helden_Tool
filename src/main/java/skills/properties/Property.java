@@ -1,7 +1,6 @@
 package skills.properties;
 
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import aventurian.Aventurian;
 import skills.IncreasableSkill;
@@ -9,13 +8,13 @@ import skills.IncreasableSkill;
 public class Property extends IncreasableSkill {
 
 	public Property(String name, String description, int cost, Consumer<Aventurian> effectOnGain,
-			Consumer<Aventurian> effectOnLose, Predicate<Aventurian> requirement) {
-		super(name, description, effectOnGain, effectOnLose, requirement, cost, 1, 1);
+			Consumer<Aventurian> effectOnLose ) {
+		super(name, description, effectOnGain, effectOnLose, NOREQUIREMENT, cost, 1, 1);
 	}
 	
 	public Property(String name, String description, int cost, Consumer<Aventurian> effectOnGain,
-			Consumer<Aventurian> effectOnLose, Predicate<Aventurian> requirement, int minLevel, int maxLevel) {
-		super(name, description, effectOnGain, effectOnLose, requirement, cost, minLevel, maxLevel);
+			Consumer<Aventurian> effectOnLose,  int minLevel, int maxLevel) {
+		super(name, description, effectOnGain, effectOnLose, NOREQUIREMENT, cost, minLevel, maxLevel);
 	}
 	
 

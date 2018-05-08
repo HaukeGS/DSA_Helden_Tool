@@ -3,29 +3,21 @@ package skills.properties;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.function.Predicate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import aventurian.Aventurian;
-import skills.properties.BadProperty;
 
 public class BadPropertyTest {
 	private static final int COST = -100;
 	private BadProperty toTest;
-	private static Predicate<Aventurian> requirement = (Aventurian a) -> {
-		return true;
-	};
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new BadProperty("testBadProperty", "testDescription", COST, requirement);
+		toTest = new BadProperty("testBadProperty", "testDescription", COST);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidCosts() {
-		toTest = new BadProperty("testBadProperty", "testDescription", 100, requirement);
+		toTest = new BadProperty("testBadProperty", "testDescription", 100);
 	}
 
 	@Test
