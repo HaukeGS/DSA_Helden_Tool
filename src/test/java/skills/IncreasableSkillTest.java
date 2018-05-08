@@ -4,13 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import aventurian.Aventurian;
 
 public class IncreasableSkillTest {
 
@@ -18,15 +13,10 @@ public class IncreasableSkillTest {
 	private static final int MIN_LEVEL = 1;
 	private static final int MAX_LEVEL = 5;
 	IncreasableSkill toTest;
-	private static final Predicate<Aventurian> REQUIREMENT = (Aventurian a) -> {
-		return true;
-	};
-	private static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
-	};
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new IncreasableSkill("test", "description", EMPTY, EMPTY, REQUIREMENT, COSTS, MIN_LEVEL, MAX_LEVEL) {
+		toTest = new IncreasableSkill("test", "description", COSTS, MIN_LEVEL, MAX_LEVEL) {
 		};
 	}
 

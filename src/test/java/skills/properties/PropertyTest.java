@@ -26,7 +26,7 @@ public class PropertyTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Property("testProperty", "testDescription", 100, ON_GAIN, ON_LOOSE);
+		toTest = new Property("testProperty", "testDescription", 100);
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class PropertyTest {
 
 	@Test
 	public void testIsDisadvantage() {
-		toTest = new Property("testProperty", "testDescription", -100, ON_GAIN, ON_GAIN);
+		toTest = new Property("testProperty", "testDescription", -100);
 		assertTrue(toTest.isDisadvantage());
 		assertFalse(toTest.isAdvantage());
 	}
@@ -49,7 +49,7 @@ public class PropertyTest {
 
 	@Test
 	public void testGetCostDisadvantage() {
-		toTest = new Property("testProperty", "testDescription", -100, ON_GAIN, ON_GAIN);
+		toTest = new Property("testProperty", "testDescription", -100);
 		assertEquals(100, toTest.getLearningCosts());
 	}
 
@@ -77,16 +77,11 @@ public class PropertyTest {
 		verify(mock).decrasePrimaryAttribute(COURAGE);
 	}
 
-	@Test
-	public void testIsAllowed() {
-		final Aventurian mock = mock(Aventurian.class);
-		assertTrue(toTest.isAllowedToHave(mock));
-	}
 
 	@Test
 	public void testEquals() {
-		final Skill anotherButSame = new Property("testProperty", "", 1, ON_GAIN, ON_LOOSE);
-		final Skill anotherButDifferent = new Property("other", "", 1, ON_GAIN, ON_LOOSE);
+		final Skill anotherButSame = new Property("testProperty", "", 1);
+		final Skill anotherButDifferent = new Property("other", "", 1);
 		assertTrue(toTest.equals(toTest));
 		assertTrue(toTest.equals(anotherButSame));
 		assertFalse(toTest.equals(anotherButDifferent));

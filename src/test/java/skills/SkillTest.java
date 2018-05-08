@@ -1,6 +1,7 @@
 package skills;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -27,6 +28,13 @@ public class SkillTest {
 		toTest = new Skill(name, "description", EMPTY, EMPTY, REQUIREMENT, COSTS) {
 		};
 	}
+	
+	@Test
+	public void testIsAllowedToHave() {
+		final Aventurian mock = mock(Aventurian.class);
+		assertTrue(toTest.isAllowedToHave(mock));
+	}
+
 
 	@Test
 	public void testCompareTo() {

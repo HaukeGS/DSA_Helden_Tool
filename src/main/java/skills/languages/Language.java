@@ -9,7 +9,7 @@ public class Language extends IncreasableSkill {
 	private boolean isNativeTongue;
 
 	public Language(String name, String description, int maxLevel, int cost) {
-		super(name, description, EMPTY, EMPTY, NOREQUIREMENT, cost, 1, maxLevel);
+		super(name, description, cost, 1, maxLevel);
 		this.isNativeTongue = false;
 	}
 
@@ -20,7 +20,7 @@ public class Language extends IncreasableSkill {
 	public boolean isNativeTongue() {
 		return isNativeTongue;
 	}
-	
+
 	@Override
 	public boolean isAllowedToHave(Aventurian a) {
 		return true;

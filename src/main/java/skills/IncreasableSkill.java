@@ -1,8 +1,5 @@
 package skills;
 
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 import aventurian.Aventurian;
 
 public abstract class IncreasableSkill extends Skill {
@@ -10,10 +7,9 @@ public abstract class IncreasableSkill extends Skill {
 	protected final int maxLevel;
 	protected final int minLevel;
 
-	public IncreasableSkill(String name, String description, Consumer<Aventurian> effectOnGain,
-			Consumer<Aventurian> effectOnLose, Predicate<Aventurian> requirement, int cost, int minLevel,
+	public IncreasableSkill(String name, String description,  int cost, int minLevel,
 			int maxLevel) {
-		super(name, description, effectOnGain, effectOnLose, requirement, cost);
+		super(name, description, EMPTY, EMPTY, NOREQUIREMENT, cost);
 		this.maxLevel = maxLevel;
 		this.minLevel = minLevel;
 		this.level = minLevel;
