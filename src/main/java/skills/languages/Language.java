@@ -1,6 +1,7 @@
 
 package skills.languages;
 
+import aventurian.Aventurian;
 import skills.IncreasableSkill;
 
 public class Language extends IncreasableSkill {
@@ -18,6 +19,11 @@ public class Language extends IncreasableSkill {
 
 	public boolean isNativeTongue() {
 		return isNativeTongue;
+	}
+	
+	@Override
+	public boolean isAllowed(Aventurian a) {
+		return true;
 	}
 
 	@Override

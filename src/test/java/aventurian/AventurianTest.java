@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.languages.Language;
 import skills.properties.BadProperty;
@@ -424,5 +425,46 @@ public class AventurianTest {
 		toTest.add(badProperty);
 
 		assertEquals(1, toTest.getAdvantages().size());
+	}
+
+	@Test
+	public void testGetLevelSumOfLanguages() {
+		assertEquals(0, toTest.getLevelSumOfLanguages());
+
+		final Language l1 = mock(Language.class);
+		when(l1.getLevel()).thenReturn(3);
+		toTest.add(l1);
+
+		assertEquals(3, toTest.getLevelSumOfLanguages());
+
+		final Language l2 = mock(Language.class);
+		when(l2.getLevel()).thenReturn(4);
+		toTest.add(l2);
+
+		assertEquals(7, toTest.getLevelSumOfLanguages());
+
+		toTest.remove(l1);
+
+		assertEquals(4, toTest.getLevelSumOfLanguages());
+	}
+
+	@Test
+	public void testGetAPInAttributes() {
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTUITION)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CHARISMA)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.AGILITY)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(8);
+		assertEquals(0, toTest.getAPinAttributes());
+
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(9);
+		assertEquals(220, toTest.getAPinAttributes());
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(9);
+		assertEquals(2 * 220, toTest.getAPinAttributes());
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(10);
+		assertEquals(2 * 220 + 250, toTest.getAPinAttributes());
 	}
 }
