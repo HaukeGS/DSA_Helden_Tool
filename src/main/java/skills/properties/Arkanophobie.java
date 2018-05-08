@@ -14,7 +14,7 @@ public class Arkanophobie extends BadProperty {
 	}
 	
 	@Override
-	public boolean isAllowed(Aventurian a) {
+	public boolean isAllowedToHave(Aventurian a) {
 		return !a.isMage();
 	}
 

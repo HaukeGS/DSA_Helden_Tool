@@ -1,4 +1,4 @@
-	package skills;
+package skills;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -52,7 +52,14 @@ public abstract class Skill implements Comparable<Skill> {
 		effectOnLose.accept(t);
 	}
 
-	public boolean isAllowed(Aventurian t) {
+	/**
+	 * 
+	 * @param t
+	 *            the aventurian which must fulfill the skill's requirements in
+	 *            order to buy and keep it
+	 * @return
+	 */
+	public boolean isAllowedToHave(Aventurian t) {
 		return requirement.test(t);
 	}
 
@@ -77,7 +84,7 @@ public abstract class Skill implements Comparable<Skill> {
 	public String toString() {
 		return getName() + " (" + getLearningCosts() + ")";
 	}
-	
+
 	@Override
 	public int compareTo(Skill o) {
 		return getName().compareTo(o.getName());

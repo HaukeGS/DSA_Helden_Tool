@@ -22,7 +22,7 @@ public class Language extends IncreasableSkill {
 	}
 	
 	@Override
-	public boolean isAllowed(Aventurian a) {
+	public boolean isAllowedToHave(Aventurian a) {
 		return true;
 	}
 

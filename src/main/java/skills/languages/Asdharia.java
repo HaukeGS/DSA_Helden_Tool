@@ -14,7 +14,7 @@ public class Asdharia extends Language {
 	}
 	
 	@Override
-	public boolean isAllowed(Aventurian a) {
+	public boolean isAllowedToHave(Aventurian a) {
 		if (getLevel() < 2)
 			return true;
 		if (getLevel() < 3 && a.hasSkill("Sprachenkunde"))

@@ -14,7 +14,7 @@ public class Isdira extends Language {
 	}
 	
 	@Override
-	public boolean isAllowed(Aventurian a) {
+	public boolean isAllowedToHave(Aventurian a) {
 		if (getLevel() < 3)
 			return true;
 		if (a.hasSkill("Zweistimmiger Gesang"))

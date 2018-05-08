@@ -151,7 +151,7 @@ public class LanguagePaneController extends PaneController {
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!item.isIncreasable());
+				increaseButton.setDisable(!item.isAllowedToIncreasase(null));
 				increaseButton.setDisable(!LanguagePaneController.this.m.canIncreaseLanguage(item));
 				decreaseButton.setDisable(!item.isDecreasable());
 				nameLabel.setTextFill(getItem().isNativeTongue() ? Color.BLUE : Color.BLACK);

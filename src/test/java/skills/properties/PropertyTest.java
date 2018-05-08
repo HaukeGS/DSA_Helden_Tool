@@ -80,7 +80,7 @@ public class PropertyTest {
 	@Test
 	public void testIsAllowed() {
 		final Aventurian mock = mock(Aventurian.class);
-		assertTrue(toTest.isAllowed(mock));
+		assertTrue(toTest.isAllowedToHave(mock));
 	}
 
 	@Test

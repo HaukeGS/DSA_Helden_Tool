@@ -13,9 +13,19 @@ public class Aureliani extends Language {
 	public Aureliani() {
 		super(NAME, DESCRIPTION, 5, 50);
 	}
-	
+
 	@Override
-	public boolean isAllowed(Aventurian a) {
+	public boolean isAllowedToHave(Aventurian a) {
+		if (getLevel() <= 3)
+			return true;
+		if (a.hasSkill("Sprachenkunde"))
+			return true;
+		return false;
+	}
+
+	public boolean isAllowedToIncrease(Aventurian a) {
+		if (!super.isAllowedToIncreasase(a))
+			return false;
 		if (getLevel() < 3)
 			return true;
 		if (a.hasSkill("Sprachenkunde"))

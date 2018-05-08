@@ -172,7 +172,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testIncreaseLanguageLevelButtonGetsDisabled() {
-		when(assignedLanguage.isIncreasable()).thenReturn(false);
+		when(assignedLanguage.isAllowedToIncreasase(null)).thenReturn(false);
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
 		updateGui();
 
@@ -225,12 +225,12 @@ public class LanguagePaneTest extends BaseGuiTest {
 	private Language createLanguage(String name, int cost) {
 		final Language l = Mockito.mock(Language.class);
 		when(l.getName()).thenReturn(name);
-		when(l.isIncreasable()).thenReturn(true);
+		when(l.isAllowedToIncreasase(null)).thenReturn(true);
 		when(l.getMaxLevel()).thenReturn(5);
 		when(l.getMinLevel()).thenReturn(1);
 		when(l.isNativeTongue()).thenReturn(false);
 		when(l.getTotalCosts()).thenReturn(cost);
-		when(l.isAllowed(mockedAventurian)).thenReturn(true);
+		when(l.isAllowedToHave(mockedAventurian)).thenReturn(true);
 		when(l.toString()).thenReturn(name + " (" + Math.abs(cost) + ")");
 		return l;
 	}

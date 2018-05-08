@@ -42,7 +42,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	private Property createPropertyMock(boolean isAllowed, boolean isAdvantage) {
 		final Property p = mock(Property.class);
-		when(p.isAllowed(aventurian)).thenReturn(isAllowed);
+		when(p.isAllowedToHave(aventurian)).thenReturn(isAllowed);
 		when(p.isAdvantage()).thenReturn(isAdvantage);
 		when(p.isDisadvantage()).thenReturn(!isAdvantage);
 		when(p.getName()).thenReturn("testProperty");
@@ -111,8 +111,8 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	private BadProperty createBadPropertyMock(boolean isAllowed, boolean isIncreasable) {
 		final BadProperty p = mock(BadProperty.class);
-		when(p.isAllowed(aventurian)).thenReturn(isAllowed);
-		when(p.isIncreasable()).thenReturn(isIncreasable);
+		when(p.isAllowedToHave(aventurian)).thenReturn(isAllowed);
+		when(p.isAllowedToIncreasase(null)).thenReturn(isIncreasable);
 		when(p.getLevel()).thenReturn(5);
 		when(p.getTotalCosts()).thenReturn(250);
 		when(p.getName()).thenReturn("testBadProperty");
@@ -282,7 +282,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	public void testIncreasePropertyAdvantageAllConditionsMet() {
 		final Property advantage = createPropertyMock(true, true);
 		when(aventurian.hasSkill(advantage)).thenReturn(true);
-		when(advantage.isIncreasable()).thenReturn(true);
+		when(advantage.isAllowedToIncreasase(null)).thenReturn(true);
 
 		toTest.increaseProperty(advantage);
 		verify(aventurian).increaseIncreasableSkill(advantage);
@@ -292,7 +292,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	@Test(expected = IllegalStateException.class)
 	public void testIncreasePropertyAdvantageTooExpensive() {
 		final Property advantage = createPropertyMock(true, true);
-		when(advantage.isIncreasable()).thenReturn(true);
+		when(advantage.isAllowedToIncreasase(null)).thenReturn(true);
 		when(aventurian.hasSkill(advantage)).thenReturn(true);
 		when(aventurian.canPay(anyInt())).thenReturn(false);
 

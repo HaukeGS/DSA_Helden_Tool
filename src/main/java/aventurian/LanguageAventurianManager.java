@@ -20,7 +20,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	void addLanguageAsNativeTongue(Language l) {
 		if (!canAddAsNativeTongue(l))
 			throw new IllegalStateException("requirements not met for adding " + l.getName() + " as native tongue");
-		while (l.isIncreasable() && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+		while (l.isAllowedToIncreasase(null) && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
 			l.increase();
 		l.setNativeTongue(true);
 		add(l);

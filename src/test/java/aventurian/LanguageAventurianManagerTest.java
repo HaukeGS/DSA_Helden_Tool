@@ -124,7 +124,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testAddLanguageAsNativeTongueHasAlreadyNativeTongue() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(false);
-		when(l.isAllowed(aventurian)).thenReturn(true);
+		when(l.isAllowedToHave(aventurian)).thenReturn(true);
 		when(l.isNativeTongue()).thenReturn(false);
 		when(aventurian.hasNativeTongue()).thenReturn(true);
 
@@ -141,7 +141,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testAddLanguageAsNativeTongueNotIncreasable() {
 		final Language l = createLanguageMock(true, true);
 		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3);
-		when(l.isIncreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(l.isAllowedToIncreasase(null)).thenReturn(true).thenReturn(true).thenReturn(false);
 		toTest.addLanguageAsNativeTongue(l);
 
 		verify(l, times(2)).increase();
@@ -281,10 +281,10 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	private Language createLanguageMock(boolean isAllowed, boolean isIncreasable) {
 		final Language l = mock(Language.class);
 		when(l.getName()).thenReturn("testLanguage");
-		when(l.isAllowed(aventurian)).thenReturn(isAllowed);
+		when(l.isAllowedToHave(aventurian)).thenReturn(isAllowed);
 		when(l.getLevel()).thenReturn(5);
 		when(l.getLearningCosts()).thenReturn(50);
-		when(l.isIncreasable()).thenReturn(isIncreasable);
+		when(l.isAllowedToIncreasase(null)).thenReturn(isIncreasable);
 		when(l.isDecreasable()).thenReturn(false);
 
 		return l;
