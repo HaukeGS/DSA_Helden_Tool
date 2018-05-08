@@ -9,7 +9,7 @@ public abstract class IncreasableSkill extends Skill {
 
 	public IncreasableSkill(String name, String description,  int cost, int minLevel,
 			int maxLevel) {
-		super(name, description, EMPTY, EMPTY, NOREQUIREMENT, cost);
+		super(name, description, cost);
 		this.maxLevel = maxLevel;
 		this.minLevel = minLevel;
 		this.level = minLevel;
@@ -51,11 +51,11 @@ public abstract class IncreasableSkill extends Skill {
 		return minLevel;
 	}
 
-	public boolean isAllowedToIncreasase(Aventurian a) {
+	public boolean isAllowedToIncrease(Aventurian a) {
 		return level < maxLevel;
 	}
 
-	public boolean isDecreasable() {
+	public boolean isAllowedToDecrease() {
 		return level > minLevel;
 	}
 	
@@ -63,5 +63,7 @@ public abstract class IncreasableSkill extends Skill {
 	public String toString() {
 		return getName() + " (" + getTotalCosts() + ")";
 	}
+
+
 
 }

@@ -27,7 +27,7 @@ public class Language extends IncreasableSkill {
 	}
 
 	@Override
-	public boolean isDecreasable() {
+	public boolean isAllowedToDecrease() {
 		if (isNativeTongue())
 			return level > NATIVE_TONGUE_LEVEL;
 		return level > 1;

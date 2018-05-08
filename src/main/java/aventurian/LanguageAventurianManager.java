@@ -8,11 +8,12 @@ import database.Database;
 import skills.languages.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
-	
+
 	private final Predicate<Language> IS_NATIVE_TONGUE = (Language l) -> l.isNativeTongue();
-	private final Predicate<Aventurian> EXCEEDS_MAX_SUM_IN_LANGUAGES = (Aventurian a) -> a.getLevelSumOfLanguages() >= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	private final Predicate<Aventurian> EXCEEDS_MAX_SUM_IN_LANGUAGES = (
+			Aventurian a) -> a.getLevelSumOfLanguages() >= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
 	private final Predicate<Aventurian> HAS_ALREADY_NATIVE_TONGUE = (Aventurian av) -> av.hasNativeTongue();
-	
+
 	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
 	}
@@ -20,10 +21,15 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	void addLanguageAsNativeTongue(Language l) {
 		if (!canAddAsNativeTongue(l))
 			throw new IllegalStateException("requirements not met for adding " + l.getName() + " as native tongue");
-		while (l.isAllowedToIncreasase(null) && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+		while (mustIncreaseNativeTongue(l))
 			l.increase();
 		l.setNativeTongue(true);
 		add(l);
+	}
+
+	private boolean mustIncreaseNativeTongue(Language l) {
+		return aventurian.map(av -> l.isAllowedToIncrease(av) && l.getLevel() < Language.NATIVE_TONGUE_LEVEL)
+				.orElse(false);
 	}
 
 	boolean canAddAsNativeTongue(Language l) {
@@ -50,7 +56,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	}
 
 	private void decreaseLanguageWithRefund(Language l) {
-		while (l.isDecreasable()) {
+		while (l.isAllowedToDecrease()) {
 			decreaseLanguage(l);
 		}
 		refund(l.getLearningCosts());
@@ -59,7 +65,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	private void decreaseLanguageWithoutRefund(Language l) {
 		while (l.getLevel() > Language.NATIVE_TONGUE_LEVEL)
 			decreaseLanguage(l);
-		while (l.isDecreasable())
+		while (l.isAllowedToDecrease())
 			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(l));
 	}
 
@@ -100,7 +106,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	boolean canIncrease(Language l) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)//
 				|| IS_NOT_ALLOWED.test(av, l)//
-				|| IS_NOT_INCREASABLE.test(l)//
+				|| IS_NOT_INCREASABLE.test(av, l)//
 				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)//
 				|| CANNOT_PAY_UPGRADE_COSTS.test(av, l)).orElse(true);
 	}

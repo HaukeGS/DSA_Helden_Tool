@@ -172,7 +172,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testIncreaseLanguageLevelButtonGetsDisabled() {
-		when(assignedLanguage.isAllowedToIncreasase(null)).thenReturn(false);
+		when(assignedLanguage.isAllowedToIncrease(null)).thenReturn(false);
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
 		updateGui();
 
@@ -183,7 +183,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testDecreaseLanguageLevel() {
-		when(assignedLanguage.isDecreasable()).thenReturn(true);
+		when(mockedAventurianManager.canDecreaseLanguage(assignedLanguage)).thenReturn(true);
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
 		updateGui();
 
@@ -225,7 +225,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 	private Language createLanguage(String name, int cost) {
 		final Language l = Mockito.mock(Language.class);
 		when(l.getName()).thenReturn(name);
-		when(l.isAllowedToIncreasase(null)).thenReturn(true);
+		when(l.isAllowedToIncrease(null)).thenReturn(true);
 		when(l.getMaxLevel()).thenReturn(5);
 		when(l.getMinLevel()).thenReturn(1);
 		when(l.isNativeTongue()).thenReturn(false);

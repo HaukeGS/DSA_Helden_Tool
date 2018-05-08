@@ -1,33 +1,19 @@
 package skills;
 
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
-import javax.xml.bind.annotation.XmlAttribute;
-
 import aventurian.Aventurian;
 
 public abstract class Skill implements Comparable<Skill> {
 
-	protected static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
-	};
-	protected static final Predicate<Aventurian> NOREQUIREMENT = (Aventurian a) -> true;
-	@XmlAttribute
 	private final String name;
 	private final String description;
-	private final Consumer<Aventurian> effectOnGain;
-	private final Consumer<Aventurian> effectOnLose;
-	private final Predicate<Aventurian> requirement;
+
 	protected final int cost;
 	private final boolean isRacialSkill;
 
-	public Skill(String name, String description, Consumer<Aventurian> effectOnGain, Consumer<Aventurian> effectOnLose,
-			Predicate<Aventurian> requirement, int cost) {
+	public Skill(String name, String description, int cost) {
 		this.name = name;
 		this.description = description;
-		this.effectOnGain = effectOnGain;
-		this.effectOnLose = effectOnLose;
-		this.requirement = requirement;
+
 		this.cost = cost;
 		this.isRacialSkill = false;
 	}
@@ -45,11 +31,9 @@ public abstract class Skill implements Comparable<Skill> {
 	}
 
 	public void gain(Aventurian t) {
-		effectOnGain.accept(t);
 	}
 
 	public void lose(Aventurian t) {
-		effectOnLose.accept(t);
 	}
 
 	/**
@@ -60,7 +44,7 @@ public abstract class Skill implements Comparable<Skill> {
 	 * @return
 	 */
 	public boolean isAllowedToHave(Aventurian t) {
-		return requirement.test(t);
+		return true;
 	}
 
 	@Override

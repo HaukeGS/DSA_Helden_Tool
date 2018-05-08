@@ -72,7 +72,9 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageTooExpensive() {
 		final Language l = createLanguageMock(true, true);
+		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 		when(aventurian.canPay(anyInt())).thenReturn(false);
+		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 
 		toTest.addLanguage(l);
 	}
@@ -92,7 +94,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
 		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(aventurian.canPay(anyInt())).thenReturn(true);
 		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
 		
@@ -141,7 +142,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testAddLanguageAsNativeTongueNotIncreasable() {
 		final Language l = createLanguageMock(true, true);
 		when(l.getLevel()).thenReturn(1).thenReturn(2).thenReturn(3);
-		when(l.isAllowedToIncreasase(null)).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(l.isAllowedToIncrease(aventurian)).thenReturn(true).thenReturn(true).thenReturn(false);
 		toTest.addLanguageAsNativeTongue(l);
 
 		verify(l, times(2)).increase();
@@ -163,7 +164,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		final Language l = createLanguageMock(true, true);
 		when(l.isNativeTongue()).thenReturn(true);
 		when(l.getLevel()).thenReturn(5).thenReturn(4).thenReturn(3).thenReturn(2).thenReturn(1);
-		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(l.isAllowedToDecrease()).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(true).thenReturn(false);
 		when(aventurian.hasSkill(l)).thenReturn(true);
 		toTest.removeLanguage(l);
 
@@ -189,7 +190,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testDecreaseLanguage() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(l.isAllowedToDecrease()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.decreaseLanguage(l);
 
@@ -218,7 +219,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(l.isDecreasable()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(l.isAllowedToDecrease()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.removeLanguage(l);
 		verify(aventurian).decreaseIncreasableSkill(l);
@@ -284,8 +285,8 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(l.isAllowedToHave(aventurian)).thenReturn(isAllowed);
 		when(l.getLevel()).thenReturn(5);
 		when(l.getLearningCosts()).thenReturn(50);
-		when(l.isAllowedToIncreasase(null)).thenReturn(isIncreasable);
-		when(l.isDecreasable()).thenReturn(false);
+		when(l.isAllowedToIncrease(aventurian)).thenReturn(isIncreasable);
+		when(l.isAllowedToDecrease()).thenReturn(false);
 
 		return l;
 	}

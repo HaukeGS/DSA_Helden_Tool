@@ -1,5 +1,6 @@
 package skills.languages;
 
+import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
@@ -10,6 +11,14 @@ public class Fuechsisch extends Language {
 
 	public Fuechsisch() {
 		super(NAME, DESCRIPTION, 3, 40);
+	}
+
+	@Override
+	public boolean isAllowedToHave(Aventurian a) {
+
+		if (a.hasSkill(Aureliani.NAME))
+			return true;
+		return false;
 	}
 
 }

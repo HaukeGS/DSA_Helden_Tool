@@ -306,7 +306,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(p.toString()).thenReturn(name + " (" + Math.abs(cost) + ")");
 		when(p.isAdvantage()).thenReturn(cost > 0);
 		when(p.isDisadvantage()).thenReturn(cost < 0);
-		when(p.isAllowedToIncreasase(null)).thenReturn(false);
+		when(p.isAllowedToIncrease(null)).thenReturn(false);
 		when(p.getMaxLevel()).thenReturn(1);
 		when(p.getMinLevel()).thenReturn(1);
 		when(p.getTotalCosts()).thenReturn(cost);
@@ -319,8 +319,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		when(bP.getName()).thenReturn(name);
 		when(bP.toString()).thenReturn(name + " (" + Math.abs(cost) + ")");
 		when(bP.getTotalCosts()).thenReturn(50);
-		when(bP.isAllowedToIncreasase(null)).thenReturn(true);
-		when(bP.isDecreasable()).thenReturn(false);
+		when(bP.isAllowedToIncrease(null)).thenReturn(true);
+		when(bP.isAllowedToDecrease()).thenReturn(false);
 		when(bP.getMaxLevel()).thenReturn(12);
 		when(bP.getMinLevel()).thenReturn(5);
 		when(bP.getTotalCosts()).thenReturn(50);

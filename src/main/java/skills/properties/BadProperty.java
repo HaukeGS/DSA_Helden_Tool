@@ -5,7 +5,7 @@ public class BadProperty extends Property {
 	static final int MAX_LEVEL = 12;
 
 	public BadProperty(String name, String description, int cost) {
-		super(name, description, cost, EMPTY, EMPTY, MIN_LEVEL, MAX_LEVEL);
+		super(name, description, cost, MIN_LEVEL, MAX_LEVEL);
 		if (cost >= 0)
 			throw new IllegalArgumentException("Costs must be less than zero for BadProperties!");
 	}
@@ -24,7 +24,7 @@ public class BadProperty extends Property {
 	public int getUpgradeCosts() {
 		return getLearningCosts();
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName() + " " + getLevel() + " (" + getLearningCosts() + " AP pro Punkt)";

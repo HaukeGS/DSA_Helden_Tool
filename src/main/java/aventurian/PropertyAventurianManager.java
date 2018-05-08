@@ -76,7 +76,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	private void decreaseDisadvantageToMinimum(Property p) {
-		while (p.isDecreasable()) {
+		while (p.isAllowedToDecrease()) {
 			pay(p.getDowngradeRefund());
 			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(p));
 		}
@@ -95,7 +95,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	}
 
 	private void decreaseAdvantageToMinimum(Property p) {
-		while (p.isDecreasable()) {
+		while (p.isAllowedToDecrease()) {
 			refund(p.getDowngradeRefund());
 			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(p));
 		}
@@ -116,7 +116,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	boolean canIncrease(Property p) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
 				|| IS_NOT_ALLOWED.test(av, p)//
-				|| IS_NOT_INCREASABLE.test(p)//
+				|| IS_NOT_INCREASABLE.test(av,p)//
 				|| CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS.test(av, p)//
 				|| EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE.test(av, p)).orElse(true);
 	}
@@ -126,4 +126,6 @@ class PropertyAventurianManager extends BaseAventurianManager {
 				|| IS_NOT_DECREASABLE.test(p)//
 				|| CANNOT_PAY_DISADVANTAGE_DOWNGRADE_COSTS.test(av, p)).orElse(true);
 	}
+
+
 }

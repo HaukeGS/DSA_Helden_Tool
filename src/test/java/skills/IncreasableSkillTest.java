@@ -29,7 +29,7 @@ public class IncreasableSkillTest {
 
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseExceedMaximum() {
-		while (toTest.isAllowedToIncreasase(null))
+		while (toTest.isAllowedToIncrease(null))
 			toTest.increase();
 		toTest.increase();
 	}
@@ -97,7 +97,7 @@ public class IncreasableSkillTest {
 
 	@Test
 	public void testGetDowngradeCost() {
-		while (toTest.isAllowedToIncreasase(null))
+		while (toTest.isAllowedToIncrease(null))
 			toTest.increase();
 
 		assertEquals(5, toTest.getLevel());
@@ -125,20 +125,20 @@ public class IncreasableSkillTest {
 
 	@Test
 	public void testIsIncreasable() {
-		assertTrue(toTest.isAllowedToIncreasase(null));
+		assertTrue(toTest.isAllowedToIncrease(null));
 
 		for (int i = 1; i < MAX_LEVEL; i++)
 			toTest.increase();
 
-		assertFalse(toTest.isAllowedToIncreasase(null));
+		assertFalse(toTest.isAllowedToIncrease(null));
 	}
 
 	@Test
 	public void testIsDecreasable() {
-		assertFalse(toTest.isDecreasable());
+		assertFalse(toTest.isAllowedToDecrease());
 
 		toTest.increase();
 
-		assertTrue(toTest.isDecreasable());
+		assertTrue(toTest.isAllowedToDecrease());
 	}
 }

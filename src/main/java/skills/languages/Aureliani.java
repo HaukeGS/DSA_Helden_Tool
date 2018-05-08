@@ -23,8 +23,9 @@ public class Aureliani extends Language {
 		return false;
 	}
 
+	@Override
 	public boolean isAllowedToIncrease(Aventurian a) {
-		if (!super.isAllowedToIncreasase(a))
+		if (!super.isAllowedToIncrease(a))
 			return false;
 		if (getLevel() < 3)
 			return true;

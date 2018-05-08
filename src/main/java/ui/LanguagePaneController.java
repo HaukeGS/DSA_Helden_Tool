@@ -33,7 +33,6 @@ public class LanguagePaneController extends PaneController {
 	@FXML
 	public ListView<Language> lvAssignedLanguages;
 
-
 	public void assignLanguage() {
 		final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
 		m.addLanguage(language);
@@ -83,7 +82,7 @@ public class LanguagePaneController extends PaneController {
 		});
 		lvAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
 			final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && language!=null && m.canRemoveLanguage(language)) {
+			if (click.getClickCount() == 2 && language != null && m.canRemoveLanguage(language)) {
 				m.removeLanguage(language);
 			}
 		});
@@ -151,9 +150,8 @@ public class LanguagePaneController extends PaneController {
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!item.isAllowedToIncreasase(null));
 				increaseButton.setDisable(!LanguagePaneController.this.m.canIncreaseLanguage(item));
-				decreaseButton.setDisable(!item.isDecreasable());
+				decreaseButton.setDisable(!LanguagePaneController.this.m.canDecreaseLanguage(item));
 				nameLabel.setTextFill(getItem().isNativeTongue() ? Color.BLUE : Color.BLACK);
 				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);

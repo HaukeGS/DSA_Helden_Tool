@@ -20,11 +20,11 @@ public class LanguageTest {
 		for (int i = 0; i < Language.NATIVE_TONGUE_LEVEL; i++) {
 			toTest.increase();
 		}
-		assertTrue(toTest.isDecreasable());
+		assertTrue(toTest.isAllowedToDecrease());
 
 		toTest.decrease();
 
-		assertFalse(toTest.isDecreasable());
+		assertFalse(toTest.isAllowedToDecrease());
 	}
 
 	@Test

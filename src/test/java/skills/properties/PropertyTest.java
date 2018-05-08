@@ -4,8 +4,6 @@ import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 import java.util.function.Consumer;
 
@@ -63,19 +61,7 @@ public class PropertyTest {
 		assertEquals("testDescription", toTest.getDescription());
 	}
 
-	@Test
-	public void testGain() {
-		final Aventurian mock = mock(Aventurian.class);
-		toTest.gain(mock);
-		verify(mock).increasePrimaryAttribute(COURAGE);
-	}
 
-	@Test
-	public void testLose() {
-		final Aventurian mock = mock(Aventurian.class);
-		toTest.lose(mock);
-		verify(mock).decrasePrimaryAttribute(COURAGE);
-	}
 
 
 	@Test

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -100,7 +101,7 @@ public class Aventurian extends Observable {
 	void remove(Skill s) {
 		allSkills.remove(s);
 		s.lose(this);
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	int getBadPropertySum() {
@@ -190,6 +191,10 @@ public class Aventurian extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	private void setChangedAndNotifyObservers(Optional<Skill> s) {
+		setChanged();
+		notifyObservers(s.orElse(null));
+	}
 
 	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
@@ -273,14 +278,18 @@ public class Aventurian extends Observable {
 		super.addObserver(o);
 		setChangedAndNotifyObservers();
 	}
-	
+
 	void increaseIncreasableSkill(IncreasableSkill s) {
 		s.increase();
 		setChangedAndNotifyObservers();
 	}
-	
+
 	void decreaseIncreasableSkill(IncreasableSkill s) {
 		s.decrease();
 		setChangedAndNotifyObservers();
+	}
+
+	public Optional<Skill> getSkillToRemove() {
+		return allSkills.stream().filter(skill -> !skill.isAllowedToHave(this)).findFirst();
 	}
 }

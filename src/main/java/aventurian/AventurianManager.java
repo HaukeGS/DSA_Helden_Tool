@@ -3,16 +3,18 @@ package aventurian;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
 
 import javax.xml.bind.JAXBException;
 
 import database.Database;
+import skills.Skill;
 import skills.languages.Language;
 import skills.properties.Property;
 
-public class AventurianManager extends BaseAventurianManager {
+public class AventurianManager extends BaseAventurianManager implements Observer {
 
 	private final List<Observer> observers;
 	private final LanguageAventurianManager languageManager;
@@ -27,6 +29,7 @@ public class AventurianManager extends BaseAventurianManager {
 		this.attributesManager = new AttributesAventurianManager(Optional.empty(), db);
 		this.raceManager = new RaceAventurianManager(Optional.empty(), db, this.propertyManager);
 		this.observers = new ArrayList<>();
+		registerObserver(this);
 	}
 
 	/**
@@ -50,6 +53,7 @@ public class AventurianManager extends BaseAventurianManager {
 		this.languageManager = languages;
 		this.raceManager = races;
 		this.observers = new ArrayList<>();
+		registerObserver(this);
 	}
 
 	public void createNewAventurian(String name, int startingAP, Race race) {
@@ -190,4 +194,19 @@ public class AventurianManager extends BaseAventurianManager {
 	public boolean canRemoveLanguage(Language l) {
 		return languageManager.canRemoveLanguage(l);
 	}
+
+	//skillToRemove is not null if there is a skill whose requirements are not met anymore
+	@Override
+	public void update(Observable o, Object skillToRemove) {
+		if (o instanceof Aventurian && skillToRemove instanceof Skill) {
+			final Skill toRemove = (Skill) skillToRemove;
+			if (toRemove instanceof Property)
+				propertyManager.removeProperty((Property) toRemove);
+			else if (toRemove instanceof Language)
+				languageManager.removeLanguage((Language) toRemove);
+
+		}
+
+	}
+
 }
