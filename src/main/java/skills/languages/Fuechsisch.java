@@ -13,12 +13,4 @@ public class Fuechsisch extends Language {
 		super(NAME, DESCRIPTION, 3, 40);
 	}
 
-	@Override
-	public boolean isAllowedToHave(Aventurian a) {
-
-		if (a.hasSkill(Aureliani.NAME))
-			return true;
-		return false;
-	}
-
 }
