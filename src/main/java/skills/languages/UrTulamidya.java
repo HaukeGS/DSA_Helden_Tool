@@ -23,9 +23,7 @@ public class UrTulamidya extends Language {
 	}
 
 	@Override
-	public boolean isAllowedToIncrease(Aventurian a) {
-		if (!super.isAllowedToIncrease(a))
-			return false;
+	public boolean fulfillOptionalRequirement(Aventurian a) {
 		if (getLevel() < 3)
 			return true;
 		if (a.hasSkill("Sprachenkunde"))
