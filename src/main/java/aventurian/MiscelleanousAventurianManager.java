@@ -15,11 +15,11 @@ public class MiscelleanousAventurianManager extends BaseAventurianManager {
 		this.observers = new ArrayList<>();
 	}
 
-	public void setName(String name) {
+	void setName(String name) {
 		aventurian.ifPresent(a -> a.setName(name));
 	}
 
-	public void registerObserver(Observer o) {
+	void registerObserver(Observer o) {
 		this.observers.add(o);
 		addObserversToAventurian();
 	}

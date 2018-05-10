@@ -75,7 +75,7 @@ public class Aventurian extends Observable {
 		return cost <= adventurePoints;
 	}
 
-	public void setName(String name) {
+	 void setName(String name) {
 		this.nameOfAventurian = name;
 		setChangedAndNotifyObservers();
 	}

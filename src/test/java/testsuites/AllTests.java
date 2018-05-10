@@ -9,6 +9,7 @@ import aventurian.AventurianManagerTest;
 import aventurian.AventurianTest;
 import aventurian.LanguageAventurianManagerTest;
 import aventurian.LevelCostCalculatorTest;
+import aventurian.MiscelleanousAventurianManagerTest;
 import aventurian.PrimaryAttributesTest;
 import aventurian.PropertyAventurianManagerTest;
 import aventurian.RaceAventurianManagerTest;
@@ -32,7 +33,8 @@ import ui.PropertyPaneTest;
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
 		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class,
-		PropertyPaneTest.class, DatabaseTest.class, IncreasableSkillTest.class, SkillTest.class })
+		PropertyPaneTest.class, DatabaseTest.class, IncreasableSkillTest.class, SkillTest.class,
+		MiscelleanousAventurianManagerTest.class })
 public class AllTests {
 
 }
