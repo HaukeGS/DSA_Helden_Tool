@@ -3,6 +3,7 @@ package aventurian;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 import java.util.Optional;
 
@@ -191,7 +192,25 @@ public class AventurianManagerTest extends BaseTest {
 	public void setName() {
 		toTest.setName("");
 		verify(misc).setName("");
-
+	}
+	@Test
+	public void testUpdate() {
+		toTest.update(mockedAventurian, null);
+		verifyZeroInteractions(properties);
+		verifyZeroInteractions(languages);
+		
+		toTest.update(null, null);
+		verifyZeroInteractions(properties);
+		verifyZeroInteractions(languages);
+	}
+	@Test
+	public void testUpdateWithSkillToRemove() {
+		final Language l = mock(Language.class);
+		toTest.update(mockedAventurian, l);
+		verify(languages).removeLanguage(l);
+		final Property p = mock(Property.class);
+		toTest.update(mockedAventurian, p);
+		verify(properties).removeProperty(p);
 	}
 
 }

@@ -57,7 +57,6 @@ public class AventurianManager implements Observer {
 
 	public void createNewAventurian(String name, int startingAP, Race race) {
 		database.reset();
-		this.aventurian.ifPresent(a -> a.deleteObservers());
 		this.aventurian = Optional.of(new Aventurian(name, startingAP, race));
 		attributesManager.changeAventurian(aventurian);
 		propertyManager.changeAventurian(aventurian);
@@ -163,7 +162,7 @@ public class AventurianManager implements Observer {
 		return languageManager.canRemoveLanguage(l);
 	}
 
-	// skillToRemove is not null if there is a skill whose requirements are not met
+	// skillToRemove is only not null when there is a skill whose requirements are not met
 	// anymore -> remove it
 	@Override
 	public void update(Observable o, Object skillToRemove) {
