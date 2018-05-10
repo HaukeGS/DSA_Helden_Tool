@@ -35,12 +35,12 @@ public class LanguagePaneController extends PaneController {
 
 	public void assignLanguage() {
 		final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
-		m.addLanguage(language);
+		m.add(language);
 	}
 
 	public void unassignLanguage() {
 		final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
-		m.removeLanguage(language);
+		m.remove(language);
 	}
 
 	@Override
@@ -64,13 +64,13 @@ public class LanguagePaneController extends PaneController {
 	private void prepareUnAssignedListView() {
 		lvUnAssignedLanguages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnAssignLanguage.setDisable(newValue == null || !m.canAddLanguage(newValue));
+					btnAssignLanguage.setDisable(newValue == null || !m.canAdd(newValue));
 				});
 
 		lvUnAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
 			final Language language = lvUnAssignedLanguages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && language != null && m.canAddLanguage(language)) {
-				m.addLanguage(language);
+			if (click.getClickCount() == 2 && language != null && m.canAdd(language)) {
+				m.add(language);
 			}
 		});
 		lvUnAssignedLanguages.setCellFactory((ListView<Language> list) -> new UnassignedLanguageCell());
@@ -78,12 +78,12 @@ public class LanguagePaneController extends PaneController {
 
 	private void prepareAssignedListView() {
 		lvAssignedLanguages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			btnUnAssignLanguage.setDisable(newValue == null || !m.canRemoveLanguage(newValue));
+			btnUnAssignLanguage.setDisable(newValue == null || !m.canRemove(newValue));
 		});
 		lvAssignedLanguages.setOnMouseClicked((MouseEvent click) -> {
 			final Language language = lvAssignedLanguages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && language != null && m.canRemoveLanguage(language)) {
-				m.removeLanguage(language);
+			if (click.getClickCount() == 2 && language != null && m.canRemove(language)) {
+				m.remove(language);
 			}
 		});
 		lvAssignedLanguages.setCellFactory((ListView<Language> list) -> new AssignedLanguageCell());
@@ -113,7 +113,7 @@ public class LanguagePaneController extends PaneController {
 				setTooltip(null);
 			} else {
 				nameLabel.setText(item.toString());
-				nameLabel.setDisable(!LanguagePaneController.this.m.canAddLanguage(item));
+				nameLabel.setDisable(!LanguagePaneController.this.m.canAdd(item));
 				nativeTongueButton.setDisable(!LanguagePaneController.this.m.canAddLanguageAsNativeTongue(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(hbox);
@@ -135,8 +135,8 @@ public class LanguagePaneController extends PaneController {
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			decreaseButton.setPrefWidth(25);
 			increaseButton.setPrefWidth(25);
-			decreaseButton.setOnAction((ActionEvent e) -> m.decreaseLanguage(getItem()));
-			increaseButton.setOnAction((ActionEvent e) -> m.increaseLanguage(getItem()));
+			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
+			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
 		}
 
 		@Override
@@ -150,8 +150,8 @@ public class LanguagePaneController extends PaneController {
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!LanguagePaneController.this.m.canIncreaseLanguage(item));
-				decreaseButton.setDisable(!LanguagePaneController.this.m.canDecreaseLanguage(item));
+				increaseButton.setDisable(!LanguagePaneController.this.m.canIncrease(item));
+				decreaseButton.setDisable(!LanguagePaneController.this.m.canDecrease(item));
 				nameLabel.setTextFill(getItem().isNativeTongue() ? Color.BLUE : Color.BLACK);
 				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);

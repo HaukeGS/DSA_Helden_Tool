@@ -1,34 +1,33 @@
 package aventurian;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
-
-import javax.xml.bind.JAXBException;
 
 import database.Database;
 import skills.Skill;
 import skills.languages.Language;
 import skills.properties.Property;
 
-public class AventurianManager extends BaseAventurianManager implements Observer {
+public class AventurianManager implements Observer {
 
-	private final List<Observer> observers;
+	
 	private final LanguageAventurianManager languageManager;
 	private final PropertyAventurianManager propertyManager;
 	private final AttributesAventurianManager attributesManager;
 	private final RaceAventurianManager raceManager;
+	private final MiscelleanousAventurianManager miscManager;
+	private final Database database;
+	private Optional<Aventurian> aventurian = Optional.empty();
 
 	public AventurianManager(Database db) {
-		super(Optional.empty(), db);
-		this.languageManager = new LanguageAventurianManager(Optional.empty(), db);
-		this.propertyManager = new PropertyAventurianManager(Optional.empty(), db);
-		this.attributesManager = new AttributesAventurianManager(Optional.empty(), db);
-		this.raceManager = new RaceAventurianManager(Optional.empty(), db, this.propertyManager);
-		this.observers = new ArrayList<>();
+		this.languageManager = new LanguageAventurianManager(aventurian, db);
+		this.propertyManager = new PropertyAventurianManager(aventurian, db);
+		this.attributesManager = new AttributesAventurianManager(aventurian, db);
+		this.raceManager = new RaceAventurianManager(aventurian, db, this.propertyManager);
+		this.miscManager = new MiscelleanousAventurianManager(aventurian, db);
+		this.database = db;
 		registerObserver(this);
 	}
 
@@ -46,13 +45,13 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 	 */
 	AventurianManager(Optional<Aventurian> a, AttributesAventurianManager attributes,
 			LanguageAventurianManager languages, PropertyAventurianManager properties, RaceAventurianManager races,
-			Database db) {
-		super(a, db);
+			MiscelleanousAventurianManager misc, Database db) {
 		this.attributesManager = attributes;
 		this.propertyManager = properties;
 		this.languageManager = languages;
 		this.raceManager = races;
-		this.observers = new ArrayList<>();
+		this.miscManager = misc;
+		this.database = db;
 		registerObserver(this);
 	}
 
@@ -64,8 +63,8 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 		propertyManager.changeAventurian(aventurian);
 		languageManager.changeAventurian(aventurian);
 		raceManager.changeAventurian(aventurian);
+		miscManager.changeAventurian(aventurian);
 		raceManager.buyRaceMods(race);
-		addObserversToAventurian();
 	}
 
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
@@ -84,47 +83,47 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 		this.attributesManager.decreaseSecondaryAttribute(a);
 	}
 
-	public void addProperty(Property p) {
+	public void add(Property p) {
 		this.propertyManager.addProperty(p);
 	}
 
-	public boolean canAddProperty(Property p) {
+	public boolean canAdd(Property p) {
 		return propertyManager.canAdd(p);
 	}
 
-	public void increaseProperty(Property p) {
+	public void increase(Property p) {
 		this.propertyManager.increaseProperty(p);
 	}
 
-	public boolean canIncreaseProperty(Property p) {
+	public boolean canIncrease(Property p) {
 		return this.propertyManager.canIncrease(p);
 	}
 
-	public void removeProperty(Property p) {
+	public void remove(Property p) {
 		this.propertyManager.removeProperty(p);
 	}
 
-	public void increaseLanguage(Language l) {
+	public void increase(Language l) {
 		languageManager.increaseLanguage(l);
 	}
 
-	public boolean canIncreaseLanguage(Language l) {
+	public boolean canIncrease(Language l) {
 		return languageManager.canIncrease(l);
 	}
 
-	public void decreaseLanguage(Language l) {
+	public void decrease(Language l) {
 		languageManager.decreaseLanguage(l);
 	}
 
-	public boolean canDecreaseLanguage(Language l) {
+	public boolean canDecrease(Language l) {
 		return languageManager.canDecrease(l);
 	}
 
-	public void addLanguage(Language l) {
+	public void add(Language l) {
 		languageManager.addLanguage(l);
 	}
 
-	public boolean canAddLanguage(Language l) {
+	public boolean canAdd(Language l) {
 		return languageManager.canAdd(l);
 	}
 
@@ -136,50 +135,19 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 		return languageManager.canAddAsNativeTongue(l);
 	}
 
-	public void removeLanguage(Language l) {
+	public void remove(Language l) {
 		languageManager.removeLanguage(l);
 	}
 
 	public void setName(String name) {
-		aventurian.ifPresent(a -> a.setName(name));
-
-	}
-
-	public void saveAventurian(File f) throws JAXBException {
-		// final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
-		// final Marshaller m = context.createMarshaller();
-		// m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		// // Marshalling and saving XML to the file.
-		// m.marshal(aventurian, System.out);
-		// // m.marshal(aventurian, new File("aventurian.xml"));
-		// m.marshal(aventurian, f);
+		miscManager.setName(name);
 	}
 
 	public void registerObserver(Observer o) {
-		this.observers.add(o);
-		addObserversToAventurian();
+		miscManager.registerObserver(o);
 	}
 
-	private void addObserversToAventurian() {
-		aventurian.ifPresent(a -> a.deleteObservers());
-		aventurian.ifPresent(a -> observers.forEach(a::addObserver));
-	}
-
-	public void loadAventurian(File f) {
-		// try {
-		// final JAXBContext context = JAXBContext.newInstance(Aventurian.class);
-		// final Unmarshaller um = context.createUnmarshaller();
-		// // Reading XML from the file and unmarshalling.
-		// this.aventurian = Optional.of((Aventurian) um.unmarshal(f));
-		// addObserversToAventurian();
-		//
-		// } catch (
-		//
-		// final Exception e) { // catches ANY exception e.printStackTrace(); }
-		// }
-	}
-
-	public void decreaseProperty(Property p) {
+	public void decrease(Property p) {
 		propertyManager.decreaseProperty(p);
 	}
 
@@ -187,15 +155,16 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 		return propertyManager.canDecrease(p);
 	}
 
-	public boolean canRemoveProperty(Property p) {
+	public boolean canRemove(Property p) {
 		return propertyManager.canRemove(p);
 	}
 
-	public boolean canRemoveLanguage(Language l) {
+	public boolean canRemove(Language l) {
 		return languageManager.canRemoveLanguage(l);
 	}
 
-	//skillToRemove is not null if there is a skill whose requirements are not met anymore -> remove it
+	// skillToRemove is not null if there is a skill whose requirements are not met
+	// anymore -> remove it
 	@Override
 	public void update(Observable o, Object skillToRemove) {
 		if (o instanceof Aventurian && skillToRemove instanceof Skill) {
@@ -207,6 +176,11 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 
 		}
 
+	}
+
+	public void saveAventurian(File file) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

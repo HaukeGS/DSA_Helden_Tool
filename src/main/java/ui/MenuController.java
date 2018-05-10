@@ -7,8 +7,6 @@ import java.util.Optional;
 import java.util.prefs.Preferences;
 import java.util.stream.Stream;
 
-import javax.xml.bind.JAXBException;
-
 import aventurian.Aventurian;
 import aventurian.Race;
 import javafx.application.Platform;
@@ -35,7 +33,6 @@ public class MenuController extends PaneController {
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public void open() {
 		final FileChooser fileChooser = new FileChooser();
 
@@ -45,40 +42,32 @@ public class MenuController extends PaneController {
 		final File file = fileChooser.showOpenDialog(menu.getScene().getWindow());
 
 		if (file != null) {
-			//m.loadAventurian(file);
+			// m.loadAventurian(file);
 		}
 	}
 
 	public void save() {
 		if (getFilePath().isPresent())
-			try {
-				m.saveAventurian(getFilePath().map(File::new).get());
-			} catch (final JAXBException e) {
-				e.printStackTrace();
-			}
+			m.saveAventurian(getFilePath().map(File::new).get());
 		else
 			saveAs();
 	}
 
 	public void saveAs() {
-		try {
-			final FileChooser fileChooser = new FileChooser();
+		final FileChooser fileChooser = new FileChooser();
 
-			final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-			fileChooser.getExtensionFilters().add(extFilter);
-			fileChooser.setInitialFileName(nameOfAventurian);
+		final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+		fileChooser.getExtensionFilters().add(extFilter);
+		fileChooser.setInitialFileName(nameOfAventurian);
 
-			File file = fileChooser.showSaveDialog(menu.getScene().getWindow());
+		File file = fileChooser.showSaveDialog(menu.getScene().getWindow());
 
-			if (file != null) {
-				if (!file.getPath().endsWith(".xml")) {
-					file = new File(file.getPath() + ".xml");
-				}
-				m.saveAventurian(file);
-				saveFilePath(file);
+		if (file != null) {
+			if (!file.getPath().endsWith(".xml")) {
+				file = new File(file.getPath() + ".xml");
 			}
-		} catch (final JAXBException e) {
-			e.printStackTrace();
+			m.saveAventurian(file);
+			saveFilePath(file);
 		}
 	}
 

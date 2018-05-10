@@ -4,7 +4,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import java.util.Observer;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -30,54 +29,54 @@ public class AventurianManagerTest extends BaseTest {
 	PropertyAventurianManager properties;
 	@Mock
 	RaceAventurianManager races;
+	@Mock
+	MiscelleanousAventurianManager misc;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races,
+		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races, misc,
 				mockedDatabase);
 	}
 
 	@Test
 	public void testCreateNewAventurian() {
-		final Observer obs = mock(Observer.class);
-		toTest.registerObserver(obs);
 		toTest.createNewAventurian("test", 16500, Race.ORK);
 		verify(mockedDatabase).reset();
 		verify(attributes).changeAventurian(any(Optional.class));
 		verify(languages).changeAventurian(any(Optional.class));
 		verify(properties).changeAventurian(any(Optional.class));
+		verify(misc).changeAventurian(any(Optional.class));
 		verify(races).changeAventurian(any(Optional.class));
 		verify(races).buyRaceMods(Race.ORK);
-		verify(obs).update(any(Aventurian.class), any());
 	}
 
 	@Test
 	public void testAddProperty() {
-		toTest.addProperty(mock(Property.class));
+		toTest.add(mock(Property.class));
 		verify(properties).addProperty(any(Property.class));
 	}
 
 	@Test
 	public void testCanAddProperty() {
-		toTest.canAddProperty(mock(Property.class));
+		toTest.canAdd(mock(Property.class));
 		verify(properties).canAdd(any(Property.class));
 	}
 
 	@Test
 	public void testIncreaseProperty() {
-		toTest.increaseProperty(mock(BadProperty.class));
+		toTest.increase(mock(BadProperty.class));
 		verify(properties).increaseProperty(any(BadProperty.class));
 	}
 
 	@Test
 	public void testCannotIncreaseProperty() {
-		toTest.canIncreaseProperty(mock(BadProperty.class));
+		toTest.canIncrease(mock(BadProperty.class));
 		verify(properties).canIncrease(any(BadProperty.class));
 	}
 
 	@Test
 	public void testDecreaseProperty() {
-		toTest.decreaseProperty(mock(BadProperty.class));
+		toTest.decrease(mock(BadProperty.class));
 		verify(properties).decreaseProperty(any(BadProperty.class));
 	}
 
@@ -89,31 +88,31 @@ public class AventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testCannotRemoveProperty() {
-		toTest.canRemoveProperty(mock(BadProperty.class));
+		toTest.canRemove(mock(BadProperty.class));
 		verify(properties).canRemove(any(BadProperty.class));
 	}
 
 	@Test
 	public void removeProperty() {
-		toTest.removeProperty(mock(Property.class));
+		toTest.remove(mock(Property.class));
 		verify(properties).removeProperty(any(Property.class));
 	}
 
 	@Test
 	public void increaseLanguage() {
-		toTest.increaseLanguage(mock(Language.class));
+		toTest.increase(mock(Language.class));
 		verify(languages).increaseLanguage(any(Language.class));
 	}
 
 	@Test
 	public void decreaseLanguage() {
-		toTest.decreaseLanguage(mock(Language.class));
+		toTest.decrease(mock(Language.class));
 		verify(languages).decreaseLanguage(any(Language.class));
 	}
 
 	@Test
 	public void addLanguage() {
-		toTest.addLanguage(mock(Language.class));
+		toTest.add(mock(Language.class));
 		verify(languages).addLanguage(any(Language.class));
 	}
 
@@ -125,7 +124,7 @@ public class AventurianManagerTest extends BaseTest {
 
 	@Test
 	public void removeLanguage() {
-		toTest.removeLanguage(mock(Language.class));
+		toTest.remove(mock(Language.class));
 		verify(languages).removeLanguage(any(Language.class));
 	}
 
@@ -156,7 +155,7 @@ public class AventurianManagerTest extends BaseTest {
 	@Test
 	public void testCanAddLanguge() {
 		final Language l = mock(Language.class);
-		toTest.canAddLanguage(l);
+		toTest.canAdd(l);
 		verify(languages).canAdd(l);
 	}
 
@@ -170,28 +169,28 @@ public class AventurianManagerTest extends BaseTest {
 	@Test
 	public void testCanIncreaseLanguge() {
 		final Language l = mock(Language.class);
-		toTest.canIncreaseLanguage(l);
+		toTest.canIncrease(l);
 		verify(languages).canIncrease(l);
 	}
 
 	@Test
 	public void testCanDecreaseLanguge() {
 		final Language l = mock(Language.class);
-		toTest.canDecreaseLanguage(l);
+		toTest.canDecrease(l);
 		verify(languages).canDecrease(l);
 	}
 
 	@Test
 	public void testCanRemoveLanguage() {
 		final Language l = mock(Language.class);
-		toTest.canRemoveLanguage(l);
+		toTest.canRemove(l);
 		verify(languages).canRemoveLanguage(l);
 	}
 
 	@Test
 	public void setName() {
 		toTest.setName("");
-		verify(mockedAventurian).setName("");
+		verify(misc).setName("");
 
 	}
 

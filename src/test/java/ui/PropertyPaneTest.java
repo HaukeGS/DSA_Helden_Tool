@@ -54,14 +54,14 @@ public class PropertyPaneTest extends BaseGuiTest {
 	public void testAssignAdvantage() {
 		verifyThat(royalMock.toString(), NodeMatchers.isNotNull());
 		clickOn(royalMock.toString()).clickOn(ID_BTN_ASSIGN_ADVANTAGE);
-		verify(mockedAventurianManager).addProperty(any(Property.class));
+		verify(mockedAventurianManager).add(any(Property.class));
 	}
 
 	@Test
 	public void testAssignAdvantageViaDoubleClick() {
 		verifyThat(royalMock.toString(), NodeMatchers.isNotNull());
 		doubleClickOn(royalMock.toString(), MouseButton.PRIMARY);
-		verify(mockedAventurianManager).addProperty(any(Property.class));
+		verify(mockedAventurianManager).add(any(Property.class));
 	}
 
 	@Test
@@ -71,18 +71,18 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 		verifyThat(prettyMock.toString(), NodeMatchers.isNotNull());
 		clickOn(prettyMock.toString()).clickOn(ID_BTN_UN_ASSIGN_ADVANTAGE);
-		verify(mockedAventurianManager).removeProperty(any(Property.class));
+		verify(mockedAventurianManager).remove(any(Property.class));
 	}
 
 	@Test
 	public void testUnAssignAdvantageViaDoubleClick() {
 		when(mockedAventurian.getAdvantages()).thenReturn(Arrays.asList(prettyMock));
-		when(mockedAventurianManager.canRemoveProperty(prettyMock)).thenReturn(true);
+		when(mockedAventurianManager.canRemove(prettyMock)).thenReturn(true);
 		updateGui();
 
 		verifyThat(prettyMock.toString(), NodeMatchers.isNotNull());
 		doubleClickOn(prettyMock.toString(), MouseButton.PRIMARY);
-		verify(mockedAventurianManager).removeProperty(any(Property.class));
+		verify(mockedAventurianManager).remove(any(Property.class));
 	}
 
 	@Test
@@ -142,14 +142,14 @@ public class PropertyPaneTest extends BaseGuiTest {
 	public void testAssignDisadvantage() {
 		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
 		clickOn(disadvantageMock.toString()).clickOn(ID_BTN_ASSIGN_DISADVANTAGE);
-		verify(mockedAventurianManager).addProperty(disadvantageMock);
+		verify(mockedAventurianManager).add(disadvantageMock);
 	}
 
 	@Test
 	public void testAssignDisadvantageViaDoubleClick() {
 		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
 		doubleClickOn(disadvantageMock.toString(), MouseButton.PRIMARY);
-		verify(mockedAventurianManager).addProperty(disadvantageMock);
+		verify(mockedAventurianManager).add(disadvantageMock);
 	}
 
 	@Test
@@ -193,19 +193,19 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
 		clickOn(disadvantageMock.toString()).clickOn(ID_BTN_UN_ASSIGN_DISADVANTAGE);
-		verify(mockedAventurianManager).removeProperty(disadvantageMock);
+		verify(mockedAventurianManager).remove(disadvantageMock);
 
 	}
 
 	@Test
 	public void testUnAssignDisadvantageViaDoubleClick() {
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock));
-		when(mockedAventurianManager.canRemoveProperty(disadvantageMock)).thenReturn(true);
+		when(mockedAventurianManager.canRemove(disadvantageMock)).thenReturn(true);
 		updateGui();
 
 		verifyThat(disadvantageMock.toString(), NodeMatchers.isNotNull());
 		doubleClickOn(disadvantageMock.toString(), MouseButton.PRIMARY);
-		verify(mockedAventurianManager).removeProperty(disadvantageMock);
+		verify(mockedAventurianManager).remove(disadvantageMock);
 	}
 
 	@Test
@@ -252,7 +252,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 
 	@Test
 	public void testBadPropertyIncreaseButtonGetsDisabled() {
-		when(mockedAventurianManager.canIncreaseProperty(badPropertyMock)).thenReturn(false);
+		when(mockedAventurianManager.canIncrease(badPropertyMock)).thenReturn(false);
 		when(mockedAventurian.getDisadvantages()).thenReturn(Arrays.asList(badPropertyMock));
 		updateGui();
 
@@ -266,7 +266,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 	public void testBadPropertyIncrease() {
 		testBadPropertyIncreaseButtonIsEnabled();
 		clickOn("+");
-		verify(mockedAventurianManager).increaseProperty(badPropertyMock);
+		verify(mockedAventurianManager).increase(badPropertyMock);
 	}
 
 	@Test
@@ -284,7 +284,7 @@ public class PropertyPaneTest extends BaseGuiTest {
 	public void testBadPropertyDecrease() {
 		testBadPropertyDecreaseButtonIsEnabled();
 		clickOn("-");
-		verify(mockedAventurianManager).decreaseProperty(badPropertyMock);
+		verify(mockedAventurianManager).decrease(badPropertyMock);
 	}
 
 	@Override
@@ -295,8 +295,8 @@ public class PropertyPaneTest extends BaseGuiTest {
 		badPropertyMock = createBadPropertyMock("badProperty", -75);
 		when(mockedDatabase.getAdvantages()).thenReturn(Arrays.asList(royalMock, prettyMock));
 		when(mockedDatabase.getDisadvantages()).thenReturn(Arrays.asList(disadvantageMock, badPropertyMock));
-		when(mockedAventurianManager.canAddProperty(any(Property.class))).thenReturn(true);
-		when(mockedAventurianManager.canIncreaseProperty(any(Property.class))).thenReturn(true);
+		when(mockedAventurianManager.canAdd(any(Property.class))).thenReturn(true);
+		when(mockedAventurianManager.canIncrease(any(Property.class))).thenReturn(true);
 
 	}
 

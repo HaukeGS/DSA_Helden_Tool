@@ -42,22 +42,22 @@ public class PropertyPaneController extends PaneController {
 
 	public void assignAdvantage() {
 		final Property p = lvUnassignedAdvantages.getSelectionModel().getSelectedItem();
-		m.addProperty(p);
+		m.add(p);
 	}
 
 	public void unassignAdvantage() {
 		final Property p = lvAssignedAdvantages.getSelectionModel().getSelectedItem();
-		m.removeProperty(p);
+		m.remove(p);
 	}
 
 	public void assignDisadvantage() {
 		final Property p = lvUnassignedDisadvantages.getSelectionModel().getSelectedItem();
-		m.addProperty(p);
+		m.add(p);
 	}
 
 	public void unassignDisadvantage() {
 		final Property p = lvAssignedDisadvantages.getSelectionModel().getSelectedItem();
-		m.removeProperty(p);
+		m.remove(p);
 	}
 
 	@Override
@@ -77,8 +77,8 @@ public class PropertyPaneController extends PaneController {
 				});
 		lvAssignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvAssignedAdvantages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && p != null && m.canRemoveProperty(p)) {
-				m.removeProperty(p);
+			if (click.getClickCount() == 2 && p != null && m.canRemove(p)) {
+				m.remove(p);
 			}
 		});
 		lvAssignedAdvantages.setCellFactory((ListView<Property> list) -> new AssignedPropertyCell());
@@ -87,13 +87,13 @@ public class PropertyPaneController extends PaneController {
 	private void prepareUnassignedAdvantages() {
 		lvUnassignedAdvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnAssignAdvantage.setDisable(newValue == null || !m.canAddProperty(newValue));
+					btnAssignAdvantage.setDisable(newValue == null || !m.canAdd(newValue));
 				});
 
 		lvUnassignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvUnassignedAdvantages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && p != null && m.canAddProperty(p)) {
-				m.addProperty(p);
+			if (click.getClickCount() == 2 && p != null && m.canAdd(p)) {
+				m.add(p);
 			}
 		});
 
@@ -103,12 +103,12 @@ public class PropertyPaneController extends PaneController {
 	private void prepareAssignedDisadvantages() {
 		lvAssignedDisadvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnUnassignDisadvantage.setDisable(newValue == null || m.canRemoveProperty(newValue));
+					btnUnassignDisadvantage.setDisable(newValue == null || m.canRemove(newValue));
 				});
 		lvAssignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvAssignedDisadvantages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && p != null && m.canRemoveProperty(p)) {
-				m.removeProperty(p);
+			if (click.getClickCount() == 2 && p != null && m.canRemove(p)) {
+				m.remove(p);
 			}
 		});
 		lvAssignedDisadvantages.setCellFactory((ListView<Property> list) -> new AssignedPropertyCell());
@@ -117,13 +117,13 @@ public class PropertyPaneController extends PaneController {
 	private void prepareUnassignedDisadvantages() {
 		lvUnassignedDisadvantages.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> {
-					btnAssignDisadvantage.setDisable(newValue == null || !m.canAddProperty(newValue));
+					btnAssignDisadvantage.setDisable(newValue == null || !m.canAdd(newValue));
 				});
 
 		lvUnassignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvUnassignedDisadvantages.getSelectionModel().getSelectedItem();
-			if (click.getClickCount() == 2 && p != null && m.canAddProperty(p)) {
-				m.addProperty(p);
+			if (click.getClickCount() == 2 && p != null && m.canAdd(p)) {
+				m.add(p);
 			}
 		});
 		lvUnassignedDisadvantages.setCellFactory((ListView<Property> list) -> new UnAssignedPropertyCell());
@@ -163,8 +163,8 @@ public class PropertyPaneController extends PaneController {
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			decreaseButton.setPrefWidth(25);
 			increaseButton.setPrefWidth(25);
-			decreaseButton.setOnAction((ActionEvent e) -> m.decreaseProperty(getItem()));
-			increaseButton.setOnAction((ActionEvent e) -> m.increaseProperty(getItem()));
+			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
+			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
 		}
 
 		@Override
@@ -177,14 +177,14 @@ public class PropertyPaneController extends PaneController {
 				setTooltip(null);
 			} else if (item.getMinLevel() == item.getMaxLevel()) {
 				nameLabel.setText(item.toString());
-				nameLabel.setDisable(!PropertyPaneController.this.m.canRemoveProperty(item));
+				nameLabel.setDisable(!PropertyPaneController.this.m.canRemove(item));
 				setTooltip(new Tooltip(item.getDescription()));
 				setGraphic(nameLabel);
 			} else {
 				nameLabel.setText(item.toString());
-				nameLabel.setDisable(!PropertyPaneController.this.m.canRemoveProperty(item));
+				nameLabel.setDisable(!PropertyPaneController.this.m.canRemove(item));
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!PropertyPaneController.this.m.canIncreaseProperty(item));
+				increaseButton.setDisable(!PropertyPaneController.this.m.canIncrease(item));
 				decreaseButton.setDisable(!PropertyPaneController.this.m.canDecreaseProperty(item));
 				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);
@@ -205,7 +205,7 @@ public class PropertyPaneController extends PaneController {
 				setTooltip(null);
 			} else {
 				nameLabel.setText(item.toString());
-				nameLabel.setDisable(!PropertyPaneController.this.m.canAddProperty(item));
+				nameLabel.setDisable(!PropertyPaneController.this.m.canAdd(item));
 				setGraphic(nameLabel);
 				setTooltip(new Tooltip(item.getDescription()));
 			}

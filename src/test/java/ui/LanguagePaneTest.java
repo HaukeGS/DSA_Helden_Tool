@@ -50,7 +50,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testAssignLanguage() {
 		verifyThat(garethi.toString(), NodeMatchers.isNotNull());
 		clickOn(garethi.toString()).clickOn(ID_BTN_ASSIGN_LANGUAGE);
-		verify(mockedAventurianManager).addLanguage(any(Language.class));
+		verify(mockedAventurianManager).add(any(Language.class));
 	}
 
 	@Test
@@ -76,31 +76,31 @@ public class LanguagePaneTest extends BaseGuiTest {
 	public void testAssignLanguageViaDoubleClick() {
 		verifyThat(garethi.toString(), NodeMatchers.isNotNull());
 		doubleClickOn(garethi.toString(), MouseButton.PRIMARY);
-		verify(mockedAventurianManager).addLanguage(any(Language.class));
+		verify(mockedAventurianManager).add(any(Language.class));
 	}
 
 	@Test
 	public void testUnAssignLanguage() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
-		when(mockedAventurianManager.canRemoveLanguage(assignedLanguage)).thenReturn(true);
+		when(mockedAventurianManager.canRemove(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
 		clickOn(assignedLanguage.getName()).clickOn(ID_BTN_UN_ASSIGN_LANGUAGE);
 		final Button unassign = find(ID_BTN_UN_ASSIGN_LANGUAGE);
 		assertFalse(unassign.isDisable());
-		verify(mockedAventurianManager).removeLanguage(assignedLanguage);
+		verify(mockedAventurianManager).remove(assignedLanguage);
 	}
 
 	@Test
 	public void testUnAssignLanguageViaDoubleClick() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
-		when(mockedAventurianManager.canRemoveLanguage(assignedLanguage)).thenReturn(true);
+		when(mockedAventurianManager.canRemove(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
 		doubleClickOn(assignedLanguage.getName());
-		verify(mockedAventurianManager).removeLanguage(any(Language.class));
+		verify(mockedAventurianManager).remove(any(Language.class));
 	}
 
 	@Test
@@ -120,7 +120,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 	@Test
 	public void testUnAssignLanguageButtonIsEnabled() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
-		when(mockedAventurianManager.canRemoveLanguage(assignedLanguage)).thenReturn(true);
+		when(mockedAventurianManager.canRemove(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
@@ -160,14 +160,14 @@ public class LanguagePaneTest extends BaseGuiTest {
 	@Test
 	public void testIncreaseLanguageLevel() {
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
-		when(mockedAventurianManager.canIncreaseLanguage(assignedLanguage)).thenReturn(true);
+		when(mockedAventurianManager.canIncrease(assignedLanguage)).thenReturn(true);
 		updateGui();
 
 		verifyThat(assignedLanguage.getName(), NodeMatchers.isNotNull());
 		final Button btn = find("+");
 		verifyThat(btn, (Button button) -> !button.isDisable());
 		clickOn(btn);
-		verify(mockedAventurianManager).increaseLanguage(assignedLanguage);
+		verify(mockedAventurianManager).increase(assignedLanguage);
 	}
 
 	@Test
@@ -183,7 +183,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 
 	@Test
 	public void testDecreaseLanguageLevel() {
-		when(mockedAventurianManager.canDecreaseLanguage(assignedLanguage)).thenReturn(true);
+		when(mockedAventurianManager.canDecrease(assignedLanguage)).thenReturn(true);
 		when(mockedAventurian.getLanguages()).thenReturn(Arrays.asList(assignedLanguage));
 		updateGui();
 
@@ -191,7 +191,7 @@ public class LanguagePaneTest extends BaseGuiTest {
 		final Button btn = find("-");
 		verifyThat(btn, (Button button) -> !button.isDisable());
 		clickOn(btn);
-		verify(mockedAventurianManager).decreaseLanguage(any(Language.class));
+		verify(mockedAventurianManager).decrease(any(Language.class));
 	}
 
 	@Test
@@ -216,8 +216,8 @@ public class LanguagePaneTest extends BaseGuiTest {
 		blablub = createLanguage("blablub", 50);
 		assignedLanguage = createLanguage("assignedLanguage", 50);
 		when(mockedDatabase.getLanguages()).thenReturn(Arrays.asList(garethi, blablub, assignedLanguage));
-		when(mockedAventurianManager.canAddLanguage(garethi)).thenReturn(true);
-		when(mockedAventurianManager.canAddLanguage(blablub)).thenReturn(true);
+		when(mockedAventurianManager.canAdd(garethi)).thenReturn(true);
+		when(mockedAventurianManager.canAdd(blablub)).thenReturn(true);
 		when(mockedAventurianManager.canAddLanguageAsNativeTongue(garethi)).thenReturn(true);
 		when(mockedAventurianManager.canAddLanguageAsNativeTongue(blablub)).thenReturn(true);
 	}
