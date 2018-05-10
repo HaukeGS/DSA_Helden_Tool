@@ -9,12 +9,6 @@ import java.util.Observer;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import aventurian.LevelCostCalculator.COLUMN;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.IncreasableSkill;
@@ -23,20 +17,14 @@ import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Aventurian extends Observable {
 
 	private final LevelCostCalculator calculator;
 
-	@XmlAttribute
 	private String nameOfAventurian;
-	@XmlAttribute
 	private int adventurePoints;
 	private final PrimaryAttributes primaryAttributes;
 	private final SecondaryAttributes secondaryAttributes;
-
-	@XmlElementWrapper(name = "languages")
 
 	private final List<Skill> allSkills;
 
@@ -101,6 +89,8 @@ public class Aventurian extends Observable {
 	void remove(Skill s) {
 		allSkills.remove(s);
 		s.lose(this);
+		// when a skill is removed, it might have been a requirement for other skills ->
+		// notify observers about first skill which must be removed, too
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
@@ -191,6 +181,7 @@ public class Aventurian extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+
 	private void setChangedAndNotifyObservers(Optional<Skill> s) {
 		setChanged();
 		notifyObservers(s.orElse(null));
@@ -289,7 +280,7 @@ public class Aventurian extends Observable {
 		setChangedAndNotifyObservers();
 	}
 
-	public Optional<Skill> getSkillToRemove() {
+	private Optional<Skill> getSkillToRemove() {
 		return allSkills.stream().filter(skill -> !skill.isAllowedToHave(this)).findFirst();
 	}
 }

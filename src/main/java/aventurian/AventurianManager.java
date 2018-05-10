@@ -195,7 +195,7 @@ public class AventurianManager extends BaseAventurianManager implements Observer
 		return languageManager.canRemoveLanguage(l);
 	}
 
-	//skillToRemove is not null if there is a skill whose requirements are not met anymore
+	//skillToRemove is not null if there is a skill whose requirements are not met anymore -> remove it
 	@Override
 	public void update(Observable o, Object skillToRemove) {
 		if (o instanceof Aventurian && skillToRemove instanceof Skill) {

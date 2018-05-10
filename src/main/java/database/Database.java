@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.reflections.Reflections;
@@ -19,7 +17,6 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
-import aventurian.Aventurian;
 import aventurian.Race;
 import skills.InstantiableSkill;
 import skills.languages.Language;
@@ -28,9 +25,6 @@ import skills.properties.Property;
 
 public class Database {
 
-	private static final Predicate<Aventurian> NOREQUIREMENT = (Aventurian a) -> true;
-	private static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
-	};
 	private static final RaceConfiguration DEFAULT_RACECONFIGURATION = new RaceConfiguration(0, 0, new ArrayList<>());
 	private List<Property> properties;
 	private List<Language> languages;

@@ -22,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import skills.Skill;
 import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
@@ -152,54 +153,6 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testAddProperty() throws Exception {
-		final Property testProp = mock(Property.class);
-		when(testProp.getName()).thenReturn("testProp");
-		toTest.add(testProp);
-		assertTrue(toTest.hasSkill(testProp));
-		verify(testProp).gain(toTest);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
-	public void testRemoveProperty() throws Exception {
-		final Property testProp = mock(Property.class);
-		when(testProp.getName()).thenReturn("testProp");
-		toTest.add(testProp);
-		assertTrue(toTest.hasSkill(testProp));
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-
-		toTest.remove(testProp);
-		assertFalse(toTest.hasSkill(testProp));
-		verify(testProp).lose(toTest);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
-	public void testAddBadProperty() throws Exception {
-		final BadProperty testProp = mock(BadProperty.class);
-		when(testProp.getName()).thenReturn("testProp");
-		toTest.add(testProp);
-		assertTrue(toTest.hasSkill(testProp));
-		verify(testProp).gain(toTest);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
-	public void testRemoveBadProperty() throws Exception {
-		final BadProperty testProp = mock(BadProperty.class);
-		when(testProp.getName()).thenReturn("testProp");
-		toTest.add(testProp);
-		assertTrue(toTest.hasSkill(testProp));
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-
-		toTest.remove(testProp);
-		assertFalse(toTest.hasSkill(testProp));
-		verify(testProp).lose(toTest);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
 	public void testGetBadPropertySum() throws Exception {
 		assertEquals(0, toTest.getBadPropertySum());
 		final BadProperty bP1 = mock(BadProperty.class);
@@ -214,7 +167,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testAddLanguage() throws Exception {
+	public void testAdd() throws Exception {
 		final Language testLanguage = mock(Language.class);
 		when(testLanguage.getName()).thenReturn("testLanguage");
 		toTest.add(testLanguage);
@@ -224,19 +177,47 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testRemoveLanguage() throws Exception {
-		final Language testLanguage = mock(Language.class);
-		when(testLanguage.getName()).thenReturn("testLanguage");
-		toTest.add(testLanguage);
-		assertTrue(toTest.hasSkill(testLanguage));
+	public void testRemoveSkillNoRequirement() throws Exception {
+		final Skill s1 = mock(Skill.class);
+		when(s1.getName()).thenReturn("testSkill1");
+		toTest.add(s1);
+		assertTrue(toTest.hasSkill(s1));
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
+		
+		final Skill s2 = mock(Skill.class);
+		when(s2.getName()).thenReturn("testSkill2");
+		when(s2.isAllowedToHave(toTest)).thenReturn(true);
+		toTest.add(s2);
+		assertTrue(toTest.hasSkill(s2));
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 
-		toTest.remove(testLanguage);
-		assertFalse(toTest.hasSkill(testLanguage));
-		verify(testLanguage).lose(toTest);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null); // Why
-																	// atLeastOnce???
+		toTest.remove(s1);
+		assertFalse(toTest.hasSkill(s1));
+		verify(s1).lose(toTest);
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
+	
+	@Test
+	public void testRemoveSkillIsRequirement() throws Exception {
+		final Skill requirementSkill = mock(Skill.class);
+		when(requirementSkill.getName()).thenReturn("requirementSkill");
+		toTest.add(requirementSkill);
+		assertTrue(toTest.hasSkill(requirementSkill));
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
+
+		final Skill dependentSkill = mock(Skill.class);
+		when(dependentSkill.getName()).thenReturn("dependentSkill");
+		toTest.add(dependentSkill);
+		assertTrue(toTest.hasSkill(dependentSkill));
+		
+		when(dependentSkill.isAllowedToHave(toTest)).thenReturn(false);
+		
+		toTest.remove(requirementSkill);
+		assertFalse(toTest.hasSkill(requirementSkill));
+		verify(requirementSkill).lose(toTest);
+		verify(mockedObserver, atLeastOnce()).update(toTest, dependentSkill);
+	}
+	
 
 	@Test
 	public void testGetLanguages() {
