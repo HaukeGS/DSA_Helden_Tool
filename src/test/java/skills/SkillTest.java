@@ -1,6 +1,7 @@
 package skills;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -14,11 +15,12 @@ import aventurian.Aventurian;
 public class SkillTest {
 	private static final int COSTS = 50;
 	private Skill toTest;
-	private final String name = "blub";
+	private static final String NAME = "blub";
+	private static final String DESCRIPTION = "blub";
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Skill(name, "description", COSTS) {
+		toTest = new Skill(NAME, DESCRIPTION, COSTS) {
 		};
 	}
 
@@ -46,9 +48,30 @@ public class SkillTest {
 	public void testCompareTo() {
 		final Skill o = mock(Skill.class);
 		when(o.getName()).thenReturn("bla");
-		final int expected = name.compareTo("bla");
+		final int expected = NAME.compareTo("bla");
 		final int actual = toTest.compareTo(o);
 		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testGetName() {
+		assertEquals(NAME, toTest.getName());
+	}
+
+	@Test
+	public void testEquals() {
+		final Skill anotherButSame = new Skill(NAME, "sdfn", COSTS + 1) {
+		};
+		final Skill anotherButDifferent = new Skill("fg", "sdfn", COSTS + 1) {
+		};
+		assertTrue(toTest.equals(toTest));
+		assertTrue(toTest.equals(anotherButSame));
+		assertFalse(toTest.equals(anotherButDifferent));
+	}
+
+	@Test
+	public void testGetDescription() {
+		assertEquals(DESCRIPTION, toTest.getDescription());
 	}
 
 }

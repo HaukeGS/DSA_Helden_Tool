@@ -8,7 +8,7 @@ import skills.InstantiableSkill.SkillType;
 public class Aureliani extends Language {
 
 	static final String NAME = "Aureliani";
-	static final String DESCRIPTION = "\nUm es über die zweite Stufe hinaus zu steigern ist die Sonderfertigkeit Sprachenkunde erforderlich. \nDie Sprache wird in den Imperialen Zeichen der Güldenländer geschrieben.";
+	static final String DESCRIPTION = "Um es über die zweite Stufe hinaus zu steigern ist die Sonderfertigkeit Sprachenkunde erforderlich. \nDie Sprache wird in den Imperialen Zeichen der Güldenländer geschrieben.";
 
 	public Aureliani() {
 		super(NAME, DESCRIPTION, 5, 50);
