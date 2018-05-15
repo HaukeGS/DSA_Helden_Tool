@@ -13,14 +13,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 import aventurian.Aventurian;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AurelianiTest {
-	private Aureliani toTest;
+public class AngramTest {
+	private Angram toTest;
 	@Mock
 	Aventurian av;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Aureliani();
+		toTest = new Angram();
 	}
 
 	@Test

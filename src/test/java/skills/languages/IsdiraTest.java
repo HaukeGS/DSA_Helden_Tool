@@ -13,25 +13,28 @@ import org.mockito.junit.MockitoJUnitRunner;
 import aventurian.Aventurian;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AurelianiTest {
-	private Aureliani toTest;
+public class IsdiraTest {
+	private Isdira toTest;
 	@Mock
 	Aventurian av;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Aureliani();
+		toTest = new Isdira();
 	}
 
 	@Test
 	public void testFulfillOptionalRequirement() {
 		assertTrue(toTest.fulfillOptionalRequirement(av));
 		toTest.increase();
+		assertTrue(toTest.fulfillOptionalRequirement(av));
+		toTest.increase();
 		assertFalse(toTest.fulfillOptionalRequirement(av));
-		when(av.hasSkill("Sprachenkunde")).thenReturn(true);
+		when(av.hasSkill("Zweistimmiger Gesang")).thenReturn(true);
 		assertTrue(toTest.fulfillOptionalRequirement(av));
 		toTest.increase();
 		assertTrue(toTest.fulfillOptionalRequirement(av));
+		
 	}
 
 	@Test
@@ -40,9 +43,11 @@ public class AurelianiTest {
 		toTest.increase();
 		assertTrue(toTest.isAllowedToHave(av));
 		toTest.increase();
+		assertTrue(toTest.isAllowedToHave(av));
+		toTest.increase();
 		assertFalse(toTest.isAllowedToHave(av));
 		
-		when(av.hasSkill("Sprachenkunde")).thenReturn(true);
+		when(av.hasSkill("Zweistimmiger Gesang")).thenReturn(true);
 		assertTrue(toTest.isAllowedToHave(av));
 		toTest.increase();
 		assertTrue(toTest.isAllowedToHave(av));
