@@ -168,11 +168,19 @@ public class AventurianManager implements Observer {
 	public void update(Observable o, Object skillToRemove) {
 		if (o instanceof Aventurian && skillToRemove instanceof Skill) {
 			final Skill toRemove = (Skill) skillToRemove;
-			if (toRemove instanceof Property)
-				remove((Property) toRemove);
-			else if (toRemove instanceof Language)
-				remove((Language) toRemove);
-
+			if (toRemove instanceof Property) {
+				final Property p = (Property) toRemove;
+				if (p.isAllowedToDecrease())
+					decrease(p);
+				else
+					remove(p);
+			} else if (toRemove instanceof Language) {
+				final Language l = (Language) toRemove;
+				if (l.isAllowedToDecrease())
+					decrease(l);
+				else
+					remove(l);
+			}
 		}
 
 	}

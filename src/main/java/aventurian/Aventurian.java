@@ -3,6 +3,7 @@ package aventurian;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -73,13 +74,19 @@ public class Aventurian extends Observable {
 
 	void setName(String name) {
 		this.nameOfAventurian = name;
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	void add(Skill s) {
 		allSkills.add(s);
 		s.gain(this);
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
+	}
+
+	public int getMaximumOf(PRIMARY_ATTRIBUTE... a) {
+		return Stream.of(a).mapToInt(pA -> primaryAttributes.getPrimaryAttribute(pA)).max()
+				.orElseThrow(() -> new IllegalArgumentException());
+
 	}
 
 	void remove(Skill s) {
@@ -138,7 +145,7 @@ public class Aventurian extends Observable {
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		primaryAttributes.increase(a);
 		secondaryAttributes.updateValues(primaryAttributes);
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	public boolean isSecondaryAttributeIncreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
@@ -186,17 +193,18 @@ public class Aventurian extends Observable {
 	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
-		setChangedAndNotifyObservers();
+		
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.increaseMaximum(attribute);
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	void decreaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decreaseMaximum(attribute);
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	public String getName() {
@@ -227,7 +235,7 @@ public class Aventurian extends Observable {
 		return getStreamOfLanguages().anyMatch((Language l) -> l.isNativeTongue());
 	}
 
-	int getLevelSumOfLanguages() {
+	public int getLevelSumOfLanguages() {
 		return getLanguages().stream().mapToInt(Language::getLevel).sum();
 	}
 
@@ -263,20 +271,23 @@ public class Aventurian extends Observable {
 	@Override
 	public void addObserver(Observer o) {
 		super.addObserver(o);
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	void increaseIncreasableSkill(LinearIncreasableSkill s) {
 		s.increase();
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	void decreaseIncreasableSkill(LinearIncreasableSkill s) {
 		s.decrease();
-		setChangedAndNotifyObservers();
+		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	private Optional<Skill> getSkillToRemove() {
-		return allSkills.stream().filter(skill -> !skill.isAllowedToHave(this)).findFirst();
+		Collections.reverse(allSkills);
+		final Optional<Skill> toRemove = allSkills.stream().filter(skill -> !skill.isAllowedToHave(this)).findFirst();
+		Collections.reverse(allSkills);
+		return toRemove;
 	}
 }

@@ -28,6 +28,8 @@ public class Asdharia extends Language {
 
 	@Override
 	public boolean isAbleToIncrease(Aventurian a) {
+		if (!super.isAbleToIncrease(a))
+			return false;
 		if (getLevel() < 4 && isNativeTongue())
 			return true;
 		if (getLevel() < 2)

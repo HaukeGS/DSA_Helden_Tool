@@ -1,6 +1,8 @@
 
 package skills.languages;
 
+import aventurian.Aventurian;
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.LinearIncreasableSkill;
 
 public class Language extends LinearIncreasableSkill {
@@ -20,6 +22,20 @@ public class Language extends LinearIncreasableSkill {
 		return isNativeTongue;
 	}
 
+	@Override
+	public boolean isAllowedToHave(Aventurian a) {
+		return a.getLevelSumOfLanguages() <= a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	}
+
+	@Override
+	public boolean isAllowedToAdd(Aventurian a) {
+		return a.getLevelSumOfLanguages() < a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	}
+	
+	@Override
+	protected boolean isAbleToIncrease(Aventurian a) {
+		return a.getLevelSumOfLanguages() < a.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+	}
 
 	@Override
 	public boolean isAllowedToDecrease() {

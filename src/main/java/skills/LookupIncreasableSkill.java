@@ -7,17 +7,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class LookupIncreasableSkill extends Skill {
+public class LookupIncreasableSkill extends IncreasableSkill {
+	protected static enum COLUMN {
+		ASTERN, A, B, C, D, E, F, G, H
+	}
 
-	public LookupIncreasableSkill(String name, String description) {
-		super(name, description);
-		// TODO Auto-generated constructor stub
+	private final COLUMN c;
+
+	public LookupIncreasableSkill(String name, String description, COLUMN c, int minLevel, int maxLevel) {
+		super(name, description, minLevel, maxLevel);
+		this.c = c;
+	}
+
+	@Override
+	int getUpgradeCosts() {
+		return getCost(level, level + 1, c);
+	}
+
+	@Override
+	int getDowngradeRefund() {
+		return getRefund(level, level-1, c);
 	}
 
 	@Override
 	int getTotalCosts() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getCost(minLevel, level, c);
 	}
 
 	private final static Map<COLUMN, List<Integer>> map;
@@ -42,10 +56,6 @@ public class LookupIncreasableSkill extends Skill {
 		aMap.put(COLUMN.H, Arrays.asList(0, 16, 35, 60, 85, 110, 140, 165, 195, 220, 250, 280, 320, 350, 380, 410, 450,
 				480, 510, 550, 580, 620, 650, 690, 720, 760, 800, 830, 870, 910, 950, 1000));
 		map = Collections.unmodifiableMap(aMap);
-	}
-
-	protected static enum COLUMN {
-		ASTERN, A, B, C, D, E, F, G, H
 	}
 
 	private static int getCost(int from, int to, COLUMN column) {

@@ -1,31 +1,12 @@
 package skills;
 
-import aventurian.Aventurian;
+public abstract class LinearIncreasableSkill extends IncreasableSkill {
 
-public abstract class LinearIncreasableSkill extends Skill {
-	protected int level;
-	protected final int maxLevel;
-	protected final int minLevel;
 	protected final int cost;
 
 	public LinearIncreasableSkill(String name, String description, int cost, int minLevel, int maxLevel) {
-		super(name, description);
-		this.maxLevel = maxLevel;
-		this.minLevel = minLevel;
-		this.level = minLevel;
-		this.cost=cost;
-	}
-
-	public void increase() {
-		if (level >= maxLevel)
-			throw new IllegalStateException("IncreasableSkill cannot be over max level!");
-		level++;
-	}
-
-	public void decrease() {
-		if (level <= minLevel)
-			throw new IllegalStateException("IncreasableSkill level cannot be less than min level!");
-		level--;
+		super(name, description, minLevel, maxLevel);
+		this.cost = cost;
 	}
 
 	protected int getLearningCosts() {
@@ -43,34 +24,6 @@ public abstract class LinearIncreasableSkill extends Skill {
 	@Override
 	public int getTotalCosts() {
 		return (level * (level + 1) / 2) * getLearningCosts();
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public int getMaxLevel() {
-		return maxLevel;
-	}
-
-	public int getMinLevel() {
-		return minLevel;
-	}
-
-	public boolean isAllowedToIncrease(Aventurian a) {
-		return isIncreasable() && isAbleToIncrease(a);
-	}
-
-	private boolean isIncreasable() {
-		return level < maxLevel;
-	}
-
-	protected boolean isAbleToIncrease(Aventurian a) {
-		return true;
-	}
-
-	public boolean isAllowedToDecrease() {
-		return level > minLevel;
 	}
 
 	@Override

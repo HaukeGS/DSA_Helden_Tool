@@ -24,6 +24,8 @@ public class Angram extends Language {
 	
 	@Override
 	public boolean isAbleToIncrease(Aventurian a) {
+		if (!super.isAbleToIncrease(a))
+			return false;
 		if (getLevel() < 2)
 			return true;
 		if (a.hasSkill("Sprachenkunde"))

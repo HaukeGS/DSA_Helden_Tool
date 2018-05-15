@@ -2,6 +2,22 @@ package skills;
 
 import aventurian.Aventurian;
 
+/**
+ * @author Jonas
+ *
+ */
+/**
+ * @author Jonas
+ *
+ */
+/**
+ * @author Jonas
+ *
+ */
+/**
+ * @author Jonas
+ *
+ */
 public abstract class Skill implements Comparable<Skill> {
 
 	private final String name;
@@ -34,10 +50,20 @@ public abstract class Skill implements Comparable<Skill> {
 	 * 
 	 * @param t
 	 *            the aventurian which must fulfill the skill's requirements in
-	 *            order to buy and keep it
+	 *            order keep it
 	 * @return
 	 */
 	public boolean isAllowedToHave(Aventurian t) {
+		return true;
+	}
+
+	/**
+	 * @param a
+	 *            the aventurian which must fulfill the skill's requirements in
+	 *            order buy it
+	 * @return
+	 */
+	public boolean isAllowedToAdd(Aventurian a) {
 		return true;
 	}
 
@@ -67,6 +93,6 @@ public abstract class Skill implements Comparable<Skill> {
 	public int compareTo(Skill o) {
 		return getName().compareTo(o.getName());
 	}
-	
+
 	abstract int getTotalCosts();
 }
