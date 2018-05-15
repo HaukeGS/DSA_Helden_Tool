@@ -20,10 +20,7 @@ abstract class BaseAventurianManager {
 	protected final Predicate<Optional<Aventurian>> IS_NOT_PRESENT = (Optional<Aventurian> av) -> !av.isPresent();
 	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_ALLOWED = (Aventurian av,
 			IncreasableSkill s) -> !s.isAllowedToHave(av);
-	protected final BiPredicate<Aventurian, IncreasableSkill> CANNOT_PAY_TOTAL_COSTS = (Aventurian av,
-			IncreasableSkill s) -> !av.canPay(s.getTotalCosts());
-	protected final BiPredicate<Aventurian, IncreasableSkill> CANNOT_PAY_UPGRADE_COSTS = (Aventurian av,
-			IncreasableSkill s) -> !av.canPay(s.getUpgradeCosts());
+
 	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_SKILL = (Aventurian av, IncreasableSkill s) -> av
 			.hasSkill(s);
 	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_NOT_SKILL = (Aventurian av,
@@ -38,10 +35,6 @@ abstract class BaseAventurianManager {
 
 	protected void changeAventurian(Optional<Aventurian> a) {
 		this.aventurian = a;
-	}
-
-	protected final boolean canPay(int cost) {
-		return aventurian.map(a -> a.canPay(cost)).orElse(false);
 	}
 
 	protected final void pay(int cost) {

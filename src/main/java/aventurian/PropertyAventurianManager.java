@@ -11,16 +11,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	static final int MAX_BAD_PROPERTIES_SUM = 25;
 	static final int MAX_POINTS_IN_ADVANTAGES = 2500;
 	static final int MAX_POINTS_OUT_DISADVANTAGES = 2500;
-	private final BiPredicate<Aventurian, Property> CANNOT_PAY_ADVANTAGE_TOTAL_COSTS = (av, p) -> p.isAdvantage()
-			&& !av.canPay(p.getTotalCosts());
-	private final BiPredicate<Aventurian, Property> CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS = (av, p) -> p.isAdvantage()
-			&& !av.canPay(p.getUpgradeCosts());
 
-	// TODO is this predicate correct??
-	private final BiPredicate<Aventurian, Property> CANNOT_PAY_DISADVANTAGE_TOTAL_COSTS = (av, p) -> p.isDisadvantage()
-			&& !av.canPay(p.getTotalCosts());
-	private final BiPredicate<Aventurian, Property> CANNOT_PAY_DISADVANTAGE_DOWNGRADE_COSTS = (av,
-			p) -> p.isDisadvantage() && !av.canPay(p.getDowngradeRefund());
 	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_ADVANTAGEPOINTS = (av, p) -> p.isAdvantage()
 			&& av.getPointsInAdvantages() + p.getTotalCosts() > MAX_POINTS_IN_ADVANTAGES;
 	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_DISADVANTAGEPOINTS = (av, p) -> p.isDisadvantage()
@@ -48,7 +39,6 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	boolean canAdd(Property p) {
 		return !aventurian.map(av -> HAS_SKILL.test(av, p)//
 				|| IS_NOT_ALLOWED.test(av, p)//
-				|| CANNOT_PAY_ADVANTAGE_TOTAL_COSTS.test(av, p)//
 				|| EXCEEDS_MAX_ADVANTAGEPOINTS.test(av, p)//
 				|| EXCEEDS_MAX_DISADVANTAGEPOINTS.test(av, p) //
 				|| EXCEEDS_MAX_BADPROPERTYLEVELS.test(av, p)).orElse(true);
@@ -71,8 +61,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 
 	// is this correct?
 	boolean canRemove(Property p) {
-		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
-				|| CANNOT_PAY_DISADVANTAGE_TOTAL_COSTS.test(av, p)).orElse(true);
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)).orElse(true);
 	}
 
 	private void decreaseDisadvantageToMinimum(Property p) {
@@ -116,16 +105,13 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	boolean canIncrease(Property p) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
 				|| IS_NOT_ALLOWED.test(av, p)//
-				|| IS_NOT_INCREASABLE.test(av,p)//
-				|| CANNOT_PAY_ADVANTAGE_UPGRADE_COSTS.test(av, p)//
+				|| IS_NOT_INCREASABLE.test(av, p)//
 				|| EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE.test(av, p)).orElse(true);
 	}
 
 	boolean canDecrease(Property p) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, p)//
-				|| IS_NOT_DECREASABLE.test(p)//
-				|| CANNOT_PAY_DISADVANTAGE_DOWNGRADE_COSTS.test(av, p)).orElse(true);
+				|| IS_NOT_DECREASABLE.test(p)).orElse(true);
 	}
-
 
 }

@@ -25,7 +25,7 @@ public class Language extends IncreasableSkill {
 	public boolean isAllowedToDecrease() {
 		if (isNativeTongue())
 			return level > NATIVE_TONGUE_LEVEL;
-		return level > 1;
+		return super.isAllowedToDecrease();
 	}
 
 }

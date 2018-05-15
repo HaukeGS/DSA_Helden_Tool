@@ -6,7 +6,7 @@ import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import database.Database;
 
 public class RaceAventurianManager extends BaseAventurianManager {
-	
+
 	private final PropertyAventurianManager propertyManager;
 
 	public RaceAventurianManager(Optional<Aventurian> a, Database db, PropertyAventurianManager propertyManager) {
@@ -20,13 +20,12 @@ public class RaceAventurianManager extends BaseAventurianManager {
 			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, magicResistanceMod);
 		else
 			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, Math.abs(magicResistanceMod));
-		
+
 		final int hitPointsMod = database.getHitPointsModFor(race);
 		if (hitPointsMod > 0)
 			increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, hitPointsMod);
 		else
 			decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, Math.abs(hitPointsMod));
-
 
 		database.getSkillsFor(race).forEach(propertyManager::addProperty);
 	}
@@ -34,10 +33,8 @@ public class RaceAventurianManager extends BaseAventurianManager {
 	private void increaseSecondaryAttribute(SECONDARY_ATTRIBUTE a, int mod) {
 		aventurian.ifPresent(av -> {
 			final int cost = av.getSecondaryAttributeCost(a);
-			if (av.canPay(cost)) {
-				av.increaseSecondaryAttribute(a, mod);
-				pay(cost * mod);
-			}
+			av.increaseSecondaryAttribute(a, mod);
+			pay(cost * mod);
 		});
 	}
 

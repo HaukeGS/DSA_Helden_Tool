@@ -114,10 +114,6 @@ public class AventurianTest {
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testPayTooMuch() throws Exception {
-		toTest.pay(20000);
-	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testPayNegative() throws Exception {
@@ -145,11 +141,6 @@ public class AventurianTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testRefundNegative() throws Exception {
 		toTest.refund(-20);
-	}
-
-	@Test
-	public void testCanPay() throws Exception {
-		assertFalse(toTest.canPay(AP + 1));
 	}
 
 	@Test
@@ -183,7 +174,7 @@ public class AventurianTest {
 		toTest.add(s1);
 		assertTrue(toTest.hasSkill(s1));
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-		
+
 		final Skill s2 = mock(Skill.class);
 		when(s2.getName()).thenReturn("testSkill2");
 		when(s2.isAllowedToHave(toTest)).thenReturn(true);
@@ -196,7 +187,7 @@ public class AventurianTest {
 		verify(s1).lose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
-	
+
 	@Test
 	public void testRemoveSkillIsRequirement() throws Exception {
 		final Skill requirementSkill = mock(Skill.class);
@@ -209,15 +200,14 @@ public class AventurianTest {
 		when(dependentSkill.getName()).thenReturn("dependentSkill");
 		toTest.add(dependentSkill);
 		assertTrue(toTest.hasSkill(dependentSkill));
-		
+
 		when(dependentSkill.isAllowedToHave(toTest)).thenReturn(false);
-		
+
 		toTest.remove(requirementSkill);
 		assertFalse(toTest.hasSkill(requirementSkill));
 		verify(requirementSkill).lose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, dependentSkill);
 	}
-	
 
 	@Test
 	public void testGetLanguages() {

@@ -92,8 +92,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	boolean canAdd(Language l) {
 		return !aventurian.map(av -> HAS_SKILL.test(av, l)//
 				|| IS_NOT_ALLOWED.test(av, l)//
-				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)//
-				|| CANNOT_PAY_TOTAL_COSTS.test(av, l)).orElse(true);
+				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)).orElse(true);
 	}
 
 	void increaseLanguage(Language l) {
@@ -107,8 +106,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)//
 				|| IS_NOT_ALLOWED.test(av, l)//
 				|| IS_NOT_INCREASABLE.test(av, l)//
-				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)//
-				|| CANNOT_PAY_UPGRADE_COSTS.test(av, l)).orElse(true);
+				|| EXCEEDS_MAX_SUM_IN_LANGUAGES.test(av)).orElse(true);
 	}
 
 }

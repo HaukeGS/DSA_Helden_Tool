@@ -22,7 +22,6 @@ public class AttributesAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		when(mockedAventurian.canPay(anyInt())).thenReturn(true);
 		toTest = new AttributesAventurianManager(Optional.of(mockedAventurian), mockedDatabase);
 	}
 
@@ -36,7 +35,6 @@ public class AttributesAventurianManagerTest extends BaseTest {
 
 	private void setUpMockForPrimaryAttributesTest(boolean canPay, boolean currentSmallerThanMax,
 			boolean sumSmallerThanMax) {
-		when(mockedAventurian.canPay(anyInt())).thenReturn(canPay);
 		when(mockedAventurian.isPrimaryAttributesLowerThanThreshhold()).thenReturn(sumSmallerThanMax);
 		// when(a.getSumOfPrimaryAttributes()).thenReturn(
 		// sumSmallerThanMax ? Aventurian.MAX_ATTRIBUTES_SUM - 1 :
@@ -45,13 +43,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.isPrimaryAttributeIncreasable(COURAGE)).thenReturn(currentSmallerThanMax);
 	}
 
-	@Test
-	public void testIncreasePrimaryAttributeTooExpensive() {
-		setUpMockForPrimaryAttributesTest(false, true, true);
-		toTest.increasePrimaryAttribute(COURAGE);
-		verify(mockedAventurian, never()).increasePrimaryAttribute(COURAGE);
-		verify(mockedAventurian, never()).pay(anyInt());
-	}
+
 
 	@Test
 	public void testIncreasePrimaryAttributeCurrentAtMaximum() {
@@ -96,20 +88,10 @@ public class AttributesAventurianManagerTest extends BaseTest {
 	}
 
 	@Test
-	public void testIncreaseSecondaryAttributeTooExpensive() {
-		when(mockedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(true);
-		when(mockedAventurian.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.ASTRALPOINTS)).thenReturn(50);
-		when(mockedAventurian.canPay(50)).thenReturn(false);
-		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
-		verify(mockedAventurian, never()).pay(anyInt());
-		verify(mockedAventurian, never()).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
-	}
-
-	@Test
 	public void testIncreaseSecondaryAttributeAllConditionsMet() {
-		when(mockedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(true);
+		when(mockedAventurian.isSecondaryAttributeIncreasableByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE))
+				.thenReturn(true);
 		when(mockedAventurian.getSecondaryAttributeCost(SECONDARY_ATTRIBUTE.MAGICRESISTANCE)).thenReturn(100);
-		when(mockedAventurian.canPay(100)).thenReturn(true);
 		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);
 		verify(mockedAventurian).pay(anyInt());
 		verify(mockedAventurian).increaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.MAGICRESISTANCE);

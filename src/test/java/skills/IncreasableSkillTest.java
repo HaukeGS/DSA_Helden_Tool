@@ -124,7 +124,7 @@ public class IncreasableSkillTest {
 	}
 
 	@Test
-	public void testIsIncreasable() {
+	public void testIsAllowedToIncrease() {
 		assertTrue(toTest.isAllowedToIncrease(null));
 
 		for (int i = 1; i < MAX_LEVEL; i++)
@@ -134,7 +134,7 @@ public class IncreasableSkillTest {
 	}
 
 	@Test
-	public void testIsDecreasable() {
+	public void testIsAllowedToDecrease() {
 		assertFalse(toTest.isAllowedToDecrease());
 
 		toTest.increase();

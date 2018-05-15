@@ -25,13 +25,13 @@ public class AngramTest {
 
 	@Test
 	public void testFulfillOptionalRequirement() {
-		assertTrue(toTest.fulfillOptionalRequirement(av));
+		assertTrue(toTest.specificRequirementsMet(av));
 		toTest.increase();
-		assertFalse(toTest.fulfillOptionalRequirement(av));
+		assertFalse(toTest.specificRequirementsMet(av));
 		when(av.hasSkill("Sprachenkunde")).thenReturn(true);
-		assertTrue(toTest.fulfillOptionalRequirement(av));
+		assertTrue(toTest.specificRequirementsMet(av));
 		toTest.increase();
-		assertTrue(toTest.fulfillOptionalRequirement(av));
+		assertTrue(toTest.specificRequirementsMet(av));
 	}
 
 	@Test

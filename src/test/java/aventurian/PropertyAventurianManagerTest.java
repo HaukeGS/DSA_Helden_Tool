@@ -24,7 +24,6 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		when(mockedAventurian.canPay(anyInt())).thenReturn(true);
 		toTest = new PropertyAventurianManager(Optional.of(mockedAventurian), mockedDatabase);
 	}
 
@@ -44,14 +43,6 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(p.getName()).thenReturn("testProperty");
 		when(p.getTotalCosts()).thenReturn(200);
 		return p;
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testAddPropertyAdvantageTooExpensive() {
-		final Property p = createPropertyMock(true, true);
-		when(mockedAventurian.canPay(anyInt())).thenReturn(false);
-
-		toTest.addProperty(p);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -217,15 +208,6 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testDecreasePropertyTooExpensive() {
-		final BadProperty bp = createBadPropertyMock(true);
-		when(bp.isAllowedToDecrease()).thenReturn(true);
-		when(mockedAventurian.hasSkill(bp)).thenReturn(true);
-		when(mockedAventurian.canPay(anyInt())).thenReturn(false);
-		toTest.decreaseProperty(bp);
-	}
-
-	@Test(expected = IllegalStateException.class)
 	public void testDecreasePropertyNotDecreasable() {
 		final BadProperty bp = createBadPropertyMock(true);
 		when(mockedAventurian.hasSkill(bp)).thenReturn(true);
@@ -285,27 +267,6 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		toTest.increaseProperty(advantage);
 		verify(mockedAventurian).increaseIncreasableSkill(advantage);
 		verify(mockedAventurian).pay(anyInt());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testIncreasePropertyAdvantageTooExpensive() {
-		final Property advantage = createPropertyMock(true, true);
-		when(mockedAventurian.hasSkill(advantage)).thenReturn(true);
-		when(advantage.isAllowedToIncrease(mockedAventurian)).thenReturn(true);
-		when(mockedAventurian.canPay(anyInt())).thenReturn(false);
-
-		toTest.increaseProperty(advantage);
-
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testIncreasePropertyDisadvantageTooExpensive() {
-		final BadProperty disadvantage = createBadPropertyMock(true, true);
-		when(mockedAventurian.hasSkill(disadvantage)).thenReturn(true);
-		when(mockedAventurian.canPay(anyInt())).thenReturn(false);
-
-		toTest.removeProperty(disadvantage);
-
 	}
 
 	@Test(expected = IllegalStateException.class)

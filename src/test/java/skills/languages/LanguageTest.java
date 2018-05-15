@@ -28,6 +28,17 @@ public class LanguageTest {
 	}
 
 	@Test
+	public void testIsDecreasableForeignNativeTongue() {
+		assertFalse(toTest.isAllowedToDecrease());
+		toTest.increase();
+		assertTrue(toTest.isAllowedToDecrease());
+
+		toTest.decrease();
+
+		assertFalse(toTest.isAllowedToDecrease());
+	}
+
+	@Test
 	public void testSetNativeTongue() {
 		toTest.setNativeTongue(false);
 		assertFalse(toTest.isNativeTongue());

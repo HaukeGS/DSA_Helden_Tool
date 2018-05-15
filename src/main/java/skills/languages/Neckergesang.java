@@ -23,7 +23,7 @@ public class Neckergesang extends Language {
 	}
 	
 	@Override
-	public boolean fulfillOptionalRequirement(Aventurian a) {
+	public boolean specificRequirementsMet(Aventurian a) {
 		if (getLevel() < 4)
 			return true;
 		if (a.hasSkill("Gedankenbilder Elfenruf"))

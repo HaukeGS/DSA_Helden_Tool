@@ -30,7 +30,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		when(aventurian.canPay(anyInt())).thenReturn(true);
 		toTest = new LanguageAventurianManager(Optional.of(aventurian), mockedDatabase);
 	}
 
@@ -51,7 +50,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	@Test
 	public void testAddLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
-		when(aventurian.canPay(anyInt())).thenReturn(true);
 		when(aventurian.hasSkill(l)).thenReturn(false);
 		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
@@ -69,15 +67,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		toTest.addLanguage(l);
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testAddLanguageTooExpensive() {
-		final Language l = createLanguageMock(true, true);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
-		when(aventurian.canPay(anyInt())).thenReturn(false);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-
-		toTest.addLanguage(l);
-	}
 	
 	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageExceedsMaxSum() {
@@ -231,7 +220,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testIncreaseLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(aventurian.canPay(anyInt())).thenReturn(true);
 		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 
@@ -258,17 +246,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		toTest.increaseLanguage(l);
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testIncreaseLanguageTooExpensive() {
-		final Language l = createLanguageMock(true, true);
-		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(aventurian.canPay(anyInt())).thenReturn(false);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
-
-		toTest.increaseLanguage(l);
-
-	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageDoesNotHaveSkill() {

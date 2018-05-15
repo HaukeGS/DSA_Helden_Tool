@@ -15,7 +15,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		aventurian.ifPresent(av -> {
 			final int cost = calculator.getCost(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) + 1, H);
-			if (canPay(cost) && av.isPrimaryAttributesLowerThanThreshhold() && av.isPrimaryAttributeIncreasable(a)) {
+			if (av.isPrimaryAttributesLowerThanThreshhold() && av.isPrimaryAttributeIncreasable(a)) {
 				av.increasePrimaryAttribute(a);
 				pay(cost);
 			}
@@ -24,8 +24,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 
 	public void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		aventurian.ifPresent(av -> {
-			final int cost = calculator.getRefund(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) - 1,
-					H);
+			final int cost = calculator.getRefund(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) - 1, H);
 			if (av.isPrimaryAttributeDecreasable(a)) {
 				av.decrasePrimaryAttribute(a);
 				refund(cost);
@@ -37,12 +36,10 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(av -> {
 			if (av.isSecondaryAttributeIncreasableByBuy(a)) {
 				final int cost = av.getSecondaryAttributeCost(a);
-				if (av.canPay(cost)) {
-					av.increaseSecondaryAttributeByBuy(a);
-					pay(cost);
-				}
+				av.increaseSecondaryAttributeByBuy(a);
+				pay(cost);
 			}
-			
+
 		});
 	}
 
@@ -53,7 +50,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 				av.decreaseSecondaryAttributeByBuy(a);
 				refund(cost);
 			}
-			
+
 		});
 	}
 

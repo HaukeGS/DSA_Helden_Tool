@@ -56,11 +56,11 @@ public class Aventurian extends Observable {
 	}
 
 	void pay(int cost) {
-		if (canPay(cost) && cost >= 0) {
+		if (cost >= 0) {
 			adventurePoints -= cost;
 			setChangedAndNotifyObservers();
 		} else
-			throw new IllegalArgumentException("Cannot pay: " + cost);
+			throw new IllegalArgumentException("Cannot pay negative costs: " + cost);
 	}
 
 	void refund(int refund) {
@@ -71,11 +71,7 @@ public class Aventurian extends Observable {
 			throw new IllegalArgumentException("Cannot refund negative amound: " + refund);
 	}
 
-	boolean canPay(int cost) {
-		return cost <= adventurePoints;
-	}
-
-	 void setName(String name) {
+	void setName(String name) {
 		this.nameOfAventurian = name;
 		setChangedAndNotifyObservers();
 	}

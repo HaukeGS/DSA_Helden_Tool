@@ -52,10 +52,14 @@ public abstract class IncreasableSkill extends Skill {
 	}
 
 	public boolean isAllowedToIncrease(Aventurian a) {
-		return level < maxLevel && fulfillOptionalRequirement(a);
+		return isIncreasable() && specificRequirementsMet(a);
+	}
+
+	private boolean isIncreasable() {
+		return level < maxLevel;
 	}
 	
-	protected boolean fulfillOptionalRequirement(Aventurian a) {
+	protected boolean specificRequirementsMet(Aventurian a) {
 		return true;
 	}
 

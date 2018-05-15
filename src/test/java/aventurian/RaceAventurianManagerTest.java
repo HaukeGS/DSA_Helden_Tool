@@ -37,11 +37,9 @@ public class RaceAventurianManagerTest extends BaseTest {
 		when(mockedDatabase.getMagicResistanceModFor(any(Race.class))).thenReturn(5);
 		when(mockedDatabase.getSkillsFor(any(Race.class))).thenReturn(Arrays.asList(mock(Property.class), mock(Property.class)));
 
-		when(mockedAventurian.canPay(any(Integer.class))).thenReturn(true);
 
 		toTest.buyRaceMods(Race.THORWALAN);
 
-		verify(mockedAventurian, atLeastOnce()).canPay(any(Integer.class));
 		verify(mockedAventurian, times(2)).pay(any(Integer.class));
 		verify(mockedAventurian).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.MAGICRESISTANCE, 5);
 		verify(mockedAventurian).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS, 11);
