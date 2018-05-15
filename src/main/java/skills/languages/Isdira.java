@@ -23,7 +23,7 @@ public class Isdira extends Language {
 	}
 	
 	@Override
-	public boolean specificRequirementsMet(Aventurian a) {
+	public boolean isAbleToIncrease(Aventurian a) {
 		if (getLevel() < 3)
 			return true;
 		if (a.hasSkill("Zweistimmiger Gesang"))

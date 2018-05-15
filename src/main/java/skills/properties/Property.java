@@ -1,8 +1,8 @@
 package skills.properties;
 
-import skills.IncreasableSkill;
+import skills.LinearIncreasableSkill;
 
-public class Property extends IncreasableSkill {
+public class Property extends LinearIncreasableSkill {
 
 	public Property(String name, String description, int cost) {
 		super(name, description, cost, 1, 1);

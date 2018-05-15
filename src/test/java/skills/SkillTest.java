@@ -20,7 +20,11 @@ public class SkillTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Skill(NAME, DESCRIPTION, COSTS) {
+		toTest = new Skill(NAME, DESCRIPTION) {
+			@Override
+			int getTotalCosts() {
+				return 0;
+			}
 		};
 	}
 
@@ -60,9 +64,17 @@ public class SkillTest {
 
 	@Test
 	public void testEquals() {
-		final Skill anotherButSame = new Skill(NAME, "sdfn", COSTS + 1) {
+		final Skill anotherButSame = new Skill(NAME, "sdfn") {
+			@Override
+			int getTotalCosts() {
+				return 0;
+			}
 		};
-		final Skill anotherButDifferent = new Skill("fg", "sdfn", COSTS + 1) {
+		final Skill anotherButDifferent = new Skill("fg", "sdfn") {
+			@Override
+			int getTotalCosts() {
+				return 0;
+			}
 		};
 		assertTrue(toTest.equals(toTest));
 		assertTrue(toTest.equals(anotherButSame));

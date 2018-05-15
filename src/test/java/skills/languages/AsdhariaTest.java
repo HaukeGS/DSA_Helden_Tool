@@ -25,28 +25,28 @@ public class AsdhariaTest {
 
 	@Test
 	public void testFulfillOptionalRequirement() {
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertFalse(toTest.specificRequirementsMet(av));
+		assertFalse(toTest.isAbleToIncrease(av));
 		when(av.hasSkill("Sprachenkunde")).thenReturn(true);
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertFalse(toTest.specificRequirementsMet(av));
+		assertFalse(toTest.isAbleToIncrease(av));
 		when(av.hasSkill("Zweistimmiger Gesang")).thenReturn(true);
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 	}
 	
 	@Test
 	public void testFulfillOptionalRequirementOnlySecondProperty() {
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertFalse(toTest.specificRequirementsMet(av));
+		assertFalse(toTest.isAbleToIncrease(av));
 		when(av.hasSkill("Zweistimmiger Gesang")).thenReturn(true);
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 	}
 
 	@Test

@@ -24,7 +24,7 @@ public class Aureliani extends Language {
 	}
 
 	@Override
-	protected boolean specificRequirementsMet(Aventurian a) {
+	protected boolean isAbleToIncrease(Aventurian a) {
 		if (getLevel() < 2)
 			return true;
 		if (a.hasSkill("Sprachenkunde"))

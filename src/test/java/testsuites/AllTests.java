@@ -16,7 +16,7 @@ import aventurian.RaceAventurianManagerTest;
 import aventurian.SecondaryAttributeHelperTest;
 import aventurian.SecondaryAttributesTest;
 import database.DatabaseTest;
-import skills.IncreasableSkillTest;
+import skills.LinearIncreasableSkillTest;
 import skills.SkillTest;
 import skills.languages.AngramTest;
 import skills.languages.AsdhariaTest;
@@ -41,7 +41,7 @@ import ui.PropertyPaneTest;
 		PropertyTest.class, AventurianManagerTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
 		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class,
-		PropertyPaneTest.class, DatabaseTest.class, IncreasableSkillTest.class, SkillTest.class,
+		PropertyPaneTest.class, DatabaseTest.class, LinearIncreasableSkillTest.class, SkillTest.class,
 		MiscelleanousAventurianManagerTest.class, AurelianiTest.class, AngramTest.class, AsdhariaTest.class,
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
 		UrTulamidyaTest.class })

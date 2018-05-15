@@ -1,9 +1,9 @@
 
 package skills.languages;
 
-import skills.IncreasableSkill;
+import skills.LinearIncreasableSkill;
 
-public class Language extends IncreasableSkill {
+public class Language extends LinearIncreasableSkill {
 	public static final int NATIVE_TONGUE_LEVEL = 4;
 	private boolean isNativeTongue;
 

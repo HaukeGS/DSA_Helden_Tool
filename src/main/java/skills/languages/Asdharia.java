@@ -12,9 +12,11 @@ public class Asdharia extends Language {
 	public Asdharia() {
 		super(NAME, DESCRIPTION, 5, 75);
 	}
-	
+
 	@Override
 	public boolean isAllowedToHave(Aventurian a) {
+		if (getLevel() <= 4 && isNativeTongue())
+			return true;
 		if (getLevel() <= 2)
 			return true;
 		if (getLevel() <= 3 && a.hasSkill("Sprachenkunde"))
@@ -23,9 +25,11 @@ public class Asdharia extends Language {
 			return true;
 		return false;
 	}
-	
+
 	@Override
-	public boolean specificRequirementsMet(Aventurian a) {
+	public boolean isAbleToIncrease(Aventurian a) {
+		if (getLevel() < 4 && isNativeTongue())
+			return true;
 		if (getLevel() < 2)
 			return true;
 		if (getLevel() < 3 && a.hasSkill("Sprachenkunde"))

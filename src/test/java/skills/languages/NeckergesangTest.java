@@ -25,18 +25,18 @@ public class NeckergesangTest {
 
 	@Test
 	public void testFulfillOptionalRequirement() {
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
-		assertFalse(toTest.specificRequirementsMet(av));
+		assertFalse(toTest.isAbleToIncrease(av));
 
 		when(av.hasSkill("Gedankenbilder Elfenruf")).thenReturn(true);
 		
 		toTest.increase();
-		assertTrue(toTest.specificRequirementsMet(av));
+		assertTrue(toTest.isAbleToIncrease(av));
 	}
 
 	@Test

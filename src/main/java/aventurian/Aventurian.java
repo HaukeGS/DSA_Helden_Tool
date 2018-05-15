@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import aventurian.LevelCostCalculator.COLUMN;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import skills.IncreasableSkill;
+import skills.LinearIncreasableSkill;
 import skills.Skill;
 import skills.languages.Language;
 import skills.properties.BadProperty;
@@ -266,12 +266,12 @@ public class Aventurian extends Observable {
 		setChangedAndNotifyObservers();
 	}
 
-	void increaseIncreasableSkill(IncreasableSkill s) {
+	void increaseIncreasableSkill(LinearIncreasableSkill s) {
 		s.increase();
 		setChangedAndNotifyObservers();
 	}
 
-	void decreaseIncreasableSkill(IncreasableSkill s) {
+	void decreaseIncreasableSkill(LinearIncreasableSkill s) {
 		s.decrease();
 		setChangedAndNotifyObservers();
 	}

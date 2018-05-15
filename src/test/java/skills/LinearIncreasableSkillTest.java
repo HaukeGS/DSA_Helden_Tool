@@ -7,16 +7,16 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class IncreasableSkillTest {
+public class LinearIncreasableSkillTest {
 
 	private static final int COSTS = 50;
 	private static final int MIN_LEVEL = 1;
 	private static final int MAX_LEVEL = 5;
-	IncreasableSkill toTest;
+	LinearIncreasableSkill toTest;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new IncreasableSkill("test", "description", COSTS, MIN_LEVEL, MAX_LEVEL) {
+		toTest = new LinearIncreasableSkill("test", "description", COSTS, MIN_LEVEL, MAX_LEVEL) {
 		};
 	}
 

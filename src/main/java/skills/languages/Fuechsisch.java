@@ -1,6 +1,5 @@
 package skills.languages;
 
-import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 

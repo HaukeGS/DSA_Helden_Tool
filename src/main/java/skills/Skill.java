@@ -7,14 +7,12 @@ public abstract class Skill implements Comparable<Skill> {
 	private final String name;
 	private final String description;
 
-	protected final int cost;
 	private final boolean isRacialSkill;
 
-	public Skill(String name, String description, int cost) {
+	public Skill(String name, String description) {
 		this.name = name;
 		this.description = description;
 
-		this.cost = cost;
 		this.isRacialSkill = false;
 	}
 
@@ -24,10 +22,6 @@ public abstract class Skill implements Comparable<Skill> {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public int getLearningCosts() {
-		return cost;
 	}
 
 	public void gain(Aventurian t) {
@@ -66,11 +60,13 @@ public abstract class Skill implements Comparable<Skill> {
 
 	@Override
 	public String toString() {
-		return getName() + " (" + getLearningCosts() + ")";
+		return getName();
 	}
 
 	@Override
 	public int compareTo(Skill o) {
 		return getName().compareTo(o.getName());
 	}
+	
+	abstract int getTotalCosts();
 }

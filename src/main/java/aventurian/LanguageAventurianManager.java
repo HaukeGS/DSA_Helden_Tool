@@ -21,9 +21,9 @@ class LanguageAventurianManager extends BaseAventurianManager {
 	void addLanguageAsNativeTongue(Language l) {
 		if (!canAddAsNativeTongue(l))
 			throw new IllegalStateException("requirements not met for adding " + l.getName() + " as native tongue");
+		l.setNativeTongue(true);
 		while (mustIncreaseNativeTongue(l))
 			l.increase();
-		l.setNativeTongue(true);
 		add(l);
 	}
 
@@ -50,6 +50,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		}
 		remove(l);
 	}
+	
 
 	boolean canRemoveLanguage(Language l) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)).orElse(true);
@@ -59,7 +60,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (l.isAllowedToDecrease()) {
 			decreaseLanguage(l);
 		}
-		refund(l.getLearningCosts());
+		refund(l.getTotalCosts());
 	}
 
 	private void decreaseLanguageWithoutRefund(Language l) {

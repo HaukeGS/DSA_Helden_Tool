@@ -5,7 +5,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import database.Database;
-import skills.IncreasableSkill;
+import skills.LinearIncreasableSkill;
 import skills.Skill;
 
 abstract class BaseAventurianManager {
@@ -14,17 +14,17 @@ abstract class BaseAventurianManager {
 	protected Optional<Aventurian> aventurian;
 	protected final LevelCostCalculator calculator;
 
-	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_INCREASABLE = (Aventurian a,
-			IncreasableSkill s) -> !s.isAllowedToIncrease(a);
-	protected final Predicate<IncreasableSkill> IS_NOT_DECREASABLE = (IncreasableSkill s) -> !s.isAllowedToDecrease();
+	protected final BiPredicate<Aventurian, LinearIncreasableSkill> IS_NOT_INCREASABLE = (Aventurian a,
+			LinearIncreasableSkill s) -> !s.isAllowedToIncrease(a);
+	protected final Predicate<LinearIncreasableSkill> IS_NOT_DECREASABLE = (LinearIncreasableSkill s) -> !s.isAllowedToDecrease();
 	protected final Predicate<Optional<Aventurian>> IS_NOT_PRESENT = (Optional<Aventurian> av) -> !av.isPresent();
-	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_ALLOWED = (Aventurian av,
-			IncreasableSkill s) -> !s.isAllowedToHave(av);
+	protected final BiPredicate<Aventurian, LinearIncreasableSkill> IS_NOT_ALLOWED = (Aventurian av,
+			LinearIncreasableSkill s) -> !s.isAllowedToHave(av);
 
-	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_SKILL = (Aventurian av, IncreasableSkill s) -> av
+	protected final BiPredicate<Aventurian, LinearIncreasableSkill> HAS_SKILL = (Aventurian av, LinearIncreasableSkill s) -> av
 			.hasSkill(s);
-	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_NOT_SKILL = (Aventurian av,
-			IncreasableSkill s) -> HAS_SKILL.negate().test(av, s);
+	protected final BiPredicate<Aventurian, LinearIncreasableSkill> HAS_NOT_SKILL = (Aventurian av,
+			LinearIncreasableSkill s) -> HAS_SKILL.negate().test(av, s);
 
 	BaseAventurianManager(Optional<Aventurian> a, Database db) {
 		this.calculator = new LevelCostCalculator();

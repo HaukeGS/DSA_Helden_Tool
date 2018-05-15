@@ -12,7 +12,6 @@ import skills.properties.Property;
 
 public class AventurianManager implements Observer {
 
-	
 	private final LanguageAventurianManager languageManager;
 	private final PropertyAventurianManager propertyManager;
 	private final AttributesAventurianManager attributesManager;
@@ -98,10 +97,6 @@ public class AventurianManager implements Observer {
 		return this.propertyManager.canIncrease(p);
 	}
 
-	public void remove(Property p) {
-		this.propertyManager.removeProperty(p);
-	}
-
 	public void increase(Language l) {
 		languageManager.increaseLanguage(l);
 	}
@@ -138,6 +133,10 @@ public class AventurianManager implements Observer {
 		languageManager.removeLanguage(l);
 	}
 
+	public void remove(Property p) {
+		this.propertyManager.removeProperty(p);
+	}
+
 	public void setName(String name) {
 		miscManager.setName(name);
 	}
@@ -162,16 +161,17 @@ public class AventurianManager implements Observer {
 		return languageManager.canRemoveLanguage(l);
 	}
 
-	// skillToRemove is only not null when there is a skill whose requirements are not met
+	// skillToRemove is only not null when there is a skill whose requirements are
+	// not met
 	// anymore -> remove it
 	@Override
 	public void update(Observable o, Object skillToRemove) {
 		if (o instanceof Aventurian && skillToRemove instanceof Skill) {
 			final Skill toRemove = (Skill) skillToRemove;
 			if (toRemove instanceof Property)
-				propertyManager.removeProperty((Property) toRemove);
+				remove((Property) toRemove);
 			else if (toRemove instanceof Language)
-				languageManager.removeLanguage((Language) toRemove);
+				remove((Language) toRemove);
 
 		}
 
@@ -179,7 +179,7 @@ public class AventurianManager implements Observer {
 
 	public void saveAventurian(File file) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

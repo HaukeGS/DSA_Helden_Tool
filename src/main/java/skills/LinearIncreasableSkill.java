@@ -2,17 +2,18 @@ package skills;
 
 import aventurian.Aventurian;
 
-public abstract class IncreasableSkill extends Skill {
+public abstract class LinearIncreasableSkill extends Skill {
 	protected int level;
 	protected final int maxLevel;
 	protected final int minLevel;
+	protected final int cost;
 
-	public IncreasableSkill(String name, String description,  int cost, int minLevel,
-			int maxLevel) {
-		super(name, description, cost);
+	public LinearIncreasableSkill(String name, String description, int cost, int minLevel, int maxLevel) {
+		super(name, description);
 		this.maxLevel = maxLevel;
 		this.minLevel = minLevel;
 		this.level = minLevel;
+		this.cost=cost;
 	}
 
 	public void increase() {
@@ -27,6 +28,10 @@ public abstract class IncreasableSkill extends Skill {
 		level--;
 	}
 
+	protected int getLearningCosts() {
+		return cost;
+	}
+
 	public int getUpgradeCosts() {
 		return (level + 1) * getLearningCosts();
 	}
@@ -35,6 +40,7 @@ public abstract class IncreasableSkill extends Skill {
 		return level * getLearningCosts();
 	}
 
+	@Override
 	public int getTotalCosts() {
 		return (level * (level + 1) / 2) * getLearningCosts();
 	}
@@ -52,26 +58,24 @@ public abstract class IncreasableSkill extends Skill {
 	}
 
 	public boolean isAllowedToIncrease(Aventurian a) {
-		return isIncreasable() && specificRequirementsMet(a);
+		return isIncreasable() && isAbleToIncrease(a);
 	}
 
 	private boolean isIncreasable() {
 		return level < maxLevel;
 	}
-	
-	protected boolean specificRequirementsMet(Aventurian a) {
+
+	protected boolean isAbleToIncrease(Aventurian a) {
 		return true;
 	}
 
 	public boolean isAllowedToDecrease() {
 		return level > minLevel;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName() + " (" + getTotalCosts() + ")";
 	}
-
-
 
 }
