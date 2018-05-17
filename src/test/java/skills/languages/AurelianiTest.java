@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AurelianiTest {
@@ -21,10 +22,12 @@ public class AurelianiTest {
 	@Before
 	public void setUp() throws Exception {
 		toTest = new Aureliani();
+		when(av.getLevelSumOfLanguages()).thenReturn(0);
+		when(av.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 	}
 
 	@Test
-	public void testFulfillOptionalRequirement() {
+	public void testIsAbleToIncrease() {
 		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
 		assertFalse(toTest.isAbleToIncrease(av));

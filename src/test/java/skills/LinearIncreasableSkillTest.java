@@ -9,6 +9,7 @@ import org.junit.Test;
 
 public class LinearIncreasableSkillTest {
 
+	private static final String NAME = "test";
 	private static final int COSTS = 50;
 	private static final int MIN_LEVEL = 1;
 	private static final int MAX_LEVEL = 5;
@@ -16,8 +17,14 @@ public class LinearIncreasableSkillTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new LinearIncreasableSkill("test", "description", COSTS, MIN_LEVEL, MAX_LEVEL) {
+		toTest = new LinearIncreasableSkill(NAME, "description", COSTS, MIN_LEVEL, MAX_LEVEL) {
 		};
+	}
+
+	@Test
+	public void testToString() {
+		final String expected = NAME + " (" + toTest.getTotalCosts() + ")";
+		assertEquals(expected, toTest.toString());
 	}
 
 	@Test

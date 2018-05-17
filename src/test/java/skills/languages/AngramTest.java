@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
+import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AngramTest {
@@ -21,10 +22,12 @@ public class AngramTest {
 	@Before
 	public void setUp() throws Exception {
 		toTest = new Angram();
+		when(av.getLevelSumOfLanguages()).thenReturn(0);
+		when(av.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 	}
 
 	@Test
-	public void testFulfillOptionalRequirement() {
+	public void testIsAbleToIncrease() {
 		assertTrue(toTest.isAbleToIncrease(av));
 		toTest.increase();
 		assertFalse(toTest.isAbleToIncrease(av));
@@ -41,7 +44,7 @@ public class AngramTest {
 		assertTrue(toTest.isAllowedToHave(av));
 		toTest.increase();
 		assertFalse(toTest.isAllowedToHave(av));
-		
+
 		when(av.hasSkill("Sprachenkunde")).thenReturn(true);
 		assertTrue(toTest.isAllowedToHave(av));
 		toTest.increase();

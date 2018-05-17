@@ -17,7 +17,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.languages.Language;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -50,9 +49,9 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	@Test
 	public void testAddLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
-		when(aventurian.hasSkill(l)).thenReturn(false);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
+//		when(aventurian.hasSkill(l)).thenReturn(false);
+//		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+//		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 		toTest.addLanguage(l);
 
 		final InOrder correctOrder = inOrder(aventurian);
@@ -71,21 +70,15 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	@Test(expected = IllegalStateException.class)
 	public void testAddLanguageExceedsMaxSum() {
 		final Language l = createLanguageMock(true, true);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		
+		when(l.isAllowedToAdd(aventurian)).thenReturn(false);
 		toTest.addLanguage(l);
 	}
 	
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseLanguageExceedsMaxSum() {
 		final Language l = createLanguageMock(true, true);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(8);
-		
+		when(l.isAllowedToIncrease(aventurian)).thenReturn(false);
 		toTest.increaseLanguage(l);
 	}
 
@@ -114,7 +107,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testAddLanguageAsNativeTongueHasAlreadyNativeTongue() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(false);
-		when(l.isAllowedToHave(aventurian)).thenReturn(true);
 		when(l.isNativeTongue()).thenReturn(false);
 		when(aventurian.hasNativeTongue()).thenReturn(true);
 
@@ -165,7 +157,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testRemoveLanguage() {
-
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
 
@@ -220,8 +211,6 @@ public class LanguageAventurianManagerTest extends BaseTest {
 	public void testIncreaseLanguageAllConditionsMet() {
 		final Language l = createLanguageMock(true, true);
 		when(aventurian.hasSkill(l)).thenReturn(true);
-		when(aventurian.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(aventurian.getLevelSumOfLanguages()).thenReturn(0);
 
 		toTest.increaseLanguage(l);
 		final InOrder correctOrder = inOrder(aventurian, l);
@@ -260,6 +249,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		final Language l = mock(Language.class);
 		when(l.getName()).thenReturn("testLanguage");
 		when(l.isAllowedToHave(aventurian)).thenReturn(isAllowed);
+		when(l.isAllowedToAdd(aventurian)).thenReturn(isAllowed);
 		when(l.getLevel()).thenReturn(5);
 		when(l.getTotalCosts()).thenReturn(750);
 		when(l.isAllowedToIncrease(aventurian)).thenReturn(isIncreasable);

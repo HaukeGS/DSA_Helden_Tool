@@ -50,8 +50,8 @@ public abstract class Skill implements Comparable<Skill> {
 	 * 
 	 * @param t
 	 *            the aventurian which must fulfill the skill's requirements in
-	 *            order keep it
-	 * @return
+	 *            order to keep it
+	 * @return true, if this skill can be kept
 	 */
 	public boolean isAllowedToHave(Aventurian t) {
 		return true;
@@ -60,8 +60,8 @@ public abstract class Skill implements Comparable<Skill> {
 	/**
 	 * @param a
 	 *            the aventurian which must fulfill the skill's requirements in
-	 *            order buy it
-	 * @return
+	 *            order to buy it
+	 * @return true, if this skill can be added
 	 */
 	public boolean isAllowedToAdd(Aventurian a) {
 		return true;
