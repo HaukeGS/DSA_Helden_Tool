@@ -34,6 +34,7 @@ import ui.LanguagePaneTest;
 import ui.MenuTest;
 import ui.NavigatorTest;
 import ui.PropertyPaneTest;
+import ui.TopPaneTest;
 
 @RunWith(Categories.class)
 @Suite.SuiteClasses({ PrimaryAttributesTest.class, SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
@@ -44,7 +45,7 @@ import ui.PropertyPaneTest;
 		PropertyPaneTest.class, DatabaseTest.class, LinearIncreasableSkillTest.class, SkillTest.class,
 		MiscelleanousAventurianManagerTest.class, AurelianiTest.class, AngramTest.class, AsdhariaTest.class,
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
-		UrTulamidyaTest.class })
+		UrTulamidyaTest.class, TopPaneTest.class })
 public class AllTests {
 
 }

@@ -11,8 +11,8 @@ public class TopController extends PaneController {
 
 	@Override
 	public void update(Aventurian updatedAventurian) {
+		name.setDisable(false);
 		name.setText(updatedAventurian.getName());
-
 	}
 
 	public void setName() {
