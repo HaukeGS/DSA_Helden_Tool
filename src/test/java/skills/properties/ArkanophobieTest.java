@@ -1,29 +1,32 @@
 package skills.properties;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
 
-class ArkanophobieTest {
-	Arkanophobie toTest;
+@RunWith(MockitoJUnitRunner.class)
+public class ArkanophobieTest {
+	private Arkanophobie toTest;
 	@Mock
-	Aventurian a;
+	Aventurian av;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		toTest = new Arkanophobie();
+		when(av.isMage()).thenReturn(false);
 	}
 
 	@Test
-	void testIsAllowedToHave() {
-		when(a.isMage()).thenReturn(false);
-		assertEquals(false, toTest.isAllowedToHave(a));
-		when(a.isMage()).thenReturn(true);
-		assertEquals(true, toTest.isAllowedToHave(a));
+	public void testIsAllowedToHave() {
+		assertEquals(true, toTest.isAllowedToHave(av));
+		when(av.isMage()).thenReturn(true);
+		assertEquals(false, toTest.isAllowedToHave(av));
 	}
 }

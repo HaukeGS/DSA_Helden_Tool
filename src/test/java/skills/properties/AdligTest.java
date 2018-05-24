@@ -1,28 +1,28 @@
 package skills.properties;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-class AdligTest {
+public class AdligTest {
 	
-	Adlig toTest;
+	private Adlig toTest;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		toTest = new Adlig();
 	}
 
 	@Test
-	void testGetUpgradeCosts() {
+	public void testGetUpgradeCosts() {
 		assertEquals(100, toTest.getUpgradeCosts());
 		toTest.increase();
 		assertEquals(150, toTest.getUpgradeCosts());
 	}
 	
 	@Test
-	void testGetDowngradeRefund() {
+	public void testGetDowngradeRefund() {
 		toTest.increase();
 		toTest.increase();
 		assertEquals(150, toTest.getDowngradeRefund());
@@ -31,7 +31,7 @@ class AdligTest {
 	}
 	
 	@Test
-	void testGetTotalCosts() {
+	public void testGetTotalCosts() {
 		assertEquals(250, toTest.getTotalCosts());
 		toTest.increase();
 		assertEquals(350, toTest.getTotalCosts());
