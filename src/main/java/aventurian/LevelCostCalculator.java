@@ -1,21 +1,30 @@
 package aventurian;
 
+import static aventurian.LevelCostCalculator.Column.A;
+import static aventurian.LevelCostCalculator.Column.A_STAR;
+import static aventurian.LevelCostCalculator.Column.B;
+import static aventurian.LevelCostCalculator.Column.C;
+import static aventurian.LevelCostCalculator.Column.D;
+import static aventurian.LevelCostCalculator.Column.E;
+import static aventurian.LevelCostCalculator.Column.F;
+import static aventurian.LevelCostCalculator.Column.G;
+import static aventurian.LevelCostCalculator.Column.H;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
-import static aventurian.LevelCostCalculator.COLUMN.*;
 
 /**
  * Created by Hauke on 12.07.2017.
  */
-class LevelCostCalculator {
+public class LevelCostCalculator {
 
-	private Map<COLUMN, List<Integer>> map = new HashMap<>();
+	private final Map<Column, List<Integer>> map = new HashMap<>();
 	
-	public enum COLUMN {
-		ASTERN,
+	public enum Column {
+		A_STAR,
 		A,
 		B,
 		C,
@@ -27,7 +36,7 @@ class LevelCostCalculator {
 	}
 
 	public LevelCostCalculator() {
-		map.put(ASTERN, Arrays.asList(0, 1, 1, 1, 2, 4, 5, 6, 8, 9, 11, 12, 14, 15,
+		map.put(A_STAR, Arrays.asList(0, 1, 1, 1, 2, 4, 5, 6, 8, 9, 11, 12, 14, 15,
 				17, 19, 20, 22, 24, 25, 27, 29, 31, 32, 34, 36, 38, 40, 42, 43,
 				45, 48));
 		map.put(A, Arrays.asList(0, 1, 2, 3, 4, 6, 7, 8, 10, 11, 13, 14, 16,
@@ -56,18 +65,18 @@ class LevelCostCalculator {
 				650, 690, 720, 760, 800, 830, 870, 910, 950, 1000));
 	}
 
-	int getCost(int from, int to, COLUMN column) {
+	public int getCost(int from, int to, Column column) {
 		if (from > to)
 			throw new IllegalArgumentException("startlevel must be lower than targetlevel. For refund call getRefund()");
 		if (from < 0 || from > 31 || to < 0 || to > 31)
 			throw new IllegalArgumentException("level must be between 0 and 31");
 
-		int lowerCost = stream(column).limit(from + 1).sum();
-		int higherCost = stream(column).limit(to + 1).sum();
+		final int lowerCost = stream(column).limit(from + 1).sum();
+		final int higherCost = stream(column).limit(to + 1).sum();
 		return higherCost - lowerCost;
 	}
 	
-	int getRefund(int from, int to, COLUMN column) {
+	public int getRefund(int from, int to, Column column) {
 		if (to > from)
 			throw new IllegalArgumentException("startlevel must be higher than targetlevel. For cost call getCost()");
 		if (from < 0 || from > 31 || to < 0 || to > 31)
@@ -76,7 +85,7 @@ class LevelCostCalculator {
 		return getCost(to, from, column);
 	}
 
-	private IntStream stream(COLUMN c) {
+	private IntStream stream(Column c) {
 		return map.get(c).stream().mapToInt(Integer::intValue);
 	}
 }
