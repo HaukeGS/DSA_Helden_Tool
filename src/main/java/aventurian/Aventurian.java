@@ -14,6 +14,8 @@ import aventurian.LevelCostCalculator.Column;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.IncreasableSkill;
 import skills.Skill;
+import skills.attributes.PrimaryAttribute;
+import skills.attributes.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
@@ -217,6 +219,18 @@ public class Aventurian extends Observable {
 		return allSkills.stream().sorted();
 	}
 
+	private Stream<PrimaryAttribute> getStreamOfPrimaryAttributes() {
+		return getStreamOfSkills().filter(PrimaryAttribute.class::isInstance).map(PrimaryAttribute.class::cast);
+	}
+
+	private Stream<SecondaryAttribute> getStreamOfSecondaryAttributes() {
+		return getStreamOfSkills().filter(SecondaryAttribute.class::isInstance).map(SecondaryAttribute.class::cast);
+	}
+
+	public List<PrimaryAttribute> getPrimaryAttributes() {
+		return getStreamOfPrimaryAttributes().collect(toList());
+	}
+
 	private Stream<Language> getStreamOfLanguages() {
 		return getStreamOfSkills().filter(Language.class::isInstance).map(Language.class::cast);
 	}
@@ -234,7 +248,7 @@ public class Aventurian extends Observable {
 	}
 
 	public int getLevelSumOfLanguages() {
-		return getLanguages().stream().mapToInt(Language::getLevel).sum();
+		return getStreamOfLanguages().mapToInt(Language::getLevel).sum();
 	}
 
 	public boolean isMage() {
@@ -249,7 +263,8 @@ public class Aventurian extends Observable {
 		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
 	}
 
-	//TODO this does not fit here... levelCostCalculator should not be needed here. 8 magic number?!
+	// TODO this does not fit here... levelCostCalculator should not be needed here.
+	// 8 magic number?!
 	public int getAPinAttributes() {
 		int sum = 0;
 		for (final PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
@@ -275,11 +290,13 @@ public class Aventurian extends Observable {
 
 	void increaseSkill(IncreasableSkill s) {
 		s.increase();
+		getStreamOfSecondaryAttributes().forEach(ss -> ss.calculateBasis(getPrimaryAttributes()));
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	void decreaseSkill(IncreasableSkill s) {
 		s.decrease();
+		getStreamOfSecondaryAttributes().forEach(ss -> ss.calculateBasis(getPrimaryAttributes()));
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 

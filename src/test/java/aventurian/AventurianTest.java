@@ -22,6 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import skills.IncreasableSkill;
 import skills.Skill;
 import skills.languages.Language;
 import skills.properties.BadProperty;
@@ -460,5 +461,21 @@ public class AventurianTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMaximumOfPrimaryAttributesInvalidArgument() {
 		toTest.getMaximumOf();
+	}
+
+	@Test
+	public void testIncreaseSkill() {
+		final IncreasableSkill s = mock(IncreasableSkill.class);
+		toTest.increaseSkill(s);
+		verify(s).increase();
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
+	}
+	
+	@Test
+	public void testDecreaseSkill() {
+		final IncreasableSkill s = mock(IncreasableSkill.class);
+		toTest.decreaseSkill(s);
+		verify(s).decrease();
+		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 }

@@ -1,8 +1,10 @@
 package skills.attributes;
 
+import java.util.List;
+
 import skills.IncreasableSkill;
 
-public class SecondaryAttribute extends IncreasableSkill {
+public abstract class SecondaryAttribute extends IncreasableSkill {
 	private int mod;
 	private int modBuy;
 	private int maxBuy;
@@ -31,9 +33,7 @@ public class SecondaryAttribute extends IncreasableSkill {
 		return level + mod + modBuy;
 	}
 
-	public void setBasis(int basis) {
-		this.level = basis;
-	}
+	public abstract void calculateBasis(List<PrimaryAttribute> a);
 
 	public void setMax(int max) {
 		if (max < 0)
@@ -59,6 +59,15 @@ public class SecondaryAttribute extends IncreasableSkill {
 
 	public void decreaseModBuy() {
 		this.modBuy--;
+	}
+
+	protected static PrimaryAttribute get(List<PrimaryAttribute> a, String name) {
+		return a.stream().filter(s -> name.equals(s.getName())).findFirst()
+				.orElseThrow(() -> new IllegalStateException("cannot happen"));
+	}
+
+	protected static int round(double d) {
+		return (int) Math.round(d);
 	}
 
 }

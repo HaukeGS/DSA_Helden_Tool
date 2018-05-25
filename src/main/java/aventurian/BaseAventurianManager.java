@@ -14,25 +14,18 @@ abstract class BaseAventurianManager {
 	protected Optional<Aventurian> aventurian;
 	protected final LevelCostCalculator calculator;
 
-	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_INCREASABLE = (Aventurian a,
-			IncreasableSkill s) -> !s.isAllowedToIncrease(a);
-	protected final Predicate<IncreasableSkill> IS_NOT_DECREASABLE = (IncreasableSkill s) -> !s.isAllowedToDecrease();
-	protected final Predicate<Optional<Aventurian>> IS_NOT_PRESENT = (Optional<Aventurian> av) -> !av.isPresent();
-	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_ALLOWED = (Aventurian av,
-			IncreasableSkill s) -> !s.isAllowedToHave(av);
-	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_ALLOWED_TO_ADD = (Aventurian av,
-			IncreasableSkill s) -> !s.isAllowedToAdd(av);
+	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_INCREASABLE = (a, s) -> !s.isAllowedToIncrease(a);
+	protected final Predicate<IncreasableSkill> IS_NOT_DECREASABLE = s -> !s.isAllowedToDecrease();
+	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_ALLOWED = (av, s) -> !s.isAllowedToHave(av);
+	protected final BiPredicate<Aventurian, IncreasableSkill> IS_NOT_ALLOWED_TO_ADD = (av, s) -> !s.isAllowedToAdd(av);
 
-	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_SKILL = (Aventurian av, IncreasableSkill s) -> av
-			.hasSkill(s);
-	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_NOT_SKILL = (Aventurian av,
-			IncreasableSkill s) -> HAS_SKILL.negate().test(av, s);
+	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_SKILL = (av, s) -> av.hasSkill(s);
+	protected final BiPredicate<Aventurian, IncreasableSkill> HAS_NOT_SKILL = (av, s) -> !av.hasSkill(s);
 
 	BaseAventurianManager(Optional<Aventurian> a, Database db) {
 		this.calculator = new LevelCostCalculator();
 		this.aventurian = a;
 		this.database = db;
-
 	}
 
 	protected void changeAventurian(Optional<Aventurian> a) {
