@@ -28,7 +28,7 @@ public class SkillTest {
 	public void setUp() throws Exception {
 		toTest = new Skill(NAME, DESCRIPTION) {
 			@Override
-			int getTotalCosts() {
+			public int getTotalCosts() {
 				return 0;
 			}
 		};
@@ -79,13 +79,13 @@ public class SkillTest {
 	public void testEquals() {
 		final Skill anotherButSame = new Skill(NAME, "sdfn") {
 			@Override
-			int getTotalCosts() {
+			public int getTotalCosts() {
 				return 0;
 			}
 		};
 		final Skill anotherButDifferent = new Skill("fg", "sdfn") {
 			@Override
-			int getTotalCosts() {
+			public int getTotalCosts() {
 				return 0;
 			}
 		};

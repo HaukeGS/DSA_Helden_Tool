@@ -94,5 +94,5 @@ public abstract class Skill implements Comparable<Skill> {
 		return getName().compareTo(o.getName());
 	}
 
-	abstract int getTotalCosts();
+	public abstract int getTotalCosts();
 }

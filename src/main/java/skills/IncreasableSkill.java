@@ -4,8 +4,8 @@ import aventurian.Aventurian;
 
 public abstract class IncreasableSkill extends Skill {
 	protected int level;
-	protected final int maxLevel;
-	protected final int minLevel;
+	protected int maxLevel;
+	protected int minLevel;
 
 	public IncreasableSkill(String name, String description, int minLevel, int maxLevel) {
 		super(name, description);
@@ -54,8 +54,8 @@ public abstract class IncreasableSkill extends Skill {
 		return level > minLevel;
 	}
 
-	abstract int getUpgradeCosts();
+	public abstract int getUpgradeCosts();
 
-	abstract int getDowngradeRefund();
+	public abstract int getDowngradeRefund();
 
 }
