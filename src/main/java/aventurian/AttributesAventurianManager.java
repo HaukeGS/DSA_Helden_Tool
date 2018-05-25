@@ -1,6 +1,6 @@
 package aventurian;
 
-import static aventurian.LevelCostCalculator.COLUMN.H;
+import static aventurian.LevelCostCalculator.Column.H;
 
 import java.util.Optional;
 

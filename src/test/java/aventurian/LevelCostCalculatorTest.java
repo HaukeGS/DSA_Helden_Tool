@@ -2,7 +2,7 @@ package aventurian;
 
 import static org.junit.Assert.*;
 
-import static aventurian.LevelCostCalculator.COLUMN.*;
+import static aventurian.LevelCostCalculator.Column.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class LevelCostCalculatorTest {
 
 	@Test
 	public void testGetCostValid() {
-		assertEquals(357, toTest.getCost(10, 25, ASTERN));
+		assertEquals(357, toTest.getCost(10, 25, A_STAR));
 		assertEquals(720, toTest.getCost(0, 31, A));
 		assertEquals(0, toTest.getCost(0, 0, B));
 		assertEquals(0, toTest.getCost(1, 1, C));
@@ -25,12 +25,12 @@ public class LevelCostCalculatorTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetCostToTooHigh() {
-		toTest.getCost(0, 32, ASTERN);
+		toTest.getCost(0, 32, A_STAR);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetCostFromTooLow() {
-		toTest.getCost(-1, 10, ASTERN);
+		toTest.getCost(-1, 10, A_STAR);
 	}
 
 	@Test (expected = IllegalArgumentException.class)
@@ -40,7 +40,7 @@ public class LevelCostCalculatorTest {
 	
 	@Test
 	public void testGetRefundValid() {
-		assertEquals(357, toTest.getRefund(25, 10, ASTERN));
+		assertEquals(357, toTest.getRefund(25, 10, A_STAR));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

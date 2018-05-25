@@ -114,7 +114,6 @@ public class AventurianTest {
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
-
 	@Test(expected = IllegalArgumentException.class)
 	public void testPayNegative() throws Exception {
 		toTest.pay(-20);
@@ -437,5 +436,29 @@ public class AventurianTest {
 		assertEquals(2 * 220, toTest.getAPinAttributes());
 		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(10);
 		assertEquals(2 * 220 + 250, toTest.getAPinAttributes());
+	}
+
+	@Test
+	public void testGetMaximumOfPrimaryAttributes() {
+		int actual = toTest.getMaximumOf(PRIMARY_ATTRIBUTE.values());
+		int expected = 0;
+		assertEquals(expected, actual);
+
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTUITION)).thenReturn(8);
+		actual = toTest.getMaximumOf(PRIMARY_ATTRIBUTE.values());
+		expected = 8;
+		assertEquals(expected, actual);
+
+		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CHARISMA)).thenReturn(12);
+		actual = toTest.getMaximumOf(PRIMARY_ATTRIBUTE.values());
+		expected = 12;
+		assertEquals(expected, actual);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetMaximumOfPrimaryAttributesInvalidArgument() {
+		toTest.getMaximumOf();
 	}
 }

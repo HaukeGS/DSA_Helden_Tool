@@ -10,7 +10,7 @@ import java.util.Observer;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import aventurian.LevelCostCalculator.COLUMN;
+import aventurian.LevelCostCalculator.Column;
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.LinearIncreasableSkill;
 import skills.Skill;
@@ -92,8 +92,6 @@ public class Aventurian extends Observable {
 	void remove(Skill s) {
 		allSkills.remove(s);
 		s.atLose(this);
-		// when a skill is removed, it might have been a requirement for other skills ->
-		// notify observers about first skill which must be removed, too
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
@@ -193,7 +191,7 @@ public class Aventurian extends Observable {
 	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
 		primaryAttributes.decrease(attribute);
 		secondaryAttributes.updateValues(primaryAttributes);
-		
+
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
@@ -251,10 +249,11 @@ public class Aventurian extends Observable {
 		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
 	}
 
+	//TODO this does not fit here... levelCostCalculator should not be needed here. 8 magic number?!
 	public int getAPinAttributes() {
 		int sum = 0;
 		for (final PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
-			sum += calculator.getCost(8, primaryAttributes.getPrimaryAttribute(a), COLUMN.H);
+			sum += calculator.getCost(8, primaryAttributes.getPrimaryAttribute(a), Column.H);
 		}
 		return sum;
 	}
