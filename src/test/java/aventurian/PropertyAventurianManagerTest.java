@@ -156,7 +156,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
-		verify(mockedAventurian, times(2)).decreaseIncreasableSkill(p);
+		verify(mockedAventurian, times(2)).decreaseSkill(p);
 		verify(mockedAventurian).remove(p);
 		verify(mockedAventurian, times(3)).pay(anyInt());
 	}
@@ -169,7 +169,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
-		verify(mockedAventurian, times(2)).decreaseIncreasableSkill(p);
+		verify(mockedAventurian, times(2)).decreaseSkill(p);
 		verify(mockedAventurian).remove(p);
 		verify(mockedAventurian, times(3)).refund(anyInt());
 	}
@@ -182,7 +182,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 		toTest.decreaseProperty(bp);
 
-		verify(mockedAventurian).decreaseIncreasableSkill(bp);
+		verify(mockedAventurian).decreaseSkill(bp);
 		verify(mockedAventurian).pay(anyInt());
 		verify(mockedAventurian, never()).remove(bp);
 	}
@@ -195,7 +195,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 		toTest.decreaseProperty(p);
 
-		verify(mockedAventurian).decreaseIncreasableSkill(p);
+		verify(mockedAventurian).decreaseSkill(p);
 		verify(mockedAventurian).refund(anyInt());
 		verify(mockedAventurian, never()).remove(p);
 	}
@@ -222,7 +222,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(bp)).thenReturn(true);
 		toTest.increaseProperty(bp);
 
-		verify(mockedAventurian).increaseIncreasableSkill(bp);
+		verify(mockedAventurian).increaseSkill(bp);
 		verify(mockedAventurian).refund(anyInt());
 	}
 
@@ -265,7 +265,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		when(advantage.isAllowedToIncrease(mockedAventurian)).thenReturn(true);
 
 		toTest.increaseProperty(advantage);
-		verify(mockedAventurian).increaseIncreasableSkill(advantage);
+		verify(mockedAventurian).increaseSkill(advantage);
 		verify(mockedAventurian).pay(anyInt());
 	}
 

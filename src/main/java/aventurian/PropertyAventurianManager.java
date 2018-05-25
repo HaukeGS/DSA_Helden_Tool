@@ -67,7 +67,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	private void decreaseDisadvantageToMinimum(Property p) {
 		while (p.isAllowedToDecrease()) {
 			pay(p.getDowngradeRefund());
-			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(p));
+			decrease(p);
 		}
 	}
 
@@ -76,17 +76,17 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			throw new IllegalStateException("requirements not met for decreasing " + p.getName());
 		if (p.isDisadvantage()) {
 			pay(p.getDowngradeRefund());
-			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(p));
+			decrease(p);
 		} else {
 			refund(p.getDowngradeRefund());
-			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(p));
+			decrease(p);
 		}
 	}
 
 	private void decreaseAdvantageToMinimum(Property p) {
 		while (p.isAllowedToDecrease()) {
 			refund(p.getDowngradeRefund());
-			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(p));
+			decrease(p);
 		}
 	}
 
@@ -95,10 +95,10 @@ class PropertyAventurianManager extends BaseAventurianManager {
 			throw new IllegalStateException("requirements not met for increasing " + p.getName());
 		if (p.isAdvantage()) {
 			pay(p.getUpgradeCosts());
-			aventurian.ifPresent(av -> av.increaseIncreasableSkill(p));
+			increase(p);
 		} else {
 			refund(p.getUpgradeCosts());
-			aventurian.ifPresent(av -> av.increaseIncreasableSkill(p));
+			increase(p);
 		}
 	}
 

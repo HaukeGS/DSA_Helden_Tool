@@ -151,7 +151,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 		verify(aventurian, times(1)).refund(anyInt());
 		verify(aventurian).remove(l);
-		verify(aventurian, times(4)).decreaseIncreasableSkill(l);
+		verify(aventurian, times(4)).decreaseSkill(l);
 		verify(l).setNativeTongue(false);
 	}
 
@@ -174,7 +174,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 		toTest.decreaseLanguage(l);
 
-		verify(aventurian).decreaseIncreasableSkill(l);
+		verify(aventurian).decreaseSkill(l);
 		verify(aventurian).refund(anyInt());
 		verify(aventurian, never()).remove(l);
 	}
@@ -202,7 +202,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		when(l.isAllowedToDecrease()).thenReturn(true).thenReturn(true).thenReturn(false);
 
 		toTest.removeLanguage(l);
-		verify(aventurian).decreaseIncreasableSkill(l);
+		verify(aventurian).decreaseSkill(l);
 		verify(aventurian).remove(l);
 		verify(aventurian, times(2)).refund(anyInt());
 	}
@@ -215,7 +215,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 		toTest.increaseLanguage(l);
 		final InOrder correctOrder = inOrder(aventurian, l);
 		correctOrder.verify(aventurian).pay(anyInt());
-		correctOrder.verify(aventurian).increaseIncreasableSkill(l);
+		correctOrder.verify(aventurian).increaseSkill(l);
 	}
 
 	@Test(expected = IllegalStateException.class)

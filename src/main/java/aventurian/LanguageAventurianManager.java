@@ -71,14 +71,14 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (l.getLevel() > Language.NATIVE_TONGUE_LEVEL)
 			decreaseLanguage(l);
 		while (l.isAllowedToDecrease())
-			aventurian.ifPresent(av -> av.decreaseIncreasableSkill(l));
+			decrease(l);
 	}
 
 	void decreaseLanguage(Language l) {
 		if (!canDecrease(l))
 			throw new IllegalStateException("requirements not met for decreasing " + l.getName());
 		refund(l.getDowngradeRefund());
-		aventurian.ifPresent(av -> av.decreaseIncreasableSkill(l));
+		decrease(l);
 	}
 
 	boolean canDecrease(Language l) {
@@ -103,7 +103,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		if (!canIncrease(l))
 			throw new IllegalStateException("requirements not met for increasing " + l.getName());
 		pay(l.getUpgradeCosts());
-		aventurian.ifPresent(av -> av.increaseIncreasableSkill(l));
+		increase(l);
 	}
 
 	boolean canIncrease(Language l) {
