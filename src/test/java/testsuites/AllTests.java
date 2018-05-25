@@ -27,10 +27,13 @@ import skills.languages.KoboldischTest;
 import skills.languages.LanguageTest;
 import skills.languages.NeckergesangTest;
 import skills.languages.UrTulamidyaTest;
-import skills.properties.Adlig;
 import skills.properties.AdligTest;
+import skills.properties.AdligesErbeTest;
 import skills.properties.ArkanophobieTest;
+import skills.properties.AusdauerndTest;
+import skills.properties.AusruestungsvorteilTest;
 import skills.properties.BadPropertyTest;
+import skills.properties.KurzatmigTest;
 import skills.properties.PropertyTest;
 import ui.AttributePaneTest;
 import ui.LanguagePaneTest;
@@ -48,7 +51,8 @@ import ui.TopPaneTest;
 		PropertyPaneTest.class, DatabaseTest.class, LinearIncreasableSkillTest.class, SkillTest.class,
 		MiscelleanousAventurianManagerTest.class, AurelianiTest.class, AngramTest.class, AsdhariaTest.class,
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
-		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class })
+		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class,
+		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class })
 public class AllTests {
 
 }

@@ -163,7 +163,7 @@ public class AventurianTest {
 		when(testLanguage.getName()).thenReturn("testLanguage");
 		toTest.add(testLanguage);
 		assertTrue(toTest.hasSkill(testLanguage));
-		verify(testLanguage).gain(toTest);
+		verify(testLanguage).atGain(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -184,7 +184,7 @@ public class AventurianTest {
 
 		toTest.remove(s1);
 		assertFalse(toTest.hasSkill(s1));
-		verify(s1).lose(toTest);
+		verify(s1).atLose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -205,7 +205,7 @@ public class AventurianTest {
 
 		toTest.remove(requirementSkill);
 		assertFalse(toTest.hasSkill(requirementSkill));
-		verify(requirementSkill).lose(toTest);
+		verify(requirementSkill).atLose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, dependentSkill);
 	}
 

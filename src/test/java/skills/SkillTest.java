@@ -36,13 +36,13 @@ public class SkillTest {
 
 	@Test
 	public void testGain() {
-		toTest.gain(mock);
+		toTest.atGain(mock);
 		verifyZeroInteractions(mock);
 	}
 
 	@Test
 	public void testLose() {
-		toTest.lose(mock);
+		toTest.atLose(mock);
 		verifyZeroInteractions(mock);
 	}
 

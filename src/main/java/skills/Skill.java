@@ -40,10 +40,10 @@ public abstract class Skill implements Comparable<Skill> {
 		return description;
 	}
 
-	public void gain(Aventurian t) {
+	public void atGain(Aventurian t) {
 	}
 
-	public void lose(Aventurian t) {
+	public void atLose(Aventurian t) {
 	}
 
 	/**

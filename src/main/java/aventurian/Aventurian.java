@@ -79,7 +79,7 @@ public class Aventurian extends Observable {
 
 	void add(Skill s) {
 		allSkills.add(s);
-		s.gain(this);
+		s.atGain(this);
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
@@ -91,7 +91,7 @@ public class Aventurian extends Observable {
 
 	void remove(Skill s) {
 		allSkills.remove(s);
-		s.lose(this);
+		s.atLose(this);
 		// when a skill is removed, it might have been a requirement for other skills ->
 		// notify observers about first skill which must be removed, too
 		setChangedAndNotifyObservers(getSkillToRemove());
