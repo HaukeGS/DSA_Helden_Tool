@@ -1,11 +1,16 @@
 package aventurian;
 
 import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -14,6 +19,17 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import skills.attributes.Agilitaet;
+import skills.attributes.Charisma;
+import skills.attributes.Geschicklichkeit;
+import skills.attributes.Intelligenz;
+import skills.attributes.Intuition;
+import skills.attributes.Konstitution;
+import skills.attributes.Magieresistenz;
+import skills.attributes.Mut;
+import skills.attributes.PrimaryAttribute;
+import skills.attributes.SecondaryAttribute;
+import skills.attributes.Koerperkraft;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AttributesAventurianManagerTest extends BaseTest {
@@ -42,8 +58,6 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		// when(a.getMaxOfPrimaryAttribute(COURAGE)).thenReturn(PrimaryAttributes.MAX);
 		when(mockedAventurian.isPrimaryAttributeIncreasable(COURAGE)).thenReturn(currentSmallerThanMax);
 	}
-
-
 
 	@Test
 	public void testIncreasePrimaryAttributeCurrentAtMaximum() {
@@ -110,6 +124,27 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 		verify(mockedAventurian).decreaseSecondaryAttributeByBuy(SECONDARY_ATTRIBUTE.ASTRALPOINTS);
 		verify(mockedAventurian).refund(anyInt());
+	}
+
+	@Test
+	public void testAddAttributes() {
+		when(mockedDatabase.getPrimaryAttributes()).thenReturn(primaryAttributes());
+		when(mockedDatabase.getSecondaryAttributes()).thenReturn(secondaryAttributes());
+		toTest.addAttributes();
+		verify(mockedAventurian, times(8)).add(any(PrimaryAttribute.class));
+		verify(mockedAventurian).add(any(SecondaryAttribute.class));
+		verify(mockedAventurian).updateSecondaryAttributes();
+		verify(mockedAventurian, never()).pay(anyInt());
+	}
+
+	private List<SecondaryAttribute> secondaryAttributes() {
+		return Arrays.asList(mock(Magieresistenz.class));
+	}
+
+	private List<PrimaryAttribute> primaryAttributes() {
+		return Arrays.asList(mock(Agilitaet.class), mock(Geschicklichkeit.class), mock(Intelligenz.class),
+				mock(Konstitution.class), mock(Mut.class), mock(Koerperkraft.class), mock(Intuition.class),
+				mock(Charisma.class));
 	}
 
 }

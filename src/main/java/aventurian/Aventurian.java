@@ -290,13 +290,17 @@ public class Aventurian extends Observable {
 
 	void increaseSkill(IncreasableSkill s) {
 		s.increase();
-		getStreamOfSecondaryAttributes().forEach(ss -> ss.calculateBasis(getPrimaryAttributes()));
+		updateSecondaryAttributes();
 		setChangedAndNotifyObservers(getSkillToRemove());
+	}
+
+	void updateSecondaryAttributes() {
+		getStreamOfSecondaryAttributes().forEach(ss -> ss.calculateBasis(getPrimaryAttributes()));
 	}
 
 	void decreaseSkill(IncreasableSkill s) {
 		s.decrease();
-		getStreamOfSecondaryAttributes().forEach(ss -> ss.calculateBasis(getPrimaryAttributes()));
+		updateSecondaryAttributes();
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 

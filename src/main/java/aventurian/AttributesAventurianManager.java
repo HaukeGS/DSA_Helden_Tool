@@ -39,7 +39,6 @@ class AttributesAventurianManager extends BaseAventurianManager {
 				av.increaseSecondaryAttributeByBuy(a);
 				pay(cost);
 			}
-
 		});
 	}
 
@@ -50,8 +49,13 @@ class AttributesAventurianManager extends BaseAventurianManager {
 				av.decreaseSecondaryAttributeByBuy(a);
 				refund(cost);
 			}
-
 		});
+	}
+
+	void addAttributes() {
+		database.getPrimaryAttributes().forEach(this::add);
+		database.getSecondaryAttributes().forEach(this::add);
+		aventurian.ifPresent(Aventurian::updateSecondaryAttributes);
 	}
 
 }

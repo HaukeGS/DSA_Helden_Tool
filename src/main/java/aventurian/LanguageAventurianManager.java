@@ -18,7 +18,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 
 	private final Predicate<Aventurian> HAS_ALREADY_NATIVE_TONGUE = (Aventurian av) -> av.hasNativeTongue();
 
-	public LanguageAventurianManager(Optional<Aventurian> a, Database db) {
+	 LanguageAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
 	}
 

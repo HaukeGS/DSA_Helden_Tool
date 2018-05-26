@@ -62,6 +62,7 @@ public class AventurianManager implements Observer {
 		languageManager.changeAventurian(aventurian);
 		raceManager.changeAventurian(aventurian);
 		miscManager.changeAventurian(aventurian);
+		attributesManager.addAttributes();
 		raceManager.buyRaceMods(race);
 	}
 

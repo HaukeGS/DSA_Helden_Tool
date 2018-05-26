@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 public @interface InstantiableSkill {
 
 	enum SkillType {
-		PROPERTY, BADPROPERTY, LANGUAGE
+		PROPERTY, BADPROPERTY, LANGUAGE, PRIMARY_ATTRIBUTE, SECONDARY_ATTRIBUTE
 	}
 
 	SkillType value();

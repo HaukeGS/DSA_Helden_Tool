@@ -2,12 +2,16 @@ package skills.attributes;
 
 import java.util.List;
 
-public class MagieResistenz extends SecondaryAttribute {
+import skills.InstantiableSkill;
+import skills.InstantiableSkill.SkillType;
 
-	static final String NAME = "MagieResistenz";
+@InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
+public class Magieresistenz extends SecondaryAttribute {
 
-	public MagieResistenz() {
-		super(NAME, "", 0, 6);
+	static final String NAME = "Magieresistenz";
+
+	public Magieresistenz() {
+		super(NAME, "", minLevel, maxLevel);
 	}
 
 	@Override
@@ -17,6 +21,12 @@ public class MagieResistenz extends SecondaryAttribute {
 		final int courage = get(primaryAttributes, Mut.NAME).getLevel();
 
 		level = round((courage + intelligence + constitution) / 5.0);
+		maxBoughtLevelModifier = round(courage / 2.0);
+	}
+
+	@Override
+	protected boolean isDecreasableByBuy() {
+		return getLevel() > 0;
 	}
 
 }

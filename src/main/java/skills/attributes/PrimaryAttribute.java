@@ -1,7 +1,7 @@
 package skills.attributes;
 
-import skills.LookupIncreasableSkill;
 import aventurian.LevelCostCalculator.Column;
+import skills.LookupIncreasableSkill;
 
 public class PrimaryAttribute extends LookupIncreasableSkill {
 	static final int MAX = 14;
@@ -16,10 +16,14 @@ public class PrimaryAttribute extends LookupIncreasableSkill {
 	}
 
 	public void increaseMinLevel() {
+		if (minLevel >= maxLevel)
+			throw new IllegalStateException("minLevel cannot be greater than maxLevel");
 		this.minLevel += 1;
 	}
 
 	public void decreaseMaxLevel() {
+		if (maxLevel <= minLevel)
+			throw new IllegalStateException("maxLevel cannot be lower than minLevel");
 		this.maxLevel -= 1;
 	}
 
