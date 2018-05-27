@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import database.Database;
 import skills.Skill;
+import skills.attributes.PrimaryAttribute;
+import skills.attributes.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.Property;
 
@@ -189,6 +191,39 @@ public class AventurianManager implements Observer {
 	public void saveAventurian(File file) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void increasePrimaryAttribute(PrimaryAttribute a) {
+		attributesManager.increasePrimaryAttribute(a);
+	}
+
+	public void decreasePrimaryAttribute(PrimaryAttribute a) {
+		attributesManager.decreasePrimaryAttribute(a);
+
+	}
+
+	public void increaseSecondaryAttribute(SecondaryAttribute a) {
+		attributesManager.increaseSecondaryAttribute(a);
+	}
+
+	public void decreaseSecondaryAttribute(SecondaryAttribute a) {
+		attributesManager.decreaseSecondaryAttribute(a);
+	}
+
+	public boolean canDecrease(SecondaryAttribute a) {
+		return attributesManager.canDecrease(a);
+	}
+
+	public boolean canIncrease(SecondaryAttribute a) {
+		return attributesManager.canIncrease(a);
+	}
+
+	public boolean canDecrease(PrimaryAttribute a) {
+		return attributesManager.canDecrease(a);
+	}
+
+	public boolean canIncrease(PrimaryAttribute a) {
+		return attributesManager.canIncrease(a);
 	}
 
 }

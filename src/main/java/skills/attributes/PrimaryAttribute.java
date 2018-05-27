@@ -7,8 +7,8 @@ public class PrimaryAttribute extends LookupIncreasableSkill {
 	static final int MAX = 14;
 	static final int MIN = 8;
 
-	public PrimaryAttribute(String name, String description, Column c) {
-		super(name, description, c, MIN, MAX);
+	public PrimaryAttribute(String name, String description) {
+		super(name, description, Column.H, MIN, MAX);
 	}
 
 	public void increaseMaxLevel() {

@@ -15,6 +15,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import skills.attributes.PrimaryAttribute;
+import skills.attributes.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
@@ -48,6 +50,7 @@ public class AventurianManagerTest extends BaseTest {
 		verify(properties).changeAventurian(any(Optional.class));
 		verify(misc).changeAventurian(any(Optional.class));
 		verify(races).changeAventurian(any(Optional.class));
+		verify(attributes).addAttributes();
 		verify(races).buyRaceMods(Race.ORK);
 	}
 
@@ -136,9 +139,37 @@ public class AventurianManagerTest extends BaseTest {
 	}
 
 	@Test
+	public void increasePrimaryAttribute2() {
+		final PrimaryAttribute a = mock(PrimaryAttribute.class);
+		toTest.increasePrimaryAttribute(a);
+		verify(attributes).increasePrimaryAttribute(a);
+	}
+
+	@Test
 	public void decreasePrimaryAttribute() {
 		toTest.decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 		verify(attributes).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
+	}
+
+	@Test
+	public void testDecreasePrimaryAttribute() {
+		final PrimaryAttribute a = mock(PrimaryAttribute.class);
+		toTest.decreasePrimaryAttribute(a);
+		verify(attributes).decreasePrimaryAttribute(a);
+	}
+
+	@Test
+	public void testCanIncreasePrimaryAttribute() {
+		final PrimaryAttribute a = mock(PrimaryAttribute.class);
+		toTest.canIncrease(a);
+		verify(attributes).canIncrease(a);
+	}
+
+	@Test
+	public void testCanDecreasePrimaryAttribute() {
+		final PrimaryAttribute a = mock(PrimaryAttribute.class);
+		toTest.canDecrease(a);
+		verify(attributes).canDecrease(a);
 	}
 
 	@Test
@@ -151,6 +182,34 @@ public class AventurianManagerTest extends BaseTest {
 	public void decreaseSecondaryAttribute() {
 		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 		verify(attributes).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
+	}
+
+	@Test
+	public void testIncreaseSecondaryAttribute() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.increaseSecondaryAttribute(a);
+		verify(attributes).increaseSecondaryAttribute(a);
+	}
+
+	@Test
+	public void testDecreaseSecondaryAttribute() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.decreaseSecondaryAttribute(a);
+		verify(attributes).decreaseSecondaryAttribute(a);
+	}
+
+	@Test
+	public void testCanDecreaseSecondaryAttribute() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.canDecrease(a);
+		verify(attributes).canDecrease(a);
+	}
+
+	@Test
+	public void testCanIncreaseSecondaryAttribute() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.canIncrease(a);
+		verify(attributes).canIncrease(a);
 	}
 
 	@Test
@@ -193,16 +252,20 @@ public class AventurianManagerTest extends BaseTest {
 		toTest.setName("");
 		verify(misc).setName("");
 	}
+
 	@Test
 	public void testUpdate() {
 		toTest.update(mockedAventurian, null);
 		verifyZeroInteractions(properties);
 		verifyZeroInteractions(languages);
-		
+		verifyZeroInteractions(attributes);
+
 		toTest.update(null, null);
 		verifyZeroInteractions(properties);
 		verifyZeroInteractions(languages);
+		verifyZeroInteractions(attributes);
 	}
+
 	@Test
 	public void testUpdateWithSkillToRemove() {
 		final Language l = mock(Language.class);

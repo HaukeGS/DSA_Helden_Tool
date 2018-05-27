@@ -5,6 +5,8 @@ import static aventurian.LevelCostCalculator.Column.H;
 import java.util.Optional;
 
 import database.Database;
+import skills.attributes.PrimaryAttribute;
+import skills.attributes.SecondaryAttribute;
 
 class AttributesAventurianManager extends BaseAventurianManager {
 
@@ -56,6 +58,56 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		database.getPrimaryAttributes().forEach(this::add);
 		database.getSecondaryAttributes().forEach(this::add);
 		aventurian.ifPresent(Aventurian::updateSecondaryAttributes);
+	}
+
+	public void increasePrimaryAttribute(PrimaryAttribute a) {
+		if (!canIncrease(a))
+			throw new IllegalStateException("requirements not met for increasing " + a.getName());
+		pay(a.getUpgradeCosts());
+		increase(a);
+	}
+
+	public void decreasePrimaryAttribute(PrimaryAttribute a) {
+		if (!canDecrease(a))
+			throw new IllegalStateException("requirements not met for decreasing " + a.getName());
+		refund(a.getDowngradeRefund());
+		decrease(a);
+	}
+
+	public void increaseSecondaryAttribute(SecondaryAttribute a) {
+		if (!canIncrease(a))
+			throw new IllegalStateException("requirements not met for increasing " + a.getName());
+		pay(a.getUpgradeCosts());
+		increase(a);
+
+	}
+
+	public void decreaseSecondaryAttribute(SecondaryAttribute a) {
+		if (!canDecrease(a))
+			throw new IllegalStateException("requirements not met for decreasing " + a.getName());
+		refund(a.getDowngradeRefund());
+		decrease(a);
+
+	}
+
+	public boolean canDecrease(SecondaryAttribute a) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean canIncrease(SecondaryAttribute a) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean canDecrease(PrimaryAttribute a) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean canIncrease(PrimaryAttribute a) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

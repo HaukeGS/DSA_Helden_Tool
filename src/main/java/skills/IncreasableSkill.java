@@ -51,7 +51,7 @@ public abstract class IncreasableSkill extends Skill {
 	}
 
 	public boolean isAllowedToDecrease() {
-		return level > minLevel;
+		return getLevel() > getMinLevel();
 	}
 
 	public abstract int getUpgradeCosts();

@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import aventurian.LevelCostCalculator;
 import testsuites.categories.CannotRunHeadless;
 
 public class PrimaryAttributeTest {
@@ -16,7 +15,7 @@ public class PrimaryAttributeTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new PrimaryAttribute("test", "", LevelCostCalculator.Column.H);
+		toTest = new PrimaryAttribute("test", "");
 	}
 
 	@Test
@@ -28,7 +27,7 @@ public class PrimaryAttributeTest {
 		actual = toTest.getMaxLevel();
 		expected = PrimaryAttribute.MAX + 1;
 	}
-	
+
 	@Test
 	public void testIncreaseMinLevel() {
 		int actual = toTest.getMinLevel();
@@ -54,7 +53,7 @@ public class PrimaryAttributeTest {
 		for (int i = 0; i < PrimaryAttribute.MAX; i++)
 			toTest.decreaseMaxLevel();
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseMinLevelHigherThanMaxLevel() {
 		for (int i = 0; i < PrimaryAttribute.MAX; i++)

@@ -10,7 +10,7 @@ public class Astralenergie extends SecondaryAttribute {
 	static final String NAME = "Astralenergie";
 
 	public Astralenergie() {
-		super(NAME, "", minLevel, maxLevel);
+		super(NAME, "");
 	}
 
 	@Override
@@ -18,8 +18,8 @@ public class Astralenergie extends SecondaryAttribute {
 		final int courage = getLevelOf(a, Mut.NAME);
 		final int intuition = getLevelOf(a, Intuition.NAME);
 		final int charisma = getLevelOf(a, Charisma.NAME);
-		level = round((courage + intuition + charisma) / 2.0);
-		maxBoughtLevelModifier = round(charisma / 2.0);
+		basisLevel = round((courage + intuition + charisma) / 2.0);
+		maxLevel = round(charisma / 2.0);
 	}
 
 }

@@ -7,24 +7,21 @@ import skills.IncreasableSkill;
 
 public abstract class SecondaryAttribute extends IncreasableSkill {
 
-	static final int maxLevel = 100;
-	static final int minLevel = 0;
 	private int levelModifier;
-	private int boughtLevelModifier;
-	protected int maxBoughtLevelModifier;
+	protected int basisLevel;
 
-	public SecondaryAttribute(String name, String description, int minLevel, int maxLevel) {
-		super(name, description, minLevel, maxLevel);
+	public SecondaryAttribute(String name, String description) {
+		super(name, description, 0, 100);
 	}
 
 	@Override
 	public int getUpgradeCosts() {
-		return 0;
+		throw new IllegalStateException("does not support increasing: " + getName());
 	}
 
 	@Override
 	public int getDowngradeRefund() {
-		return 0;
+		throw new IllegalStateException("does not support decreasing: " + getName());
 	}
 
 	@Override
@@ -34,10 +31,8 @@ public abstract class SecondaryAttribute extends IncreasableSkill {
 
 	@Override
 	public int getLevel() {
-		return level + levelModifier + boughtLevelModifier;
+		return level + levelModifier + basisLevel;
 	}
-
-	public abstract void calculateBasis(List<PrimaryAttribute> a);
 
 	public void increaseMod(int mod) {
 		if (mod < 0)
@@ -51,30 +46,16 @@ public abstract class SecondaryAttribute extends IncreasableSkill {
 		this.levelModifier -= mod;
 	}
 
-	public void increaseModBuy() {
-		this.boughtLevelModifier++;
-	}
-
-	public void decreaseModBuy() {
-		this.boughtLevelModifier--;
-	}
+	public abstract void calculateBasis(List<PrimaryAttribute> a);
 
 	@Override
 	protected boolean isAbleToIncrease(Aventurian a) {
-		return true;
-	}
-
-	boolean isIncreasableByBuy() {
-		return boughtLevelModifier < maxBoughtLevelModifier;
-	}
-
-	protected boolean isDecreasableByBuy() {
 		return false;
 	}
 
 	protected static PrimaryAttribute get(List<PrimaryAttribute> a, String name) {
 		return a.stream().filter(s -> name.equals(s.getName())).findFirst()
-				.orElseThrow(() -> new IllegalStateException("cannot happen"));
+				.orElseThrow(() -> new IllegalStateException("could not find primary attribute: " + name));
 	}
 
 	protected static int getLevelOf(List<PrimaryAttribute> a, String name) {

@@ -10,16 +10,31 @@ public class Lebenspunkte extends SecondaryAttribute {
 	static final String NAME = "Lebenspunkte";
 
 	public Lebenspunkte() {
-		super(NAME, "", minLevel, maxLevel);
+		super(NAME, "");
 	}
 
 	@Override
 	public void calculateBasis(List<PrimaryAttribute> a) {
 		final int constitution = getLevelOf(a, Konstitution.NAME);
 		final int strength = getLevelOf(a, Koerperkraft.NAME);
-		level = round((constitution * 2 + strength) / 2.0);
-		maxBoughtLevelModifier = round(constitution / 2.0);
+		basisLevel = round((constitution * 2 + strength) / 2.0);
+		maxLevel = round(constitution / 2.0);
 
+	}
+
+	@Override
+	public int getUpgradeCosts() {
+		return 50;
+	}
+
+	@Override
+	public int getDowngradeRefund() {
+		return 50;
+	}
+
+	@Override
+	public int getTotalCosts() {
+		return level * 50;
 	}
 
 }

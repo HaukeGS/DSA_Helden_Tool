@@ -18,6 +18,7 @@ import aventurian.SecondaryAttributesTest;
 import database.DatabaseTest;
 import skills.LinearIncreasableSkillTest;
 import skills.SkillTest;
+import skills.attributes.LebenspunkteTest;
 import skills.attributes.PrimaryAttributeTest;
 import skills.languages.AngramTest;
 import skills.languages.AsdhariaTest;
@@ -53,7 +54,8 @@ import ui.TopPaneTest;
 		MiscelleanousAventurianManagerTest.class, AurelianiTest.class, AngramTest.class, AsdhariaTest.class,
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
 		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class,
-		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class, PrimaryAttributeTest.class })
+		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class, PrimaryAttributeTest.class,
+		LebenspunkteTest.class })
 public class AllTests {
 
 }

@@ -11,7 +11,7 @@ public class Magieresistenz extends SecondaryAttribute {
 	static final String NAME = "Magieresistenz";
 
 	public Magieresistenz() {
-		super(NAME, "", minLevel, maxLevel);
+		super(NAME, "");
 	}
 
 	@Override
@@ -20,13 +20,8 @@ public class Magieresistenz extends SecondaryAttribute {
 		final int constitution = get(primaryAttributes, Konstitution.NAME).getLevel();
 		final int courage = get(primaryAttributes, Mut.NAME).getLevel();
 
-		level = round((courage + intelligence + constitution) / 5.0);
-		maxBoughtLevelModifier = round(courage / 2.0);
-	}
-
-	@Override
-	protected boolean isDecreasableByBuy() {
-		return getLevel() > 0;
+		basisLevel = round((courage + intelligence + constitution) / 5.0);
+		maxLevel = round(courage / 2.0);
 	}
 
 }

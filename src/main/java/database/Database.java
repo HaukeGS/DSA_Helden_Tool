@@ -32,6 +32,7 @@ public class Database {
 	private List<Language> languages;
 	private Map<Race, RaceConfiguration> races;
 	private ArrayList<PrimaryAttribute> primaryAttributes;
+	private List<SecondaryAttribute> secondaryAttributes;
 
 	public Database() {
 		reset();
@@ -46,7 +47,7 @@ public class Database {
 	}
 
 	public List<SecondaryAttribute> getSecondaryAttributes() {
-		return new ArrayList<>();
+		return secondaryAttributes.stream().sorted().collect(toList());
 	}
 
 	public List<Property> getAdvantages() {
@@ -73,6 +74,7 @@ public class Database {
 		initProperties(reflections);
 		initLanguages(reflections);
 		initPrimaryAttributes(reflections);
+		initSecondaryAttributes(reflections);
 	}
 
 	private void initLanguages(Reflections reflections) {
@@ -99,6 +101,19 @@ public class Database {
 					InstantiableSkill.SkillType.PRIMARY_ATTRIBUTE);
 			for (final Class<?> clazz : primaryAttributeClasses) {
 				primaryAttributes.add((PrimaryAttribute) clazz.newInstance());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void initSecondaryAttributes(Reflections reflections) {
+		secondaryAttributes = new ArrayList<>();
+		try {
+			final Set<Class<?>> secondaryAttributeClasses = findClasses(reflections,
+					InstantiableSkill.SkillType.SECONDARY_ATTRIBUTE);
+			for (final Class<?> clazz : secondaryAttributeClasses) {
+				secondaryAttributes.add((SecondaryAttribute) clazz.newInstance());
 			}
 		} catch (final Exception e) {
 			e.printStackTrace();
