@@ -1,13 +1,13 @@
-package skills.attributes;
+package skills.attributes.primary;
 
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
 @InstantiableSkill(SkillType.PRIMARY_ATTRIBUTE)
-public class Agilitaet extends PrimaryAttribute {
-	public static final String NAME = "Agilität";
+public class Charisma extends PrimaryAttribute {
+	public static final String NAME = "Charisma";
 
-	public Agilitaet() {
+	public Charisma() {
 		super(NAME, "");
 	}
 

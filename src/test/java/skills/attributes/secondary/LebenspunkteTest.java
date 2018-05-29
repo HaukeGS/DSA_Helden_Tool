@@ -1,4 +1,4 @@
-package skills.attributes;
+package skills.attributes.secondary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -13,6 +13,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import aventurian.Aventurian;
+import skills.attributes.primary.Koerperkraft;
+import skills.attributes.primary.Konstitution;
+import skills.attributes.primary.PrimaryAttribute;
+import skills.attributes.secondary.Lebenspunkte;
 
 public class LebenspunkteTest {
 	private Lebenspunkte toTest;

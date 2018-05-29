@@ -1,4 +1,4 @@
-package skills.attributes;
+package skills.attributes.primary;
 
 import aventurian.LevelCostCalculator.Column;
 import skills.LookupIncreasableSkill;

@@ -19,17 +19,17 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import skills.attributes.Agilitaet;
-import skills.attributes.Charisma;
-import skills.attributes.Geschicklichkeit;
-import skills.attributes.Intelligenz;
-import skills.attributes.Intuition;
-import skills.attributes.Konstitution;
-import skills.attributes.Magieresistenz;
-import skills.attributes.Mut;
-import skills.attributes.PrimaryAttribute;
-import skills.attributes.SecondaryAttribute;
-import skills.attributes.Koerperkraft;
+import skills.attributes.primary.Agilitaet;
+import skills.attributes.primary.Charisma;
+import skills.attributes.primary.Geschicklichkeit;
+import skills.attributes.primary.Intelligenz;
+import skills.attributes.primary.Intuition;
+import skills.attributes.primary.Koerperkraft;
+import skills.attributes.primary.Konstitution;
+import skills.attributes.primary.Mut;
+import skills.attributes.primary.PrimaryAttribute;
+import skills.attributes.secondary.Magieresistenz;
+import skills.attributes.secondary.SecondaryAttribute;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AttributesAventurianManagerTest extends BaseTest {

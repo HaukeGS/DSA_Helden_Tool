@@ -108,7 +108,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 
 	boolean canIncrease(Language l) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, l)//
-				|| IS_NOT_ALLOWED.test(av, l)//
+				|| IS_NOT_ALLOWED_TO_HAVE.test(av, l)//
 				|| IS_NOT_INCREASABLE.test(av, l)).orElse(true);
 	}
 

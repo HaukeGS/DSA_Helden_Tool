@@ -1,4 +1,4 @@
-package skills.attributes;
+package skills.attributes.primary;
 
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;

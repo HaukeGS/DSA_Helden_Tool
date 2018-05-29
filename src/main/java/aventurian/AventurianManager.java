@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import database.Database;
 import skills.Skill;
-import skills.attributes.PrimaryAttribute;
-import skills.attributes.SecondaryAttribute;
+import skills.attributes.primary.PrimaryAttribute;
+import skills.attributes.secondary.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.Property;
 

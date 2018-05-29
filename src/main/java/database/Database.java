@@ -19,8 +19,8 @@ import org.reflections.util.FilterBuilder;
 
 import aventurian.Race;
 import skills.InstantiableSkill;
-import skills.attributes.PrimaryAttribute;
-import skills.attributes.SecondaryAttribute;
+import skills.attributes.primary.PrimaryAttribute;
+import skills.attributes.secondary.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;

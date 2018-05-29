@@ -1,9 +1,13 @@
-package skills.attributes;
+package skills.attributes.secondary;
 
 import java.util.List;
 
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
+import skills.attributes.primary.Charisma;
+import skills.attributes.primary.Intuition;
+import skills.attributes.primary.Mut;
+import skills.attributes.primary.PrimaryAttribute;
 
 @InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
 public class Astralenergie extends SecondaryAttribute {

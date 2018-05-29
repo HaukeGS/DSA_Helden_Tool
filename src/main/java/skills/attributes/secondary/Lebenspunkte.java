@@ -1,10 +1,13 @@
-package skills.attributes;
+package skills.attributes.secondary;
 
 import java.util.List;
 
 import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
+import skills.attributes.primary.Koerperkraft;
+import skills.attributes.primary.Konstitution;
+import skills.attributes.primary.PrimaryAttribute;
 
 @InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
 public class Lebenspunkte extends SecondaryAttribute {

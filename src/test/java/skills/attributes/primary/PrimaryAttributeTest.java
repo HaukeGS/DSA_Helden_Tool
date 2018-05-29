@@ -1,4 +1,4 @@
-package skills.attributes;
+package skills.attributes.primary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import skills.attributes.primary.PrimaryAttribute;
 import testsuites.categories.CannotRunHeadless;
 
 public class PrimaryAttributeTest {

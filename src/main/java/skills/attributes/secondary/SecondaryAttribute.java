@@ -1,9 +1,10 @@
-package skills.attributes;
+package skills.attributes.secondary;
 
 import java.util.List;
 
 import aventurian.Aventurian;
 import skills.IncreasableSkill;
+import skills.attributes.primary.PrimaryAttribute;
 
 public abstract class SecondaryAttribute extends IncreasableSkill {
 

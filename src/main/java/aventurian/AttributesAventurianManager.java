@@ -5,8 +5,8 @@ import static aventurian.LevelCostCalculator.Column.H;
 import java.util.Optional;
 
 import database.Database;
-import skills.attributes.PrimaryAttribute;
-import skills.attributes.SecondaryAttribute;
+import skills.attributes.primary.PrimaryAttribute;
+import skills.attributes.secondary.SecondaryAttribute;
 
 class AttributesAventurianManager extends BaseAventurianManager {
 
@@ -14,7 +14,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		super(a, db);
 	}
 
-	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+	void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		aventurian.ifPresent(av -> {
 			final int cost = calculator.getCost(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) + 1, H);
 			if (av.isPrimaryAttributesLowerThanThreshhold() && av.isPrimaryAttributeIncreasable(a)) {
@@ -24,7 +24,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		});
 	}
 
-	public void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
+	void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		aventurian.ifPresent(av -> {
 			final int cost = calculator.getRefund(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) - 1, H);
 			if (av.isPrimaryAttributeDecreasable(a)) {
@@ -34,7 +34,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		});
 	}
 
-	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+	void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		aventurian.ifPresent(av -> {
 			if (av.isSecondaryAttributeIncreasableByBuy(a)) {
 				final int cost = av.getSecondaryAttributeCost(a);
@@ -44,7 +44,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		});
 	}
 
-	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
+	void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
 		aventurian.ifPresent(av -> {
 			if (av.isSecondaryAttributeDecreasableByBuy(a)) {
 				final int cost = av.getSecondaryAttributeCost(a);
@@ -60,21 +60,21 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		aventurian.ifPresent(Aventurian::updateSecondaryAttributes);
 	}
 
-	public void increasePrimaryAttribute(PrimaryAttribute a) {
+	void increasePrimaryAttribute(PrimaryAttribute a) {
 		if (!canIncrease(a))
 			throw new IllegalStateException("requirements not met for increasing " + a.getName());
 		pay(a.getUpgradeCosts());
 		increase(a);
 	}
 
-	public void decreasePrimaryAttribute(PrimaryAttribute a) {
+	void decreasePrimaryAttribute(PrimaryAttribute a) {
 		if (!canDecrease(a))
 			throw new IllegalStateException("requirements not met for decreasing " + a.getName());
 		refund(a.getDowngradeRefund());
 		decrease(a);
 	}
 
-	public void increaseSecondaryAttribute(SecondaryAttribute a) {
+	void increaseSecondaryAttribute(SecondaryAttribute a) {
 		if (!canIncrease(a))
 			throw new IllegalStateException("requirements not met for increasing " + a.getName());
 		pay(a.getUpgradeCosts());
@@ -82,7 +82,7 @@ class AttributesAventurianManager extends BaseAventurianManager {
 
 	}
 
-	public void decreaseSecondaryAttribute(SecondaryAttribute a) {
+	void decreaseSecondaryAttribute(SecondaryAttribute a) {
 		if (!canDecrease(a))
 			throw new IllegalStateException("requirements not met for decreasing " + a.getName());
 		refund(a.getDowngradeRefund());
@@ -90,24 +90,26 @@ class AttributesAventurianManager extends BaseAventurianManager {
 
 	}
 
-	public boolean canDecrease(SecondaryAttribute a) {
-		// TODO Auto-generated method stub
-		return false;
+	boolean canDecrease(SecondaryAttribute a) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
+				|| IS_NOT_DECREASABLE.test(a)).orElse(true);
 	}
 
-	public boolean canIncrease(SecondaryAttribute a) {
-		// TODO Auto-generated method stub
-		return false;
+	boolean canIncrease(SecondaryAttribute a) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
+				|| IS_NOT_ALLOWED_TO_HAVE.test(av, a)//
+				|| IS_NOT_INCREASABLE.test(av, a)).orElse(true);
 	}
 
-	public boolean canDecrease(PrimaryAttribute a) {
-		// TODO Auto-generated method stub
-		return false;
+	boolean canDecrease(PrimaryAttribute a) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
+				|| IS_NOT_DECREASABLE.test(a)).orElse(true);
 	}
 
-	public boolean canIncrease(PrimaryAttribute a) {
-		// TODO Auto-generated method stub
-		return false;
+	boolean canIncrease(PrimaryAttribute a) {
+		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
+				|| IS_NOT_ALLOWED_TO_HAVE.test(av, a)//
+				|| IS_NOT_INCREASABLE.test(av, a)).orElse(true);
 	}
 
 }

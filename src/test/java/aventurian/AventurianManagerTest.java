@@ -15,8 +15,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
-import skills.attributes.PrimaryAttribute;
-import skills.attributes.SecondaryAttribute;
+import skills.attributes.primary.PrimaryAttribute;
+import skills.attributes.secondary.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;

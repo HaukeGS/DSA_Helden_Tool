@@ -1,4 +1,4 @@
-package skills.attributes;
+package skills.attributes.secondary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import aventurian.Aventurian;
+import skills.attributes.secondary.SecondaryAttribute;
 
 public class SecondaryAttributeTest {
 
