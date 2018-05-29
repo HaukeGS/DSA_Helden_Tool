@@ -20,6 +20,7 @@ import skills.LinearIncreasableSkillTest;
 import skills.SkillTest;
 import skills.attributes.LebenspunkteTest;
 import skills.attributes.PrimaryAttributeTest;
+import skills.attributes.SecondaryAttributeTest;
 import skills.languages.AngramTest;
 import skills.languages.AsdhariaTest;
 import skills.languages.AurelianiTest;
@@ -55,7 +56,7 @@ import ui.TopPaneTest;
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
 		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class,
 		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class, PrimaryAttributeTest.class,
-		LebenspunkteTest.class })
+		LebenspunkteTest.class, SecondaryAttributeTest.class })
 public class AllTests {
 
 }

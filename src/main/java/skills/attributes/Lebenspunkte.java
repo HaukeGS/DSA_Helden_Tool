@@ -2,6 +2,7 @@ package skills.attributes;
 
 import java.util.List;
 
+import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
@@ -35,6 +36,11 @@ public class Lebenspunkte extends SecondaryAttribute {
 	@Override
 	public int getTotalCosts() {
 		return level * 50;
+	}
+
+	@Override
+	protected boolean isAbleToIncrease(Aventurian a) {
+		return true;
 	}
 
 }

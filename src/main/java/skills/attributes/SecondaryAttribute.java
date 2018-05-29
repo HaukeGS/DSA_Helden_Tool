@@ -11,7 +11,7 @@ public abstract class SecondaryAttribute extends IncreasableSkill {
 	protected int basisLevel;
 
 	public SecondaryAttribute(String name, String description) {
-		super(name, description, 0, 100);
+		super(name, description, 0, 0);
 	}
 
 	@Override
