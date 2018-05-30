@@ -16,6 +16,7 @@
       <Hyperlink fx:id="hyperlinkAttributes" onAction="#showAttributes" style="-fx-underline: false;" text="Attributes" visited="true" />
       <Hyperlink fx:id="hyperlinkLanguages" onAction="#showLanguages" style="-fx-underline: false;" text="Languages" visited="true" />
       <Hyperlink fx:id="hyperlinkProperties" onAction="#showProperties" style="-fx-underline: false;" text="Properties" visited="true" />
+      <Hyperlink fx:id="hyperlinkAttributes2" onAction="#showAttributes2" style="-fx-underline: false;" text="Attributes2" visited="true" />
       <Hyperlink style="-fx-underline: false;" text="Combat Skills" visited="true" />
    </children>
    <padding>

@@ -39,6 +39,7 @@ public class Starter extends Application {
 		loadPage(LANGUAGES, "/languages.fxml");
 		loadPage(ATTRIBUTES, "/attributes.fxml");
 		loadPage(PROPERTIES, "/propertyPane.fxml");
+		loadPage(PAGES.ATTRIBUTES_2, "/attributes2.fxml");
 
 		mainController.init(aventurianManager, db);
 

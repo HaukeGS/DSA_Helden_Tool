@@ -193,20 +193,20 @@ public class AventurianManager implements Observer {
 
 	}
 
-	public void increasePrimaryAttribute(PrimaryAttribute a) {
+	public void increase(PrimaryAttribute a) {
 		attributesManager.increasePrimaryAttribute(a);
 	}
 
-	public void decreasePrimaryAttribute(PrimaryAttribute a) {
+	public void decrease(PrimaryAttribute a) {
 		attributesManager.decreasePrimaryAttribute(a);
 
 	}
 
-	public void increaseSecondaryAttribute(SecondaryAttribute a) {
+	public void increase(SecondaryAttribute a) {
 		attributesManager.increaseSecondaryAttribute(a);
 	}
 
-	public void decreaseSecondaryAttribute(SecondaryAttribute a) {
+	public void decrease(SecondaryAttribute a) {
 		attributesManager.decreaseSecondaryAttribute(a);
 	}
 

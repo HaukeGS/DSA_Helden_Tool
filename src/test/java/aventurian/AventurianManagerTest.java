@@ -141,7 +141,7 @@ public class AventurianManagerTest extends BaseTest {
 	@Test
 	public void increasePrimaryAttribute2() {
 		final PrimaryAttribute a = mock(PrimaryAttribute.class);
-		toTest.increasePrimaryAttribute(a);
+		toTest.increase(a);
 		verify(attributes).increasePrimaryAttribute(a);
 	}
 
@@ -154,7 +154,7 @@ public class AventurianManagerTest extends BaseTest {
 	@Test
 	public void testDecreasePrimaryAttribute() {
 		final PrimaryAttribute a = mock(PrimaryAttribute.class);
-		toTest.decreasePrimaryAttribute(a);
+		toTest.decrease(a);
 		verify(attributes).decreasePrimaryAttribute(a);
 	}
 
@@ -187,14 +187,14 @@ public class AventurianManagerTest extends BaseTest {
 	@Test
 	public void testIncreaseSecondaryAttribute() {
 		final SecondaryAttribute a = mock(SecondaryAttribute.class);
-		toTest.increaseSecondaryAttribute(a);
+		toTest.increase(a);
 		verify(attributes).increaseSecondaryAttribute(a);
 	}
 
 	@Test
 	public void testDecreaseSecondaryAttribute() {
 		final SecondaryAttribute a = mock(SecondaryAttribute.class);
-		toTest.decreaseSecondaryAttribute(a);
+		toTest.decrease(a);
 		verify(attributes).decreaseSecondaryAttribute(a);
 	}
 

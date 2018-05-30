@@ -231,6 +231,10 @@ public class Aventurian extends Observable {
 		return getStreamOfPrimaryAttributes().collect(toList());
 	}
 
+	public List<SecondaryAttribute> getSecondaryAttributes() {
+		return getStreamOfSecondaryAttributes().collect(toList());
+	}
+
 	private Stream<Language> getStreamOfLanguages() {
 		return getStreamOfSkills().filter(Language.class::isInstance).map(Language.class::cast);
 	}

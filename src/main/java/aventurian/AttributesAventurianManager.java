@@ -97,7 +97,6 @@ class AttributesAventurianManager extends BaseAventurianManager {
 
 	boolean canIncrease(SecondaryAttribute a) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
-				|| IS_NOT_ALLOWED_TO_HAVE.test(av, a)//
 				|| IS_NOT_INCREASABLE.test(av, a)).orElse(true);
 	}
 
@@ -108,7 +107,6 @@ class AttributesAventurianManager extends BaseAventurianManager {
 
 	boolean canIncrease(PrimaryAttribute a) {
 		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
-				|| IS_NOT_ALLOWED_TO_HAVE.test(av, a)//
 				|| IS_NOT_INCREASABLE.test(av, a)).orElse(true);
 	}
 

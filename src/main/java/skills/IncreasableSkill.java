@@ -15,13 +15,14 @@ public abstract class IncreasableSkill extends Skill {
 	}
 
 	public void increase() {
-		if (level >= maxLevel)
+		if (level >= maxLevel) // TODO ziemlich bloed, dass wir hier nicht if(isAllowedToIncrease) machen
+								// konnen...
 			throw new IllegalStateException("IncreasableSkill cannot be over max level!");
 		level++;
 	}
 
 	public void decrease() {
-		if (level <= minLevel)
+		if (!isAllowedToDecrease())
 			throw new IllegalStateException("IncreasableSkill level cannot be less than min level!");
 		level--;
 	}
