@@ -14,33 +14,37 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import aventurian.Aventurian;
-import skills.attributes.primary.Koerperkraft;
-import skills.attributes.primary.Konstitution;
+import skills.attributes.primary.Charisma;
+import skills.attributes.primary.Intuition;
+import skills.attributes.primary.Mut;
 import skills.attributes.primary.PrimaryAttribute;
 
-public class LebenspunkteTest {
-	private Lebenspunkte toTest;
+public class AstralenergieTest {
+	private Astralenergie toTest;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Lebenspunkte();
+		toTest = new Astralenergie();
 		toTest.calculateBasis(mockPrimaryAttributes());
 	}
 
 	@Test
 	public void testCalculateBasis() {
-		assertEquals(16, toTest.getLevel());
-		assertEquals(5, toTest.getMaxLevel());
+		assertEquals(17, toTest.getLevel());
+		assertEquals(6, toTest.getMaxLevel());
 	}
 
 	private List<PrimaryAttribute> mockPrimaryAttributes() {
-		final PrimaryAttribute constitution = Mockito.mock(Konstitution.class);
-		when(constitution.getName()).thenReturn("Konstitution");
-		when(constitution.getLevel()).thenReturn(10);
-		final PrimaryAttribute strength = mock(Koerperkraft.class);
-		when(strength.getName()).thenReturn("Körperkraft");
-		when(strength.getLevel()).thenReturn(12);
-		return Arrays.asList(constitution, strength);
+		final PrimaryAttribute intuition = Mockito.mock(Intuition.class);
+		when(intuition.getName()).thenReturn(Intuition.NAME);
+		when(intuition.getLevel()).thenReturn(10);
+		final PrimaryAttribute courage = mock(Mut.class);
+		when(courage.getName()).thenReturn(Mut.NAME);
+		when(courage.getLevel()).thenReturn(12);
+		final PrimaryAttribute charisma = mock(Charisma.class);
+		when(charisma.getName()).thenReturn(Charisma.NAME);
+		when(charisma.getLevel()).thenReturn(12);
+		return Arrays.asList(intuition, courage, charisma);
 	}
 
 	@Test
@@ -75,14 +79,6 @@ public class LebenspunkteTest {
 	public void testIsAbleToIncrease() {
 		assertTrue(toTest.isAbleToIncrease(mock(Aventurian.class)));
 	}
-	
-	@Test
-	public void testIsAllowedToDecrease() {
-		assertTrue(toTest.isAllowedToDecrease());
-		for(int i = 0; i<16;i++)
-			toTest.decrease();
-		assertFalse(toTest.isAllowedToDecrease());
-	}
 
 	@Test
 	public void testGetTotalCosts() {
@@ -99,6 +95,14 @@ public class LebenspunkteTest {
 		expected = 100;
 		actual = toTest.getTotalCosts();
 		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testIsAllowedToDecrease() {
+		assertTrue(toTest.isAllowedToDecrease());
+		for(int i = 0; i<17;i++)
+			toTest.decrease();
+		assertFalse(toTest.isAllowedToDecrease());
 	}
 
 }

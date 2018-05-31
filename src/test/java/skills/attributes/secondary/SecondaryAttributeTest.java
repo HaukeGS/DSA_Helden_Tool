@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import aventurian.Aventurian;
-import skills.attributes.secondary.SecondaryAttribute;
 
 public class SecondaryAttributeTest {
 
@@ -30,6 +29,11 @@ public class SecondaryAttributeTest {
 	@Test
 	public void testIsAbleToIncrease() {
 		assertFalse(toTest.isAbleToIncrease(mock(Aventurian.class)));
+	}
+
+	@Test
+	public void testIsAllowedToDecrease() {
+		assertFalse(toTest.isAllowedToDecrease());
 	}
 
 	@Test(expected = IllegalStateException.class)

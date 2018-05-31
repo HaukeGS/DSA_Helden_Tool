@@ -14,38 +14,42 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import aventurian.Aventurian;
-import skills.attributes.primary.Koerperkraft;
+import skills.attributes.primary.Intelligenz;
 import skills.attributes.primary.Konstitution;
+import skills.attributes.primary.Mut;
 import skills.attributes.primary.PrimaryAttribute;
 
-public class LebenspunkteTest {
-	private Lebenspunkte toTest;
+public class MagieresistenzTest {
+	private Magieresistenz toTest;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Lebenspunkte();
+		toTest = new Magieresistenz();
 		toTest.calculateBasis(mockPrimaryAttributes());
 	}
 
 	@Test
 	public void testCalculateBasis() {
-		assertEquals(16, toTest.getLevel());
-		assertEquals(5, toTest.getMaxLevel());
+		assertEquals(7, toTest.getLevel());
+		assertEquals(6, toTest.getMaxLevel());
 	}
 
 	private List<PrimaryAttribute> mockPrimaryAttributes() {
-		final PrimaryAttribute constitution = Mockito.mock(Konstitution.class);
-		when(constitution.getName()).thenReturn("Konstitution");
-		when(constitution.getLevel()).thenReturn(10);
-		final PrimaryAttribute strength = mock(Koerperkraft.class);
-		when(strength.getName()).thenReturn("Körperkraft");
-		when(strength.getLevel()).thenReturn(12);
-		return Arrays.asList(constitution, strength);
+		final PrimaryAttribute intelligence = Mockito.mock(Intelligenz.class);
+		when(intelligence.getName()).thenReturn(Intelligenz.NAME);
+		when(intelligence.getLevel()).thenReturn(10);
+		final PrimaryAttribute courage = mock(Mut.class);
+		when(courage.getName()).thenReturn(Mut.NAME);
+		when(courage.getLevel()).thenReturn(12);
+		final PrimaryAttribute constitution = mock(Konstitution.class);
+		when(constitution.getName()).thenReturn(Konstitution.NAME);
+		when(constitution.getLevel()).thenReturn(12);
+		return Arrays.asList(intelligence, courage, constitution);
 	}
 
 	@Test
 	public void testGetUpgradeCost() {
-		final int expected = 50;
+		final int expected = 100;
 		int actual = toTest.getUpgradeCosts();
 		assertEquals(expected, actual);
 
@@ -56,7 +60,7 @@ public class LebenspunkteTest {
 
 	@Test
 	public void testGetDowngradeRefund() {
-		final int expected = 50;
+		final int expected = 100;
 		int actual = toTest.getDowngradeRefund();
 		assertEquals(expected, actual);
 
@@ -75,14 +79,6 @@ public class LebenspunkteTest {
 	public void testIsAbleToIncrease() {
 		assertTrue(toTest.isAbleToIncrease(mock(Aventurian.class)));
 	}
-	
-	@Test
-	public void testIsAllowedToDecrease() {
-		assertTrue(toTest.isAllowedToDecrease());
-		for(int i = 0; i<16;i++)
-			toTest.decrease();
-		assertFalse(toTest.isAllowedToDecrease());
-	}
 
 	@Test
 	public void testGetTotalCosts() {
@@ -91,14 +87,21 @@ public class LebenspunkteTest {
 		assertEquals(expected, actual);
 
 		toTest.increase();
-		expected = 50;
+		expected = 100;
 		actual = toTest.getTotalCosts();
 		assertEquals(expected, actual);
 
 		toTest.increase();
-		expected = 100;
+		expected = 200;
 		actual = toTest.getTotalCosts();
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testIsAllowedToDecrease() {
+		assertTrue(toTest.isAllowedToDecrease());
+		for (int i = 0; i < 7; i++)
+			toTest.decrease();
+		assertFalse(toTest.isAllowedToDecrease());
+	}
 }

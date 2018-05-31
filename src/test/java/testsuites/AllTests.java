@@ -19,7 +19,9 @@ import database.DatabaseTest;
 import skills.LinearIncreasableSkillTest;
 import skills.SkillTest;
 import skills.attributes.primary.PrimaryAttributeTest;
+import skills.attributes.secondary.AstralenergieTest;
 import skills.attributes.secondary.LebenspunkteTest;
+import skills.attributes.secondary.MagieresistenzTest;
 import skills.attributes.secondary.SecondaryAttributeTest;
 import skills.languages.AngramTest;
 import skills.languages.AsdhariaTest;
@@ -56,7 +58,7 @@ import ui.TopPaneTest;
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
 		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class,
 		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class, PrimaryAttributeTest.class,
-		LebenspunkteTest.class, SecondaryAttributeTest.class })
+		LebenspunkteTest.class, SecondaryAttributeTest.class, AstralenergieTest.class, MagieresistenzTest.class })
 public class AllTests {
 
 }

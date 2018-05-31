@@ -171,7 +171,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(a)).thenReturn(true);
 		assertFalse(toTest.canIncrease(a));
 	}
-	
+
 	@Test
 	public void testCanDecreaseSecondaryAttribute() {
 		final SecondaryAttribute a = createSecondaryAttributeMock(true, true);
@@ -193,6 +193,38 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		assertFalse(toTest.canDecrease(a));
 	}
 
+	@Test
+	public void testDecreaseSecondaryAttribute() {
+		final SecondaryAttribute a = createSecondaryAttributeMock(true, true);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.decreaseSecondaryAttribute(a);
+		verify(mockedAventurian).refund(anyInt());
+		verify(mockedAventurian).decreaseSkill(a);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreaseSecondaryAttributeCannotBeDecreased() {
+		final SecondaryAttribute a = createSecondaryAttributeMock(true, false);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.decreaseSecondaryAttribute(a);
+	}
+	
+	@Test
+	public void testIncreaseSecondaryAttribute() {
+		final SecondaryAttribute a = createSecondaryAttributeMock(true, true);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.increaseSecondaryAttribute(a);
+		verify(mockedAventurian).pay(anyInt());
+		verify(mockedAventurian).increaseSkill(a);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testIncreaseSecondaryAttributeCannotBeIncreased() {
+		final SecondaryAttribute a = createSecondaryAttributeMock(false, false);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.increaseSecondaryAttribute(a);
+	}
+
 	private SecondaryAttribute createSecondaryAttributeMock(boolean isIncreasable, boolean isDecreasable) {
 		final SecondaryAttribute a = mock(SecondaryAttribute.class);
 		when(a.isAllowedToIncrease(mockedAventurian)).thenReturn(isIncreasable);
@@ -200,7 +232,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 
 		return a;
 	}
-	
+
 	@Test
 	public void testCanIncreasePrimaryAttribute() {
 		final PrimaryAttribute a = createPrimaryAttributeMock(true, true);
@@ -221,7 +253,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(a)).thenReturn(true);
 		assertFalse(toTest.canIncrease(a));
 	}
-	
+
 	@Test
 	public void testCanDecreasePrimaryAttribute() {
 		final PrimaryAttribute a = createPrimaryAttributeMock(true, true);
@@ -243,6 +275,38 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		assertFalse(toTest.canDecrease(a));
 	}
 
+	@Test
+	public void testDecreasePrimaryAttribute() {
+		final PrimaryAttribute a = createPrimaryAttributeMock(true, true);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.decreasePrimaryAttribute(a);
+		verify(mockedAventurian).refund(anyInt());
+		verify(mockedAventurian).decreaseSkill(a);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testDecreasePrimaryAttributeCannotBeDecreased() {
+		final PrimaryAttribute a = createPrimaryAttributeMock(true, false);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.decreasePrimaryAttribute(a);
+	}
+	
+	@Test
+	public void testIncreasePrimaryAttribute() {
+		final PrimaryAttribute a = createPrimaryAttributeMock(true, true);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.increasePrimaryAttribute(a);
+		verify(mockedAventurian).pay(anyInt());
+		verify(mockedAventurian).increaseSkill(a);
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testIncreasePrimaryAttributeCannotBeIncreased() {
+		final PrimaryAttribute a = createPrimaryAttributeMock(false, false);
+		when(mockedAventurian.hasSkill(a)).thenReturn(true);
+		toTest.increasePrimaryAttribute(a);
+	}
+
 	private PrimaryAttribute createPrimaryAttributeMock(boolean isIncreasable, boolean isDecreasable) {
 		final PrimaryAttribute a = mock(PrimaryAttribute.class);
 		when(a.isAllowedToIncrease(mockedAventurian)).thenReturn(isIncreasable);
@@ -250,6 +314,5 @@ public class AttributesAventurianManagerTest extends BaseTest {
 
 		return a;
 	}
-
 
 }

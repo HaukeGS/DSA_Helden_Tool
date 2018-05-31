@@ -46,4 +46,8 @@ public class Lebenspunkte extends SecondaryAttribute {
 		return true;
 	}
 
+	@Override
+	public boolean isAllowedToDecrease() {
+		return getLevel() > getMinLevel();
+	}
 }

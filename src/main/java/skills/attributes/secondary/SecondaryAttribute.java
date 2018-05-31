@@ -54,6 +54,11 @@ public abstract class SecondaryAttribute extends IncreasableSkill {
 		return false;
 	}
 
+	@Override
+	public boolean isAllowedToDecrease() {
+		return false;
+	}
+
 	protected static PrimaryAttribute get(List<PrimaryAttribute> a, String name) {
 		return a.stream().filter(s -> name.equals(s.getName())).findFirst()
 				.orElseThrow(() -> new IllegalStateException("could not find primary attribute: " + name));
