@@ -57,6 +57,8 @@ public class AttributesPaneController2 extends PaneController {
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			decreaseButton.setPrefWidth(25);
 			increaseButton.setPrefWidth(25);
+			levelLabel.setPrefWidth(25);
+			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
 			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
 			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
 		}
@@ -95,6 +97,8 @@ public class AttributesPaneController2 extends PaneController {
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			decreaseButton.setPrefWidth(25);
 			increaseButton.setPrefWidth(25);
+			levelLabel.setPrefWidth(25);
+			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
 			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
 			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
 		}
@@ -112,10 +116,17 @@ public class AttributesPaneController2 extends PaneController {
 				levelLabel.setText(String.valueOf(item.getLevel()));
 				increaseButton.setDisable(!AttributesPaneController2.this.m.canIncrease(item));
 				decreaseButton.setDisable(!AttributesPaneController2.this.m.canDecrease(item));
+				increaseButton.setVisible(isIncreasableSecondaryAttribute(item));
+				decreaseButton.setVisible(isIncreasableSecondaryAttribute(item));
 				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);
 				setTooltip(new Tooltip(item.getDescription()));
 			}
+		}
+
+		boolean isIncreasableSecondaryAttribute(SecondaryAttribute item) {
+			return AttributesPaneController2.this.m.canIncrease(item)
+					|| AttributesPaneController2.this.m.canDecrease(item);
 		}
 	}
 }
