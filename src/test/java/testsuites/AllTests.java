@@ -20,9 +20,16 @@ import skills.LinearIncreasableSkillTest;
 import skills.SkillTest;
 import skills.attributes.primary.PrimaryAttributeTest;
 import skills.attributes.secondary.AstralenergieTest;
+import skills.attributes.secondary.AttackeBasisTest;
+import skills.attributes.secondary.ErschoepungsschwelleTest;
+import skills.attributes.secondary.FernkampfBasisTest;
+import skills.attributes.secondary.InitiativeBasisTest;
+import skills.attributes.secondary.KarmaenergieTest;
 import skills.attributes.secondary.LebenspunkteTest;
 import skills.attributes.secondary.MagieresistenzTest;
+import skills.attributes.secondary.ParadeBasisTest;
 import skills.attributes.secondary.SecondaryAttributeTest;
+import skills.attributes.secondary.WundschwelleTest;
 import skills.languages.AngramTest;
 import skills.languages.AsdhariaTest;
 import skills.languages.AurelianiTest;
@@ -58,7 +65,9 @@ import ui.TopPaneTest;
 		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
 		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class,
 		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class, PrimaryAttributeTest.class,
-		LebenspunkteTest.class, SecondaryAttributeTest.class, AstralenergieTest.class, MagieresistenzTest.class })
+		LebenspunkteTest.class, SecondaryAttributeTest.class, AstralenergieTest.class, MagieresistenzTest.class,
+		AttackeBasisTest.class, ErschoepungsschwelleTest.class, FernkampfBasisTest.class, InitiativeBasisTest.class,
+		KarmaenergieTest.class, ParadeBasisTest.class, WundschwelleTest.class })
 public class AllTests {
 
 }
