@@ -79,7 +79,24 @@ class AttributesAventurianManager extends BaseAventurianManager {
 			throw new IllegalStateException("requirements not met for increasing " + a.getName());
 		pay(a.getUpgradeCosts());
 		increase(a);
+	}
 
+	void applyRaceMod(SecondaryAttribute a, int mod) {
+		if (mod >= 0) {
+			increaseRaceMod(a, mod);
+		} else {
+			decreaseRaceMod(a, Math.abs(mod));
+		}
+	}
+
+	public void decreaseRaceMod(SecondaryAttribute a, int mod) {
+		a.decreaseMod(mod);
+		refund(a.getDowngradeRefund() * mod);
+	}
+
+	public void increaseRaceMod(SecondaryAttribute a, int mod) {
+		a.increaseMod(mod);
+		pay(a.getUpgradeCosts() * mod);
 	}
 
 	void decreaseSecondaryAttribute(SecondaryAttribute a) {
@@ -87,7 +104,6 @@ class AttributesAventurianManager extends BaseAventurianManager {
 			throw new IllegalStateException("requirements not met for decreasing " + a.getName());
 		refund(a.getDowngradeRefund());
 		decrease(a);
-
 	}
 
 	boolean canDecrease(SecondaryAttribute a) {

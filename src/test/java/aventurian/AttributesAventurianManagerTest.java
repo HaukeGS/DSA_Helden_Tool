@@ -208,7 +208,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(a)).thenReturn(true);
 		toTest.decreaseSecondaryAttribute(a);
 	}
-	
+
 	@Test
 	public void testIncreaseSecondaryAttribute() {
 		final SecondaryAttribute a = createSecondaryAttributeMock(true, true);
@@ -217,7 +217,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		verify(mockedAventurian).pay(anyInt());
 		verify(mockedAventurian).increaseSkill(a);
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void testIncreaseSecondaryAttributeCannotBeIncreased() {
 		final SecondaryAttribute a = createSecondaryAttributeMock(false, false);
@@ -290,7 +290,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		when(mockedAventurian.hasSkill(a)).thenReturn(true);
 		toTest.decreasePrimaryAttribute(a);
 	}
-	
+
 	@Test
 	public void testIncreasePrimaryAttribute() {
 		final PrimaryAttribute a = createPrimaryAttributeMock(true, true);
@@ -299,7 +299,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		verify(mockedAventurian).pay(anyInt());
 		verify(mockedAventurian).increaseSkill(a);
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void testIncreasePrimaryAttributeCannotBeIncreased() {
 		final PrimaryAttribute a = createPrimaryAttributeMock(false, false);
@@ -313,6 +313,21 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		when(a.isAllowedToDecrease()).thenReturn(isDecreasable);
 
 		return a;
+	}
+
+	@Test
+	public void testApplyRaceModPositive() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.applyRaceMod(a, 5);
+		verify(a).increaseMod(5);
+		verify(mockedAventurian).pay(anyInt());
+	}
+	@Test
+	public void testApplyRaceModNegative() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.applyRaceMod(a, -5);
+		verify(a).decreaseMod(5);
+		verify(mockedAventurian).refund(anyInt());
 	}
 
 }

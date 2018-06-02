@@ -11,7 +11,7 @@ import skills.attributes.primary.PrimaryAttribute;
 
 @InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
 public class Lebenspunkte extends SecondaryAttribute {
-	static final String NAME = "Lebenspunkte";
+	public static final String NAME = "Lebenspunkte";
 
 	public Lebenspunkte() {
 		super(NAME, "");

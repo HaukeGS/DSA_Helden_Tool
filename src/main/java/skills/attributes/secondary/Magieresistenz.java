@@ -13,7 +13,7 @@ import skills.attributes.primary.PrimaryAttribute;
 @InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
 public class Magieresistenz extends SecondaryAttribute {
 
-	static final String NAME = "Magieresistenz";
+	public static final String NAME = "Magieresistenz";
 
 	public Magieresistenz() {
 		super(NAME, "");

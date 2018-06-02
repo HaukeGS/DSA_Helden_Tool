@@ -26,7 +26,7 @@ public class AventurianManager implements Observer {
 		this.languageManager = new LanguageAventurianManager(aventurian, db);
 		this.propertyManager = new PropertyAventurianManager(aventurian, db);
 		this.attributesManager = new AttributesAventurianManager(aventurian, db);
-		this.raceManager = new RaceAventurianManager(aventurian, db, this.propertyManager);
+		this.raceManager = new RaceAventurianManager(aventurian, db, propertyManager, attributesManager);
 		this.miscManager = new MiscelleanousAventurianManager(aventurian, db);
 		this.database = db;
 		registerObserver(this);
