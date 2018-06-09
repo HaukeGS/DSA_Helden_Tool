@@ -121,6 +121,10 @@ public class Aventurian extends Observable {
 	public int getSumOfPrimaryAttributes() {
 		return primaryAttributes.getSum();
 	}
+	
+	int getSumOfPrimaryAttributes2() {
+		return getStreamOfPrimaryAttributes().mapToInt(PrimaryAttribute::getLevel).sum();
+	}
 
 	public boolean isPrimaryAttributeIncreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
 		return primaryAttributes.isIncreasable(a);
@@ -276,13 +280,17 @@ public class Aventurian extends Observable {
 		}
 		return sum;
 	}
+	
+	public int getAPInAttributes() {
+		return getStreamOfPrimaryAttributes().mapToInt(PrimaryAttribute::getTotalCosts).sum();
+	}
 
 	public List<Property> getAdvantages() {
-		return getStreamOfProperties().filter((p) -> p.isAdvantage()).collect(toList());
+		return getStreamOfProperties().filter(Property::isAdvantage).collect(toList());
 	}
 
 	public List<Property> getDisadvantages() {
-		return getStreamOfProperties().filter((p) -> p.isDisadvantage()).collect(toList());
+		return getStreamOfProperties().filter(Property::isDisadvantage).collect(toList());
 
 	}
 

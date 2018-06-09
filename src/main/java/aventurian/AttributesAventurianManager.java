@@ -3,12 +3,16 @@ package aventurian;
 import static aventurian.LevelCostCalculator.Column.H;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import database.Database;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 
 class AttributesAventurianManager extends BaseAventurianManager {
+	static final int MAX_PRIMARY_ATTRIBUTES_SUM = 101;
+	private final static Predicate<Aventurian> EXCEEDS_MAX_SUM = av -> av
+			.getSumOfPrimaryAttributes2() >= MAX_PRIMARY_ATTRIBUTES_SUM;
 
 	AttributesAventurianManager(Optional<Aventurian> a, Database db) {
 		super(a, db);
@@ -122,8 +126,9 @@ class AttributesAventurianManager extends BaseAventurianManager {
 	}
 
 	boolean canIncrease(PrimaryAttribute a) {
-		return !aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
-				|| IS_NOT_INCREASABLE.test(av, a)).orElse(true);
+		return !(aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
+				|| IS_NOT_INCREASABLE.test(av, a)//
+				|| EXCEEDS_MAX_SUM.test(av)).orElse(true));
 	}
 
 }
