@@ -38,7 +38,7 @@ public class AventurianManagerTest extends BaseTest {
 	@Before
 	public void setUp() throws Exception {
 		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races, misc,
-				mockedDatabase);
+				mockedDatabase, mockedLogger);
 	}
 
 	@Test

@@ -22,7 +22,7 @@ public class AventurianManager implements Observer {
 	private final MiscelleanousAventurianManager miscManager;
 	private final Database database;
 	private Optional<Aventurian> aventurian = Optional.empty();
-	private Logger logger;
+	private final Logger logger;
 
 	public AventurianManager(Database db, Logger logger) {
 		this.languageManager = new LanguageAventurianManager(aventurian, db, logger);
@@ -49,13 +49,14 @@ public class AventurianManager implements Observer {
 	 */
 	AventurianManager(Optional<Aventurian> a, AttributesAventurianManager attributes,
 			LanguageAventurianManager languages, PropertyAventurianManager properties, RaceAventurianManager races,
-			MiscelleanousAventurianManager misc, Database db) {
+			MiscelleanousAventurianManager misc, Database db, Logger logger) {
 		this.attributesManager = attributes;
 		this.propertyManager = properties;
 		this.languageManager = languages;
 		this.raceManager = races;
 		this.miscManager = misc;
 		this.database = db;
+		this.logger = logger;
 		registerObserver(this);
 	}
 

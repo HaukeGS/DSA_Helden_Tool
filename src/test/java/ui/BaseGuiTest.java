@@ -7,8 +7,6 @@ import static ui.NavigationPaneController.PAGES.PROPERTIES;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import org.junit.experimental.categories.Category;
 import org.mockito.Mock;
@@ -40,9 +38,6 @@ import ui.NavigationPaneController.PAGES;
 @Category(UITest.class)
 public abstract class BaseGuiTest extends ApplicationTest {
 
-	protected static final Predicate<Aventurian> NOREQUIREMENT = (Aventurian a) -> true;
-	protected static final Consumer<Aventurian> EMPTY = (Aventurian a) -> {
-	};
 	protected MainController mainController;
 	@Mock
 	protected AventurianManager mockedAventurianManager;
