@@ -1,8 +1,6 @@
 package ui;
 
 import aventurian.Aventurian;
-import aventurian.AventurianManager;
-import database.Database;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -29,18 +27,8 @@ public class LogPaneController extends PaneController {
 	private final static PseudoClass warn = PseudoClass.getPseudoClass("warn");
 	private final static PseudoClass error = PseudoClass.getPseudoClass("error");
 
-	public LogPaneController() {
-	}
-
-	void init(AventurianManager manager, Database database, Logger log) {
-		m = manager;
-		db = database;
+	void init(Logger log) {
 		this.logger = log;
-		initControllerSpecificStuff();
-	}
-
-	@Override
-	void initControllerSpecificStuff() {
 		logListView.getStyleClass().add("log-view");
 		logListView.setItems(logItems);
 
@@ -51,28 +39,14 @@ public class LogPaneController extends PaneController {
 				logItems.remove(0, logItems.size() - MAX_ENTRIES);
 			}
 
-			// if (tail.get()) {
-			logListView.scrollTo(logItems.size());
-			// }
 		}));
 		logTransfer.setCycleCount(Timeline.INDEFINITE);
 		logTransfer.setRate(10);
 		logTransfer.play();
 		logListView.setCellFactory(list -> new LogItemListCell());
-		logger.debug("hallo");
-	}
-
-	@Override
-	void update(Aventurian updatedAventurian) {
-		// TODO Auto-generated method stub
-
 	}
 
 	private class LogItemListCell extends ListCell<LogRecord> {
-		// {
-		// showTimestamp.addListener(observable -> updateItem(this.getItem(),
-		// this.isEmpty()));
-		// }
 
 		@Override
 		protected void updateItem(LogRecord item, boolean empty) {
@@ -88,15 +62,7 @@ public class LogPaneController extends PaneController {
 				return;
 			}
 
-			final String context = "";// (item.getContext() == null) ? "" : item.getContext() + " ";
-
-			// if (showTimestamp.get()) {
-			// final String timestamp = (item.getTimestamp() == null) ? ""
-			// : timestampFormatter.format(item.getTimestamp()) + " ";
-			// setText(timestamp + context + item.getMessage());
-			// } else {
-			setText(context + item.getMessage());
-			// }
+			setText(item.getMessage());
 
 			switch (item.getLevel()) {
 			case DEBUG:
@@ -116,5 +82,15 @@ public class LogPaneController extends PaneController {
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void update(Aventurian updatedAventurian) {
+		// nothing to do here since we do not display any info about aventurian
+	}
+
+	@Override
+	void initControllerSpecificStuff() {
+		// nothing to do here
 	}
 }

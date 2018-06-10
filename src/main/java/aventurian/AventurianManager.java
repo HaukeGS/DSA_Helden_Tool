@@ -22,6 +22,7 @@ public class AventurianManager implements Observer {
 	private final MiscelleanousAventurianManager miscManager;
 	private final Database database;
 	private Optional<Aventurian> aventurian = Optional.empty();
+	private Logger logger;
 
 	public AventurianManager(Database db, Logger logger) {
 		this.languageManager = new LanguageAventurianManager(aventurian, db, logger);
@@ -30,6 +31,7 @@ public class AventurianManager implements Observer {
 		this.raceManager = new RaceAventurianManager(aventurian, db, propertyManager, attributesManager, logger);
 		this.miscManager = new MiscelleanousAventurianManager(aventurian, db, logger);
 		this.database = db;
+		this.logger = logger;
 		registerObserver(this);
 	}
 
@@ -166,12 +168,12 @@ public class AventurianManager implements Observer {
 	}
 
 	// skillToRemove is only not null when there is a skill whose requirements are
-	// not met
-	// anymore -> remove it
+	// not met anymore -> remove it
 	@Override
 	public void update(Observable o, Object skillToRemove) {
 		if (o instanceof Aventurian && skillToRemove instanceof Skill) {
 			final Skill toRemove = (Skill) skillToRemove;
+			logger.warn("going to remove/decrease skill " + toRemove.getName());
 			if (toRemove instanceof Property) {
 				final Property p = (Property) toRemove;
 				if (p.isAllowedToDecrease())

@@ -30,7 +30,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (mustIncreaseNativeTongue(l))
 			l.increase();
 		add(l);
-		logger.info("native tongue " + l.getName() + "buyed");
+		logger.info("native tongue " + l.getName() + " added");
 	}
 
 	private boolean mustIncreaseNativeTongue(Language l) {
@@ -56,6 +56,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 			decreaseLanguageWithRefund(l);
 		}
 		remove(l);
+		logger.info("language" + l.getName() + " removed");
 	}
 
 	boolean canRemoveLanguage(Language l) {
@@ -80,6 +81,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		if (!canDecrease(l))
 			throw new IllegalStateException("requirements not met for decreasing " + l.getName());
 		refund(l.getDowngradeRefund());
+		logger.info("language " + l.getName() + " decreased and " + l.getDowngradeRefund() + " were paid back");
 		decrease(l);
 	}
 
@@ -93,6 +95,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 			throw new IllegalStateException("requirements not met for adding " + l.getName());
 		add(l);
 		pay(l.getTotalCosts());
+		logger.info("language" + l.getName() + " bought for " + l.getTotalCosts() + " AP");
 
 	}
 
@@ -105,6 +108,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		if (!canIncrease(l))
 			throw new IllegalStateException("requirements not met for increasing " + l.getName());
 		pay(l.getUpgradeCosts());
+		logger.info("language " + l.getName() + " increased " + l.getUpgradeCosts());
 		increase(l);
 	}
 

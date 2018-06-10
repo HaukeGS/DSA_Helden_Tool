@@ -46,10 +46,10 @@ public class MainController extends PaneController implements Observer {
 	public void init(AventurianManager manager, Database db, Logger logger) {
 		this.m = manager;
 		navigationPaneController.init(this);
+		logPaneController.init(logger);
 		topController.init(manager, db);
 		menuController.init(manager, db);
 		overviewPaneController.init(manager, db);
-		logPaneController.init(manager, db, logger);
 		centerControllers.values().forEach(c -> c.init(manager, db));
 		m.registerObserver(this);
 

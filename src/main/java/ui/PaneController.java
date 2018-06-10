@@ -9,9 +9,6 @@ public abstract class PaneController {
 	protected AventurianManager m;
 	protected Database db;
 
-	public PaneController() {
-		// TODO Auto-generated constructor stub
-	}
 
 	void init(AventurianManager manager, Database database) {
 		m = manager;

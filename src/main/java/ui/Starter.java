@@ -49,7 +49,7 @@ public class Starter extends Application {
 		mainController.init(aventurianManager, db, logger);
 
 		final Scene scene = new Scene(root);
-		scene.getStylesheets().add(this.getClass().getResource("log-view.css").toExternalForm());
+		scene.getStylesheets().add(ui.Starter.class.getResource("/log-view.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 
@@ -63,7 +63,7 @@ public class Starter extends Application {
 	}
 
 	private void loadPage(PAGES p, String fxml) throws IOException {
-		final FXMLLoader l = new FXMLLoader(ui.MainController.class.getResource(fxml));
+		final FXMLLoader l = new FXMLLoader(ui.Starter.class.getResource(fxml));
 		final Parent pane = l.load();
 		final PaneController controller = l.getController();
 		mainController.addLoadedPage(p, controller, pane);
