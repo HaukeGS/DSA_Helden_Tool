@@ -6,12 +6,13 @@ import java.util.Observer;
 import java.util.Optional;
 
 import database.Database;
+import logging.Logger;
 
 public class MiscelleanousAventurianManager extends BaseAventurianManager {
 	private final List<Observer> observers;
 
-	MiscelleanousAventurianManager(Optional<Aventurian> a, Database db) {
-		super(a, db);
+	MiscelleanousAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
+		super(a, db, logger);
 		this.observers = new ArrayList<>();
 	}
 

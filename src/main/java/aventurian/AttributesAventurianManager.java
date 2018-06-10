@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import database.Database;
+import logging.Logger;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 
@@ -14,8 +15,8 @@ class AttributesAventurianManager extends BaseAventurianManager {
 	private final static Predicate<Aventurian> EXCEEDS_MAX_SUM = av -> av
 			.getSumOfPrimaryAttributes2() >= MAX_PRIMARY_ATTRIBUTES_SUM;
 
-	AttributesAventurianManager(Optional<Aventurian> a, Database db) {
-		super(a, db);
+	AttributesAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
+		super(a, db, logger);
 	}
 
 	void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {

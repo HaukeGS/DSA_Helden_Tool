@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import database.Database;
+import logging.Logger;
 import skills.languages.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
@@ -18,8 +19,8 @@ class LanguageAventurianManager extends BaseAventurianManager {
 
 	private final Predicate<Aventurian> HAS_ALREADY_NATIVE_TONGUE = (Aventurian av) -> av.hasNativeTongue();
 
-	 LanguageAventurianManager(Optional<Aventurian> a, Database db) {
-		super(a, db);
+	LanguageAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
+		super(a, db, logger);
 	}
 
 	void addLanguageAsNativeTongue(Language l) {
@@ -29,6 +30,7 @@ class LanguageAventurianManager extends BaseAventurianManager {
 		while (mustIncreaseNativeTongue(l))
 			l.increase();
 		add(l);
+		logger.info("native tongue " + l.getName() + "buyed");
 	}
 
 	private boolean mustIncreaseNativeTongue(Language l) {

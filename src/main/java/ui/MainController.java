@@ -13,6 +13,7 @@ import database.Database;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import logging.Logger;
 import ui.NavigationPaneController.PAGES;
 
 public class MainController extends PaneController implements Observer {
@@ -37,15 +38,18 @@ public class MainController extends PaneController implements Observer {
 	OverviewPaneController overviewPaneController;
 
 	@FXML
+	LogPaneController logPaneController;
+
+	@FXML
 	Pane centerPane;
 
-	@Override
-	public void init(AventurianManager manager, Database db) {
+	public void init(AventurianManager manager, Database db, Logger logger) {
 		this.m = manager;
 		navigationPaneController.init(this);
 		topController.init(manager, db);
 		menuController.init(manager, db);
 		overviewPaneController.init(manager, db);
+		logPaneController.init(manager, db, logger);
 		centerControllers.values().forEach(c -> c.init(manager, db));
 		m.registerObserver(this);
 
@@ -80,6 +84,7 @@ public class MainController extends PaneController implements Observer {
 		topController.update(updatedAventurian);
 		overviewPaneController.update(updatedAventurian);
 		menuController.update(updatedAventurian);
+		logPaneController.update(updatedAventurian);
 		centerControllers.values().forEach(c -> c.update(updatedAventurian));
 
 	}

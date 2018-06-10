@@ -33,7 +33,7 @@ public class RaceAventurianManagerTest extends BaseTest {
 	@Before
 	public void setUp() throws Exception {
 		toTest = new RaceAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedPropertyManager,
-				mockedAttributesManager);
+				mockedAttributesManager, mockedLogger);
 
 	}
 

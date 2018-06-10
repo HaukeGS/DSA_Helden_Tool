@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import database.Database;
+import logging.Logger;
 import skills.attributes.secondary.Lebenspunkte;
 import skills.attributes.secondary.Magieresistenz;
 import skills.attributes.secondary.SecondaryAttribute;
@@ -14,8 +15,8 @@ public class RaceAventurianManager extends BaseAventurianManager {
 	private final AttributesAventurianManager attributesManager;
 
 	public RaceAventurianManager(Optional<Aventurian> a, Database db, PropertyAventurianManager propertyManager,
-			AttributesAventurianManager attributesManager) {
-		super(a, db);
+			AttributesAventurianManager attributesManager, Logger logger) {
+		super(a, db, logger);
 		this.propertyManager = propertyManager;
 		this.attributesManager = attributesManager;
 	}

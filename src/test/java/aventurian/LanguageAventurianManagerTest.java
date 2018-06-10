@@ -26,7 +26,7 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new LanguageAventurianManager(Optional.of(mockedAventurian), mockedDatabase);
+		toTest = new LanguageAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
 	}
 
 	@Test(expected = IllegalStateException.class)

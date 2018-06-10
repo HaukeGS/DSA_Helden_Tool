@@ -24,7 +24,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new PropertyAventurianManager(Optional.of(mockedAventurian), mockedDatabase);
+		toTest = new PropertyAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
 	}
 
 	@Test(expected = IllegalStateException.class)

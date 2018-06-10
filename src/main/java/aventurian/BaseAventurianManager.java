@@ -5,6 +5,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import database.Database;
+import logging.Logger;
 import skills.IncreasableSkill;
 import skills.Skill;
 
@@ -13,6 +14,7 @@ abstract class BaseAventurianManager {
 	protected final Database database;
 	protected Optional<Aventurian> aventurian;
 	protected final LevelCostCalculator calculator;
+	protected final Logger logger;
 
 	protected final static BiPredicate<Aventurian, IncreasableSkill> IS_NOT_INCREASABLE = (a,
 			s) -> !s.isAllowedToIncrease(a);
@@ -25,10 +27,11 @@ abstract class BaseAventurianManager {
 	protected final static BiPredicate<Aventurian, IncreasableSkill> HAS_SKILL = (av, s) -> av.hasSkill(s);
 	protected final static BiPredicate<Aventurian, IncreasableSkill> HAS_NOT_SKILL = (av, s) -> !av.hasSkill(s);
 
-	BaseAventurianManager(Optional<Aventurian> a, Database db) {
+	BaseAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
 		this.calculator = new LevelCostCalculator();
 		this.aventurian = a;
 		this.database = db;
+		this.logger = logger;
 	}
 
 	protected void changeAventurian(Optional<Aventurian> a) {

@@ -6,6 +6,7 @@ import java.util.Observer;
 import java.util.Optional;
 
 import database.Database;
+import logging.Logger;
 import skills.Skill;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
@@ -22,12 +23,12 @@ public class AventurianManager implements Observer {
 	private final Database database;
 	private Optional<Aventurian> aventurian = Optional.empty();
 
-	public AventurianManager(Database db) {
-		this.languageManager = new LanguageAventurianManager(aventurian, db);
-		this.propertyManager = new PropertyAventurianManager(aventurian, db);
-		this.attributesManager = new AttributesAventurianManager(aventurian, db);
-		this.raceManager = new RaceAventurianManager(aventurian, db, propertyManager, attributesManager);
-		this.miscManager = new MiscelleanousAventurianManager(aventurian, db);
+	public AventurianManager(Database db, Logger logger) {
+		this.languageManager = new LanguageAventurianManager(aventurian, db, logger);
+		this.propertyManager = new PropertyAventurianManager(aventurian, db, logger);
+		this.attributesManager = new AttributesAventurianManager(aventurian, db, logger);
+		this.raceManager = new RaceAventurianManager(aventurian, db, propertyManager, attributesManager, logger);
+		this.miscManager = new MiscelleanousAventurianManager(aventurian, db, logger);
 		this.database = db;
 		registerObserver(this);
 	}

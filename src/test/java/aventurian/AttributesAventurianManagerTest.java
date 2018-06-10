@@ -42,7 +42,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AttributesAventurianManager(Optional.of(mockedAventurian), mockedDatabase);
+		toTest = new AttributesAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
 	}
 
 	@Test
@@ -322,6 +322,7 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		verify(a).increaseMod(5);
 		verify(mockedAventurian).pay(anyInt());
 	}
+
 	@Test
 	public void testApplyRaceModNegative() {
 		final SecondaryAttribute a = mock(SecondaryAttribute.class);

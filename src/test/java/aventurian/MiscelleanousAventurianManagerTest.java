@@ -20,7 +20,7 @@ public class MiscelleanousAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new MiscelleanousAventurianManager(Optional.of(mockedAventurian), mockedDatabase);
+		toTest = new MiscelleanousAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
 	}
 
 	@Test

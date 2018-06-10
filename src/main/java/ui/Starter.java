@@ -1,6 +1,7 @@
 package ui;
 
 import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
+import static ui.NavigationPaneController.PAGES.ATTRIBUTES_2;
 import static ui.NavigationPaneController.PAGES.LANGUAGES;
 import static ui.NavigationPaneController.PAGES.PROPERTIES;
 
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logging.Logger;
 import ui.NavigationPaneController.PAGES;
 
 public class Starter extends Application {
@@ -20,6 +22,8 @@ public class Starter extends Application {
 
 	private Database db;
 	private AventurianManager aventurianManager;
+
+	private Logger logger;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -29,7 +33,8 @@ public class Starter extends Application {
 	@Override
 	public void init() {
 		db = new Database();
-		aventurianManager = new AventurianManager(db);
+		logger = new Logger();
+		aventurianManager = new AventurianManager(db, logger);
 	}
 
 	@Override
@@ -39,11 +44,12 @@ public class Starter extends Application {
 		loadPage(LANGUAGES, "/languages.fxml");
 		loadPage(ATTRIBUTES, "/attributes.fxml");
 		loadPage(PROPERTIES, "/propertyPane.fxml");
-		loadPage(PAGES.ATTRIBUTES_2, "/attributes2.fxml");
+		loadPage(ATTRIBUTES_2, "/attributes2.fxml");
 
-		mainController.init(aventurianManager, db);
+		mainController.init(aventurianManager, db, logger);
 
 		final Scene scene = new Scene(root);
+		scene.getStylesheets().add(this.getClass().getResource("log-view.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 
