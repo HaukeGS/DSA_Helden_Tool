@@ -24,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logging.Logger;
 import testsuites.categories.UITest;
 import ui.NavigationPaneController.PAGES;
 
@@ -51,6 +52,9 @@ public abstract class BaseGuiTest extends ApplicationTest {
 
 	@Mock
 	protected Database mockedDatabase;
+	
+	@Mock
+	protected Logger mockedLogger;
 
 	@Override
 	public void init() {
@@ -65,7 +69,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 		loadPage(ATTRIBUTES, "/attributes.fxml");
 		loadPage(PROPERTIES, "/propertyPane.fxml");
 
-		mainController.init(mockedAventurianManager, mockedDatabase);
+		mainController.init(mockedAventurianManager, mockedDatabase, mockedLogger);
 		mockedAventurian.addObserver(mainController);
 		mainController.update(mockedAventurian, null);
 
