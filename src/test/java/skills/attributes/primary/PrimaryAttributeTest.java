@@ -1,14 +1,9 @@
 package skills.attributes.primary;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-
-import skills.attributes.primary.PrimaryAttribute;
-import testsuites.categories.CannotRunHeadless;
 
 public class PrimaryAttributeTest {
 
@@ -61,13 +56,12 @@ public class PrimaryAttributeTest {
 			toTest.increaseMinLevel();
 	}
 
-	@Test
-	@Category(CannotRunHeadless.class)
+	@Test(expected = IllegalStateException.class)
 	public void testDecreaseMinLevelNegative() {
 		for (int i = 0; i < PrimaryAttribute.MIN; i++)
 			toTest.decreaseMinLevel();
 		toTest.decreaseMinLevel();
-		fail("HAUKE: is negative minLevel possible?");
+		
 	}
 
 }

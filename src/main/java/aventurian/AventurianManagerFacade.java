@@ -13,7 +13,7 @@ import skills.attributes.secondary.SecondaryAttribute;
 import skills.languages.Language;
 import skills.properties.Property;
 
-public class AventurianManager implements Observer {
+public class AventurianManagerFacade implements Observer {
 
 	private final LanguageAventurianManager languageManager;
 	private final PropertyAventurianManager propertyManager;
@@ -24,7 +24,7 @@ public class AventurianManager implements Observer {
 	private Optional<Aventurian> aventurian = Optional.empty();
 	private final Logger logger;
 
-	public AventurianManager(Database db, Logger logger) {
+	public AventurianManagerFacade(Database db, Logger logger) {
 		this.languageManager = new LanguageAventurianManager(aventurian, db, logger);
 		this.propertyManager = new PropertyAventurianManager(aventurian, db, logger);
 		this.attributesManager = new AttributesAventurianManager(aventurian, db, logger);
@@ -47,7 +47,7 @@ public class AventurianManager implements Observer {
 	 * @param properties
 	 *            the mock of a {@link PropertyAventurianManager}
 	 */
-	AventurianManager(Optional<Aventurian> a, AttributesAventurianManager attributes,
+	AventurianManagerFacade(Optional<Aventurian> a, AttributesAventurianManager attributes,
 			LanguageAventurianManager languages, PropertyAventurianManager properties, RaceAventurianManager races,
 			MiscelleanousAventurianManager misc, Database db, Logger logger) {
 		this.attributesManager = attributes;

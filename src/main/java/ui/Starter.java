@@ -7,7 +7,7 @@ import static ui.NavigationPaneController.PAGES.PROPERTIES;
 
 import java.io.IOException;
 
-import aventurian.AventurianManager;
+import aventurian.AventurianManagerFacade;
 import database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ public class Starter extends Application {
 	private MainController mainController;
 
 	private Database db;
-	private AventurianManager aventurianManager;
+	private AventurianManagerFacade aventurianManager;
 
 	private Logger logger;
 
@@ -34,7 +34,7 @@ public class Starter extends Application {
 	public void init() {
 		db = new Database();
 		logger = new Logger();
-		aventurianManager = new AventurianManager(db, logger);
+		aventurianManager = new AventurianManagerFacade(db, logger);
 	}
 
 	@Override

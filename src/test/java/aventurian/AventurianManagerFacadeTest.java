@@ -22,8 +22,8 @@ import skills.properties.BadProperty;
 import skills.properties.Property;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AventurianManagerTest extends BaseTest {
-	AventurianManager toTest;
+public class AventurianManagerFacadeTest extends BaseTest {
+	AventurianManagerFacade toTest;
 	@Mock
 	AttributesAventurianManager attributes;
 	@Mock
@@ -37,7 +37,7 @@ public class AventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManager(Optional.of(mockedAventurian), attributes, languages, properties, races, misc,
+		toTest = new AventurianManagerFacade(Optional.of(mockedAventurian), attributes, languages, properties, races, misc,
 				mockedDatabase, mockedLogger);
 	}
 

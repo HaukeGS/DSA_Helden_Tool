@@ -14,7 +14,7 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
 import aventurian.Aventurian;
-import aventurian.AventurianManager;
+import aventurian.AventurianManagerFacade;
 import database.Database;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +40,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 
 	protected MainController mainController;
 	@Mock
-	protected AventurianManager mockedAventurianManager;
+	protected AventurianManagerFacade mockedAventurianManager;
 
 	@Mock
 	protected Aventurian mockedAventurian;

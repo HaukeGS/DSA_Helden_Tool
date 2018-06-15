@@ -28,6 +28,8 @@ public class PrimaryAttribute extends LookupIncreasableSkill {
 	}
 
 	public void decreaseMinLevel() {
+		if (minLevel <= 0)
+			throw new IllegalStateException("minLevel cannot be lower than 0");
 		this.minLevel -= 1;
 	}
 }

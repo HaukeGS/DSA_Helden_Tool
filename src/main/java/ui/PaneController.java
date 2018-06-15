@@ -1,16 +1,16 @@
 package ui;
 
 import aventurian.Aventurian;
-import aventurian.AventurianManager;
+import aventurian.AventurianManagerFacade;
 import database.Database;
 
 public abstract class PaneController {
 
-	protected AventurianManager m;
+	protected AventurianManagerFacade m;
 	protected Database db;
 
 
-	void init(AventurianManager manager, Database database) {
+	void init(AventurianManagerFacade manager, Database database) {
 		m = manager;
 		db = database;
 		initControllerSpecificStuff();

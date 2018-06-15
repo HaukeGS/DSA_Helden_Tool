@@ -8,7 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import aventurian.Aventurian;
-import aventurian.AventurianManager;
+import aventurian.AventurianManagerFacade;
 import database.Database;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -43,7 +43,7 @@ public class MainController extends PaneController implements Observer {
 	@FXML
 	Pane centerPane;
 
-	public void init(AventurianManager manager, Database db, Logger logger) {
+	public void init(AventurianManagerFacade manager, Database db, Logger logger) {
 		this.m = manager;
 		navigationPaneController.init(this);
 		logPaneController.init(logger);
