@@ -4,10 +4,10 @@ import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
 @InstantiableSkill(SkillType.PRIMARY_ATTRIBUTE)
-public class Intelligenz extends PrimaryAttribute {
+public class Klugheit extends PrimaryAttribute {
 	public static final String NAME = "Intelligenz";
 
-	public Intelligenz() {
+	public Klugheit() {
 		super(NAME, "");
 	}
 

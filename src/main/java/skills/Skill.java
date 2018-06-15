@@ -1,6 +1,7 @@
 package skills;
 
 import aventurian.Aventurian;
+import aventurian.AventurianManagerFacade;
 
 /**
  * @author Jonas
@@ -43,7 +44,13 @@ public abstract class Skill implements Comparable<Skill> {
 	public void atGain(Aventurian t) {
 	}
 
+	public void atGain(AventurianManagerFacade m) {
+	}
+
 	public void atLose(Aventurian t) {
+	}
+
+	public void atLose(AventurianManagerFacade m) {
 	}
 
 	/**

@@ -13,8 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 import skills.languages.Language;
@@ -45,11 +43,11 @@ public class AventurianManagerFacadeTest extends BaseTest {
 	public void testCreateNewAventurian() {
 		toTest.createNewAventurian("test", 16500, Race.ORK);
 		verify(mockedDatabase).reset();
-		verify(attributes).changeAventurian(any(Optional.class));
-		verify(languages).changeAventurian(any(Optional.class));
-		verify(properties).changeAventurian(any(Optional.class));
-		verify(misc).changeAventurian(any(Optional.class));
-		verify(races).changeAventurian(any(Optional.class));
+		verify(attributes).changeAventurian(any(Aventurian.class));
+		verify(languages).changeAventurian(any(Aventurian.class));
+		verify(properties).changeAventurian(any(Aventurian.class));
+		verify(misc).changeAventurian(any(Aventurian.class));
+		verify(races).changeAventurian(any(Aventurian.class));
 		verify(attributes).addAttributes();
 		verify(races).buyRaceMods(Race.ORK);
 	}
@@ -70,6 +68,20 @@ public class AventurianManagerFacadeTest extends BaseTest {
 	public void testIncreaseProperty() {
 		toTest.increase(mock(BadProperty.class));
 		verify(properties).increaseProperty(any(BadProperty.class));
+	}
+	
+	@Test
+	public void testIncreasePropertyWithoutPay() {
+		final Property p = mock(Property.class);
+		toTest.increasePropertyWithoutPay(p);
+		verify(properties).increasePropertyWithoutPay(p);
+	}
+	
+	@Test
+	public void testIncreaseSecondaryAttributeWithoutPay() {
+		final SecondaryAttribute s = mock(SecondaryAttribute.class);
+		toTest.increaseSecondaryAttributeWithoutPay(s);
+		verify(attributes).increaseSecondaryAttributeWithoutPay(s);
 	}
 
 	@Test
@@ -134,21 +146,9 @@ public class AventurianManagerFacadeTest extends BaseTest {
 
 	@Test
 	public void increasePrimaryAttribute() {
-		toTest.increasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
-		verify(attributes).increasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
-	}
-
-	@Test
-	public void increasePrimaryAttribute2() {
 		final PrimaryAttribute a = mock(PrimaryAttribute.class);
 		toTest.increase(a);
 		verify(attributes).increasePrimaryAttribute(a);
-	}
-
-	@Test
-	public void decreasePrimaryAttribute() {
-		toTest.decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
-		verify(attributes).decreasePrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE);
 	}
 
 	@Test
@@ -170,18 +170,6 @@ public class AventurianManagerFacadeTest extends BaseTest {
 		final PrimaryAttribute a = mock(PrimaryAttribute.class);
 		toTest.canDecrease(a);
 		verify(attributes).canDecrease(a);
-	}
-
-	@Test
-	public void increaseSecondaryAttribute() {
-		toTest.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
-		verify(attributes).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
-	}
-
-	@Test
-	public void decreaseSecondaryAttribute() {
-		toTest.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
-		verify(attributes).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
 	}
 
 	@Test

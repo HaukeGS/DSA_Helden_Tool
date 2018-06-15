@@ -5,7 +5,7 @@ import java.util.List;
 import aventurian.Aventurian;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
-import skills.attributes.primary.Intelligenz;
+import skills.attributes.primary.Klugheit;
 import skills.attributes.primary.Konstitution;
 import skills.attributes.primary.Mut;
 import skills.attributes.primary.PrimaryAttribute;
@@ -21,7 +21,7 @@ public class Magieresistenz extends SecondaryAttribute {
 
 	@Override
 	public void calculateBasis(List<PrimaryAttribute> primaryAttributes) {
-		final int intelligence = get(primaryAttributes, Intelligenz.NAME).getLevel();
+		final int intelligence = get(primaryAttributes, Klugheit.NAME).getLevel();
 		final int constitution = get(primaryAttributes, Konstitution.NAME).getLevel();
 		final int courage = get(primaryAttributes, Mut.NAME).getLevel();
 

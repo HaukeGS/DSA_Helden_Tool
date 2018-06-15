@@ -1,13 +1,10 @@
 package aventurian;
 
-import static aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE.COURAGE;
-import static aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE.ASTRALPOINTS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -20,8 +17,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
 import skills.IncreasableSkill;
 import skills.Skill;
 import skills.languages.Language;
@@ -36,77 +31,17 @@ public class AventurianTest {
 	private Aventurian toTest;
 	@Mock
 	private Observer mockedObserver;
-	@Mock
-	private PrimaryAttributes mockedPrimaryAttributes;
-	@Mock
-	private SecondaryAttributes mockedSecondaryAttributes;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Aventurian(AVENTURIAN_NAME, AP, mockedPrimaryAttributes, mockedSecondaryAttributes, Race.DWARF);
+		toTest = new Aventurian(AVENTURIAN_NAME, AP, Race.DWARF);
 		toTest.addObserver(mockedObserver);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		toTest.deleteObservers();
-	}
-
-	@Test
-	public void testIsPrimaryAttributeIncreasable() {
-		toTest.isPrimaryAttributeIncreasable(COURAGE);
-		verify(mockedPrimaryAttributes).isIncreasable(COURAGE);
-	}
-
-	@Test
-	public void testIsPrimaryAttributeDecreasable() {
-		toTest.isPrimaryAttributeDecreasable(COURAGE);
-		verify(mockedPrimaryAttributes).isDecreasable(COURAGE);
-	}
-
-	@Test
-	public void testIsSecondaryAttributeIncreasableByBuy() {
-		toTest.isSecondaryAttributeIncreasableByBuy(ASTRALPOINTS);
-		verify(mockedSecondaryAttributes).isIncreasableByBuy(ASTRALPOINTS);
-	}
-
-	@Test
-	public void testIsSecondaryAttributeDecreasableByBuy() {
-		toTest.isSecondaryAttributeDecreasableByBuy(ASTRALPOINTS);
-		verify(mockedSecondaryAttributes).isDecreasableByBuy(ASTRALPOINTS);
-	}
-
-	@Test
-	public void testIncreaseSecondaryAttribute() {
-		toTest.increaseSecondaryAttribute(ASTRALPOINTS, 1);
-		verify(mockedSecondaryAttributes).increaseMod(ASTRALPOINTS, 1);
-	}
-
-	@Test
-	public void testDecreaseSecondaryAttribute() {
-		toTest.decreaseSecondaryAttribute(ASTRALPOINTS, 1);
-		verify(mockedSecondaryAttributes).decreaseMod(ASTRALPOINTS, 1);
-	}
-
-	@Test
-	public void testIncreaseSecondaryAttributeByBuy() {
-		toTest.increaseSecondaryAttributeByBuy(ASTRALPOINTS);
-		verify(mockedSecondaryAttributes).increaseModBuy(ASTRALPOINTS);
-	}
-
-	@Test
-	public void testDecreaseSecondaryAttributeByBuy() {
-		toTest.decreaseSecondaryAttributeByBuy(ASTRALPOINTS);
-		verify(mockedSecondaryAttributes).decreaseModBuy(ASTRALPOINTS);
-	}
-
-	@Test
-	public void testGetSecondaryAttributeCost() {
-		toTest.getSecondaryAttributeCost(ASTRALPOINTS);
-		verify(mockedSecondaryAttributes).getCost(ASTRALPOINTS);
-	}
-
-	@Test
+	}@Test
 	public void testPayValid() throws Exception {
 		toTest.pay(1000);
 		final int expected = AP - 1000;
@@ -159,11 +94,10 @@ public class AventurianTest {
 
 	@Test
 	public void testAdd() throws Exception {
-		final Language testLanguage = mock(Language.class);
-		when(testLanguage.getName()).thenReturn("testLanguage");
-		toTest.add(testLanguage);
-		assertTrue(toTest.hasSkill(testLanguage));
-		verify(testLanguage).atGain(toTest);
+		final Skill testSkill = mock(Skill.class);
+		when(testSkill.getName()).thenReturn("testSkill");
+		toTest.add(testSkill);
+		assertTrue(toTest.hasSkill(testSkill));
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -258,55 +192,6 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testGetSumOfPrimaryAttributes() throws Exception {
-		toTest.getSumOfPrimaryAttributes();
-		verify(mockedPrimaryAttributes).getSum();
-	}
-
-	@Test
-	public void testGetPrimaryAttribute() throws Exception {
-		toTest.getPrimaryAttribute(COURAGE);
-		verify(mockedPrimaryAttributes).getPrimaryAttribute(COURAGE);
-	}
-
-	@Test
-	public void testGetMaxOfPrimaryAttribute() throws Exception {
-		toTest.getMaxOfPrimaryAttribute(COURAGE);
-		verify(mockedPrimaryAttributes).getMaximumOfPrimaryAttribute(COURAGE);
-	}
-
-	@Test
-	public void testIncreasePrimaryAttribute() throws Exception {
-		toTest.increasePrimaryAttribute(COURAGE);
-		verify(mockedPrimaryAttributes).increase(COURAGE);
-		verify(mockedSecondaryAttributes, times(2)).updateValues(mockedPrimaryAttributes);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
-	public void testDecrasePrimaryAttribute() throws Exception {
-		toTest.addObserver(mockedObserver);
-		toTest.decrasePrimaryAttribute(COURAGE);
-		verify(mockedPrimaryAttributes).decrease(COURAGE);
-		verify(mockedSecondaryAttributes, times(2)).updateValues(mockedPrimaryAttributes);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
-	public void testIncreaseMaximumOfPrimaryAttribute() throws Exception {
-		toTest.increaseMaximumOfPrimaryAttribute(COURAGE);
-		verify(mockedPrimaryAttributes).increaseMaximum(COURAGE);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
-	public void testDecreaseMaximumOfPrimaryAttribute() throws Exception {
-		toTest.decreaseMaximumOfPrimaryAttribute(COURAGE);
-		verify(mockedPrimaryAttributes).decreaseMaximum(COURAGE);
-		verify(mockedObserver, atLeastOnce()).update(toTest, null);
-	}
-
-	@Test
 	public void testGetPointsInAdvantagesValid() throws Exception {
 		assertEquals(0, toTest.getPointsInAdvantages());
 		final Property p = mock(Property.class);
@@ -361,12 +246,6 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testGetSecondaryAttribute() {
-		toTest.getSecondaryAttribute(SECONDARY_ATTRIBUTE.HITPOINTS);
-		verify(mockedSecondaryAttributes).getValueOf(SECONDARY_ATTRIBUTE.HITPOINTS);
-	}
-
-	@Test
 	public void testGetDisadvantages() {
 		final Property disadvantage = mock(Property.class);
 		when(disadvantage.isDisadvantage()).thenReturn(true);
@@ -417,50 +296,6 @@ public class AventurianTest {
 		toTest.remove(l1);
 
 		assertEquals(4, toTest.getLevelSumOfLanguages());
-	}
-
-	@Test
-	public void testGetAPInAttributes() {
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTUITION)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CHARISMA)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.AGILITY)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CONSTITUTION)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(8);
-		assertEquals(0, toTest.getAPinAttributes());
-
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(9);
-		assertEquals(220, toTest.getAPinAttributes());
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.STRENGTH)).thenReturn(9);
-		assertEquals(2 * 220, toTest.getAPinAttributes());
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.DEXTERITY)).thenReturn(10);
-		assertEquals(2 * 220 + 250, toTest.getAPinAttributes());
-	}
-
-	@Test
-	public void testGetMaximumOfPrimaryAttributes() {
-		int actual = toTest.getMaximumOf(PRIMARY_ATTRIBUTE.values());
-		int expected = 0;
-		assertEquals(expected, actual);
-
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.COURAGE)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTUITION)).thenReturn(8);
-		actual = toTest.getMaximumOf(PRIMARY_ATTRIBUTE.values());
-		expected = 8;
-		assertEquals(expected, actual);
-
-		when(mockedPrimaryAttributes.getPrimaryAttribute(PRIMARY_ATTRIBUTE.CHARISMA)).thenReturn(12);
-		actual = toTest.getMaximumOf(PRIMARY_ATTRIBUTE.values());
-		expected = 12;
-		assertEquals(expected, actual);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetMaximumOfPrimaryAttributesInvalidArgument() {
-		toTest.getMaximumOf();
 	}
 
 	@Test

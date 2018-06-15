@@ -9,7 +9,7 @@ import skills.attributes.primary.PrimaryAttribute;
 
 @InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
 public class Erschoepfungsschwelle extends SecondaryAttribute {
-	static final String NAME = "Erschöpfungsschwelle";
+	public static final String NAME = "Erschöpfungsschwelle";
 
 	public Erschoepfungsschwelle() {
 		super(NAME, "");

@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import aventurian.Aventurian;
-import skills.attributes.primary.Intelligenz;
+import skills.attributes.primary.Klugheit;
 import skills.attributes.primary.Konstitution;
 import skills.attributes.primary.Mut;
 import skills.attributes.primary.PrimaryAttribute;
@@ -35,8 +35,8 @@ public class MagieresistenzTest {
 	}
 
 	private List<PrimaryAttribute> mockPrimaryAttributes() {
-		final PrimaryAttribute intelligence = Mockito.mock(Intelligenz.class);
-		when(intelligence.getName()).thenReturn(Intelligenz.NAME);
+		final PrimaryAttribute intelligence = Mockito.mock(Klugheit.class);
+		when(intelligence.getName()).thenReturn(Klugheit.NAME);
 		when(intelligence.getLevel()).thenReturn(10);
 		final PrimaryAttribute courage = mock(Mut.class);
 		when(courage.getName()).thenReturn(Mut.NAME);

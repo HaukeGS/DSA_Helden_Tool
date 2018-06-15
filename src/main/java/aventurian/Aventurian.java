@@ -10,8 +10,6 @@ import java.util.Observer;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import aventurian.LevelCostCalculator.Column;
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import skills.IncreasableSkill;
 import skills.Skill;
 import skills.attributes.primary.PrimaryAttribute;
@@ -22,12 +20,8 @@ import skills.properties.Property;
 
 public class Aventurian extends Observable {
 
-	private final LevelCostCalculator calculator;
-
 	private String nameOfAventurian;
 	private int adventurePoints;
-	private final PrimaryAttributes primaryAttributes;
-	private final SecondaryAttributes secondaryAttributes;
 
 	private final List<Skill> allSkills;
 
@@ -36,26 +30,25 @@ public class Aventurian extends Observable {
 
 	private final Race race;
 
-	public static final int MAX_ATTRIBUTES_SUM = 101;
-
-	public Aventurian(String name, int ap, Race r) {
-		this(name, ap, new PrimaryAttributes(), new SecondaryAttributes(), r);
-	}
-
-	Aventurian(String name, int ap, PrimaryAttributes primary, SecondaryAttributes secondary, Race r) {
+	Aventurian(String name, int ap, Race r) {
 		this.nameOfAventurian = name;
-		this.primaryAttributes = primary;
-		this.secondaryAttributes = secondary;
 		this.adventurePoints = ap;
 		this.race = r;
 		this.allSkills = new ArrayList<>();
-		if (secondary != null)
-			secondaryAttributes.updateValues(primaryAttributes);
-		this.calculator = new LevelCostCalculator();
 	}
 
 	public int getAdventurePoints() {
 		return adventurePoints;
+	}
+
+	public int getPrimaryAttribute(String attributeName) {
+		return getStreamOfPrimaryAttributes().filter(pa -> pa.getName().equals(attributeName)).findFirst()
+				.map(PrimaryAttribute::getLevel)
+				.orElseThrow(() -> new IllegalStateException("could not find primary attribute " + attributeName));
+	}
+
+	public Optional<Property> getProperty(String name) {
+		return getStreamOfProperties().filter(prop -> prop.getName().equals(name)).findFirst();
 	}
 
 	void pay(int cost) {
@@ -81,14 +74,7 @@ public class Aventurian extends Observable {
 
 	void add(Skill s) {
 		allSkills.add(s);
-		s.atGain(this);
 		setChangedAndNotifyObservers(getSkillToRemove());
-	}
-
-	public int getMaximumOf(PRIMARY_ATTRIBUTE... a) {
-		return Stream.of(a).mapToInt(pA -> primaryAttributes.getPrimaryAttribute(pA)).max()
-				.orElseThrow(() -> new IllegalArgumentException());
-
 	}
 
 	void remove(Skill s) {
@@ -115,73 +101,15 @@ public class Aventurian extends Observable {
 	}
 
 	public boolean hasSkill(String skillName) {
-		return getStreamOfSkills().anyMatch((s) -> s.getName().equals(skillName));
+		return getStreamOfSkills().anyMatch(s -> s.getName().equals(skillName));
 	}
 
-	public int getSumOfPrimaryAttributes() {
-		return primaryAttributes.getSum();
-	}
-	
 	int getSumOfPrimaryAttributes2() {
 		return getStreamOfPrimaryAttributes().mapToInt(PrimaryAttribute::getLevel).sum();
 	}
 
-	public boolean isPrimaryAttributeIncreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		return primaryAttributes.isIncreasable(a);
-	}
-
-	public boolean isPrimaryAttributeDecreasable(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		return primaryAttributes.isDecreasable(a);
-	}
-
 	public Race getRace() {
 		return race;
-	}
-
-	public int getPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		return primaryAttributes.getPrimaryAttribute(a);
-	}
-
-	public int getMaxOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		return primaryAttributes.getMaximumOfPrimaryAttribute(a);
-	}
-
-	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		primaryAttributes.increase(a);
-		secondaryAttributes.updateValues(primaryAttributes);
-		setChangedAndNotifyObservers(getSkillToRemove());
-	}
-
-	public boolean isSecondaryAttributeIncreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		return secondaryAttributes.isIncreasableByBuy(a);
-	}
-
-	public boolean isSecondaryAttributeDecreasableByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		return secondaryAttributes.isDecreasableByBuy(a);
-	}
-
-	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a, int mod) {
-		secondaryAttributes.increaseMod(a, mod);
-	}
-
-	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a, int mod) {
-		secondaryAttributes.decreaseMod(a, mod);
-	}
-
-	public void increaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		secondaryAttributes.increaseModBuy(a);
-	}
-
-	public void decreaseSecondaryAttributeByBuy(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		secondaryAttributes.decreaseModBuy(a);
-	}
-
-	int getSecondaryAttributeCost(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		return secondaryAttributes.getCost(a);
-	}
-
-	public int getSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		return secondaryAttributes.getValueOf(a);
 	}
 
 	private void setChangedAndNotifyObservers() {
@@ -192,23 +120,6 @@ public class Aventurian extends Observable {
 	private void setChangedAndNotifyObservers(Optional<Skill> s) {
 		setChanged();
 		notifyObservers(s.orElse(null));
-	}
-
-	public void decrasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
-		primaryAttributes.decrease(attribute);
-		secondaryAttributes.updateValues(primaryAttributes);
-
-		setChangedAndNotifyObservers(getSkillToRemove());
-	}
-
-	void increaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
-		primaryAttributes.increaseMaximum(attribute);
-		setChangedAndNotifyObservers(getSkillToRemove());
-	}
-
-	void decreaseMaximumOfPrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE attribute) {
-		primaryAttributes.decreaseMaximum(attribute);
-		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	public String getName() {
@@ -267,20 +178,6 @@ public class Aventurian extends Observable {
 		return isConsecrated;
 	}
 
-	public boolean isPrimaryAttributesLowerThanThreshhold() {
-		return getSumOfPrimaryAttributes() < MAX_ATTRIBUTES_SUM;
-	}
-
-	// TODO this does not fit here... levelCostCalculator should not be needed here.
-	// 8 magic number?!
-	public int getAPinAttributes() {
-		int sum = 0;
-		for (final PRIMARY_ATTRIBUTE a : PRIMARY_ATTRIBUTE.values()) {
-			sum += calculator.getCost(8, primaryAttributes.getPrimaryAttribute(a), Column.H);
-		}
-		return sum;
-	}
-	
 	public int getAPInAttributes() {
 		return getStreamOfPrimaryAttributes().mapToInt(PrimaryAttribute::getTotalCosts).sum();
 	}
@@ -300,10 +197,34 @@ public class Aventurian extends Observable {
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
-	void increaseSkill(IncreasableSkill s) {
+	 void increaseSkill(IncreasableSkill s) {
 		s.increase();
 		updateSecondaryAttributes();
 		setChangedAndNotifyObservers(getSkillToRemove());
+	}
+
+	public void increaseSkill(String name) {
+		findIncreasableSkill(name).ifPresent(iS -> {
+			iS.increase();
+			updateSecondaryAttributes();
+			setChangedAndNotifyObservers(getSkillToRemove());
+		});
+	}
+
+	public void decreaseSkill(String name) {
+		findIncreasableSkill(name).ifPresent(iS -> {
+			iS.decrease();
+			updateSecondaryAttributes();
+			setChangedAndNotifyObservers(getSkillToRemove());
+		});
+	}
+
+	private Optional<IncreasableSkill> findIncreasableSkill(String name) {
+		return getStreamOfIncreasableSkills().filter(s -> s.getName().equals(name)).findFirst();
+	}
+
+	private Stream<IncreasableSkill> getStreamOfIncreasableSkills() {
+		return getStreamOfSkills().filter(IncreasableSkill.class::isInstance).map(IncreasableSkill.class::cast);
 	}
 
 	void updateSecondaryAttributes() {

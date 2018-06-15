@@ -8,8 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +24,8 @@ public class LanguageAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new LanguageAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
+		toTest = new LanguageAventurianManager(mockedFacade, mockedDatabase, mockedLogger);
+		toTest.changeAventurian(mockedAventurian);
 	}
 
 	@Test(expected = IllegalStateException.class)

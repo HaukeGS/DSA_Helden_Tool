@@ -21,15 +21,14 @@ public class AventurianManagerFacade implements Observer {
 	private final RaceAventurianManager raceManager;
 	private final MiscelleanousAventurianManager miscManager;
 	private final Database database;
-	private Optional<Aventurian> aventurian = Optional.empty();
 	private final Logger logger;
 
 	public AventurianManagerFacade(Database db, Logger logger) {
-		this.languageManager = new LanguageAventurianManager(aventurian, db, logger);
-		this.propertyManager = new PropertyAventurianManager(aventurian, db, logger);
-		this.attributesManager = new AttributesAventurianManager(aventurian, db, logger);
-		this.raceManager = new RaceAventurianManager(aventurian, db, propertyManager, attributesManager, logger);
-		this.miscManager = new MiscelleanousAventurianManager(aventurian, db, logger);
+		this.languageManager = new LanguageAventurianManager( this, db, logger);
+		this.propertyManager = new PropertyAventurianManager( this, db, logger);
+		this.attributesManager = new AttributesAventurianManager( this, db, logger);
+		this.raceManager = new RaceAventurianManager( this, db, propertyManager, attributesManager, logger);
+		this.miscManager = new MiscelleanousAventurianManager( this, db, logger);
 		this.database = db;
 		this.logger = logger;
 		registerObserver(this);
@@ -62,7 +61,7 @@ public class AventurianManagerFacade implements Observer {
 
 	public void createNewAventurian(String name, int startingAP, Race race) {
 		database.reset();
-		this.aventurian = Optional.of(new Aventurian(name, startingAP, race));
+		final Aventurian aventurian = new Aventurian(name, startingAP, race);
 		attributesManager.changeAventurian(aventurian);
 		propertyManager.changeAventurian(aventurian);
 		languageManager.changeAventurian(aventurian);
@@ -70,22 +69,6 @@ public class AventurianManagerFacade implements Observer {
 		miscManager.changeAventurian(aventurian);
 		attributesManager.addAttributes();
 		raceManager.buyRaceMods(race);
-	}
-
-	public void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		this.attributesManager.increasePrimaryAttribute(a);
-	}
-
-	public void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		this.attributesManager.decreasePrimaryAttribute(a);
-	}
-
-	public void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		this.attributesManager.increaseSecondaryAttribute(a);
-	}
-
-	public void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		this.attributesManager.decreaseSecondaryAttribute(a);
 	}
 
 	public void add(Property p) {
@@ -98,6 +81,10 @@ public class AventurianManagerFacade implements Observer {
 
 	public void increase(Property p) {
 		this.propertyManager.increaseProperty(p);
+	}
+	
+	public void increasePropertyWithoutPay(Property p) {
+		this.propertyManager.increasePropertyWithoutPay(p);
 	}
 
 	public boolean canIncrease(Property p) {
@@ -210,6 +197,11 @@ public class AventurianManagerFacade implements Observer {
 		attributesManager.increaseSecondaryAttribute(a);
 	}
 
+	public void increaseSecondaryAttributeWithoutPay(SecondaryAttribute s) {
+		attributesManager.increaseSecondaryAttributeWithoutPay(s);
+		
+	}
+
 	public void decrease(SecondaryAttribute a) {
 		attributesManager.decreaseSecondaryAttribute(a);
 	}
@@ -228,6 +220,10 @@ public class AventurianManagerFacade implements Observer {
 
 	public boolean canIncrease(PrimaryAttribute a) {
 		return attributesManager.canIncrease(a);
+	}
+	
+	public Database getDatabase() {
+		return database;
 	}
 
 }

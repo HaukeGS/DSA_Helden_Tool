@@ -9,12 +9,13 @@ import logging.Logger;
 import skills.IncreasableSkill;
 import skills.Skill;
 
-abstract class BaseAventurianManager {
+class BaseAventurianManager {
 
 	protected final Database database;
 	protected Optional<Aventurian> aventurian;
 	protected final LevelCostCalculator calculator;
 	protected final Logger logger;
+	protected final AventurianManagerFacade aventurianManagerFacade;
 
 	protected final static BiPredicate<Aventurian, IncreasableSkill> IS_NOT_INCREASABLE = (a,
 			s) -> !s.isAllowedToIncrease(a);
@@ -27,15 +28,17 @@ abstract class BaseAventurianManager {
 	protected final static BiPredicate<Aventurian, IncreasableSkill> HAS_SKILL = (av, s) -> av.hasSkill(s);
 	protected final static BiPredicate<Aventurian, IncreasableSkill> HAS_NOT_SKILL = (av, s) -> !av.hasSkill(s);
 
-	BaseAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
+	protected BaseAventurianManager(final AventurianManagerFacade aventurianManagerFacade, final Database db,
+			final Logger logger) {
 		this.calculator = new LevelCostCalculator();
-		this.aventurian = a;
+		this.aventurianManagerFacade = aventurianManagerFacade;
+		this.aventurian = Optional.empty();
 		this.database = db;
 		this.logger = logger;
 	}
 
-	protected void changeAventurian(Optional<Aventurian> a) {
-		this.aventurian = a;
+	protected void changeAventurian(Aventurian a) {
+		this.aventurian = Optional.of(a);
 	}
 
 	protected final void pay(int cost) {
@@ -47,11 +50,17 @@ abstract class BaseAventurianManager {
 	}
 
 	protected final void remove(Skill s) {
-		aventurian.ifPresent(a -> a.remove(s));
+		aventurian.ifPresent(a -> {
+			a.remove(s);
+			s.atLose(aventurianManagerFacade);
+		});
 	}
 
 	protected final void add(Skill s) {
-		aventurian.ifPresent(a -> a.add(s));
+		aventurian.ifPresent(a -> {
+			a.add(s);
+			s.atGain(aventurianManagerFacade);
+		});
 	}
 
 	protected void decrease(IncreasableSkill s) {

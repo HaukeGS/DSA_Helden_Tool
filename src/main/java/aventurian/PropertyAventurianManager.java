@@ -1,6 +1,5 @@
 package aventurian;
 
-import java.util.Optional;
 import java.util.function.BiPredicate;
 
 import database.Database;
@@ -22,8 +21,8 @@ class PropertyAventurianManager extends BaseAventurianManager {
 	private final BiPredicate<Aventurian, Property> EXCEEDS_MAX_BADPROPERTYLEVELS_BY_INCREASE = (av,
 			p) -> p instanceof BadProperty && av.getBadPropertySum() >= MAX_BAD_PROPERTIES_SUM;
 
-	PropertyAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
-		super(a, db, logger);
+	PropertyAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db, Logger logger) {
+		super(aventurianManagerFacade, db, logger);
 	}
 
 	void addProperty(Property p) {
@@ -34,7 +33,6 @@ class PropertyAventurianManager extends BaseAventurianManager {
 		else
 			refund(p.getTotalCosts());
 		add(p);
-
 	}
 
 	boolean canAdd(Property p) {
@@ -115,4 +113,9 @@ class PropertyAventurianManager extends BaseAventurianManager {
 				|| IS_NOT_DECREASABLE.test(p)).orElse(true);
 	}
 
+	void increasePropertyWithoutPay(Property p) {
+		if (!canIncrease(p))
+			throw new IllegalStateException("requirements not met for increasing " + p.getName());
+		increase(p);
+	}
 }

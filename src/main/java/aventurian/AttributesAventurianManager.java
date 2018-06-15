@@ -1,8 +1,5 @@
 package aventurian;
 
-import static aventurian.LevelCostCalculator.Column.H;
-
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import database.Database;
@@ -15,48 +12,8 @@ class AttributesAventurianManager extends BaseAventurianManager {
 	private final static Predicate<Aventurian> EXCEEDS_MAX_SUM = av -> av
 			.getSumOfPrimaryAttributes2() >= MAX_PRIMARY_ATTRIBUTES_SUM;
 
-	AttributesAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
-		super(a, db, logger);
-	}
-
-	void increasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		aventurian.ifPresent(av -> {
-			final int cost = calculator.getCost(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) + 1, H);
-			if (av.isPrimaryAttributesLowerThanThreshhold() && av.isPrimaryAttributeIncreasable(a)) {
-				av.increasePrimaryAttribute(a);
-				pay(cost);
-			}
-		});
-	}
-
-	void decreasePrimaryAttribute(PrimaryAttributes.PRIMARY_ATTRIBUTE a) {
-		aventurian.ifPresent(av -> {
-			final int cost = calculator.getRefund(av.getPrimaryAttribute(a), av.getPrimaryAttribute(a) - 1, H);
-			if (av.isPrimaryAttributeDecreasable(a)) {
-				av.decrasePrimaryAttribute(a);
-				refund(cost);
-			}
-		});
-	}
-
-	void increaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		aventurian.ifPresent(av -> {
-			if (av.isSecondaryAttributeIncreasableByBuy(a)) {
-				final int cost = av.getSecondaryAttributeCost(a);
-				av.increaseSecondaryAttributeByBuy(a);
-				pay(cost);
-			}
-		});
-	}
-
-	void decreaseSecondaryAttribute(SecondaryAttributes.SECONDARY_ATTRIBUTE a) {
-		aventurian.ifPresent(av -> {
-			if (av.isSecondaryAttributeDecreasableByBuy(a)) {
-				final int cost = av.getSecondaryAttributeCost(a);
-				av.decreaseSecondaryAttributeByBuy(a);
-				refund(cost);
-			}
-		});
+	AttributesAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db, Logger logger) {
+		super(aventurianManagerFacade, db, logger);
 	}
 
 	void addAttributes() {
@@ -130,6 +87,12 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		return !(aventurian.map(av -> HAS_NOT_SKILL.test(av, a)//
 				|| IS_NOT_INCREASABLE.test(av, a)//
 				|| EXCEEDS_MAX_SUM.test(av)).orElse(true));
+	}
+
+	public void increaseSecondaryAttributeWithoutPay(SecondaryAttribute s) {
+		if (!canIncrease(s))
+			throw new IllegalStateException("requirements not met for increasing " + s.getName());
+		increase(s);
 	}
 
 }

@@ -12,5 +12,7 @@ public class BaseTest {
 	protected Database mockedDatabase;
 	@Mock
 	protected Logger mockedLogger;
+	@Mock
+	protected AventurianManagerFacade mockedFacade;
 
 }

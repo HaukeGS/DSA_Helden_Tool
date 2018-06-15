@@ -10,11 +10,8 @@ import aventurian.AventurianTest;
 import aventurian.LanguageAventurianManagerTest;
 import aventurian.LevelCostCalculatorTest;
 import aventurian.MiscelleanousAventurianManagerTest;
-import aventurian.PrimaryAttributesTest;
 import aventurian.PropertyAventurianManagerTest;
 import aventurian.RaceAventurianManagerTest;
-import aventurian.SecondaryAttributeHelperTest;
-import aventurian.SecondaryAttributesTest;
 import database.DatabaseTest;
 import skills.LinearIncreasableSkillTest;
 import skills.SkillTest;
@@ -55,8 +52,7 @@ import ui.PropertyPaneTest;
 import ui.TopPaneTest;
 
 @RunWith(Categories.class)
-@Suite.SuiteClasses({ PrimaryAttributesTest.class, SecondaryAttributeHelperTest.class, SecondaryAttributesTest.class,
-		AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
+@Suite.SuiteClasses({ AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
 		PropertyTest.class, AventurianManagerFacadeTest.class, PropertyAventurianManagerTest.class,
 		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
 		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class,

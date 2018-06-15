@@ -1,12 +1,11 @@
 package aventurian;
 
-import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
 import database.Database;
 import logging.Logger;
+import skills.attributes.primary.Klugheit;
 import skills.languages.Language;
 
 class LanguageAventurianManager extends BaseAventurianManager {
@@ -15,12 +14,12 @@ class LanguageAventurianManager extends BaseAventurianManager {
 
 	private final BiPredicate<Aventurian, Language> EXCEEDS_MAX_SUM_AS_NATIVE_TONGUE = (Aventurian a,
 			Language l) -> a.getLevelSumOfLanguages() + Math.min(l.getMaxLevel(), Language.NATIVE_TONGUE_LEVEL) > a
-					.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE);
+					.getPrimaryAttribute(Klugheit.NAME);
 
 	private final Predicate<Aventurian> HAS_ALREADY_NATIVE_TONGUE = (Aventurian av) -> av.hasNativeTongue();
 
-	LanguageAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
-		super(a, db, logger);
+	LanguageAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db, Logger logger) {
+		super(aventurianManagerFacade, db, logger);
 	}
 
 	void addLanguageAsNativeTongue(Language l) {

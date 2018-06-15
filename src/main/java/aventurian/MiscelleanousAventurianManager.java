@@ -3,7 +3,6 @@ package aventurian;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
-import java.util.Optional;
 
 import database.Database;
 import logging.Logger;
@@ -11,8 +10,8 @@ import logging.Logger;
 public class MiscelleanousAventurianManager extends BaseAventurianManager {
 	private final List<Observer> observers;
 
-	MiscelleanousAventurianManager(Optional<Aventurian> a, Database db, Logger logger) {
-		super(a, db, logger);
+	MiscelleanousAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db, Logger logger) {
+		super(aventurianManagerFacade, db, logger);
 		this.observers = new ArrayList<>();
 	}
 
@@ -31,7 +30,7 @@ public class MiscelleanousAventurianManager extends BaseAventurianManager {
 	}
 
 	@Override
-	protected void changeAventurian(Optional<Aventurian> a) {
+	protected void changeAventurian(Aventurian a) {
 		super.changeAventurian(a);
 		addObserversToAventurian();
 	}

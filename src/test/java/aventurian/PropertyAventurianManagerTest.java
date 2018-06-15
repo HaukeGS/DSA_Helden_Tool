@@ -1,13 +1,13 @@
 package aventurian;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,15 +24,16 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new PropertyAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
+		toTest = new PropertyAventurianManager(mockedFacade, mockedDatabase, mockedLogger);
+		toTest.changeAventurian(mockedAventurian);
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testAddPropertyAdvantageExceedsMaxPointsInAdvantages() {
+	@Test
+	public void testCanAddPropertyAdvantageExceedsMaxPointsInAdvantages() {
 		final Property p = createPropertyMock(true, true);
 		when(mockedAventurian.getPointsInAdvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_IN_ADVANTAGES);
 
-		toTest.addProperty(p);
+		assertFalse(toTest.canAdd(p));
 	}
 
 	private Property createPropertyMock(boolean isAllowed, boolean isAdvantage) {
@@ -45,10 +46,10 @@ public class PropertyAventurianManagerTest extends BaseTest {
 		return p;
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testAddPropertyAdvantageNotAllowed() {
+	@Test
+	public void testCanAddPropertyAdvantageNotAllowed() {
 		final Property p = createPropertyMock(false, true);
-		toTest.addProperty(p);
+		assertFalse(toTest.canAdd(p));
 	}
 
 	@Test
@@ -63,19 +64,30 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testAddPropertyDisadvantageExceedMaxPointsOutDisadvantages() {
+	public void testAddPropertyDisdvantageAllNotConditionsMet() {
+		final Property p = createPropertyMock(false, false);
+		
+		toTest.addProperty(p);
+
+		verify(mockedAventurian, never()).add(p);
+		verify(mockedAventurian, never()).refund(anyInt());
+
+	}
+
+	@Test
+	public void testCanAddPropertyDisadvantageExceedMaxPointsOutDisadvantages() {
 		final Property p = createPropertyMock(true, false);
 		when(mockedAventurian.getPointsOutDisadvantages())
 				.thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
 
-		toTest.addProperty(p);
+		assertFalse(toTest.canAdd(p));
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testAddPropertyAlreadyHasSkill() {
+	@Test
+	public void testCanAddPropertyAlreadyHasSkill() {
 		final Property p = createPropertyMock(true, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
-		toTest.addProperty(p);
+		assertFalse(toTest.canAdd(p));
 
 	}
 
@@ -311,10 +323,50 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	@Test
 	public void testAddPropertyAdvantageAllConditionsMet() {
 		final Property p = createPropertyMock(true, true);
-
+		
 		toTest.addProperty(p);
 
 		verify(mockedAventurian).add(p);
 		verify(mockedAventurian).pay(anyInt());
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testAddPropertyAdvantageNotAllConditionsMet() {
+		final Property p = createPropertyMock(false, true);
+		
+		toTest.addProperty(p);
+
+		verify(mockedAventurian, never()).add(p);
+		verify(mockedAventurian, never()).pay(anyInt());
+	}
+	
+	@Test
+	public void testCanAddAllConditionsMet() {
+		final Property p = createPropertyMock(true, true);
+		assertTrue(toTest.canAdd(p));
+	}
+	
+	@Test
+	public void testIncreasePropertyWithoutPayAllConditionsMet() {
+		final Property p = createPropertyMock(true, true);
+		when(mockedAventurian.hasSkill(p)).thenReturn(true);
+		when(p.isAllowedToIncrease(mockedAventurian)).thenReturn(true);
+		
+		toTest.increasePropertyWithoutPay(p);
+		
+		verify(mockedAventurian).increaseSkill(p);
+		verify(mockedAventurian, never()).pay(anyInt());
+		
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testIncreasePropertyWithoutPayNotAllConditionsMet() {
+		final Property p = createPropertyMock(false, true);
+		
+		toTest.increasePropertyWithoutPay(p);
+		
+		verify(mockedAventurian, never()).increaseSkill(p);
+		verify(mockedAventurian, never()).pay(anyInt());
+		
 	}
 }

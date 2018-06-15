@@ -1,9 +1,11 @@
 package skills.properties;
 
 import aventurian.Aventurian;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import aventurian.AventurianManagerFacade;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
+import skills.attributes.secondary.Erschoepfungsschwelle;
+import skills.attributes.secondary.SecondaryAttribute;
 
 @InstantiableSkill(SkillType.PROPERTY)
 public class Ausdauernd extends Property {
@@ -21,8 +23,9 @@ public class Ausdauernd extends Property {
 	}
 	
 	@Override
-	public void atGain(Aventurian a) {
-		a.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1);
+	public void atGain(AventurianManagerFacade a) {
+		final SecondaryAttribute s = a.getDatabase().getSecondaryAttributes().stream().filter(sa -> sa.getName().equals(Erschoepfungsschwelle.NAME)).findFirst().orElseThrow(() -> new IllegalStateException(""));
+		a.increaseSecondaryAttributeWithoutPay(s);
 	}
 	
 	@Override

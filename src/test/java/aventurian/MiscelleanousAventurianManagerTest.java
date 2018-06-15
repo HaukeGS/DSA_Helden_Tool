@@ -4,7 +4,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import java.util.Observer;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +19,8 @@ public class MiscelleanousAventurianManagerTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new MiscelleanousAventurianManager(Optional.of(mockedAventurian), mockedDatabase, mockedLogger);
+		toTest = new MiscelleanousAventurianManager(mockedFacade, mockedDatabase, mockedLogger);
+		toTest.changeAventurian(mockedAventurian);
 	}
 
 	@Test
@@ -34,7 +34,7 @@ public class MiscelleanousAventurianManagerTest extends BaseTest {
 		testRegisterObserver();
 
 		final Aventurian anotherMockedAventurian = mock(Aventurian.class);
-		toTest.changeAventurian(Optional.of(anotherMockedAventurian));
+		toTest.changeAventurian(anotherMockedAventurian);
 		verify(anotherMockedAventurian).addObserver(mockedObserver);
 
 	}
