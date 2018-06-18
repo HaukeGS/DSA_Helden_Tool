@@ -89,10 +89,16 @@ class AttributesAventurianManager extends BaseAventurianManager {
 				|| EXCEEDS_MAX_SUM.test(av)).orElse(true));
 	}
 
-	public void increaseSecondaryAttributeWithoutPay(SecondaryAttribute s) {
+	void increaseSecondaryAttributeWithoutPay(SecondaryAttribute s) {
 		if (!canIncrease(s))
 			throw new IllegalStateException("requirements not met for increasing " + s.getName());
 		increase(s);
+	}
+
+	void decreaseSecondaryAttributeWithoutRefund(SecondaryAttribute a) {
+		if (!canDecrease(a))
+			throw new IllegalStateException("requirements not met for decreasing " + a.getName());
+		decrease(a);
 	}
 
 }

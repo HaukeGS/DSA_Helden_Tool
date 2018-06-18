@@ -80,7 +80,7 @@ public class AventurianManagerFacadeTest extends BaseTest {
 	@Test
 	public void testIncreaseSecondaryAttributeWithoutPay() {
 		final SecondaryAttribute s = mock(SecondaryAttribute.class);
-		toTest.increaseSecondaryAttributeWithoutPay(s);
+		toTest.increaseWithoutPay(s);
 		verify(attributes).increaseSecondaryAttributeWithoutPay(s);
 	}
 
@@ -262,6 +262,14 @@ public class AventurianManagerFacadeTest extends BaseTest {
 		final Property p = mock(Property.class);
 		toTest.update(mockedAventurian, p);
 		verify(properties).removeProperty(p);
+	}
+	
+	@Test
+	public void testDecreaseWithoutRefund() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.decreaseWithoutRefund(a);
+		
+		verify(attributes).decreaseSecondaryAttributeWithoutRefund(a);
 	}
 
 }

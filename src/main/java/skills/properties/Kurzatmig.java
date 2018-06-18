@@ -1,9 +1,10 @@
 package skills.properties;
 
 import aventurian.Aventurian;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import aventurian.AventurianManagerFacade;
 import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
+import skills.attributes.secondary.Erschoepfungsschwelle;
 
 @InstantiableSkill(SkillType.PROPERTY)
 public class Kurzatmig extends Property {
@@ -21,12 +22,12 @@ public class Kurzatmig extends Property {
 	}
 
 	@Override
-	public void atGain(Aventurian a) {
-		a.decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1);
+	public void atGain(AventurianManagerFacade m) {
+		m.decreaseWithoutRefund(m.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME));
 	}
 
 	@Override
-	public void atLose(Aventurian a) {
-		a.increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1);
+	public void atLose(AventurianManagerFacade m) {
+		m.increaseWithoutPay(m.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME));
 	}
 }

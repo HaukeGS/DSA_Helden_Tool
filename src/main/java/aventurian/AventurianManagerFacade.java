@@ -197,13 +197,16 @@ public class AventurianManagerFacade implements Observer {
 		attributesManager.increaseSecondaryAttribute(a);
 	}
 
-	public void increaseSecondaryAttributeWithoutPay(SecondaryAttribute s) {
-		attributesManager.increaseSecondaryAttributeWithoutPay(s);
-
-	}
-
 	public void decrease(SecondaryAttribute a) {
 		attributesManager.decreaseSecondaryAttribute(a);
+	}
+
+	public void increaseWithoutPay(SecondaryAttribute s) {
+		attributesManager.increaseSecondaryAttributeWithoutPay(s);
+	}
+
+	public void decreaseWithoutRefund(SecondaryAttribute a) {
+		attributesManager.decreaseSecondaryAttributeWithoutRefund(a);
 	}
 
 	public boolean canDecrease(SecondaryAttribute a) {
@@ -225,5 +228,6 @@ public class AventurianManagerFacade implements Observer {
 	public Database getDatabase() {
 		return database;
 	}
+
 
 }

@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
-import aventurian.PrimaryAttributes.PRIMARY_ATTRIBUTE;
+import skills.attributes.primary.Klugheit;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UrTulamidyaTest {
@@ -23,7 +23,7 @@ public class UrTulamidyaTest {
 	public void setUp() throws Exception {
 		toTest = new UrTulamidya();
 		when(av.getLevelSumOfLanguages()).thenReturn(0);
-		when(av.getPrimaryAttribute(PRIMARY_ATTRIBUTE.INTELLIGENCE)).thenReturn(8);
+		when(av.getPrimaryAttribute(Klugheit.NAME)).thenReturn(8);
 	}
 
 	@Test

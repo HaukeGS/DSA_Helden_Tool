@@ -197,26 +197,18 @@ public class Aventurian extends Observable {
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
-	 void increaseSkill(IncreasableSkill s) {
+	void increaseSkill(IncreasableSkill s) {
 		s.increase();
 		updateSecondaryAttributes();
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 
 	public void increaseSkill(String name) {
-		findIncreasableSkill(name).ifPresent(iS -> {
-			iS.increase();
-			updateSecondaryAttributes();
-			setChangedAndNotifyObservers(getSkillToRemove());
-		});
+		findIncreasableSkill(name).ifPresent(this::increaseSkill);
 	}
 
 	public void decreaseSkill(String name) {
-		findIncreasableSkill(name).ifPresent(iS -> {
-			iS.decrease();
-			updateSecondaryAttributes();
-			setChangedAndNotifyObservers(getSkillToRemove());
-		});
+		findIncreasableSkill(name).ifPresent(this::decreaseSkill);
 	}
 
 	private Optional<IncreasableSkill> findIncreasableSkill(String name) {

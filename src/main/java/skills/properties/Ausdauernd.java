@@ -24,18 +24,14 @@ public class Ausdauernd extends Property {
 
 	@Override
 	public void atGain(AventurianManagerFacade a) {
-		final SecondaryAttribute s = a.getDatabase().getSecondaryAttributes().stream()
-				.filter(sa -> sa.getName().equals(Erschoepfungsschwelle.NAME)).findFirst()
-				.orElseThrow(() -> new IllegalStateException(""));
-		a.increaseSecondaryAttributeWithoutPay(s);
+		final SecondaryAttribute s = a.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME);
+		a.increaseWithoutPay(s);
 	}
 
 	@Override
 	public void atLose(AventurianManagerFacade a) {
-		final SecondaryAttribute s = a.getDatabase().getSecondaryAttributes().stream()
-				.filter(sa -> sa.getName().equals(Erschoepfungsschwelle.NAME)).findFirst()
-				.orElseThrow(() -> new IllegalStateException(""));
-		a.decreaseSecondaryAttributeWithoutRefund(s);
+		final SecondaryAttribute s = a.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME);
+		a.decreaseWithoutRefund(s);
 	}
 
 }

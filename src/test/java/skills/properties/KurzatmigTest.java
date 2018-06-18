@@ -2,8 +2,8 @@ package skills.properties;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,17 +12,28 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
-import aventurian.SecondaryAttributes.SECONDARY_ATTRIBUTE;
+import aventurian.AventurianManagerFacade;
+import database.Database;
+import skills.attributes.secondary.Erschoepfungsschwelle;
+import skills.attributes.secondary.SecondaryAttribute;
 
 @RunWith(MockitoJUnitRunner.class)
 public class KurzatmigTest {
 	private Kurzatmig toTest;
 	@Mock
 	Aventurian av;
+	@Mock
+	AventurianManagerFacade avm;
+	@Mock
+	SecondaryAttribute s;
+	@Mock
+	Database db;
 
 	@Before
 	public void setUp() throws Exception {
 		toTest = new Kurzatmig();
+		when(db.getSecondaryAttribute(Erschoepfungsschwelle.NAME)).thenReturn(s);
+		when(avm.getDatabase()).thenReturn(db);
 	}
 
 	@Test
@@ -35,13 +46,13 @@ public class KurzatmigTest {
 
 	@Test
 	public void testAtGain() {
-		toTest.atGain(av);
-		verify(av).decreaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1);
+		toTest.atGain(avm);
+		verify(avm).decreaseWithoutRefund(s);
 	}
 
 	@Test
 	public void testAtLose() {
-		toTest.atLose(av);
-		verify(av).increaseSecondaryAttribute(SECONDARY_ATTRIBUTE.EXHAUSTIONTHRESHHOLD, 1);
+		toTest.atLose(avm);
+		verify(avm).increaseWithoutPay(s);
 	}
 }
