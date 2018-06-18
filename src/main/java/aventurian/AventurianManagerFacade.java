@@ -24,11 +24,11 @@ public class AventurianManagerFacade implements Observer {
 	private final Logger logger;
 
 	public AventurianManagerFacade(Database db, Logger logger) {
-		this.languageManager = new LanguageAventurianManager( this, db, logger);
-		this.propertyManager = new PropertyAventurianManager( this, db, logger);
-		this.attributesManager = new AttributesAventurianManager( this, db, logger);
-		this.raceManager = new RaceAventurianManager( this, db, propertyManager, attributesManager, logger);
-		this.miscManager = new MiscelleanousAventurianManager( this, db, logger);
+		this.languageManager = new LanguageAventurianManager(this, db, logger);
+		this.propertyManager = new PropertyAventurianManager(this, db, logger);
+		this.attributesManager = new AttributesAventurianManager(this, db, logger);
+		this.raceManager = new RaceAventurianManager(this, db, logger);
+		this.miscManager = new MiscelleanousAventurianManager(this, db, logger);
 		this.database = db;
 		this.logger = logger;
 		registerObserver(this);
@@ -82,7 +82,7 @@ public class AventurianManagerFacade implements Observer {
 	public void increase(Property p) {
 		this.propertyManager.increaseProperty(p);
 	}
-	
+
 	public void increasePropertyWithoutPay(Property p) {
 		this.propertyManager.increasePropertyWithoutPay(p);
 	}
@@ -199,7 +199,7 @@ public class AventurianManagerFacade implements Observer {
 
 	public void increaseSecondaryAttributeWithoutPay(SecondaryAttribute s) {
 		attributesManager.increaseSecondaryAttributeWithoutPay(s);
-		
+
 	}
 
 	public void decrease(SecondaryAttribute a) {
@@ -221,7 +221,7 @@ public class AventurianManagerFacade implements Observer {
 	public boolean canIncrease(PrimaryAttribute a) {
 		return attributesManager.canIncrease(a);
 	}
-	
+
 	public Database getDatabase() {
 		return database;
 	}

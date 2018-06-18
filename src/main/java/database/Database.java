@@ -50,6 +50,11 @@ public class Database {
 		return secondaryAttributes.stream().sorted().collect(toList());
 	}
 
+	public SecondaryAttribute getSecondaryAttribute(String name) {
+		return secondaryAttributes.stream().filter(p -> name.equals(p.getName())).findFirst()
+				.orElseThrow(() -> new IllegalStateException("could not find " + name + " in database!"));
+	}
+
 	public List<Property> getAdvantages() {
 		return properties.stream().filter(Property::isAdvantage).collect(toList());
 	}

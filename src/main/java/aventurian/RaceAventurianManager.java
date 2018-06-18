@@ -8,14 +8,8 @@ import skills.attributes.secondary.SecondaryAttribute;
 
 public class RaceAventurianManager extends BaseAventurianManager {
 
-	private final PropertyAventurianManager propertyManager;
-	private final AttributesAventurianManager attributesManager;
-
-	public RaceAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db,
-			PropertyAventurianManager propertyManager, AttributesAventurianManager attributesManager, Logger logger) {
+	public RaceAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db, Logger logger) {
 		super(aventurianManagerFacade, db, logger);
-		this.propertyManager = propertyManager;
-		this.attributesManager = attributesManager;
 	}
 
 	void buyRaceMods(Race race) {
@@ -23,25 +17,31 @@ public class RaceAventurianManager extends BaseAventurianManager {
 
 		applyHitPointsMod(race);
 
-		database.getSkillsFor(race).forEach(propertyManager::addProperty);
+		database.getSkillsFor(race).forEach(aventurianManagerFacade::add);
 	}
 
-	public void applyHitPointsMod(Race race) {
+	private void applyHitPointsMod(Race race) {
 		final int hitPointsMod = database.getHitPointsModFor(race);
 
-		final SecondaryAttribute hitpoints = database.getSecondaryAttributes().stream()
-				.filter(p -> Lebenspunkte.NAME.equals(p.getName())).findFirst()
-				.orElseThrow(() -> new IllegalStateException("could not find " + Lebenspunkte.NAME));
-		attributesManager.applyRaceMod(hitpoints, hitPointsMod);
+		final SecondaryAttribute hitpoints = database.getSecondaryAttribute(Lebenspunkte.NAME);
+		if (hitPointsMod > 0)
+			for (int i = 0; i < hitPointsMod; i++)
+				aventurianManagerFacade.increase(hitpoints);
+		else
+			for (int i = hitPointsMod; i < 0; i++)
+				aventurianManagerFacade.decrease(hitpoints);
 	}
 
-	public void applyMagicResistenceMod(Race race) {
+	private void applyMagicResistenceMod(Race race) {
 		final int magicResistanceMod = database.getMagicResistanceModFor(race);
 
-		final SecondaryAttribute magicresistance = database.getSecondaryAttributes().stream()
-				.filter(p -> Magieresistenz.NAME.equals(p.getName())).findFirst()
-				.orElseThrow(() -> new IllegalStateException("could not find " + Magieresistenz.NAME));
-		attributesManager.applyRaceMod(magicresistance, magicResistanceMod);
+		final SecondaryAttribute magicresistance = database.getSecondaryAttribute(Magieresistenz.NAME);
+		if (magicResistanceMod > 0)
+			for (int i = 0; i < magicResistanceMod; i++)
+				aventurianManagerFacade.increase(magicresistance);
+		else
+			for (int i = magicResistanceMod; i < 0; i++)
+				aventurianManagerFacade.decrease(magicresistance);
 	}
 
 }
