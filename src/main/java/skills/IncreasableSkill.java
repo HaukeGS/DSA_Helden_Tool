@@ -43,6 +43,8 @@ public abstract class IncreasableSkill extends Skill {
 		return isIncreasable() && isAbleToIncrease(a);
 	}
 
+	
+
 	private boolean isIncreasable() {
 		return level < maxLevel;
 	}
@@ -50,6 +52,8 @@ public abstract class IncreasableSkill extends Skill {
 	protected boolean isAbleToIncrease(Aventurian a) {
 		return true;
 	}
+
+	
 
 	public boolean isAllowedToDecrease() {
 		return getLevel() > getMinLevel();

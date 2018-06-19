@@ -3,22 +3,6 @@ package skills;
 import aventurian.Aventurian;
 import aventurian.AventurianManagerFacade;
 
-/**
- * @author Jonas
- *
- */
-/**
- * @author Jonas
- *
- */
-/**
- * @author Jonas
- *
- */
-/**
- * @author Jonas
- *
- */
 public abstract class Skill implements Comparable<Skill> {
 
 	private final String name;

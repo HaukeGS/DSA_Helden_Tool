@@ -235,4 +235,8 @@ public class Aventurian extends Observable {
 		Collections.reverse(allSkills);
 		return toRemove;
 	}
+
+	public int getMaximumOf(String a1, String a2, String a3) {
+		return Math.max(getPrimaryAttribute(a1), Math.max(getPrimaryAttribute(a2), getPrimaryAttribute(a3)));
+	}
 }

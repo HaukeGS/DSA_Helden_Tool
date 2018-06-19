@@ -19,7 +19,7 @@ public class OverviewPaneController extends PaneController {
 	@Override
 	void update(Aventurian updatedAventurian) {
 		labelRemainingActionPoints.setText(String.valueOf(updatedAventurian.getAdventurePoints()));
-		labelAttributes.setText(String.valueOf(updatedAventurian.getAPinAttributes()));
+		labelAttributes.setText(String.valueOf(updatedAventurian.getAPInAttributes()));
 	}
 
 	@Override
