@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
 import aventurian.AttributesAventurianManagerTest;
 import aventurian.AventurianManagerFacadeTest;
 import aventurian.AventurianTest;
+import aventurian.BaseAventurianManagerTest;
 import aventurian.LanguageAventurianManagerTest;
 import aventurian.LevelCostCalculatorTest;
 import aventurian.MiscelleanousAventurianManagerTest;
@@ -62,7 +63,7 @@ import ui.TopPaneTest;
 		AusruestungsvorteilTest.class, PrimaryAttributeTest.class, LebenspunkteTest.class, SecondaryAttributeTest.class,
 		AstralenergieTest.class, MagieresistenzTest.class, AttackeBasisTest.class, ErschoepungsschwelleTest.class,
 		FernkampfBasisTest.class, InitiativeBasisTest.class, KarmaenergieTest.class, ParadeBasisTest.class,
-		WundschwelleTest.class })
+		WundschwelleTest.class, BaseAventurianManagerTest.class })
 public class AllTests {
 
 }

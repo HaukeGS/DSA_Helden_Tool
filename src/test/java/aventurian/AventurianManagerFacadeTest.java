@@ -35,8 +35,8 @@ public class AventurianManagerFacadeTest extends BaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new AventurianManagerFacade(Optional.of(mockedAventurian), attributes, languages, properties, races, misc,
-				mockedDatabase, mockedLogger);
+		toTest = new AventurianManagerFacade(Optional.of(mockedAventurian), attributes, languages, properties, races,
+				misc, mockedDatabase, mockedLogger);
 	}
 
 	@Test
@@ -69,14 +69,14 @@ public class AventurianManagerFacadeTest extends BaseTest {
 		toTest.increase(mock(BadProperty.class));
 		verify(properties).increaseProperty(any(BadProperty.class));
 	}
-	
+
 	@Test
 	public void testIncreasePropertyWithoutPay() {
 		final Property p = mock(Property.class);
 		toTest.increasePropertyWithoutPay(p);
 		verify(properties).increasePropertyWithoutPay(p);
 	}
-	
+
 	@Test
 	public void testIncreaseSecondaryAttributeWithoutPay() {
 		final SecondaryAttribute s = mock(SecondaryAttribute.class);
@@ -263,13 +263,20 @@ public class AventurianManagerFacadeTest extends BaseTest {
 		toTest.update(mockedAventurian, p);
 		verify(properties).removeProperty(p);
 	}
-	
+
 	@Test
 	public void testDecreaseWithoutRefund() {
 		final SecondaryAttribute a = mock(SecondaryAttribute.class);
 		toTest.decreaseWithoutRefund(a);
-		
+
 		verify(attributes).decreaseSecondaryAttributeWithoutRefund(a);
+	}
+
+	@Test
+	public void testApplyRaceMod() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.applyRaceMod(a, 0);
+		verify(attributes).applyRaceMod(a, 0);
 	}
 
 }
