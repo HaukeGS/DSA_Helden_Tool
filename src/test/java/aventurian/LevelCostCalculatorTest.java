@@ -1,11 +1,12 @@
 package aventurian;
 
 import static org.junit.Assert.*;
-
-import static aventurian.LevelCostCalculator.Column.*;
+import static skills.LevelCostCalculator.Column.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import skills.LevelCostCalculator;
 
 public class LevelCostCalculatorTest {
 	private LevelCostCalculator toTest;

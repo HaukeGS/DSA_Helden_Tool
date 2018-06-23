@@ -5,7 +5,7 @@ import aventurian.Aventurian;
 public class NavigationPaneController extends PaneController {
 
 	enum PAGES {
-		ATTRIBUTES, LANGUAGES, PROPERTIES, ATTRIBUTES_2
+		LANGUAGES, PROPERTIES, ATTRIBUTES
 	};
 
 	private MainController mainController;
@@ -20,10 +20,6 @@ public class NavigationPaneController extends PaneController {
 
 	public void showProperties() {
 		mainController.changeTo(PAGES.PROPERTIES);
-	}
-	
-	public void showAttributes2() {
-		mainController.changeTo(PAGES.ATTRIBUTES_2);
 	}
 
 	public void init(MainController mainController) {

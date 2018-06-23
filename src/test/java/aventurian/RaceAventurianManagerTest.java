@@ -2,7 +2,6 @@ package aventurian;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,8 +45,8 @@ public class RaceAventurianManagerTest extends BaseTest {
 		when(mockedDatabase.getMagicResistanceModFor(any(Race.class))).thenReturn(5);
 		toTest.buyRaceMods(Race.THORWALAN);
 
-		verify(mockedFacade, times(11)).increase(hitpoints);
-		verify(mockedFacade, times(5)).increase(magicResistance);
+		verify(mockedFacade).applyRaceMod(hitpoints, 11);
+		verify(mockedFacade).applyRaceMod(magicResistance, 5);
 		verify(mockedFacade, atLeastOnce()).add(mockedProperty);
 	}
 
@@ -58,8 +57,8 @@ public class RaceAventurianManagerTest extends BaseTest {
 
 		toTest.buyRaceMods(Race.THORWALAN);
 
-		verify(mockedFacade, times(11)).decrease(hitpoints);
-		verify(mockedFacade, times(5)).decrease(magicResistance);
+		verify(mockedFacade).applyRaceMod(hitpoints, -11);
+		verify(mockedFacade).applyRaceMod(magicResistance, -5);
 		verify(mockedFacade, atLeastOnce()).add(mockedProperty);
 	}
 

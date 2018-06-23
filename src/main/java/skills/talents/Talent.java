@@ -1,8 +1,8 @@
 package skills.talents;
 
 import aventurian.Aventurian;
-import aventurian.LevelCostCalculator.Column;
 import skills.LookupIncreasableSkill;
+import skills.LevelCostCalculator.Column;
 
 public class Talent extends LookupIncreasableSkill {
 

@@ -1,7 +1,7 @@
 package skills.attributes.primary;
 
-import aventurian.LevelCostCalculator.Column;
 import skills.LookupIncreasableSkill;
+import skills.LevelCostCalculator.Column;
 
 public class PrimaryAttribute extends LookupIncreasableSkill {
 	static final int MAX = 14;

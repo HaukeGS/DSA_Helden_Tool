@@ -1,7 +1,6 @@
 package skills;
 
-import aventurian.LevelCostCalculator;
-import aventurian.LevelCostCalculator.Column;
+import skills.LevelCostCalculator.Column;
 
 public class LookupIncreasableSkill extends IncreasableSkill {
 

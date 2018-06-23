@@ -225,9 +225,12 @@ public class AventurianManagerFacade implements Observer {
 		return attributesManager.canIncrease(a);
 	}
 
+	public void applyRaceMod(SecondaryAttribute a, int mod) {
+		attributesManager.applyRaceMod(a, mod);
+	}
+
 	public Database getDatabase() {
 		return database;
 	}
-
 
 }

@@ -1,7 +1,5 @@
 package ui;
 
-import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -53,7 +51,7 @@ public class MainController extends PaneController implements Observer {
 		centerControllers.values().forEach(c -> c.init(manager, db));
 		m.registerObserver(this);
 
-		changeTo(ATTRIBUTES);
+		changeTo(PAGES.ATTRIBUTES);
 	}
 
 	void addLoadedPage(PAGES p, PaneController c, Parent page) {

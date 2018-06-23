@@ -44,7 +44,6 @@ import skills.properties.AusruestungsvorteilTest;
 import skills.properties.BadPropertyTest;
 import skills.properties.KurzatmigTest;
 import skills.properties.PropertyTest;
-import ui.AttributePaneTest;
 import ui.LanguagePaneTest;
 import ui.MenuTest;
 import ui.NavigatorTest;
@@ -54,16 +53,16 @@ import ui.TopPaneTest;
 @RunWith(Categories.class)
 @Suite.SuiteClasses({ AventurianTest.class, LevelCostCalculatorTest.class, LanguageTest.class, BadPropertyTest.class,
 		PropertyTest.class, AventurianManagerFacadeTest.class, PropertyAventurianManagerTest.class,
-		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, AttributePaneTest.class,
-		NavigatorTest.class, LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class,
-		PropertyPaneTest.class, DatabaseTest.class, LinearIncreasableSkillTest.class, SkillTest.class,
-		MiscelleanousAventurianManagerTest.class, AurelianiTest.class, AngramTest.class, AsdhariaTest.class,
-		AurelianiTest.class, DrachischTest.class, IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class,
-		UrTulamidyaTest.class, TopPaneTest.class, AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class,
-		AusdauerndTest.class, KurzatmigTest.class, AusruestungsvorteilTest.class, PrimaryAttributeTest.class,
-		LebenspunkteTest.class, SecondaryAttributeTest.class, AstralenergieTest.class, MagieresistenzTest.class,
-		AttackeBasisTest.class, ErschoepungsschwelleTest.class, FernkampfBasisTest.class, InitiativeBasisTest.class,
-		KarmaenergieTest.class, ParadeBasisTest.class, WundschwelleTest.class })
+		LanguageAventurianManagerTest.class, AttributesAventurianManagerTest.class, NavigatorTest.class,
+		LanguagePaneTest.class, MenuTest.class, RaceAventurianManagerTest.class, PropertyPaneTest.class,
+		DatabaseTest.class, LinearIncreasableSkillTest.class, SkillTest.class, MiscelleanousAventurianManagerTest.class,
+		AurelianiTest.class, AngramTest.class, AsdhariaTest.class, AurelianiTest.class, DrachischTest.class,
+		IsdiraTest.class, KoboldischTest.class, NeckergesangTest.class, UrTulamidyaTest.class, TopPaneTest.class,
+		AdligTest.class, ArkanophobieTest.class, AdligesErbeTest.class, AusdauerndTest.class, KurzatmigTest.class,
+		AusruestungsvorteilTest.class, PrimaryAttributeTest.class, LebenspunkteTest.class, SecondaryAttributeTest.class,
+		AstralenergieTest.class, MagieresistenzTest.class, AttackeBasisTest.class, ErschoepungsschwelleTest.class,
+		FernkampfBasisTest.class, InitiativeBasisTest.class, KarmaenergieTest.class, ParadeBasisTest.class,
+		WundschwelleTest.class })
 public class AllTests {
 
 }

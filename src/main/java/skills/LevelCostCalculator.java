@@ -1,14 +1,14 @@
-package aventurian;
+package skills;
 
-import static aventurian.LevelCostCalculator.Column.A;
-import static aventurian.LevelCostCalculator.Column.A_STAR;
-import static aventurian.LevelCostCalculator.Column.B;
-import static aventurian.LevelCostCalculator.Column.C;
-import static aventurian.LevelCostCalculator.Column.D;
-import static aventurian.LevelCostCalculator.Column.E;
-import static aventurian.LevelCostCalculator.Column.F;
-import static aventurian.LevelCostCalculator.Column.G;
-import static aventurian.LevelCostCalculator.Column.H;
+import static skills.LevelCostCalculator.Column.A;
+import static skills.LevelCostCalculator.Column.A_STAR;
+import static skills.LevelCostCalculator.Column.B;
+import static skills.LevelCostCalculator.Column.C;
+import static skills.LevelCostCalculator.Column.D;
+import static skills.LevelCostCalculator.Column.E;
+import static skills.LevelCostCalculator.Column.F;
+import static skills.LevelCostCalculator.Column.G;
+import static skills.LevelCostCalculator.Column.H;
 
 import java.util.Arrays;
 import java.util.HashMap;

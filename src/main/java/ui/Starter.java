@@ -1,7 +1,6 @@
 package ui;
 
 import static ui.NavigationPaneController.PAGES.ATTRIBUTES;
-import static ui.NavigationPaneController.PAGES.ATTRIBUTES_2;
 import static ui.NavigationPaneController.PAGES.LANGUAGES;
 import static ui.NavigationPaneController.PAGES.PROPERTIES;
 
@@ -42,9 +41,8 @@ public class Starter extends Application {
 		final Parent root = loadMainPane();
 
 		loadPage(LANGUAGES, "/languages.fxml");
-		loadPage(ATTRIBUTES, "/attributes.fxml");
 		loadPage(PROPERTIES, "/propertyPane.fxml");
-		loadPage(ATTRIBUTES_2, "/attributes2.fxml");
+		loadPage(ATTRIBUTES, "/attributes.fxml");
 
 		mainController.init(aventurianManager, db, logger);
 

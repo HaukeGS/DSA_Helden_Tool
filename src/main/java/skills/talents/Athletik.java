@@ -1,6 +1,6 @@
 package skills.talents;
 
-import aventurian.LevelCostCalculator.Column;
+import skills.LevelCostCalculator.Column;
 import skills.attributes.primary.Agilitaet;
 import skills.attributes.primary.Koerperkraft;
 import skills.attributes.primary.Konstitution;

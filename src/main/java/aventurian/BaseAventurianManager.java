@@ -13,7 +13,6 @@ class BaseAventurianManager {
 
 	protected final Database database;
 	protected Optional<Aventurian> aventurian;
-	protected final LevelCostCalculator calculator;
 	protected final Logger logger;
 	protected final AventurianManagerFacade aventurianManagerFacade;
 
@@ -30,7 +29,6 @@ class BaseAventurianManager {
 
 	protected BaseAventurianManager(final AventurianManagerFacade aventurianManagerFacade, final Database db,
 			final Logger logger) {
-		this.calculator = new LevelCostCalculator();
 		this.aventurianManagerFacade = aventurianManagerFacade;
 		this.aventurian = Optional.empty();
 		this.database = db;
