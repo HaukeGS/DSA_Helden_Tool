@@ -118,7 +118,6 @@ public class AventurianTest {
 
 		toTest.remove(s1);
 		assertFalse(toTest.hasSkill(s1));
-		verify(s1).atLose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
 
@@ -139,7 +138,6 @@ public class AventurianTest {
 
 		toTest.remove(requirementSkill);
 		assertFalse(toTest.hasSkill(requirementSkill));
-		verify(requirementSkill).atLose(toTest);
 		verify(mockedObserver, atLeastOnce()).update(toTest, dependentSkill);
 	}
 

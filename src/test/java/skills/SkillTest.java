@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
+import aventurian.AventurianManagerFacade;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SkillTest {
@@ -22,7 +23,10 @@ public class SkillTest {
 	private static final String DESCRIPTION = "blub";
 
 	@Mock
-	Aventurian mock;
+	Aventurian mockedAventurian;
+
+	@Mock
+	AventurianManagerFacade mockedFacade;
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,24 +40,24 @@ public class SkillTest {
 
 	@Test
 	public void testGain() {
-		toTest.atGain(mock);
-		verifyZeroInteractions(mock);
+		toTest.atGain(mockedFacade);
+		verifyZeroInteractions(mockedFacade);
 	}
 
 	@Test
 	public void testLose() {
-		toTest.atLose(mock);
-		verifyZeroInteractions(mock);
+		toTest.atLose(mockedFacade);
+		verifyZeroInteractions(mockedFacade);
 	}
 
 	@Test
 	public void testIsAllowedToHave() {
-		assertTrue(toTest.isAllowedToHave(mock));
+		assertTrue(toTest.isAllowedToHave(mockedAventurian));
 	}
 
 	@Test
 	public void testIsAllowedToAdd() {
-		assertTrue(toTest.isAllowedToAdd(mock));
+		assertTrue(toTest.isAllowedToAdd(mockedAventurian));
 	}
 
 	@Test
@@ -69,7 +73,7 @@ public class SkillTest {
 	public void testGetName() {
 		assertEquals(NAME, toTest.getName());
 	}
-	
+
 	@Test
 	public void testToString() {
 		assertEquals(NAME, toTest.toString());

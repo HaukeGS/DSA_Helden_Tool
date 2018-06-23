@@ -79,7 +79,6 @@ public class Aventurian extends Observable {
 
 	void remove(Skill s) {
 		allSkills.remove(s);
-		s.atLose(this);
 		setChangedAndNotifyObservers(getSkillToRemove());
 	}
 

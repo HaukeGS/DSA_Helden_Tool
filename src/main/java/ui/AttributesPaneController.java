@@ -18,7 +18,7 @@ import javafx.scene.layout.Priority;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 
-public class AttributesPaneController2 extends PaneController {
+public class AttributesPaneController extends PaneController {
 
 	@FXML
 	public ListView<PrimaryAttribute> lvPrimaryAttributes;
@@ -74,8 +74,8 @@ public class AttributesPaneController2 extends PaneController {
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!AttributesPaneController2.this.m.canIncrease(item));
-				decreaseButton.setDisable(!AttributesPaneController2.this.m.canDecrease(item));
+				increaseButton.setDisable(!AttributesPaneController.this.m.canIncrease(item));
+				decreaseButton.setDisable(!AttributesPaneController.this.m.canDecrease(item));
 				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
 				setGraphic(hbox);
 				setTooltip(new Tooltip(item.getDescription()));
@@ -114,8 +114,8 @@ public class AttributesPaneController2 extends PaneController {
 			} else {
 				nameLabel.setText(item.getName());
 				levelLabel.setText(String.valueOf(item.getLevel()));
-				increaseButton.setDisable(!AttributesPaneController2.this.m.canIncrease(item));
-				decreaseButton.setDisable(!AttributesPaneController2.this.m.canDecrease(item));
+				increaseButton.setDisable(!AttributesPaneController.this.m.canIncrease(item));
+				decreaseButton.setDisable(!AttributesPaneController.this.m.canDecrease(item));
 				increaseButton.setVisible(isIncreasableSecondaryAttribute(item));
 				decreaseButton.setVisible(isIncreasableSecondaryAttribute(item));
 				hbox.getChildren().addAll(nameLabel, pane, decreaseButton, levelLabel, increaseButton);
@@ -125,8 +125,8 @@ public class AttributesPaneController2 extends PaneController {
 		}
 
 		boolean isIncreasableSecondaryAttribute(SecondaryAttribute item) {
-			return AttributesPaneController2.this.m.canIncrease(item)
-					|| AttributesPaneController2.this.m.canDecrease(item);
+			return AttributesPaneController.this.m.canIncrease(item)
+					|| AttributesPaneController.this.m.canDecrease(item);
 		}
 	}
 }
