@@ -103,7 +103,7 @@ public class Aventurian extends Observable {
 		return getStreamOfSkills().anyMatch(s -> s.getName().equals(skillName));
 	}
 
-	int getSumOfPrimaryAttributes2() {
+	int getSumOfPrimaryAttributes() {
 		return getStreamOfPrimaryAttributes().mapToInt(PrimaryAttribute::getLevel).sum();
 	}
 
@@ -235,7 +235,7 @@ public class Aventurian extends Observable {
 		return toRemove;
 	}
 
-	public int getMaximumOf(String a1, String a2, String a3) {
-		return Math.max(getPrimaryAttribute(a1), Math.max(getPrimaryAttribute(a2), getPrimaryAttribute(a3)));
+	public int getMaximumOfPrimaryAttributes(String name1, String name2, String name3) {
+		return Math.max(getPrimaryAttribute(name1), Math.max(getPrimaryAttribute(name2), getPrimaryAttribute(name3)));
 	}
 }

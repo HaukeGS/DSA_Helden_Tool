@@ -20,6 +20,6 @@ public class Talent extends LookupIncreasableSkill {
 
 	@Override
 	public boolean isAbleToIncrease(Aventurian a) {
-		return (level - 3) < a.getMaximumOf(a1, a2, a3);
+		return (level - 3) < a.getMaximumOfPrimaryAttributes(a1, a2, a3);
 	}
 }

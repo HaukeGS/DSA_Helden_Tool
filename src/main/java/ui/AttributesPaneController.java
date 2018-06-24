@@ -38,6 +38,8 @@ public class AttributesPaneController extends PaneController {
 
 	@Override
 	void initControllerSpecificStuff() {
+		lvPrimaryAttributes.getStyleClass().add("attributes-view");
+		lvSecondaryAttributes.getStyleClass().add("attributes-view");
 		lvPrimaryAttributes.setCellFactory((ListView<PrimaryAttribute> list) -> new PrimaryAttributeCell());
 		lvSecondaryAttributes.setCellFactory((ListView<SecondaryAttribute> list) -> new SecondaryAttributeCell());
 
@@ -59,6 +61,8 @@ public class AttributesPaneController extends PaneController {
 			increaseButton.setPrefWidth(25);
 			levelLabel.setPrefWidth(25);
 			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
+			nameLabel.setId("attributeNameLabel");
+			levelLabel.setId("attributeLevelLabel");
 			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
 			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
 		}
@@ -99,6 +103,8 @@ public class AttributesPaneController extends PaneController {
 			increaseButton.setPrefWidth(25);
 			levelLabel.setPrefWidth(25);
 			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
+			nameLabel.setId("attributeNameLabel");
+			levelLabel.setId("attributeLevelLabel");
 			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
 			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
 		}

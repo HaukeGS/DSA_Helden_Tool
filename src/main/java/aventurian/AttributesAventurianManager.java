@@ -10,7 +10,7 @@ import skills.attributes.secondary.SecondaryAttribute;
 class AttributesAventurianManager extends BaseAventurianManager {
 	static final int MAX_PRIMARY_ATTRIBUTES_SUM = 101;
 	private final static Predicate<Aventurian> EXCEEDS_MAX_SUM = av -> av
-			.getSumOfPrimaryAttributes2() >= MAX_PRIMARY_ATTRIBUTES_SUM;
+			.getSumOfPrimaryAttributes() >= MAX_PRIMARY_ATTRIBUTES_SUM;
 
 	AttributesAventurianManager(AventurianManagerFacade aventurianManagerFacade, Database db, Logger logger) {
 		super(aventurianManagerFacade, db, logger);

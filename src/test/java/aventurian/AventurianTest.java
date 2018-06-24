@@ -19,6 +19,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import skills.IncreasableSkill;
 import skills.Skill;
+import skills.attributes.primary.Agilitaet;
+import skills.attributes.primary.Klugheit;
+import skills.attributes.primary.Koerperkraft;
+import skills.attributes.primary.PrimaryAttribute;
 import skills.languages.Language;
 import skills.properties.BadProperty;
 import skills.properties.Property;
@@ -41,7 +45,9 @@ public class AventurianTest {
 	@After
 	public void tearDown() throws Exception {
 		toTest.deleteObservers();
-	}@Test
+	}
+
+	@Test
 	public void testPayValid() throws Exception {
 		toTest.pay(1000);
 		final int expected = AP - 1000;
@@ -303,12 +309,53 @@ public class AventurianTest {
 		verify(s).increase();
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
 	}
-	
+
 	@Test
 	public void testDecreaseSkill() {
 		final IncreasableSkill s = mock(IncreasableSkill.class);
 		toTest.decreaseSkill(s);
 		verify(s).decrease();
 		verify(mockedObserver, atLeastOnce()).update(toTest, null);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testGetPrimaryAttributeUnknown() {
+		toTest.getPrimaryAttribute(Agilitaet.NAME);
+	}
+
+	@Test
+	public void testGetPrimaryAttribute() {
+		final PrimaryAttribute koerperkraft = mock(PrimaryAttribute.class);
+		when(koerperkraft.getName()).thenReturn(Koerperkraft.NAME);
+		when(koerperkraft.getLevel()).thenReturn(8);
+		toTest.add(koerperkraft);
+		assertEquals(8, toTest.getPrimaryAttribute(Koerperkraft.NAME));
+	}
+
+	@Test
+	public void testGetSumOfPrimaryAttribute() {
+		final PrimaryAttribute koerperkraft = mock(PrimaryAttribute.class);
+		when(koerperkraft.getLevel()).thenReturn(8);
+		final PrimaryAttribute agilitaet = mock(PrimaryAttribute.class);
+		when(agilitaet.getLevel()).thenReturn(12);
+		toTest.add(koerperkraft);
+		toTest.add(agilitaet);
+		assertEquals(20, toTest.getSumOfPrimaryAttributes());
+	}
+	@Test
+	public void testGetMaxOfPrimaryAttribute() {
+		final PrimaryAttribute koerperkraft = mock(PrimaryAttribute.class);
+		when(koerperkraft.getLevel()).thenReturn(8);
+		when(koerperkraft.getName()).thenReturn(Koerperkraft.NAME);
+		final PrimaryAttribute agilitaet = mock(PrimaryAttribute.class);
+		when(agilitaet.getLevel()).thenReturn(12);
+		when(agilitaet.getName()).thenReturn(Agilitaet.NAME);
+		final PrimaryAttribute intelligenz = mock(PrimaryAttribute.class);
+		when(intelligenz.getLevel()).thenReturn(9);
+		when(intelligenz.getName()).thenReturn(Klugheit.NAME);
+		toTest.add(koerperkraft);
+		toTest.add(agilitaet);
+		toTest.add(intelligenz);
+		assertEquals(12, toTest.getMaximumOfPrimaryAttributes(Koerperkraft.NAME, Agilitaet.NAME, Klugheit.NAME));
 	}
 }

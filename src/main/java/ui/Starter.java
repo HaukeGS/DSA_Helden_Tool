@@ -48,6 +48,7 @@ public class Starter extends Application {
 
 		final Scene scene = new Scene(root);
 		scene.getStylesheets().add(ui.Starter.class.getResource("/log-view.css").toExternalForm());
+		scene.getStylesheets().add(ui.Starter.class.getResource("/attributes-view.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 
