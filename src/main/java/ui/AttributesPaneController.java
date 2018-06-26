@@ -15,6 +15,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import skills.Skill;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 
@@ -105,8 +106,20 @@ public class AttributesPaneController extends PaneController {
 			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
 			nameLabel.setId("attributeNameLabel");
 			levelLabel.setId("attributeLevelLabel");
-			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
+			decreaseButton.setOnAction((ActionEvent e) -> {
+				final List<Skill> dependingSkills = m.getDependingSkillsForDecrease(getItem());
+				if (dependingSkills.isEmpty())
+					m.decrease(getItem());
+				else
+					showDialog(dependingSkills);
+			});
+
 			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
+		}
+
+		private void showDialog(List<Skill> dependingSkills) {
+			// TODO Auto-generated method stub
+
 		}
 
 		@Override

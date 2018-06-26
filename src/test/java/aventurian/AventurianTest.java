@@ -342,6 +342,7 @@ public class AventurianTest {
 		toTest.add(agilitaet);
 		assertEquals(20, toTest.getSumOfPrimaryAttributes());
 	}
+
 	@Test
 	public void testGetMaxOfPrimaryAttribute() {
 		final PrimaryAttribute koerperkraft = mock(PrimaryAttribute.class);
@@ -358,4 +359,58 @@ public class AventurianTest {
 		toTest.add(intelligenz);
 		assertEquals(12, toTest.getMaximumOfPrimaryAttributes(Koerperkraft.NAME, Agilitaet.NAME, Klugheit.NAME));
 	}
+
+	@Test
+	public void testGetDependingSkillsRemove() {
+		final Skill toRemove = mock(Skill.class);
+		final Skill dependingSkill = mock(Skill.class);
+		when(toRemove.getName()).thenReturn("toRemove");
+		when(dependingSkill.getName()).thenReturn("dependingSkill");
+		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> toTest.hasSkill(toRemove));
+		toTest.add(toRemove);
+		toTest.add(dependingSkill);
+		assertEquals(1, toTest.getDependingSkillsForRemove(toRemove).size());		
+	}
+
+	@Test
+	public void testGetDependingSkillsDecrease() {
+		final IncreasableSkill toDecrease = mock(IncreasableSkill.class);
+		final Skill dependingSkill = mock(Skill.class);
+		when(toDecrease.getName()).thenReturn("toRemove");
+		when(toDecrease.getLevel()).thenReturn(10).thenReturn(9);
+		when(toDecrease.isAllowedToHave(toTest)).thenReturn(true);
+		when(dependingSkill.getName()).thenReturn("dependingSkill");
+		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> toTest.hasSkill(toDecrease) && toDecrease.getLevel() >= 10);
+		toTest.add(toDecrease);
+		toTest.add(dependingSkill);
+		assertEquals(1, toTest.getDependingSkillsForDecrease(toDecrease).size());		
+	}
+
+	@Test
+	public void testGetDependingSkillsAdd() {
+		final Skill toAdd = mock(IncreasableSkill.class);
+		final Skill dependingSkill = mock(Skill.class);
+		when(toAdd.getName()).thenReturn("toRemove");
+		when(toAdd.isAllowedToHave(toTest)).thenReturn(true);
+		when(dependingSkill.getName()).thenReturn("dependingSkill");
+		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> !toTest.hasSkill(toAdd));
+		toTest.add(dependingSkill);
+		assertEquals(1, toTest.getDependingSkillsForAdd(toAdd).size());		
+	}
+
+	@Test
+	public void testGetDependingSkillsIncrease() {
+		final IncreasableSkill toIncrease = mock(IncreasableSkill.class);
+		final Skill dependingSkill = mock(Skill.class);
+		when(toIncrease.getName()).thenReturn("toRemove");
+		when(toIncrease.getLevel()).thenReturn(9).thenReturn(10);
+		when(toIncrease.isAllowedToHave(toTest)).thenReturn(true);
+		when(dependingSkill.getName()).thenReturn("dependingSkill");
+		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> toTest.hasSkill(toIncrease) && toIncrease.getLevel() < 10);
+		toTest.add(toIncrease);
+		toTest.add(dependingSkill);
+		assertEquals(1, toTest.getDependingSkillsForDecrease(toIncrease).size());		
+	}
+	
+	
 }

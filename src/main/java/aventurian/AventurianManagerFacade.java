@@ -1,12 +1,14 @@
 package aventurian;
 
 import java.io.File;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
 
 import database.Database;
 import logging.Logger;
+import skills.IncreasableSkill;
 import skills.Skill;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
@@ -232,5 +234,21 @@ public class AventurianManagerFacade implements Observer {
 	public Database getDatabase() {
 		return database;
 	}
+	
+	public List<Skill> getDependingSkillsForRemove(Skill toRemove) {
+		return miscManager.getDependingSkillsForRemove(toRemove);
+	}
+	
+	public List<Skill> getDependingSkillsForDecrease(IncreasableSkill toDecrease) {
+		return miscManager.getDependingSkillsForDecrease(toDecrease);
+	}
 
+	public List<Skill> getDependingSkillsForIncrease(IncreasableSkill toIncrease) {
+		return miscManager.getDependingSkillsForIncrease(toIncrease);
+	}
+
+	public List<Skill> getDependingSkillsForAdd(Skill toAdd) {
+		return miscManager.getDependingSkillsForAdd(toAdd);
+	}
+	
 }

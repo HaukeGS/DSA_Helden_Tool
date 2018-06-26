@@ -6,6 +6,8 @@ import java.util.Observer;
 
 import database.Database;
 import logging.Logger;
+import skills.IncreasableSkill;
+import skills.Skill;
 
 public class MiscelleanousAventurianManager extends BaseAventurianManager {
 	private final List<Observer> observers;
@@ -33,6 +35,22 @@ public class MiscelleanousAventurianManager extends BaseAventurianManager {
 	protected void changeAventurian(Aventurian a) {
 		super.changeAventurian(a);
 		addObserversToAventurian();
+	}
+	
+	List<Skill> getDependingSkillsForRemove(Skill toRemove) {
+		return aventurian.map(av -> av.getDependingSkillsForRemove(toRemove)).orElse(new ArrayList<>());
+	}
+	
+	List<Skill> getDependingSkillsForAdd(Skill toAdd) {
+		return aventurian.map(av -> av.getDependingSkillsForAdd(toAdd)).orElse(new ArrayList<>());
+	}
+	
+	List<Skill> getDependingSkillsForDecrease(IncreasableSkill toDecrease) {
+		return aventurian.map(av -> av.getDependingSkillsForDecrease(toDecrease)).orElse(new ArrayList<>());
+	}
+	
+	List<Skill> getDependingSkillsForIncrease(IncreasableSkill toIncrease) {
+		return aventurian.map(av -> av.getDependingSkillsForDecrease(toIncrease)).orElse(new ArrayList<>());
 	}
 
 }

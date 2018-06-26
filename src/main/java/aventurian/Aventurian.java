@@ -23,7 +23,7 @@ public class Aventurian extends Observable {
 	private String nameOfAventurian;
 	private int adventurePoints;
 
-	private final List<Skill> allSkills;
+	private List<Skill> allSkills;
 
 	private boolean isMage;
 	private boolean isConsecrated;
@@ -235,7 +235,61 @@ public class Aventurian extends Observable {
 		return toRemove;
 	}
 
+	private Optional<Skill> getDependingSkill(List<Skill> listToSearch) {
+		Collections.reverse(listToSearch);
+		final List<Skill> temp = allSkills;
+		allSkills = listToSearch;
+		final Optional<Skill> dependingSkill = listToSearch.stream().filter(skill -> !skill.isAllowedToHave(this))
+				.findFirst();
+		allSkills = temp;
+		Collections.reverse(listToSearch);
+		return dependingSkill;
+	}
+
 	public int getMaximumOfPrimaryAttributes(String name1, String name2, String name3) {
 		return Math.max(getPrimaryAttribute(name1), Math.max(getPrimaryAttribute(name2), getPrimaryAttribute(name3)));
+	}
+
+	List<Skill> getDependingSkillsForRemove(Skill toRemove) {
+		final List<Skill> copiedList = new ArrayList<>();
+		copiedList.addAll(allSkills);
+		copiedList.remove(toRemove);
+		return getDependingSkills(copiedList);
+	}
+
+	List<Skill> getDependingSkillsForAdd(Skill toAdd) {
+		final List<Skill> copiedList = new ArrayList<>();
+		copiedList.addAll(allSkills);
+		copiedList.add(toAdd);
+		return getDependingSkills(copiedList);
+	}
+
+	List<Skill> getDependingSkillsForDecrease(IncreasableSkill toDecrease) {
+		final List<Skill> copiedList = new ArrayList<>();
+		copiedList.addAll(allSkills);
+		toDecrease.decrease();
+		final List<Skill> dependingSkills = getDependingSkills(copiedList);
+		toDecrease.increase();
+		return dependingSkills;
+	}
+
+	List<Skill> getDependingSkillsForIncrease(IncreasableSkill toIncrease) {
+		final List<Skill> copiedList = new ArrayList<>();
+		copiedList.addAll(allSkills);
+		toIncrease.increase();
+		final List<Skill> dependingSkills = getDependingSkills(copiedList);
+		toIncrease.decrease();
+		return dependingSkills;
+	}
+
+	private List<Skill> getDependingSkills(List<Skill> copiedList) {
+		final List<Skill> dependingSkills = new ArrayList<>();
+		Optional<Skill> dependingSkill = getDependingSkill(copiedList);
+		while (dependingSkill.isPresent()) {
+			dependingSkills.add(dependingSkill.get());
+			copiedList.remove(dependingSkill.get());
+			dependingSkill = getDependingSkill(copiedList);
+		}
+		return dependingSkills;
 	}
 }

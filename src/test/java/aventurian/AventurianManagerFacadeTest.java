@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import skills.IncreasableSkill;
+import skills.Skill;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 import skills.languages.Language;
@@ -277,6 +279,34 @@ public class AventurianManagerFacadeTest extends BaseTest {
 		final SecondaryAttribute a = mock(SecondaryAttribute.class);
 		toTest.applyRaceMod(a, 0);
 		verify(attributes).applyRaceMod(a, 0);
+	}
+	
+	@Test
+	public void testGetDependingSkillsForRemove() {
+		final Skill s = mock(Skill.class);
+		toTest.getDependingSkillsForRemove(s);
+		verify(misc).getDependingSkillsForRemove(s);
+	}
+	
+	@Test
+	public void testGetDependingSkillsForAdd() {
+		final Skill s = mock(Skill.class);
+		toTest.getDependingSkillsForAdd(s);
+		verify(misc).getDependingSkillsForAdd(s);
+	}
+	
+	@Test
+	public void testGetDependingSkillsForIncrease() {
+		final IncreasableSkill s = mock(IncreasableSkill.class);
+		toTest.getDependingSkillsForIncrease(s);
+		verify(misc).getDependingSkillsForIncrease(s);
+	}
+	
+	@Test
+	public void testGetDependingSkillsForDecrease() {
+		final IncreasableSkill s = mock(IncreasableSkill.class);
+		toTest.getDependingSkillsForDecrease(s);
+		verify(misc).getDependingSkillsForDecrease(s);
 	}
 
 }
