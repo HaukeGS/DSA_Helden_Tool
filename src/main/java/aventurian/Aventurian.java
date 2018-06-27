@@ -251,45 +251,55 @@ public class Aventurian extends Observable {
 	}
 
 	List<Skill> getDependingSkillsForRemove(Skill toRemove) {
-		final List<Skill> copiedList = new ArrayList<>();
-		copiedList.addAll(allSkills);
-		copiedList.remove(toRemove);
-		return getDependingSkills(copiedList);
+		final List<Skill> skillsToCheck = new ArrayList<>(allSkills);
+		skillsToCheck.remove(toRemove);
+//		return getDependingSkills(skillsToCheck);
+		return getDependingSkillsRecursive(new ArrayList<>(), skillsToCheck);
 	}
 
 	List<Skill> getDependingSkillsForAdd(Skill toAdd) {
-		final List<Skill> copiedList = new ArrayList<>();
-		copiedList.addAll(allSkills);
-		copiedList.add(toAdd);
-		return getDependingSkills(copiedList);
+		final List<Skill> skillsToCheck = new ArrayList<>(allSkills);
+		skillsToCheck.add(toAdd);
+		// return getDependingSkills(skillsToCheck);
+		return getDependingSkillsRecursive(new ArrayList<>(), skillsToCheck);
 	}
 
 	List<Skill> getDependingSkillsForDecrease(IncreasableSkill toDecrease) {
-		final List<Skill> copiedList = new ArrayList<>();
-		copiedList.addAll(allSkills);
+		final List<Skill> skillsToCheck = new ArrayList<>(allSkills);
 		toDecrease.decrease();
-		final List<Skill> dependingSkills = getDependingSkills(copiedList);
+		// final List<Skill> dependingSkills = getDependingSkills(skillsToCheck);
+		final List<Skill> dependingSkills = getDependingSkillsRecursive(new ArrayList<>(), skillsToCheck);
 		toDecrease.increase();
 		return dependingSkills;
 	}
 
 	List<Skill> getDependingSkillsForIncrease(IncreasableSkill toIncrease) {
-		final List<Skill> copiedList = new ArrayList<>();
-		copiedList.addAll(allSkills);
+		final List<Skill> skillsToCheck = new ArrayList<>(allSkills);
 		toIncrease.increase();
-		final List<Skill> dependingSkills = getDependingSkills(copiedList);
+		// final List<Skill> dependingSkills = getDependingSkills(skillsToCheck);
+		final List<Skill> dependingSkills = getDependingSkillsRecursive(new ArrayList<>(), skillsToCheck);
 		toIncrease.decrease();
 		return dependingSkills;
 	}
 
-	private List<Skill> getDependingSkills(List<Skill> copiedList) {
+	private List<Skill> getDependingSkills(List<Skill> skillsToCheck) {
 		final List<Skill> dependingSkills = new ArrayList<>();
-		Optional<Skill> dependingSkill = getDependingSkill(copiedList);
+		Optional<Skill> dependingSkill = getDependingSkill(skillsToCheck);
 		while (dependingSkill.isPresent()) {
 			dependingSkills.add(dependingSkill.get());
-			copiedList.remove(dependingSkill.get());
-			dependingSkill = getDependingSkill(copiedList);
+			skillsToCheck.remove(dependingSkill.get());
+			dependingSkill = getDependingSkill(skillsToCheck);
 		}
 		return dependingSkills;
+	}
+
+	private List<Skill> getDependingSkillsRecursive(List<Skill> dependingSkills, List<Skill> skillsToCheck) {
+		final Optional<Skill> dependingSkill = getDependingSkill(skillsToCheck);
+		if (!dependingSkill.isPresent())
+			return dependingSkills;
+		dependingSkills.add(dependingSkill.get());
+		skillsToCheck.remove(dependingSkill.get());
+		return getDependingSkillsRecursive(dependingSkills, skillsToCheck);
+
 	}
 }

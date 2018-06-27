@@ -361,15 +361,30 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testGetDependingSkillsRemove() {
+	public void testGetDependingSkillsRemoveRecursive() {
 		final Skill toRemove = mock(Skill.class);
 		final Skill dependingSkill = mock(Skill.class);
+		final Skill independingSkill = mock(Skill.class);
 		when(toRemove.getName()).thenReturn("toRemove");
 		when(dependingSkill.getName()).thenReturn("dependingSkill");
+		when(independingSkill.getName()).thenReturn("independedSkill");
 		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> toTest.hasSkill(toRemove));
+		when(independingSkill.isAllowedToHave(toTest)).thenReturn(true);
 		toTest.add(toRemove);
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForRemove(toRemove).size());		
+
+		final int expected = 1;
+		int actual = toTest.getDependingSkillsForRemove(toRemove).size();
+		assertEquals(expected, actual);
+		assertTrue(toTest.hasSkill(dependingSkill));
+		assertTrue(toTest.hasSkill(toRemove));
+
+		toTest.add(independingSkill);
+		actual = toTest.getDependingSkillsForRemove(toRemove).size();
+		assertEquals(expected, actual);
+		assertTrue(toTest.hasSkill(dependingSkill));
+		assertTrue(toTest.hasSkill(toRemove));
+		assertTrue(toTest.hasSkill(independingSkill));
 	}
 
 	@Test
@@ -380,10 +395,11 @@ public class AventurianTest {
 		when(toDecrease.getLevel()).thenReturn(10).thenReturn(9);
 		when(toDecrease.isAllowedToHave(toTest)).thenReturn(true);
 		when(dependingSkill.getName()).thenReturn("dependingSkill");
-		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> toTest.hasSkill(toDecrease) && toDecrease.getLevel() >= 10);
+		when(dependingSkill.isAllowedToHave(toTest))
+				.thenAnswer(a -> toTest.hasSkill(toDecrease) && toDecrease.getLevel() >= 10);
 		toTest.add(toDecrease);
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForDecrease(toDecrease).size());		
+		assertEquals(1, toTest.getDependingSkillsForDecrease(toDecrease).size());
 	}
 
 	@Test
@@ -395,7 +411,7 @@ public class AventurianTest {
 		when(dependingSkill.getName()).thenReturn("dependingSkill");
 		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> !toTest.hasSkill(toAdd));
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForAdd(toAdd).size());		
+		assertEquals(1, toTest.getDependingSkillsForAdd(toAdd).size());
 	}
 
 	@Test
@@ -406,11 +422,11 @@ public class AventurianTest {
 		when(toIncrease.getLevel()).thenReturn(9).thenReturn(10);
 		when(toIncrease.isAllowedToHave(toTest)).thenReturn(true);
 		when(dependingSkill.getName()).thenReturn("dependingSkill");
-		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> toTest.hasSkill(toIncrease) && toIncrease.getLevel() < 10);
+		when(dependingSkill.isAllowedToHave(toTest))
+				.thenAnswer(a -> toTest.hasSkill(toIncrease) && toIncrease.getLevel() < 10);
 		toTest.add(toIncrease);
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForDecrease(toIncrease).size());		
+		assertEquals(1, toTest.getDependingSkillsForDecrease(toIncrease).size());
 	}
-	
-	
+
 }
