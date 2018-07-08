@@ -4,7 +4,6 @@ import java.util.List;
 
 import aventurian.Aventurian;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,7 +14,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import skills.Skill;
 import skills.attributes.primary.PrimaryAttribute;
 import skills.attributes.secondary.SecondaryAttribute;
 
@@ -64,8 +62,11 @@ public class AttributesPaneController extends PaneController {
 			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
 			nameLabel.setId("attributeNameLabel");
 			levelLabel.setId("attributeLevelLabel");
-			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
-			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
+			decreaseButton.setOnAction(e -> askForConfirmation(getItem(), m.getDependingSkillsForDecrease(getItem()),
+					() -> m.decrease(getItem())));
+
+			increaseButton.setOnAction(e -> askForConfirmation(getItem(), m.getDependingSkillsForIncrease(getItem()),
+					() -> m.increase(getItem())));
 		}
 
 		@Override
@@ -106,20 +107,11 @@ public class AttributesPaneController extends PaneController {
 			levelLabel.setAlignment(Pos.BOTTOM_CENTER);
 			nameLabel.setId("attributeNameLabel");
 			levelLabel.setId("attributeLevelLabel");
-			decreaseButton.setOnAction((ActionEvent e) -> {
-				final List<Skill> dependingSkills = m.getDependingSkillsForDecrease(getItem());
-				if (dependingSkills.isEmpty())
-					m.decrease(getItem());
-				else
-					showDialog(dependingSkills);
-			});
+			decreaseButton.setOnAction(e -> askForConfirmation(getItem(), m.getDependingSkillsForDecrease(getItem()),
+					() -> m.decrease(getItem())));
 
-			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
-		}
-
-		private void showDialog(List<Skill> dependingSkills) {
-			// TODO Auto-generated method stub
-
+			increaseButton.setOnAction(e -> askForConfirmation(getItem(), m.getDependingSkillsForIncrease(getItem()),
+					() -> m.increase(getItem())));
 		}
 
 		@Override

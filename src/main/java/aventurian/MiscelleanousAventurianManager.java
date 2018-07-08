@@ -50,7 +50,7 @@ public class MiscelleanousAventurianManager extends BaseAventurianManager {
 	}
 	
 	List<Skill> getDependingSkillsForIncrease(IncreasableSkill toIncrease) {
-		return aventurian.map(av -> av.getDependingSkillsForDecrease(toIncrease)).orElse(new ArrayList<>());
+		return aventurian.map(av -> av.getDependingSkillsForIncrease(toIncrease)).orElse(new ArrayList<>());
 	}
 
 }

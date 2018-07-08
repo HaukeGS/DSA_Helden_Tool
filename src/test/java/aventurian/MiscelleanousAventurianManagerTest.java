@@ -11,6 +11,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import skills.IncreasableSkill;
+import skills.Skill;
+
 @RunWith(MockitoJUnitRunner.class)
 public class MiscelleanousAventurianManagerTest extends BaseTest {
 	private MiscelleanousAventurianManager toTest;
@@ -45,4 +48,30 @@ public class MiscelleanousAventurianManagerTest extends BaseTest {
 		verify(mockedAventurian).addObserver(mockedObserver);
 	}
 
+	@Test
+	public void testGetDependingSkillForDecrease() {
+		final IncreasableSkill toDecrease = mock(IncreasableSkill.class);
+		toTest.getDependingSkillsForDecrease(toDecrease);
+		verify(mockedAventurian).getDependingSkillsForDecrease(toDecrease);
+	}
+
+	@Test
+	public void testGetDependingSkillForIncrease() {
+		final IncreasableSkill toIncrease = mock(IncreasableSkill.class);
+		toTest.getDependingSkillsForIncrease(toIncrease);
+		verify(mockedAventurian).getDependingSkillsForIncrease(toIncrease);
+	}
+
+	@Test
+	public void testGetDependingSkillsForAdd() {
+		final Skill toAdd = mock(Skill.class);
+		toTest.getDependingSkillsForAdd(toAdd);
+		verify(mockedAventurian).getDependingSkillsForAdd(toAdd);
+	}
+	@Test
+	public void testGetDependingSkillsForRemove() {
+		final Skill toRemove = mock(Skill.class);
+		toTest.getDependingSkillsForRemove(toRemove);
+		verify(mockedAventurian).getDependingSkillsForRemove(toRemove);
+	}
 }

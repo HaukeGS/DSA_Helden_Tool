@@ -6,7 +6,6 @@ import java.util.List;
 
 import aventurian.Aventurian;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -78,7 +77,7 @@ public class PropertyPaneController extends PaneController {
 		lvAssignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvAssignedAdvantages.getSelectionModel().getSelectedItem();
 			if (click.getClickCount() == 2 && p != null && m.canRemove(p)) {
-				m.remove(p);
+				askForConfirmation(p, m.getDependingSkillsForRemove(p), () -> m.remove(p));
 			}
 		});
 		lvAssignedAdvantages.setCellFactory((ListView<Property> list) -> new AssignedPropertyCell());
@@ -93,7 +92,7 @@ public class PropertyPaneController extends PaneController {
 		lvUnassignedAdvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvUnassignedAdvantages.getSelectionModel().getSelectedItem();
 			if (click.getClickCount() == 2 && p != null && m.canAdd(p)) {
-				m.add(p);
+				askForConfirmation(p, m.getDependingSkillsForAdd(p), () -> m.add(p));
 			}
 		});
 
@@ -108,7 +107,7 @@ public class PropertyPaneController extends PaneController {
 		lvAssignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvAssignedDisadvantages.getSelectionModel().getSelectedItem();
 			if (click.getClickCount() == 2 && p != null && m.canRemove(p)) {
-				m.remove(p);
+				askForConfirmation(p, m.getDependingSkillsForRemove(p), () -> m.remove(p));
 			}
 		});
 		lvAssignedDisadvantages.setCellFactory((ListView<Property> list) -> new AssignedPropertyCell());
@@ -123,7 +122,7 @@ public class PropertyPaneController extends PaneController {
 		lvUnassignedDisadvantages.setOnMouseClicked((MouseEvent click) -> {
 			final Property p = lvUnassignedDisadvantages.getSelectionModel().getSelectedItem();
 			if (click.getClickCount() == 2 && p != null && m.canAdd(p)) {
-				m.add(p);
+				askForConfirmation(p, m.getDependingSkillsForAdd(p), () -> m.add(p));
 			}
 		});
 		lvUnassignedDisadvantages.setCellFactory((ListView<Property> list) -> new UnAssignedPropertyCell());
@@ -163,8 +162,10 @@ public class PropertyPaneController extends PaneController {
 			HBox.setHgrow(pane, Priority.ALWAYS);
 			decreaseButton.setPrefWidth(25);
 			increaseButton.setPrefWidth(25);
-			decreaseButton.setOnAction((ActionEvent e) -> m.decrease(getItem()));
-			increaseButton.setOnAction((ActionEvent e) -> m.increase(getItem()));
+			decreaseButton.setOnAction(e -> askForConfirmation(getItem(), m.getDependingSkillsForDecrease(getItem()),
+					() -> m.decrease(getItem())));
+			increaseButton.setOnAction(e -> askForConfirmation(getItem(), m.getDependingSkillsForIncrease(getItem()),
+					() -> m.increase(getItem())));
 		}
 
 		@Override

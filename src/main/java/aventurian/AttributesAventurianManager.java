@@ -51,12 +51,12 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		}
 	}
 
-	public void decreaseRaceMod(SecondaryAttribute a, int mod) {
+	void decreaseRaceMod(SecondaryAttribute a, int mod) {
 		a.decreaseMod(mod);
 		refund(a.getDowngradeRefund() * mod);
 	}
 
-	public void increaseRaceMod(SecondaryAttribute a, int mod) {
+	void increaseRaceMod(SecondaryAttribute a, int mod) {
 		a.increaseMod(mod);
 		pay(a.getUpgradeCosts() * mod);
 	}

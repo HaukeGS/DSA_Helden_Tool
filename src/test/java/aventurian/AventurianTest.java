@@ -361,7 +361,7 @@ public class AventurianTest {
 	}
 
 	@Test
-	public void testGetDependingSkillsRemoveRecursive() {
+	public void testGetDependingSkillsRemove() {
 		final Skill toRemove = mock(Skill.class);
 		final Skill dependingSkill = mock(Skill.class);
 		final Skill independingSkill = mock(Skill.class);
@@ -399,19 +399,31 @@ public class AventurianTest {
 				.thenAnswer(a -> toTest.hasSkill(toDecrease) && toDecrease.getLevel() >= 10);
 		toTest.add(toDecrease);
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForDecrease(toDecrease).size());
+
+		final int actual = toTest.getDependingSkillsForDecrease(toDecrease).size();
+		final int expected = 1;
+		assertEquals(expected, actual);
+		verify(toDecrease).decrease();
+		verify(toDecrease).increase();
+		assertTrue(toTest.hasSkill(dependingSkill));
+		assertTrue(toTest.hasSkill(toDecrease));
 	}
 
 	@Test
 	public void testGetDependingSkillsAdd() {
-		final Skill toAdd = mock(IncreasableSkill.class);
+		final Skill toAdd = mock(Skill.class);
 		final Skill dependingSkill = mock(Skill.class);
 		when(toAdd.getName()).thenReturn("toRemove");
 		when(toAdd.isAllowedToHave(toTest)).thenReturn(true);
 		when(dependingSkill.getName()).thenReturn("dependingSkill");
 		when(dependingSkill.isAllowedToHave(toTest)).thenAnswer(a -> !toTest.hasSkill(toAdd));
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForAdd(toAdd).size());
+
+		final int actual = toTest.getDependingSkillsForAdd(toAdd).size();
+		final int expected = 1;
+		assertEquals(expected, actual);
+		assertTrue(!toTest.hasSkill(toAdd));
+		assertTrue(toTest.hasSkill(dependingSkill));
 	}
 
 	@Test
@@ -426,7 +438,14 @@ public class AventurianTest {
 				.thenAnswer(a -> toTest.hasSkill(toIncrease) && toIncrease.getLevel() < 10);
 		toTest.add(toIncrease);
 		toTest.add(dependingSkill);
-		assertEquals(1, toTest.getDependingSkillsForDecrease(toIncrease).size());
+
+		final int actual = toTest.getDependingSkillsForIncrease(toIncrease).size();
+		final int expected = 1;
+		assertEquals(expected, actual);
+		verify(toIncrease).decrease();
+		verify(toIncrease).increase();
+		assertTrue(toTest.hasSkill(dependingSkill));
+		assertTrue(toTest.hasSkill(toIncrease));
 	}
 
 }
