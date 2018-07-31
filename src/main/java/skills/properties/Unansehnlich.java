@@ -5,13 +5,13 @@ import skills.InstantiableSkill;
 import skills.InstantiableSkill.SkillType;
 
 @InstantiableSkill(SkillType.PROPERTY)
-public class Daemmerungssicht extends Property {
+public class Unansehnlich extends Property {
 
-	private static final String DESCRIPTION = "Charaktere mit Dämmerungssicht halbieren die Abzüge durch fehlendes Licht.\nCharaktere mit Nachtsicht ignorieren 6 Stufen fehlendes Licht.\nBeides wirkt nicht bei absoluter Dunkelheit.";
-	static final String NAME = "Dämmerungssicht";
-	
-	public Daemmerungssicht() {
-		super(NAME, DESCRIPTION, 250, 1, 2);
+	private static final String DESCRIPTION = "Erschwert passende Proben auf Interaktionstalente um 2/5 Punkte.";
+	static final String NAME = "Unansehnlich";
+
+	public Unansehnlich() {
+		super(NAME, DESCRIPTION, -250, 1, 2);
 	}
 	
 	@Override
@@ -31,6 +31,7 @@ public class Daemmerungssicht extends Property {
 
 	@Override
 	public boolean isAllowedToHave(Aventurian a) {
-		return !a.hasSkill(Nachtblind.NAME);
+		return !a.hasSkill(GutAussehend.NAME);
 	}
+
 }
