@@ -8,7 +8,7 @@ import skills.attributes.primary.PrimaryAttribute;
 
 public abstract class SecondaryAttribute extends IncreasableSkill {
 
-	private int levelModifier;
+	protected int levelModifier;
 	protected int basisLevel;
 
 	public SecondaryAttribute(String name, String description) {

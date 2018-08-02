@@ -2,6 +2,7 @@ package ui;
 
 import static java.util.stream.Collectors.toList;
 
+import java.util.Collections;
 import java.util.List;
 
 import aventurian.Aventurian;
@@ -136,15 +137,19 @@ public class PropertyPaneController extends PaneController {
 		lvAssignedDisadvantages.setItems(null);
 
 		final List<Property> assignedAdvantages = updatedAventurian.getAdvantages();
+		Collections.sort(assignedAdvantages);
 		lvAssignedAdvantages.setItems(FXCollections.observableArrayList(assignedAdvantages));
 		final List<Property> unassignedAdvantages = db.getAdvantages().stream()
 				.filter(p -> !assignedAdvantages.contains(p)).collect(toList());
+		Collections.sort(unassignedAdvantages);
 		lvUnassignedAdvantages.setItems(FXCollections.observableArrayList(unassignedAdvantages));
 
 		final List<Property> assignedDisadvantages = updatedAventurian.getDisadvantages();
+		Collections.sort(assignedDisadvantages);
 		lvAssignedDisadvantages.setItems(FXCollections.observableArrayList(assignedDisadvantages));
 		final List<Property> unassignedDisadvantages = db.getDisadvantages().stream()
 				.filter(p -> !assignedDisadvantages.contains(p)).collect(toList());
+		Collections.sort(unassignedDisadvantages);
 		lvUnassignedDisadvantages.setItems(FXCollections.observableArrayList(unassignedDisadvantages));
 	}
 

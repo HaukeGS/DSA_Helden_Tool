@@ -19,7 +19,6 @@ public class Erschoepfungsschwelle extends SecondaryAttribute {
 	public void calculateBasis(List<PrimaryAttribute> a) {
 		final int constitution = getLevelOf(a, Konstitution.NAME);
 		basisLevel = round((constitution) / 2.0);
-
 	}
 
 }
