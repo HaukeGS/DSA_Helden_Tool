@@ -25,13 +25,13 @@ public class Eisern extends Property {
 	@Override
 	public void atGain(AventurianManagerFacade a) {
 		final SecondaryAttribute s = a.getDatabase().getSecondaryAttribute(Wundschwelle.NAME);
-		a.increaseWithoutPay(s);
+		a.increaseSecondaryAttributeMod(s, 1);
 	}
 
 	@Override
 	public void atLose(AventurianManagerFacade a) {
 		final SecondaryAttribute s = a.getDatabase().getSecondaryAttribute(Wundschwelle.NAME);
-		a.decreaseWithoutRefund(s);
+		a.decreaseSecondaryAttributeMod(s, 1);
 	}
 
 }

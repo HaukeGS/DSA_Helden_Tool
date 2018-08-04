@@ -28,8 +28,15 @@ public class KoboldischTest {
 		when(av.isMage()).thenReturn(false);
 		assertFalse(toTest.isAllowedToHave(av));
 		when(av.isMage()).thenReturn(true);
-		assertTrue(toTest.isAllowedToHave(av));
-		
+		assertTrue(toTest.isAllowedToHave(av));		
+	}
+
+	@Test
+	public void testIsAllowedToAdd() {
+		when(av.isMage()).thenReturn(false);
+		assertFalse(toTest.isAllowedToAdd(av));
+		when(av.isMage()).thenReturn(true);
+		assertTrue(toTest.isAllowedToAdd(av));		
 	}
 
 }

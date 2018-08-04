@@ -47,13 +47,13 @@ public class EisernTest {
 	@Test
 	public void testAtGain() {
 		toTest.atGain(avm);
-		verify(avm).increaseWithoutPay(s);
+		verify(avm).increaseSecondaryAttributeMod(s, 1);
 	}
 
 	@Test
 	public void testAtLose() {
 		toTest.atLose(avm);
-		verify(avm).decreaseWithoutRefund(s);
+		verify(avm).decreaseSecondaryAttributeMod(s, 1);
 	}
 
 }

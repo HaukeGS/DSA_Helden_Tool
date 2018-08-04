@@ -250,5 +250,12 @@ public class AventurianManagerFacade implements Observer {
 	public List<Skill> getDependingSkillsForAdd(Skill toAdd) {
 		return miscManager.getDependingSkillsForAdd(toAdd);
 	}
-	
+
+	public void increaseSecondaryAttributeMod(SecondaryAttribute a, int mod) {
+		attributesManager.increaseSecondaryAttributeMod(a, mod);
+	}
+
+	public void decreaseSecondaryAttributeMod(SecondaryAttribute a, int mod) {
+		attributesManager.decreaseSecondaryAttributeMod(a, mod);
+	}
 }

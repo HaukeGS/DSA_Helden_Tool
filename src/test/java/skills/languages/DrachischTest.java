@@ -31,4 +31,12 @@ public class DrachischTest {
 		assertTrue(toTest.isAllowedToHave(av));
 	}
 
+	@Test
+	public void testIsAllowedToAdd() {
+		when(av.isMage()).thenReturn(false);
+		assertFalse(toTest.isAllowedToAdd(av));
+		when(av.isMage()).thenReturn(true);
+		assertTrue(toTest.isAllowedToAdd(av));
+	}
+
 }

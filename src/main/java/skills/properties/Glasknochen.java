@@ -25,15 +25,13 @@ public class Glasknochen extends Property {
 	@Override
 	public void atGain(AventurianManagerFacade a) {
 		final SecondaryAttribute s = a.getDatabase().getSecondaryAttribute(Wundschwelle.NAME);
-		a.decreaseWithoutRefund(s);
-		a.decreaseWithoutRefund(s);
+		a.decreaseSecondaryAttributeMod(s, 2);
 	}
 
 	@Override
 	public void atLose(AventurianManagerFacade a) {
 		final SecondaryAttribute s = a.getDatabase().getSecondaryAttribute(Wundschwelle.NAME);
-		a.increaseWithoutPay(s);
-		a.increaseWithoutPay(s);
+		a.increaseSecondaryAttributeMod(s, 2);
 	}
 
 }

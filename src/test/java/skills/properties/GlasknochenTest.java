@@ -48,13 +48,13 @@ public class GlasknochenTest {
 	@Test
 	public void testAtGain() {
 		toTest.atGain(avm);
-		verify(avm, times(2)).decreaseWithoutRefund(s);
+		verify(avm).decreaseSecondaryAttributeMod(s, 2);
 	}
 
 	@Test
 	public void testAtLose() {
 		toTest.atLose(avm);
-		verify(avm, times(2)).increaseWithoutPay(s);;
+		verify(avm).increaseSecondaryAttributeMod(s, 2);
 	}
 
 }

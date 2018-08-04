@@ -37,7 +37,7 @@ class PropertyAventurianManager extends BaseAventurianManager {
 
 	boolean canAdd(Property p) {
 		return !aventurian.map(av -> HAS_SKILL.test(av, p)//
-				|| IS_NOT_ALLOWED_TO_HAVE.test(av, p)//
+				|| IS_NOT_ALLOWED_TO_ADD.test(av, p)//
 				|| EXCEEDS_MAX_ADVANTAGEPOINTS.test(av, p)//
 				|| EXCEEDS_MAX_DISADVANTAGEPOINTS.test(av, p) //
 				|| EXCEEDS_MAX_BADPROPERTYLEVELS.test(av, p)).orElse(true);
