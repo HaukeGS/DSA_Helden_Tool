@@ -23,11 +23,11 @@ public class Kurzatmig extends Property {
 
 	@Override
 	public void atGain(AventurianManagerFacade m) {
-		m.decreaseWithoutRefund(m.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME));
+		m.decreaseSecondaryAttributeMod(m.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME), 1);
 	}
 
 	@Override
 	public void atLose(AventurianManagerFacade m) {
-		m.increaseWithoutPay(m.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME));
+		m.increaseSecondaryAttributeMod(m.getDatabase().getSecondaryAttribute(Erschoepfungsschwelle.NAME), 1);
 	}
 }

@@ -9,7 +9,7 @@ import skills.attributes.primary.PrimaryAttribute;
 
 @InstantiableSkill(SkillType.SECONDARY_ATTRIBUTE)
 public class Wundschwelle extends SecondaryAttribute {
-	static final String NAME = "Wundschwelle";
+	public static final String NAME = "Wundschwelle";
 
 	public Wundschwelle() {
 		super(NAME, "");

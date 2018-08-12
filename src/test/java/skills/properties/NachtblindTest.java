@@ -1,4 +1,4 @@
-package skills.languages;
+package skills.properties;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -13,30 +13,22 @@ import org.mockito.junit.MockitoJUnitRunner;
 import aventurian.Aventurian;
 
 @RunWith(MockitoJUnitRunner.class)
-public class KoboldischTest {
-	private Koboldisch toTest;
+public class NachtblindTest {
+	private Nachtblind toTest;
 	@Mock
 	Aventurian av;
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Koboldisch();
+		toTest = new Nachtblind();
 	}
 
 	@Test
 	public void testIsAllowedToHave() {
-		when(av.isMage()).thenReturn(false);
+		when(av.hasSkill(Daemmerungssicht.NAME)).thenReturn(false);
+		assertTrue(toTest.isAllowedToHave(av));
+		when(av.hasSkill(Daemmerungssicht.NAME)).thenReturn(true);
 		assertFalse(toTest.isAllowedToHave(av));
-		when(av.isMage()).thenReturn(true);
-		assertTrue(toTest.isAllowedToHave(av));		
-	}
-
-	@Test
-	public void testIsAllowedToAdd() {
-		when(av.isMage()).thenReturn(false);
-		assertFalse(toTest.isAllowedToAdd(av));
-		when(av.isMage()).thenReturn(true);
-		assertTrue(toTest.isAllowedToAdd(av));		
 	}
 
 }

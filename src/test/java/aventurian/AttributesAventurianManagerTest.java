@@ -259,5 +259,19 @@ public class AttributesAventurianManagerTest extends BaseTest {
 		verify(a).decreaseMod(5);
 		verify(mockedAventurian).refund(anyInt());
 	}
+	
+	@Test
+	public void testIncreaseSecondaryAttributeMod() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.increaseSecondaryAttributeMod(a, 2);
+		verify(a).increaseMod(2);
+	}
+	
+	@Test
+	public void testDecreaseSecondaryAttributeMod() {
+		final SecondaryAttribute a = mock(SecondaryAttribute.class);
+		toTest.decreaseSecondaryAttributeMod(a, 2);
+		verify(a).decreaseMod(2);
+	}
 
 }

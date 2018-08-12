@@ -17,6 +17,8 @@ public class Drachisch extends Language {
 	public boolean isAllowedToHave(Aventurian a) {
 		return a.isMage();
 	}
+	
+
 
 	@Override
 	public boolean isAllowedToAdd(Aventurian a) {

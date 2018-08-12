@@ -14,12 +14,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import aventurian.Aventurian;
 import aventurian.AventurianManagerFacade;
 import database.Database;
-import skills.attributes.secondary.Erschoepfungsschwelle;
 import skills.attributes.secondary.SecondaryAttribute;
+import skills.attributes.secondary.Wundschwelle;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AusdauerndTest {
-	private Ausdauernd toTest;
+public class EisernTest {
+	private Eisern toTest;
 	@Mock
 	Aventurian av;
 	@Mock
@@ -31,16 +31,16 @@ public class AusdauerndTest {
 
 	@Before
 	public void setUp() throws Exception {
-		toTest = new Ausdauernd();
-		when(db.getSecondaryAttribute(Erschoepfungsschwelle.NAME)).thenReturn(s);
+		toTest = new Eisern();
+		when(db.getSecondaryAttribute(Wundschwelle.NAME)).thenReturn(s);
 		when(avm.getDatabase()).thenReturn(db);
 	}
 
 	@Test
 	public void testIsAllowedToHave() {
-		when(av.hasSkill(Kurzatmig.NAME)).thenReturn(false);
+		when(av.hasSkill(Glasknochen.NAME)).thenReturn(false);
 		assertTrue(toTest.isAllowedToHave(av));
-		when(av.hasSkill(Kurzatmig.NAME)).thenReturn(true);
+		when(av.hasSkill(Glasknochen.NAME)).thenReturn(true);
 		assertFalse(toTest.isAllowedToHave(av));
 	}
 

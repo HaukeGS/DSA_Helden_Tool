@@ -30,15 +30,16 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testCanAddPropertyAdvantageExceedsMaxPointsInAdvantages() {
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(mockedAventurian.getPointsInAdvantages()).thenReturn(PropertyAventurianManager.MAX_POINTS_IN_ADVANTAGES);
 
 		assertFalse(toTest.canAdd(p));
 	}
 
-	private Property createPropertyMock(boolean isAllowed, boolean isAdvantage) {
+	private Property createPropertyMock(boolean isAllowedToHave, boolean isAdvantage, boolean isAllowedToAdd) {
 		final Property p = mock(Property.class);
-		when(p.isAllowedToHave(mockedAventurian)).thenReturn(isAllowed);
+		when(p.isAllowedToHave(mockedAventurian)).thenReturn(isAllowedToHave);
+		when(p.isAllowedToAdd(mockedAventurian)).thenReturn(isAllowedToAdd);
 		when(p.isAdvantage()).thenReturn(isAdvantage);
 		when(p.isDisadvantage()).thenReturn(!isAdvantage);
 		when(p.getName()).thenReturn("testProperty");
@@ -48,13 +49,13 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testCanAddPropertyAdvantageNotAllowed() {
-		final Property p = createPropertyMock(false, true);
+		final Property p = createPropertyMock(true, true, false);
 		assertFalse(toTest.canAdd(p));
 	}
 
 	@Test
 	public void testAddPropertyDisdvantageAllConditionsMet() {
-		final Property p = createPropertyMock(true, false);
+		final Property p = createPropertyMock(true, false, true);
 
 		toTest.addProperty(p);
 
@@ -65,8 +66,8 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test(expected = IllegalStateException.class)
 	public void testAddPropertyDisdvantageAllNotConditionsMet() {
-		final Property p = createPropertyMock(false, false);
-		
+		final Property p = createPropertyMock(false, false, false);
+
 		toTest.addProperty(p);
 
 		verify(mockedAventurian, never()).add(p);
@@ -76,7 +77,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testCanAddPropertyDisadvantageExceedMaxPointsOutDisadvantages() {
-		final Property p = createPropertyMock(true, false);
+		final Property p = createPropertyMock(true, false, true);
 		when(mockedAventurian.getPointsOutDisadvantages())
 				.thenReturn(PropertyAventurianManager.MAX_POINTS_OUT_DISADVANTAGES);
 
@@ -85,7 +86,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testCanAddPropertyAlreadyHasSkill() {
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 		assertFalse(toTest.canAdd(p));
 
@@ -113,6 +114,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	private BadProperty createBadPropertyMock(boolean isAllowed, boolean isIncreasable) {
 		final BadProperty p = mock(BadProperty.class);
 		when(p.isAllowedToHave(mockedAventurian)).thenReturn(isAllowed);
+		when(p.isAllowedToAdd(mockedAventurian)).thenReturn(isAllowed);
 		when(p.isAllowedToIncrease(mockedAventurian)).thenReturn(isIncreasable);
 		when(p.getLevel()).thenReturn(5);
 		when(p.getTotalCosts()).thenReturn(250);
@@ -176,7 +178,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	@Test
 	public void testRemoveIncreasedAdvantage() {
 
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(p.isAllowedToDecrease()).thenReturn(true).thenReturn(true).thenReturn(false);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 
@@ -201,7 +203,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testDecreaseAdvantage() {
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 		when(p.isAllowedToDecrease()).thenReturn(true).thenReturn(true).thenReturn(false);
 
@@ -272,7 +274,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testIncreasePropertyAdvantageAllConditionsMet() {
-		final Property advantage = createPropertyMock(true, true);
+		final Property advantage = createPropertyMock(true, true, true);
 		when(mockedAventurian.hasSkill(advantage)).thenReturn(true);
 		when(advantage.isAllowedToIncrease(mockedAventurian)).thenReturn(true);
 
@@ -283,7 +285,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test(expected = IllegalStateException.class)
 	public void testIncreasePropertyNotAllowed() {
-		final Property advantage = createPropertyMock(false, true);
+		final Property advantage = createPropertyMock(false, true, true);
 
 		toTest.increaseProperty(advantage);
 
@@ -291,7 +293,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testRemovePropertyAdvantageAllConditionsMet() {
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
@@ -303,7 +305,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 	@Test(expected = IllegalStateException.class)
 	public void testRemovePropertyNotOwned() {
 
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(false);
 
 		toTest.removeProperty(p);
@@ -311,7 +313,7 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testRemovePropertyDisadvantageAllConditionsMet() {
-		final Property p = createPropertyMock(true, false);
+		final Property p = createPropertyMock(true, false, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 
 		toTest.removeProperty(p);
@@ -322,8 +324,8 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test
 	public void testAddPropertyAdvantageAllConditionsMet() {
-		final Property p = createPropertyMock(true, true);
-		
+		final Property p = createPropertyMock(true, true, true);
+
 		toTest.addProperty(p);
 
 		verify(mockedAventurian).add(p);
@@ -332,41 +334,41 @@ public class PropertyAventurianManagerTest extends BaseTest {
 
 	@Test(expected = IllegalStateException.class)
 	public void testAddPropertyAdvantageNotAllConditionsMet() {
-		final Property p = createPropertyMock(false, true);
-		
+		final Property p = createPropertyMock(true, true, false);
+
 		toTest.addProperty(p);
 
 		verify(mockedAventurian, never()).add(p);
 		verify(mockedAventurian, never()).pay(anyInt());
 	}
-	
+
 	@Test
 	public void testCanAddAllConditionsMet() {
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		assertTrue(toTest.canAdd(p));
 	}
-	
+
 	@Test
 	public void testIncreasePropertyWithoutPayAllConditionsMet() {
-		final Property p = createPropertyMock(true, true);
+		final Property p = createPropertyMock(true, true, true);
 		when(mockedAventurian.hasSkill(p)).thenReturn(true);
 		when(p.isAllowedToIncrease(mockedAventurian)).thenReturn(true);
-		
+
 		toTest.increasePropertyWithoutPay(p);
-		
+
 		verify(mockedAventurian).increaseSkill(p);
 		verify(mockedAventurian, never()).pay(anyInt());
-		
+
 	}
-	
+
 	@Test(expected = IllegalStateException.class)
 	public void testIncreasePropertyWithoutPayNotAllConditionsMet() {
-		final Property p = createPropertyMock(false, true);
-		
+		final Property p = createPropertyMock(false, true, true);
+
 		toTest.increasePropertyWithoutPay(p);
-		
+
 		verify(mockedAventurian, never()).increaseSkill(p);
 		verify(mockedAventurian, never()).pay(anyInt());
-		
+
 	}
 }

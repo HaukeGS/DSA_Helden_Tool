@@ -1,6 +1,7 @@
 package aventurian;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -307,6 +308,20 @@ public class AventurianManagerFacadeTest extends BaseTest {
 		final IncreasableSkill s = mock(IncreasableSkill.class);
 		toTest.getDependingSkillsForDecrease(s);
 		verify(misc).getDependingSkillsForDecrease(s);
+	}
+	
+	@Test
+	public void testIncreaseSecondaryAttributeMod() {
+		final SecondaryAttribute s = mock(SecondaryAttribute.class);
+		toTest.increaseSecondaryAttributeMod(s, 2);
+		verify(attributes).increaseSecondaryAttributeMod(s, 2);
+	}
+	
+	@Test
+	public void testDecreaseSecondaryAttributeMod() {
+		final SecondaryAttribute s = mock(SecondaryAttribute.class);
+		toTest.decreaseSecondaryAttributeMod(s, 2);
+		verify(attributes).decreaseSecondaryAttributeMod(s, 2);
 	}
 
 }
