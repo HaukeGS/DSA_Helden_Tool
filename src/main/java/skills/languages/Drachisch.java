@@ -12,10 +12,15 @@ public class Drachisch extends Language {
 	public Drachisch() {
 		super(NAME, DESCRIPTION, 5, 50);
 	}
-	
+
 	@Override
 	public boolean isAllowedToHave(Aventurian a) {
 		return a.isMage();
+	}
+
+	@Override
+	public boolean isAllowedToAdd(Aventurian a) {
+		return super.isAllowedToAdd(a) && isAllowedToHave(a);
 	}
 
 }

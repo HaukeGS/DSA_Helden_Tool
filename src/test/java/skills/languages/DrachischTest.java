@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import aventurian.Aventurian;
+import skills.attributes.primary.Klugheit;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DrachischTest {
@@ -29,6 +30,29 @@ public class DrachischTest {
 		assertFalse(toTest.isAllowedToHave(av));
 		when(av.isMage()).thenReturn(true);
 		assertTrue(toTest.isAllowedToHave(av));
+	}
+
+	@Test
+	public void testIsAllowedToAdd() {
+		when(av.getLevelSumOfLanguages()).thenReturn(0);
+		when(av.getPrimaryAttribute(Klugheit.NAME)).thenReturn(10);
+		when(av.isMage()).thenReturn(false);
+		assertFalse(toTest.isAllowedToAdd(av));
+		
+		when(av.getLevelSumOfLanguages()).thenReturn(10);
+		when(av.getPrimaryAttribute(Klugheit.NAME)).thenReturn(10);
+		when(av.isMage()).thenReturn(false);
+		assertFalse(toTest.isAllowedToAdd(av));
+		
+		when(av.getLevelSumOfLanguages()).thenReturn(10);
+		when(av.getPrimaryAttribute(Klugheit.NAME)).thenReturn(10);
+		when(av.isMage()).thenReturn(true);
+		assertFalse(toTest.isAllowedToAdd(av));
+
+		when(av.getLevelSumOfLanguages()).thenReturn(0);
+		when(av.getPrimaryAttribute(Klugheit.NAME)).thenReturn(10);
+		when(av.isMage()).thenReturn(true);
+		assertTrue(toTest.isAllowedToAdd(av));
 	}
 
 }
