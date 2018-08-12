@@ -278,4 +278,15 @@ public class Aventurian extends Observable {
 		return getDependingSkills(dependingSkills, skillsToCheck);
 
 	}
+
+	void increaseSecondaryAttributeMod(SecondaryAttribute a, int mod) {
+		a.increaseMod(mod);
+		setChangedAndNotifyObservers();
+	}
+
+	void decreaseSecondaryAttributeMod(SecondaryAttribute a, int mod) {
+		a.decreaseMod(mod);
+		setChangedAndNotifyObservers();
+	}
+
 }

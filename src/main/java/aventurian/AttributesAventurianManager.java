@@ -60,13 +60,19 @@ class AttributesAventurianManager extends BaseAventurianManager {
 		a.increaseMod(mod);
 		pay(a.getUpgradeCosts() * mod);
 	}
-	
+
 	void increaseSecondaryAttributeMod(SecondaryAttribute a, int mod) {
-		a.increaseMod(mod);
+		aventurian.ifPresent(av -> {
+			logger.info("increasing " + a + " by " + mod);
+			av.increaseSecondaryAttributeMod(a, mod);
+		});
 	}
-	
+
 	void decreaseSecondaryAttributeMod(SecondaryAttribute a, int mod) {
-		a.decreaseMod(mod);
+		aventurian.ifPresent(av -> {
+			logger.info("decreasing " + a + " by " + mod);
+			av.decreaseSecondaryAttributeMod(a, mod);
+		});
 	}
 
 	void decreaseSecondaryAttribute(SecondaryAttribute a) {
