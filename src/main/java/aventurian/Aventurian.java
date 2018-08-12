@@ -3,7 +3,6 @@ package aventurian;
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -228,13 +227,13 @@ public class Aventurian extends Observable {
 	}
 
 	private Optional<Skill> getDependingSkill(List<Skill> listToSearch) {
-		Collections.reverse(listToSearch);
+		// Collections.reverse(listToSearch);
 		final List<Skill> temp = allSkills;
 		allSkills = listToSearch;
 		final Optional<Skill> dependingSkill = listToSearch.stream().filter(skill -> !skill.isAllowedToHave(this))
 				.findFirst();
 		allSkills = temp;
-		Collections.reverse(listToSearch);
+		// Collections.reverse(listToSearch);
 		return dependingSkill;
 	}
 

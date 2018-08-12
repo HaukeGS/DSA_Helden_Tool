@@ -22,7 +22,7 @@ public class Drachisch extends Language {
 
 	@Override
 	public boolean isAllowedToAdd(Aventurian a) {
-		return super.isAllowedToAdd(a) && isAllowedToHave(a);
+		return super.isAllowedToAdd(a) && a.isMage();
 	}
 
 }

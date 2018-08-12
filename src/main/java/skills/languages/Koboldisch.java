@@ -12,15 +12,15 @@ public class Koboldisch extends Language {
 	public Koboldisch() {
 		super(NAME, DESCRIPTION, 4, 40);
 	}
-	
+
 	@Override
 	public boolean isAllowedToHave(Aventurian a) {
 		return a.isMage();
 	}
-	
+
 	@Override
 	public boolean isAllowedToAdd(Aventurian a) {
-		return a.isMage();
+		return super.isAllowedToAdd(a) && a.isMage();
 	}
 
 }
