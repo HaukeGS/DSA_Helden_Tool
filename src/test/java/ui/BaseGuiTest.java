@@ -93,7 +93,7 @@ public abstract class BaseGuiTest extends ApplicationTest {
 
 
 	public <T extends Node> T find(final String query) {
-		lookup(NodeMatchers.hasText(query));
+		//lookup(NodeMatchers.hasText(query));
 		// TestFX provides many operations to retrieve elements from the loaded GUI.
 		return lookup(query).query();
 	}
